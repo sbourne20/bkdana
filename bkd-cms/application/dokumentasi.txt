@@ -1,0 +1,4 @@
+Product
+---------
+Fundraising Period = hitungan Hari
+Loan Term (tenor) = hitungan Bulan

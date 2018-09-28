@@ -1,0 +1,37 @@
+/* font bira_regular */
+@font-face {
+    font-family: 'bira_regular';
+    src: url('bira_personal_use_only-webfont.eot');
+    src: url('bira_personal_use_only-webfont.eot?#iefix') format('embedded-opentype'),
+         url('bira_personal_use_only-webfont.woff2') format('woff2'),
+         url('bira_personal_use_only-webfont.woff') format('woff'),
+         url('bira_personal_use_only-webfont.ttf') format('truetype'),
+         url('bira_personal_use_only-webfont.svg#bira_personal_use_onlyregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+
+/* font rockwell_stdr */
+@font-face {
+  font-family: 'rockwell_stdr';
+  src: url('RockwellStd.eot?#iefix') format('embedded-opentype'),  
+       url('RockwellStd.otf')  format('opentype'),
+	   url('RockwellStd.woff') format('woff'), 
+       url('RockwellStd.ttf')  format('truetype'), 
+       url('RockwellStd.svg#RockwellStd') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* font arial_rounded */
+@font-face {
+  font-family: 'arial_rounded';
+  src: url('ArialRoundedMTBold.eot?#iefix') format('embedded-opentype'),  
+       url('ArialRoundedMTBold.woff') format('woff'), 
+       url('ArialRoundedMTBold.ttf')  format('truetype'), 
+       url('ArialRoundedMTBold.svg#ArialRoundedMTBold') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
