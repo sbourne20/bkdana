@@ -1,0 +1,239 @@
+/*
+Name : responsive.css
+Author : MD Creative Indonesia
+Type : Default Style
+*/
+
+@media (min-width: 991px) {
+	.desktop-hide {
+		display: none !important;
+	}
+}
+@media (min-width: 768px) and (max-width: 990px) {
+	.tablet-hide {
+		display: none !important;
+	}
+}
+@media (max-width: 767px) {
+	.mobile-hide {
+		display: none !important;
+	}
+}
+
+
+
+
+@media only screen and (max-width : 992px) {
+
+	/*container*/
+	.container {
+		width: inherit !important;
+	}
+
+}
+
+@media only screen and (max-width : 767px) {
+
+	/* Header */
+	
+
+	/* Navbar */
+	.navbar-default {
+		border-bottom: 1px solid #fff !important;
+		margin-bottom: 15px;
+	}
+	.navbar-nav {
+		float: inherit;
+		margin: 0;
+	}
+	.navbar-brand {
+    	padding: 20px 14px;
+	}
+	.navbar-collapse {
+		padding: 0;
+	}
+	.navbar-default .navbar-nav > li {
+		margin: 0;
+	}
+	.navbar-default .navbar-nav > li > a {
+		padding: 15px;
+	}
+	.navbar-default .navbar-nav > li > a.login,
+	.navbar-default .navbar-nav > li > a.register {
+		font-size: 16px;
+		border: none;
+		border-radius: 0;
+		background-color: inherit;
+		color: #fff;
+	}
+
+	/* Slider */
+	.carousel-caption {
+		margin-top: 0;
+	}
+	.carousel-caption h2 {
+    	font-size: 30px;
+    	line-height: 40px;
+    	margin-bottom: 5px;
+	}
+	.carousel-caption p {
+    	font-size: 14px;
+    	line-height: 24px;
+	}
+	.carousel-caption .btn {
+    	max-width: inherit;
+    	margin-right: 0;
+    	width: 49%;
+	}
+	.carousel img.right,
+	.carousel img.right2 {
+		max-width: 100%;
+		right: inherit;
+	}
+	.carousel-inner .row {
+		display: flex;
+	    flex-direction: row;
+	    flex-grow: 1;
+	    flex-wrap: wrap
+	}
+	.carousel-inner .row #position1 {
+    	order: 2;
+  	}
+  	.carousel-inner .row #position2 {
+    	order: 1;
+  	}
+
+
+  	/*Content*/
+  	/*Section Why*/
+	.section-why {
+		text-align: center;
+		padding: 0;
+	}
+	/*Section Login*/
+	.section-login .content .link {
+		display: block;
+		margin-top: 10px;
+	}
+
+	/*Section Aboutus*/
+	.section-aboutus {
+		background: none;
+		padding: 50px 0;
+	}
+	.section-aboutus .video-wrapp::before {
+		display: none;
+	}
+	.section-aboutus .video-wrapp i {
+		background: inherit;
+		box-shadow: inherit;
+		font-size: 50px;
+	}
+	.section-aboutus .description {
+		padding-left: 0;
+	}
+
+	/*Section Register*/
+	.section-widget-register {
+		padding: 30px 0;
+	}
+	.section-widget-register .title-wrapp {
+		left: 9%;
+	}
+	.section-widget-register .signup-wrapp {
+		position: relative;
+		margin-top: 0;
+	}
+
+	/*Section Info*/
+	.section-info {
+		background: none;
+		padding: 15px 0;
+	}
+
+	/*Section Member*/
+	.section-member-page .content .grouping-search {
+		position: relative;
+	}
+	.section-member-page .content .grouping-search input {
+		width: 80%;
+	}
+	.section-member-page .content .grouping-search .input-group-btn {
+		top: -4.5px;
+		left: -35px;
+	}
+
+	/*Others Style*/
+	.modal-dialog {
+		width: auto;
+		max-width: inherit;
+	}
+	ul.nav-tabs > li {
+		display: inline-block;
+		width: 100%;
+		border-bottom: 1px #ddd solid;
+	}
+
+	/*Plugins*/
+	/*Form Wizard*/
+	.form-wizard .wizard__header {
+		padding: 0;
+		height: auto;
+	}
+	.form-wizard .wizard__header-content {
+		position: relative;
+		padding: 30px 15px;
+		top: 0;
+		left: 0;
+		transform: inherit;
+	}
+
+
+}
+
+
+
+
+
+/* Timeline Media Queries */
+@media screen and (max-width: 65.375em) {
+	.cbp_tmtimeline > li .cbp_tmtime span:last-child {
+		font-size: 1.5em;
+	}
+}
+@media screen and (max-width: 47.2em) {
+	.cbp_tmtimeline:before {
+		display: none;
+	}
+	.cbp_tmtimeline > li .cbp_tmtime {
+		width: 100%;
+		position: relative;
+		padding: 0 0 20px 0;
+	}
+	.cbp_tmtimeline > li .cbp_tmtime span {
+		text-align: left;
+	}
+	.cbp_tmtimeline > li .cbp_tmlabel {
+		margin: 0 0 30px 0;
+		padding: 1em;
+		font-weight: 400;
+		font-size: 95%;
+	}
+	.cbp_tmtimeline > li .cbp_tmlabel:after {
+		right: auto;
+		left: 20px;
+		border-right-color: transparent;
+		border-bottom-color: #3594cb;
+		top: -20px;
+	}
+	.cbp_tmtimeline > li:nth-child(odd) .cbp_tmlabel:after {
+		border-right-color: transparent;
+		border-bottom-color: #6cbfee;
+	}
+	.cbp_tmtimeline > li .cbp_tmicon {
+		position: relative;
+		float: right;
+		left: auto;
+		margin: -55px 5px 0 0px;
+	}	
+}

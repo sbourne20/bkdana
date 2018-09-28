@@ -1,0 +1,13 @@
+<IfModule mod_rewrite.c>
+RewriteEngine on
+
+#RewriteCond %{HTTPS} off
+#RewriteRule (.*) https://www.bkdana.com/$1 [R=301,L] 
+
+#RewriteCond %{HTTP_HOST} http://www.bkdana.com$
+#RewriteRule (.*) https://www.bkdana.com/$1 [R=301,L] 
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php?/$1 [L]
+</IfModule>
