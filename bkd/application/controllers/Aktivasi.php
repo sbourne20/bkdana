@@ -8,7 +8,7 @@ class Aktivasi extends CI_Controller {
 
 		$this->load->model('Member_model');
 		$this->load->library('encryption');
-		error_reporting(E_ALL);
+		//error_reporting(E_ALL);
 	}
 	
 	public function index()

@@ -7,7 +7,7 @@ class Rekening_koran extends CI_Controller {
 		parent::  __construct();
 		$this->load->model('Member_model');
 		$this->load->model('Wallet_model');
-		error_reporting(E_ALL);
+		//error_reporting(E_ALL);
 
 		$this->Content_model->has_login();
 		$this->Content_model->is_active_pendana();

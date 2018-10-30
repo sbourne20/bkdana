@@ -113,7 +113,7 @@ class Ajax extends CI_Controller {
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				$ret = array('error'=> '1', 'message'=>'Invalid Email format!');
 
-			}else if ( $count_member > 1){
+			}else if ( $count_member > 1 && isset($check['id_mod_user_member'])){
 				$ret = array('error'=> '1', 'message'=>'Email atau No.Telp Anda sudah terdaftar!');
 
 			}else if ( $password == '' OR strlen($password) < 6 ) {

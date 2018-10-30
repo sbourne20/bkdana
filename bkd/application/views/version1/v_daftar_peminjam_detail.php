@@ -154,6 +154,25 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
                                                 </tr>
                                                 <tr>
                                                     <td>
+                                                        <?php if ($transaksi['images_foto_name'] != ''){ 
+                                                            $foto_profil = $this->config->item('images_uri') . '/member/'.$transaksi['id_mod_user_member']. '/foto/'. $transaksi['images_foto_name'];
+                                                        ?>
+                                                        <span>Foto Profil</span><br>
+                                                        <img class="img-pinjam" width="40" height="40" src="<?php echo $foto_profil; ?>" alt="" />
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($transaksi['images_usaha_name'] != ''){ 
+                                                            $foto_usaha = $this->config->item('images_uri') . '/member/'.$transaksi['id_mod_user_member']. '/usaha/'. $transaksi['images_usaha_name'];
+                                                        ?>
+                                                        <span>Foto Usaha</span><br>
+                                                        <img class="img-pinjam" width="40" height="40" src="<?php echo $foto_usaha; ?>" alt="" />
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                                <?php /*
+                                                <tr>
+                                                    <td>
                                                         <?php if ($transaksi['size_foto_profil'] > '1'){ ?>
                                                         <span>Foto Profil</span><br>
                                                         <img class="img-pinjam" width="40" height="40" src="data:image/jpeg;base64,<?php echo base64_encode($transaksi['Profile_photo']); ?>" />
@@ -165,7 +184,7 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
                                                         <img class="img-pinjam" width="40" height="40" src="data:image/jpeg;base64,<?php echo base64_encode($transaksi['foto_usaha']); ?>" />
                                                         <?php } ?>
                                                     </td>
-                                                </tr>
+                                                </tr> */?>
                                                 
                                             </table>
                                         </div>

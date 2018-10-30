@@ -22,8 +22,8 @@ class Daftar_peminjam extends CI_Controller {
 
 		ini_set('max_execution_time', 600);
 		
-		error_reporting(E_ALL & ~E_NOTICE);
-		ini_set('display_errors', '1');
+		// error_reporting(E_ALL & ~E_NOTICE);
+		// ini_set('display_errors', '1');
 	}
 	
 	public function index()

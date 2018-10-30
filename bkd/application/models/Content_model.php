@@ -703,6 +703,9 @@ class Content_model extends CI_Model
 			LENGTH(foto_usaha) as size_foto_usaha,
 			Profile_photo,
 			foto_usaha,
+			images_foto_name,
+			images_usaha_name,
+			nama_peminjam,
 			Alamat, Kota, Provinsi,
 			(select count(*) as itotal from '.$this->profile_pendanaan.' where Master_loan_id=transaksi_id) as total_lender ');
 		$this->db->from($this->profil_permohonan_pinjaman. ' p');

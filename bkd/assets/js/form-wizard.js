@@ -228,11 +228,11 @@ var Wizard = function () {
         // Password Checking
         }if(el.type == 'password'){
           if(!checkPassword(this.value)){
-            alert('Password minimum 6 karakter dan harus menggunakan kombinasi huruf dan angka');
+            alert('Password minimum 6 karakter, kombinasi huruf dan angka, dan minimal 1 huruf besar');
             this.focus();
             this.style.border = '2px #dc3545 solid';
             this.style['boxShadow'] = '0 0 0 #DC3545';
-            this.placeholder = 'Password minimum 6 karakter dan harus menggunakan kombinasi huruf dan angka';
+            this.placeholder = 'Min. 6 karakter, kombinasi huruf dan angka, dan minimal 1 huruf besar';
             return false;
           }
         }if($('#password').val() != $('#confirm_password').val()){

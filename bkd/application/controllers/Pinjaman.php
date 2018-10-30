@@ -95,17 +95,17 @@ class Pinjaman extends CI_Controller {
 			$fullname    = trim($post['fullname']);
 			$notelp      = trim($post['telp']);
 			$email       = trim($post['email']);
-			$ktp         = trim($post['nomor_ktp']);
 			$password    = trim($post['password']);
 			$repassword  = trim($post['confirm_password']);
-			$tgl_lahir   = trim($post['tgl_lahir']);
+			$ktp         = trim($post['nomor_ktp']);
+			//$tgl_lahir   = trim($post['tgl_lahir']);
 
 			/*$filter = explode('.', trim($post['jumlah_pinjam']));
 			$total_pinjam = str_replace(',', '', $filter[0]);*/
 
-			$total_pinjam = trim($post['jumlah_pinjam']);
+			//$total_pinjam = trim($post['jumlah_pinjam']);
 
-			$productID = trim($post['product']);
+			//$productID = trim($post['product']);
 			$check = $this->Content_model->check_existing_member($email, $notelp, $ktp);
 			$count_member = count($check);
 
@@ -120,7 +120,7 @@ class Pinjaman extends CI_Controller {
 
 			}else if(preg_match("/^.*(?=.{6,})(?=.*[0-9])(?=.*[a-zA-Z]).*$/", $password) === 0) {
 				// min 6 karakter, terdiri dari minimum 1 huruf, minimum 1 angka
-				$ret = array('error'=> '1', 'message'=>'Password harus terdiri dari huruf dan angka');
+				$ret = array('error'=> '1', 'message'=>'Password harus terdiri dari huruf dan angka, serta minimal 1 huruf besar.');
 			
 			}else if ( $password != $repassword ) {
 				$ret = array('error'=> '1', 'message'=>'Password dan Konfirmasi Password tidak sama!');
@@ -128,8 +128,6 @@ class Pinjaman extends CI_Controller {
 			}else if (
 				$fullname != '' 
 				&& $notelp != '' 
-				&& trim($post['nomor_rekening']) != '' 
-				&& $total_pinjam != '' && strlen($total_pinjam) > 5
 				&& $password == $repassword && strlen($password) >=6 
 				) {
 				// mod_user_member
@@ -144,7 +142,7 @@ class Pinjaman extends CI_Controller {
 				$mem_data['mum_create_date']   = $nowdatetime;
 				$mem_data['mum_type']          = '1'; // 1.peminjam, 2.pendana
 				$mem_data['mum_type_peminjam'] = '1'; // 1.Kilat, 2.mikro
-				$mem_data['mum_nomor_rekening'] = trim($post['nomor_rekening']);
+				// $mem_data['mum_nomor_rekening'] = trim($post['nomor_rekening']);
 
 				$uid = $this->Content_model->insert_mod_usermember($mem_data);
 
@@ -164,8 +162,8 @@ class Pinjaman extends CI_Controller {
 					$user['Tgl_record']         = $nowdate;
 					$user['Nama_pengguna']      = $fullname;
 					$user['Jenis_pengguna']     = 1; // 1.orang, 2.badan hukum
-					$user['Nomor_rekening']     = trim($post['nomor_rekening']);
-					$user['nama_bank']          = trim($post['nama_bank']);					
+					// $user['Nomor_rekening']     = trim($post['nomor_rekening']);
+					// $user['nama_bank']          = trim($post['nama_bank']);					
 					$user['id_mod_user_member'] = $uid;
 
 					$userID = $this->Content_model->insert_user($user);
@@ -174,7 +172,7 @@ class Pinjaman extends CI_Controller {
 					$u_detail['Id_pengguna']       = $userID;
 					$u_detail['user_type']         = 'peminjam';
 					$u_detail['Mobileno']          = $notelp;
-					$u_detail['Jumlah_permohonan_pinjaman'] = $total_pinjam;
+					//$u_detail['Jumlah_permohonan_pinjaman'] = $total_pinjam;
 
 					$this->Content_model->insert_userdetail($u_detail);
 					
@@ -188,7 +186,7 @@ class Pinjaman extends CI_Controller {
 
 					$this->Content_model->insert_profil_geografi($u_geo);		
 
-					// profil_permohonan_pinjaman
+					/* // profil_permohonan_pinjaman
 					$p_pinjam['Master_loan_id']          = $orderID;
 					$p_pinjam['Tgl_permohonan_pinjaman'] = $nowdatetime;
 					$p_pinjam['Jml_permohonan_pinjaman'] = $total_pinjam;
@@ -229,7 +227,7 @@ class Pinjaman extends CI_Controller {
 							$inlog['ltp_type_of_business_id']        = $produk['type_of_business_id'];
 							$inlog['ltp_loan_organizer_id']          = 1;
 							$inlog['ltp_date_created']               = date('Y-m-d H:i:s');
-							$this->Content_model->insert_log_transaksi_pinjam($inlog);
+							$this->Content_model->insert_log_transaksi_pinjam($inlog);*/
 
 					// ranking
 					$get_ranking = set_ranking_pengguna($userID, 1, 1); // (Id_pengguna, peminjam/pendana, kilat/mikro)
@@ -377,10 +375,10 @@ class Pinjaman extends CI_Controller {
 			$password    = trim($post['password']);
 			$repassword  = trim($post['confirm_password']);
 
-			$filter = explode('.', trim($post['jumlah_pinjam']));
+			/*$filter = explode('.', trim($post['jumlah_pinjam']));
 			$total_pinjam = str_replace(',', '', $filter[0]);
 
-			$productID = trim($post['product']);
+			$productID = trim($post['product']);*/
 
 			$check = $this->Content_model->check_existing_member($email, $notelp, '');
 			$count_member = count($check);
@@ -396,20 +394,17 @@ class Pinjaman extends CI_Controller {
 
 			}else if(preg_match("/^.*(?=.{6,})(?=.*[0-9])(?=.*[a-zA-Z]).*$/", $password) === 0) {
 				// min 6 karakter, terdiri dari minimum 1 huruf, minimum 1 angka
-				$ret = array('error'=> '1', 'message'=>'Password harus terdiri dari huruf dan angka');
+				$ret = array('error'=> '1', 'message'=>'Password harus terdiri dari huruf dan angka, serta minimal 1 huruf besar');
 
 			}else if ( $password != $repassword ) {
 				$ret = array('error'=> '1', 'message'=>'Password dan Konfirmasi Password tidak sama!');
 
-			}else if ($total_pinjam < 100000) {
-				$ret = array('error'=> '1', 'message'=>'Jumlah Pinjaman minimal Rp 100,000');
-			
+			/*}else if ($total_pinjam < 100000) {
+				$ret = array('error'=> '1', 'message'=>'Jumlah Pinjaman minimal Rp 100,000');*/
 			
 			}else if (
 				$fullname != '' 
 				&& $notelp != '' 
-				&& trim($post['nomor_rekening']) != '' 
-				&& trim($post['jumlah_pinjam']) != '' 
 				&& $password == $repassword && strlen($password) >=6 
 			) {
 				// mod_user_member
@@ -424,7 +419,7 @@ class Pinjaman extends CI_Controller {
 				$mem_data['mum_create_date']    = $nowdatetime;
 				$mem_data['mum_type']           = '1'; // 1.peminjam, 2.pendana
 				$mem_data['mum_type_peminjam']  = '2'; // 1.Kilat, 2.mikro
-				$mem_data['mum_nomor_rekening'] = trim($post['nomor_rekening']);
+				// $mem_data['mum_nomor_rekening'] = trim($post['nomor_rekening']);
 
 				$uid = $this->Content_model->insert_mod_usermember($mem_data);
 
@@ -444,8 +439,8 @@ class Pinjaman extends CI_Controller {
 					$user['Tgl_record ']        = $nowdate;
 					$user['Nama_pengguna']      = $fullname;
 					$user['Jenis_pengguna']     = 1; // 1.orang, 2.badan hukum
-					$user['Nomor_rekening']     = $post['nomor_rekening'];
-					$user['nama_bank']          = trim($post['nama_bank']);
+					// $user['Nomor_rekening']     = $post['nomor_rekening'];
+					// $user['nama_bank']          = trim($post['nama_bank']);
 					$user['id_mod_user_member'] = $uid;
 
 					$userID = $this->Content_model->insert_user($user);
@@ -454,7 +449,7 @@ class Pinjaman extends CI_Controller {
 					$u_detail['Id_pengguna']       = $userID;
 					$u_detail['user_type']         = 'peminjam';
 					$u_detail['Mobileno']          = $notelp;
-					$u_detail['Jumlah_permohonan_pinjaman'] = $total_pinjam;
+					// $u_detail['Jumlah_permohonan_pinjaman'] = $total_pinjam;
 
 					$this->Content_model->insert_userdetail($u_detail);
 					
@@ -468,7 +463,7 @@ class Pinjaman extends CI_Controller {
 
 					$this->Content_model->insert_profil_geografi($u_geo);		
 
-					// profil_permohonan_pinjaman
+					/*// profil_permohonan_pinjaman
 					$p_pinjam['Master_loan_id']          = $orderID;
 					$p_pinjam['Tgl_permohonan_pinjaman'] = $nowdatetime;
 					$p_pinjam['Jml_permohonan_pinjaman'] = $total_pinjam;
@@ -509,7 +504,7 @@ class Pinjaman extends CI_Controller {
 							$inlog['ltp_type_of_business_id']        = $produk['type_of_business_id'];
 							$inlog['ltp_loan_organizer_id']          = 1;
 							$inlog['ltp_date_created']               = date('Y-m-d H:i:s');
-							$this->Content_model->insert_log_transaksi_pinjam($inlog);
+							$this->Content_model->insert_log_transaksi_pinjam($inlog);*/
 
 					// ranking
 					$get_ranking = set_ranking_pengguna($userID, 1, 2); // (Id_pengguna, peminjam/pendana, kilat/mikro)

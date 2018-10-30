@@ -94,6 +94,7 @@
                                                         <input type="password" class="form-control" id="confirm_password" name="confirm_password">
                                                     </div>
 
+                                                    <?php /*
                                                     <div class="form-group">
                                                         <label for="handphone">* Nomor Rekening</label>
                                                         <input type="text" class="form-control" name="nomor_rekening" id="nomor_rekening" required>
@@ -128,6 +129,8 @@
                                                             <option value=""> -- Pilih --</option>           
                                                         </select>
                                                     </div>
+                                                    */?>
+                                                    
                                                     <br>
                                                     <div class="checkbox">
                                                         <label>
@@ -226,7 +229,7 @@
                             <p class="form-control-static" id="m_confirm_password"></p>
                         </div>
                     </div>
-
+                    <?php /*
                     <div class="form-group">
                         <label class="col-sm-5 control-label">Nomor Rekening</label>
                         <div class="col-sm-6">
@@ -239,6 +242,7 @@
                             <p class="form-control-static" id="m_nama_bank"></p>
                         </div>
                     </div>
+
                     <div class="form-group">
                         <label class="col-sm-5 control-label">Jumlah Pinjaman (Rp)</label>
                         <div class="col-sm-6">
@@ -251,6 +255,7 @@
                             <p class="form-control-static" id="m_product"></p>
                         </div>
                     </div>
+                    */?>
 
                     <div class="form-group">
                         <div class="col-sm-12">

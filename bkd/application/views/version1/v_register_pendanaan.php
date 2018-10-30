@@ -85,6 +85,8 @@
                                                         <input type="password" class="form-control" id="confirm_password" name="confirm_password">
                                                     </div>
 
+                                                    <?php /*
+
                                                     <div class="form-group">
                                                         <label for="nomor_rekening">* Nomor Rekening</label>
                                                         <input type="text" class="form-control" name="nomor_rekening" id="nomor_rekening" required>
@@ -101,6 +103,7 @@
                                                             <option value="Bank CIMB">Bank CIMB</option>
                                                         </select>
                                                     </div>
+                                                    */?>
                                                     <div class="form-group">
                                                         <label for="sumberdana">* Sumber Dana</label>
                                                         <input type="text" class="form-control" name="sumberdana" id="sumberdana" required>
@@ -203,6 +206,8 @@
                         </div>
                     </div>
 
+                    <?php /*
+
                     <div class="form-group">
                         <label class="col-sm-5 control-label">Nomor Rekening</label>
                         <div class="col-sm-6">
@@ -215,6 +220,8 @@
                             <p class="form-control-static" id="m_nama_bank"></p>
                         </div>
                     </div>
+                    */?>
+
                     <div class="form-group">
                         <label class="col-sm-5 control-label">Sumber Dana</label>
                         <div class="col-sm-6">

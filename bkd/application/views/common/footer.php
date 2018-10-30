@@ -93,6 +93,13 @@ if ($login_status == 1)
 if ($this->session->userdata('message')) {
 	$this->session->unset_userdata('message_type');
 	$this->session->unset_userdata('message');
+
+    unset($_SESSION['message']);
+}
+
+if (isset($_SESSION['message_type'])) {
+    unset($_SESSION['message_type']);
+    $this->session->unset_userdata('message_type');
 }
 ?>
 <script type="text/javascript">

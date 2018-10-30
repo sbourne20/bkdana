@@ -8,6 +8,7 @@ class Pendanaan extends CI_Controller {
 
 		$this->load->model('Member_model');
 		$this->load->library('encryption');
+
 		//error_reporting(E_ALL);
 		error_reporting(0);
 
@@ -83,13 +84,13 @@ class Pendanaan extends CI_Controller {
 
 			$productID = 4;
 
-			$check = $this->Content_model->check_existing_member($email, $notelp, $ktp);
+			$check = $this->Content_model->check_existing_member($email, $notelp, '');
 			$count_member = count($check);
 
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				$ret = array('error'=> '1', 'message'=>'Invalid Email format!');
 
-			}else if ( $count_member > 1 ){
+			}else if ( $count_member > 1 && isset($check['id_mod_user_member'])){
 				$ret = array('error'=> '1', 'message'=>'Email/No.Telp Anda sudah terdaftar!');
 			
 			}else if (strlen($notelp) < 10) {
@@ -100,7 +101,7 @@ class Pendanaan extends CI_Controller {
 
 			}else if(preg_match("/^.*(?=.{6,})(?=.*[0-9])(?=.*[a-zA-Z]).*$/", $password) === 0) {
 				// min 6 karakter, terdiri dari minimum 1 huruf, minimum 1 angka
-				$ret = array('error'=> '1', 'message'=>'Password harus terdiri dari huruf dan angka');
+				$ret = array('error'=> '1', 'message'=>'Password harus terdiri dari huruf dan angka, serta minimal 1 huruf besar');
 			
 			}else if ( $password != $repassword ) {
 				$ret = array('error'=> '1', 'message'=>'Password dan Konfirmasi Password tidak sama!');
@@ -108,8 +109,7 @@ class Pendanaan extends CI_Controller {
 			}else if (
 				$fullname != '' 
 				&& $notelp != '' 
-				&& trim($post['nomor_rekening']) != '' 
-				&& trim($post['sumberdana']) != '' 
+				&& $sumberdana != '' 
 				&& $password == $repassword 
 				&& strlen($password) >= 6 
 				&& strlen($notelp) > 5 
@@ -125,7 +125,7 @@ class Pendanaan extends CI_Controller {
 				$mem_data['mum_status']      = 0;	// 1. active, 2. tidak bisa melakukan pendanaan
 				$mem_data['mum_create_date'] = $nowdatetime;
 				$mem_data['mum_type']        = '2'; // 1.peminjam, 2.pendana
-				$mem_data['mum_nomor_rekening'] = antiInjection(trim($post['nomor_rekening']));
+				// $mem_data['mum_nomor_rekening'] = antiInjection(trim($post['nomor_rekening']));
 
 				$uid = $this->Content_model->insert_mod_usermember($mem_data);
 
@@ -145,8 +145,8 @@ class Pendanaan extends CI_Controller {
 					$user['Tgl_record']        = $nowdate;
 					$user['Nama_pengguna']      = $fullname;
 					$user['Jenis_pengguna']     = 1; // 1.orang, 2.badan hukum
-					$user['Nomor_rekening']     = antiInjection(trim($post['nomor_rekening']));
-					$user['nama_bank']          = trim($post['nama_bank']);
+					// $user['Nomor_rekening']     = antiInjection(trim($post['nomor_rekening']));
+					// $user['nama_bank']          = trim($post['nama_bank']);
 					$user['id_mod_user_member'] = $uid;
 
 					$userID = $this->Content_model->insert_user($user);

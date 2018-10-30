@@ -11,7 +11,7 @@ class Redeem extends CI_Controller {
 
 		$this->Content_model->has_login();
 		$this->Content_model->is_active_pendana();
-		error_reporting(E_ALL);
+		//error_reporting(E_ALL);
 	}
 	
 	public function index()

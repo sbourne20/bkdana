@@ -7,6 +7,7 @@ class Top_up extends CI_Controller {
 		parent::  __construct();
 		$this->load->model('Member_model');
 		
+		
 
 		$this->Content_model->has_login();
 		$this->Content_model->is_active_pendana();
@@ -365,8 +366,8 @@ class Top_up extends CI_Controller {
 					$this->set_payment($memberdata, $indata, $topupID);
 				}else{
 					$this->session->set_userdata('message','Error on Top Up!');
-				redirect('top-up');
 					$this->session->set_userdata('message_type','error');
+					redirect('top-up');
 				}
 			}else{
 				$this->session->set_userdata('message','Top Up gagal. Isilah semua kolom dengan benar. Cek Nomor Rekening Anda, jumlah top up min. Rp ' . $this->config->item('minimum_topup'));

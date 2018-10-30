@@ -50,7 +50,7 @@ $pph_potongan = $log_pendanaan['total_pajak'];
                                                 <td>
                                                     <span>Nama Peminjam</span>
                                                     <a href="javascript:;" class="text-warning"
-                                                     data-toggle="tooltip" data-placement="right" data-original-title="Kilik untuk melihat profil publik"><?php echo $detail_transaksi['Nama_pengguna']; ?> <i class="fas fa-user-circle"></i></a>
+                                                     data-toggle="tooltip" data-placement="right" data-original-title="Klik untuk melihat profil publik"><?php echo $detail_transaksi['nama_peminjam']; ?> <i class="fas fa-user-circle"></i></a>
                                                 </td>
                                             </tr>
                                             <tr>

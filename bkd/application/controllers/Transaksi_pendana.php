@@ -8,7 +8,8 @@ class Transaksi_pendana extends CI_Controller {
 
 		$this->load->model('Member_model');
 		$this->load->library('pagination');
-		error_reporting(E_ALL);
+
+		//error_reporting(E_ALL);
 	}
 	
 	public function index()

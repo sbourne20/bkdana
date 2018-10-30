@@ -65,6 +65,7 @@
         state:"8000123GThui245", 
         version:"v1.1",
         fbAppEventsEnabled:true,
+        display: 'modal',
       }
     );
   };

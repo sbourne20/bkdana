@@ -70,6 +70,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 | The $query_builder variables lets you determine whether or not to load
 | the query builder class.
 */
+
+
 $active_group = 'default';
 $query_builder = TRUE;
 
@@ -78,8 +80,10 @@ if($_SERVER['HTTP_HOST']=='localhost') {
 	$db_user = 'root';
 	$db_pass = 'aksesdb';
 	
-}else if($_SERVER['HTTP_HOST']=='149.129.213.30') {
-	$db_host = '172.31.33.106';
+}else if($_SERVER['HTTP_HOST']=='149.129.213.30' OR $_SERVER['HTTP_HOST']=='www.bkdana.com') {
+	// Dev
+	//$db_host = '172.31.33.106';
+	$db_host = 'localhost';
 	$db_user = 'bkduser';
 	$db_pass = 'aksesdb288';
 }else{

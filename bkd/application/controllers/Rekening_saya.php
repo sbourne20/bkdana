@@ -9,6 +9,7 @@ class Rekening_saya extends CI_Controller {
 
 		$this->load->model('Member_model');
 		$this->load->model('Wallet_model');
+		
 	}
 	public function index()
 	{

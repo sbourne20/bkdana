@@ -9,6 +9,7 @@ class Testing_ikiloh extends CI_Controller {
 		$this->load->model('Wallet_model');
 
 		$this->load->library('pagination');
+		
 
 		include(APPPATH.'libraries/phpmailer-5.2.23/PHPMailerAutoload.php');
 		require_once(APPPATH.'libraries/TCPDF/tcpdf.php');
@@ -17,6 +18,11 @@ class Testing_ikiloh extends CI_Controller {
 		
 		error_reporting(E_ALL & ~E_NOTICE);
 		ini_set('display_errors', '1');
+	}
+
+	function lihat_info()
+	{
+		phpinfo();
 	}
 
 	function pdf_kilat()
@@ -107,5 +113,40 @@ class Testing_ikiloh extends CI_Controller {
 		$this->send_email($memdata['mum_email'], $orderID, $jmldana, $attach_file);
 		unlink($pdf_folder.$filename);
 	
+	}
+
+	function pdf_pendana()
+	{
+
+			$uid = htmlentities($_SESSION['_bkduser_']);
+			$logintype = htmlentities($_SESSION['_bkdtype_']); // 1.peminjam, 2.pendana
+
+			$prefixID    = 'T';
+			$orderID     = $prefixID.strtoupper(substr(uniqid(sha1(time().$uid)),0,7));
+	        $exist_order = $this->Content_model->check_topup_code($orderID);	// Cek if order ID exist on Database
+			
+			// jika order ID sudah ada di Database, generate lagi tambahkan datetime
+			if (is_array($exist_order) && count($exist_order) > 0 )
+			{
+				$orderID = $prefixID.strtoupper(substr(uniqid(sha1(time().$uid.date('yzGis'))),0,7));
+			}
+
+			$memberdata  = $this->Member_model->get_member_byid($uid);
+
+			//echo '--------- Generate PDF Pendana ----------';
+			
+			$output['member']    = $memberdata;
+			$output['ordercode'] = date('dmY').$uid;
+			$output['tgl_order'] = date('d/m/Y');
+			$html = $this->load->view('email/vpendana', $output, TRUE);
+
+			echo $html;
+
+			/*$filename = 'perjanjian-penawaran-pendanaan-'.$output['ordercode'].'.pdf';
+			$title    = 'Perjanjian penawaraan pendanaan';
+			$attach_file = create_pdf($html, $output['ordercode'], $filename, $title); // go to helper*/
+			// --------- End Generate PDF ----------
+
+		
 	}
 }

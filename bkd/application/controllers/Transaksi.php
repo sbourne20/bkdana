@@ -12,7 +12,8 @@ class Transaksi extends CI_Controller {
 		$this->load->model('Wallet_model');
 
 		$this->load->library('pagination');
-		error_reporting(E_ALL);
+
+		//error_reporting(E_ALL);
 
 		$this->Content_model->has_login();
 	}

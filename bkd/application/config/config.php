@@ -388,14 +388,28 @@ $config['encryption_key'] = 'MDCr34t1ve58';
 | Other session cookie settings are shared with the rest of the application,
 | except for 'cookie_prefix' and 'cookie_httponly', which are ignored here.
 |
+
+
 */
-$config['sess_driver'] = 'files';
+/* // Database
+$config['sess_driver'] = 'database';
 $config['sess_cookie_name'] = 'bkdana';
-$config['sess_expiration'] = 7200;
-$config['sess_save_path'] = NULL;
+$config['sess_expiration'] = 3600;
+$config['sess_save_path'] = 'bkd_session';
 $config['sess_match_ip'] = FALSE;
-$config['sess_time_to_update'] = 300;
-$config['sess_regenerate_destroy'] = FALSE;
+$config['sess_time_to_update'] = 3600;
+$config['sess_regenerate_destroy'] = TRUE;*/
+
+
+
+
+	$config['sess_driver'] = 'files';
+	$config['sess_cookie_name'] = 'bkdana';
+	$config['sess_expiration'] = 7200;
+	$config['sess_save_path'] = '/tmp_session/';
+	$config['sess_match_ip'] = FALSE;
+	$config['sess_time_to_update'] = 300;
+	$config['sess_regenerate_destroy'] = FALSE;
 
 /*
 |--------------------------------------------------------------------------
@@ -412,11 +426,22 @@ $config['sess_regenerate_destroy'] = FALSE;
 |       'cookie_httponly') will also affect sessions.
 |
 */
-$config['cookie_prefix']	= '';
-$config['cookie_domain']	= '';
-$config['cookie_path']		= '/';
-$config['cookie_secure']	= FALSE;
-$config['cookie_httponly'] 	= FALSE;
+
+if ( $_SERVER['SERVER_ADDR'] == '::1') {
+	//  Development
+	$config['cookie_prefix']	= '';
+	$config['cookie_domain']	= '';
+	$config['cookie_path']		= '/';
+	$config['cookie_secure']	= FALSE;
+	$config['cookie_httponly'] 	= FALSE;
+}else{
+	// LIVE
+	$config['cookie_prefix']	= '';
+	$config['cookie_domain']	= '.bkdana.id';
+	$config['cookie_path']		= '/';
+	$config['cookie_secure']	= TRUE;
+	$config['cookie_httponly'] 	= TRUE;
+}
 
 /*
 |--------------------------------------------------------------------------

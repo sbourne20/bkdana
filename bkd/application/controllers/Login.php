@@ -8,8 +8,8 @@ class Login extends CI_Controller {
 
 		$this->load->model('Member_model');
 
-		error_reporting(E_ALL);
-		ini_set('display_errors', '1');
+		// error_reporting(E_ALL);
+		// ini_set('display_errors', '1');
 	}
 
 	public function index()
