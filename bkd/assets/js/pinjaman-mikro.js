@@ -62,7 +62,6 @@ function show_modal()
         var nama_bank        = $('#nama_bank option:selected').val();
         var jumlah_pinjam    = $('#jumlah_pinjam').val();
         var product          = $('#product option:selected').text();
-        
         $('#m_fullname').text(fullname);
         $('#m_email').text(email);
         $('#m_telp').text(telp);
