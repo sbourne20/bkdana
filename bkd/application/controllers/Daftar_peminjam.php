@@ -11,6 +11,7 @@ class Daftar_peminjam extends CI_Controller {
 		parent::  __construct();
 		$this->load->model('Member_model');
 		$this->load->model('Wallet_model');
+		//$this->load->model('Pinjaman_model');
 
 		$this->load->library('pagination');
 
@@ -145,10 +146,13 @@ class Daftar_peminjam extends CI_Controller {
 
 		$data['total_bayar']        = $transaksi['Jml_permohonan_pinjaman'];
 		$data['pinjaman_disetujui'] = $transaksi['Jml_permohonan_pinjaman_disetujui'];
+		$data['Product_id'] = $transaksi['Product_id'];
+		$data['Amount'] =$transaksi['Amount'];
 
 		$get_total_pendana = $this->Content_model->get_kuota_pinjaman($transaksi['Master_loan_id']);
 		$total_dana_masuk  = $get_total_pendana['jml_pendanaan'];
 		$total_pinjaman    = $transaksi['Jml_permohonan_pinjaman'];
+		$total_kredit      = $transaksi['jml_kredit'];
 
 		//_d($transaksi);
 
@@ -157,7 +161,7 @@ class Daftar_peminjam extends CI_Controller {
 		}else{
 		}*/
 
-		$data['kuota_dana'] = round(($total_dana_masuk/$total_pinjaman) * 100);
+		$data['kuota_dana'] = round(($total_kredit/$data['Amount']) * 100);
 
 		$data['pages']    = 'v_daftar_peminjam_detail';
 		$this->load->view('template', $data);
@@ -186,6 +190,7 @@ class Daftar_peminjam extends CI_Controller {
 
 			$ID_peminjam  = antiInjection(trim($post['id_peminjam']));
 			$mid_peminjam = antiInjection(trim($post['id_peminjam_member']));
+			$Product_id = antiInjection(trim($post['Product_id']));
 
 			$get_master_wallet = $this->Wallet_model->get_wallet_bymember($uid);
 
@@ -291,6 +296,10 @@ class Daftar_peminjam extends CI_Controller {
 				$status_pendanaan = ($jmldana == $jmlpinjaman)? 'approve' : 'pending';
 
 				// insert profil penawaran pemberian pinjaman
+				//tambahan baru
+				//$Product_id = $this->Content_model->get_produk($productID);
+				//batas tambahan baru
+
 				$tbl_penawaran['Id']                                         = $orderID;
 				$tbl_penawaran['Tgl_penawaran_pemberian_pinjaman']           = $nowdate;
 				$tbl_penawaran['Jml_penawaran_pemberian_pinjaman']           = $jmldana;
@@ -299,7 +308,7 @@ class Daftar_peminjam extends CI_Controller {
 				$tbl_penawaran['Master_loan_id']   = $pinjaman_transaksiID;
 				$tbl_penawaran['User_id']          = $memdata['Id_pengguna'];
 				$tbl_penawaran['dana_member_id']   = $uid;
-				$tbl_penawaran['Product_id']       = 4;
+				$tbl_penawaran['Product_id']       = $Product_id;
 				$tbl_penawaran['pendanaan_status'] = $status_pendanaan;
 				$tbl_penawaran['jml_laba']         = $laba;
 				$tbl_penawaran['nama_pendana']     = $memdata['Nama_pengguna'];
@@ -460,6 +469,38 @@ class Daftar_peminjam extends CI_Controller {
 					}
 					// ------ End Pendanaan 100% -------
 
+						//tambahan baru insert ke record_pinjaman
+					/*	$updata1['Jml_permohonan_pinjaman_disetujui'] = antiInjection(trim($post['jml_pinj_disetujui']));
+						$updata1['Amount'] = antiInjection(trim($post['jml_pinj_disetujui']));
+						$affected = $this->Wallet_model->update_profil_pinjaman($updata1, $pinjaman_transaksiID);*/
+
+						$userid = trim($post['id_peminjam']);
+						$masterloan = trim($post['transaksi_id']);
+						//$updata1 = explode('.', trim($post['jml_pendanaan']));
+						//$jmldana               = str_replace(',', '', $filter[0]);
+
+
+						$this->db->from('record_pinjaman');
+						$this->db->where('User_id', $userid);
+						//$this->db->where('Master_loan_id', $masterloan);
+						$this->db->like('Flag', 'CF', 'BOTH');
+						$hasil=$this->db->get()->num_rows();
+						// $p_pinjam2['user_id'] =$uid;
+						/*if($hasil>0){
+							$hasil+=1;	
+						}else{
+							$hasil="1";
+						}*/
+
+						$p_pinjam['Flag'] = 'CF';
+						$p_pinjam['Master_loan_id'] = $masterloan; //transaksi_id
+						$p_pinjam['User_id'] = $userid; //id_peminjam
+						$p_pinjam['Amount'] = $jmldana;
+						$p_pinjam['Tgl_pinjaman'] = date('Y-m-d H:i:s');
+						$pinjamID = $this->Content_model->insert_profil_pinjaman5($p_pinjam);
+
+						//batas tambahan baru
+
 
 					$this->session->set_userdata('message','Berhasil melakukan proses pembiayaan untuk pinjaman no.transaksi '.$post['transaksi_id']);
 					$this->session->set_userdata('message_type','success');
@@ -540,7 +581,7 @@ class Daftar_peminjam extends CI_Controller {
             <br>
             Jenis Transaksi: '.$type.'
             <br>
-            Jumlah Pinjaman: Rp '.number_format($userdata['Jml_permohonan_pinjaman']).'
+            Jumlah Pinjaman: Rp '.number_format($userdata['Amount']).'
             <br>
             Jumlah Pinjaman diterima: Rp '.number_format($userdata['Jml_permohonan_pinjaman_disetujui']).'
             <br>

@@ -29,7 +29,8 @@ class Master_model extends CI_Model
 			'mod_log_transaksi_pendana'  => 'mod_log_transaksi_pendana',
 			'mod_log_frozen'             => 'mod_log_frozen',
 			'mod_setting_home'           => 'mod_setting_home',
-			'mod_tempo'                  => 'mod_tempo'
+			'mod_tempo'                  => 'mod_tempo',
+			'tabel_pinjaman'   			 => 'profil_permohonan_pinjaman',
 		);
 
 		/* initialize table name for this class */

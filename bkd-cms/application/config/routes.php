@@ -70,3 +70,4 @@ $route['transaksi-pinjaman-mikro-draft/edit/(.*)']    = 'transaksi_pinjaman_mikr
 $route['transaksi-pinjaman-mikro-draft/approve/(.*)'] = 'transaksi_pinjaman_mikro_draft/approve/$1';
 $route['transaksi-pinjaman-mikro-draft/submit_edit']  = 'transaksi_pinjaman_mikro_draft/submit_edit';
 $route['transaksi-pinjaman-mikro-draft/detail_transaksi/(.*)'] = 'transaksi_pinjaman_mikro_draft/detail_transaksi/$1';
+//$route['cronjob/find_expired_pinjaman_kilat/(.*)'] = 'cronjob/find_expired_pinjaman_kilat';

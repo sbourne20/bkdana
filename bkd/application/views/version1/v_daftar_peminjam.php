@@ -61,12 +61,44 @@
                                                     $link_detail = site_url('daftar-peminjam-detail/?tid='.$tra['transaksi_id']);
 
                                                     $slot = round($tra['jml_kredit']/$tra['total_pinjam']*100);
+													
+													//$type_interest_rate = $tra['type_of_interest_rate'];
+														//switch($type_interest_rate){
+														//	case '1':
+															//$('#tipe_loan_term').text('days');  
+														//	$label_tenor = 'hari';
+														//	break;
+														//	case '2':
+														//	 $label_tenor = 'bulan';
+														   // $('#tipe_loan_term').text('months'); 
+														//	break; 
+														//	case '3':
+														//	  $label_tenor = 'minggu';
+															//$('#tipe_loan_term').text('weeks');
+														//	break; 
+														//}
+													
+													
 
                                                     if ($tra['id_mod_type_business'] == 1)
                                                     {
-                                                        $label_tenor = 'Hari';
+                                                         if ($tra['type_of_interest_rate'] == 1) {
+                                                            $label_tenor = 'Hari';
+                                                        }if ($tra['type_of_interest_rate'] == 2) {
+                                                            $label_tenor = 'Bulan';
+                                                        }if ($tra['type_of_interest_rate'] == 3){
+                                                            $label_tenor = 'Minggu';
+                                                        }
+                                                        //$label_tenor = 'Hari';
                                                     }else{
-                                                        $label_tenor = 'Bulan';
+                                                         if ($tra['type_of_interest_rate'] == 1) {
+                                                            $label_tenor = 'Hari';
+                                                        }if ($tra['type_of_interest_rate'] == 2) {
+                                                            $label_tenor = 'Bulan';
+                                                        }if ($tra['type_of_interest_rate'] == 3){
+                                                            $label_tenor = 'Minggu';
+                                                        }
+                                                        //$label_tenor = 'Bulan';
                                                     }
                                                 ?>
                                                 
@@ -77,7 +109,7 @@
                                                         <div class="sub-description">Slot Pendanaan : <?php echo $slot; ?>%</div>
                                                         <div class="sub-description">Rate : </div>
                                                     </td>
-                                                    <td><?php echo number_format($tra['total_pinjam']); ?></td>
+                                                    <td><?php echo number_format($tra['Amount']); ?></td>
                                                     <td><?php echo number_format($tra['jml_kredit']); ?></td>
                                                     <td><?php echo $tra['total_lender']; ?></td>
                                                     <td><?php echo $tra['peringkat_pengguna']; ?></td>

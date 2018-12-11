@@ -19,6 +19,21 @@
                                   <select multiple name="product[]" id="select2" class="populate select2" style="width:250px;" data-validation-engine="validate[required]">
                                     <?php foreach ($products as $p) {
                                         $selected = '';
+										$type_interest_rate = $p['type_of_interest_rate'];
+                                        switch($type_interest_rate){
+                                            case '1':
+                                            //$('#tipe_loan_term').text('days');  
+                                            $label_tenor = 'hari';
+                                            break;
+                                            case '2':
+                                             $label_tenor = 'bulan';
+                                           // $('#tipe_loan_term').text('months'); 
+                                            break; 
+                                            case '3':
+                                              $label_tenor = 'minggu';
+                                            //$('#tipe_loan_term').text('weeks');
+                                            break; 
+                                        }
                                         if (count($relasi_hp)>0){
                                             foreach ($relasi_hp as $hh) {
                                                 
@@ -31,7 +46,7 @@
                                             }
                                         }
                                     ?>
-                                    <option value="<?php echo $p['Product_id']; ?>" <?php echo $selected; ?>> <?php echo $p['Loan_term']; ?> Hari</option>
+                                    <option value="<?php echo $p['Product_id']; ?>" <?php echo $selected; ?>> <?php echo $p['Loan_term'].' '.$label_tenor; ?> </option>
                                     <?php 
                                     } ?>
                                   </select>

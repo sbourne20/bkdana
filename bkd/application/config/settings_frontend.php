@@ -16,6 +16,10 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	$config['doc_root'] .= "://".$_SERVER['HTTP_HOST'];
 	$config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
+	//foto start
+	$config['showphoto']    = 'http://'.$_SERVER['HTTP_HOST']. '/data-bkd/';
+	//foto end
+
 	$config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
 	$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
 
@@ -35,7 +39,7 @@ $config['pendana_images_dir'] = $config['images_dir'] . 'pendana/';
 $config['member_images_dir']  = $config['images_dir'] . 'member/';
 
 $config['img_baseurl']  = $config['doc_root'];
-$config['images_uri']   = $config['img_baseurl'] . "images-data/";
+$config['images_uri']   = $config['showphoto'] . "images";
 $config['page_img_uri'] = $config['images_uri'] . 'pages/';
 
 $config['template_frontend'] = 'version1';

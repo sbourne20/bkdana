@@ -40,6 +40,7 @@ $pph_potongan = $log_pendanaan['total_pajak'];
                             <div class="panel panel-default">
                                 <div class="panel-heading">Detail</div>
                                     <div class="panel-body">
+
                                         <table class="table-custom">
                                             <tr>
                                                 <td><span>No. Transaksi Pendanaan</span> <?php echo $transaksi['Id']; ?></td>
@@ -54,7 +55,7 @@ $pph_potongan = $log_pendanaan['total_pajak'];
                                                 </td>
                                             </tr>
                                             <tr>
-                                                <td><span>Tenor</span> <?php echo $transaksi['Loan_term']; ?> Bulan</td>
+                                                <td><span>Tenor</span> <?php echo $transaksi['Loan_term'] ?> Bulan</td>
                                                 <td><span>Jatuh Tempo</span> <?php echo $jatuh_tempo; ?></td>
                                             </tr>
                                             <tr>

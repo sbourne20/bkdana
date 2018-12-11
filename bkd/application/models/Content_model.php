@@ -279,6 +279,17 @@ class Content_model extends CI_Model
 	function insert_profil_pinjaman($data)
 	{
 		$this->db->insert($this->profil_permohonan_pinjaman, $data);
+		/*$this->db->insert($this->record_pinjaman, $data);*/
+		/*return $this->db->insert_id();*/
+		/*$insert_id = $this->db->insert_id();*/
+	//	$this->db->and_insert($this->record_pinjaman, $data);
+		return $this->db->insert_id();
+		//$this->db->insert_id($insert_data2);
+	}
+
+		function insert_profil_pinjaman1($data)
+	{
+		$this->db->insert('record_pinjaman', $data);
 		return $this->db->insert_id();
 	}
 
@@ -418,7 +429,8 @@ class Content_model extends CI_Model
 		$sql = "SELECT 
 			Master_loan_id as transaksi_id, 
 			tgl_permohonan_pinjaman as tgl_transaksi, 
-			Jml_permohonan_pinjaman as totalrp, 
+			Jml_permohonan_pinjaman as totalrp,
+			Amount as Amount, 
 			Jml_permohonan_pinjaman_disetujui as total_approve, 
 			Master_loan_status as transaksi_status, 
 			date_close, 
@@ -445,12 +457,13 @@ class Content_model extends CI_Model
 		$sql = "SELECT 
 			Master_loan_id as transaksi_id, 
 			tgl_permohonan_pinjaman as tgl_transaksi, 
-			Jml_permohonan_pinjaman as totalrp, 
+			Jml_permohonan_pinjaman as totalrp,
+			Amount as Amount, 
 			Jml_permohonan_pinjaman_disetujui as total_approve, 
 			Master_loan_status as transaksi_status, 
 			date_close, 
 			tgl_pinjaman_disetujui as tgl_approve,
-			product_title, Loan_term, id_mod_type_business, type_business_name
+			product_title, Loan_term, id_mod_type_business, type_business_name, prod.type_of_interest_rate
 			FROM {$this->profil_permohonan_pinjaman} p
 			LEFT JOIN {$this->product} prod ON(prod.Product_id=p.Product_id)
 			LEFT JOIN {$this->mod_type_business} tb ON(tb.id_mod_type_business=prod.type_of_business_id)
@@ -526,7 +539,8 @@ class Content_model extends CI_Model
 		$sql = "SELECT 
 			Master_loan_id as transaksi_id, 
 			tgl_permohonan_pinjaman as tgl_transaksi, 
-			Jml_permohonan_pinjaman as total_pinjam, 
+			Jml_permohonan_pinjaman as total_pinjam,
+			Amount as Amount, 
 			Jml_permohonan_pinjaman_disetujui as total_approve, 
 			jml_kredit as jml_kredit,
 			Master_loan_status as transaksi_status, 
@@ -534,7 +548,7 @@ class Content_model extends CI_Model
 			tgl_pinjaman_disetujui as tgl_approve,
 			Nama_pengguna as nama_peminjam,
 			peringkat_pengguna,
-			product_title, Loan_term, id_mod_type_business, type_business_name,
+			product_title, Loan_term, id_mod_type_business, type_business_name, type_of_interest_rate,
 			(select count(*) as itotal from {$this->profile_pendanaan} where Master_loan_id=transaksi_id) as total_lender
 			FROM {$this->profil_permohonan_pinjaman} p
 			LEFT JOIN {$this->product} prod ON(prod.Product_id=p.Product_id)
@@ -558,6 +572,7 @@ class Content_model extends CI_Model
 			Master_loan_id as transaksi_id, 
 			tgl_permohonan_pinjaman as tgl_transaksi, 
 			Jml_permohonan_pinjaman as totalrp, 
+			Amount as Amount,
 			Jml_permohonan_pinjaman_disetujui as total_approve, 
 			jml_kredit as jml_kredit,
 			Master_loan_status as transaksi_status, 
@@ -685,7 +700,8 @@ class Content_model extends CI_Model
 			Master_loan_id as transaksi_id, 
 			Jml_permohonan_pinjaman, 
 			Informasi_kredit, 
-			Jml_permohonan_pinjaman_disetujui, 
+			Jml_permohonan_pinjaman_disetujui,
+			Amount, 
 			tgl_pinjaman_disetujui, 
 			Master_loan_status, 
 			date_fundraise, 
@@ -705,8 +721,12 @@ class Content_model extends CI_Model
 			foto_usaha,
 			images_foto_name,
 			images_usaha_name,
+			images_usaha_name2,
+			images_usaha_name3,
+			images_usaha_name4,
+			images_usaha_name5,
 			nama_peminjam,
-			Alamat, Kota, Provinsi,
+			Alamat, Kota, Provinsi, prod.type_of_interest_rate,
 			(select count(*) as itotal from '.$this->profile_pendanaan.' where Master_loan_id=transaksi_id) as total_lender ');
 		$this->db->from($this->profil_permohonan_pinjaman. ' p');
 		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
@@ -1273,7 +1293,7 @@ class Content_model extends CI_Model
 
 	function get_pinjaman_member($ordercode)
 	{
-		$this->db->select('Master_loan_id, Tgl_permohonan_pinjaman, Jml_permohonan_pinjaman, Jml_permohonan_pinjaman_disetujui,
+		$this->db->select('Master_loan_id, Tgl_permohonan_pinjaman, Jml_permohonan_pinjaman, Jml_permohonan_pinjaman_disetujui, Amount,
 			mum_email, 
 			u.Id_pengguna, Nama_pengguna, Id_ktp, 
 			Mobileno, What_is_the_name_of_your_business, 
@@ -1306,6 +1326,13 @@ class Content_model extends CI_Model
 		$ret = $sql->result_array();
 		$sql->free_result();
 		return $ret;
+	}
+
+	function insert_profil_pinjaman5($data)
+	{
+		$this->db->insert('record_pinjaman', $data);
+		//$this->db->insert($this->record_pinjaman, $data);
+		return $this->db->insert_id();
 	}
 
 }

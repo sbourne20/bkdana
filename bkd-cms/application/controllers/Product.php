@@ -77,6 +77,14 @@ class Product extends CI_Controller {
 
 			$split_bt = explode('==', trim($post['type_bisnis']));
 
+			//tambahan baru
+	/*		$split_bt1 = explode('==', trim($post['type_interest_rate']));
+
+			$type_business_id   = $split_bt[0];
+			$type_interest_rate = $split_bt[1];*/
+
+			//batas tammbahan baru
+
 			$type_business_id   = $split_bt[0];
 			$type_business_slug = $split_bt[1];
 
@@ -96,7 +104,23 @@ class Product extends CI_Controller {
 			$data['type_of_business_id']   = $type_business_id;
 			$data['type_of_interest_rate'] = trim($post['type_interest_rate']);
 			$data['PPH']                   = trim($post['pajak']);
-
+			//$data['type_of_interest_rate_name'] = trim($post['type_interest_rate']);
+			
+			//if(isset($_POST['submit'])){
+			$radioVal = trim($post["type_interest_rate"]);
+			switch($radioVal){
+			case '1':
+			$data['type_of_interest_rate_name'] = 'hari';  
+			break;
+			case '2':
+			$data['type_of_interest_rate_name'] = 'bulan'; 
+			break; 
+			case '3':
+			$data['type_of_interest_rate_name'] = 'minggu'; 
+			break;  
+			}
+			//}
+			
 			$insertID = $this->Product_model->insert_($data);
 
 			if ($insertID){
@@ -178,6 +202,19 @@ class Product extends CI_Controller {
 			$updata['type_of_business_id']   = $type_business_id;
 			$updata['type_of_interest_rate'] = trim($post['type_interest_rate']);
 			$updata['PPH']                   = trim($post['pajak']);
+			
+			$radioVal = trim($post["type_interest_rate"]);
+			switch($radioVal){
+			case '1':
+			$updata['type_of_interest_rate_name'] = 'hari';  
+			break;
+			case '2':
+			$updata['type_of_interest_rate_name'] = 'bulan'; 
+			break; 
+			case '3':
+			$updata['type_of_interest_rate_name'] = 'minggu'; 
+			break;  
+			}
 
 			$affected = $this->Product_model->update_product($updata, $id);
 			

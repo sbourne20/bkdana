@@ -35,6 +35,233 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
 		$this->load->view('vbase',$mainData);
 	}
 
+	//tambahan fungsi baru
+
+
+	function edit()
+	{
+		
+
+		$id = antiInjection($this->uri->segment(3));
+		//$output['mode'] = 2;
+		$output['data'] = $this->Pinjaman_model->get_loan_detail($id);
+		//header('Content-type: image/jpeg');
+		$mainData['mainContent'] = $this->load->view('loan/vkilat_list_form', $output, true);
+		//$output['data'] = $this->Pinjaman_model->get_loan_detail($id);
+		$this->load->view('vbase',$mainData);
+
+
+		$post = $this->input->post(NULL, TRUE);
+
+		if (trim($post['transaksi_id']) != '' && !empty($id) )
+		{
+			$updata1['Jml_permohonan_pinjaman_disetujui'] = antiInjection(trim($post['Jml_permohonan_pinjaman_disetujui']));
+			$updata1['Amount'] = antiInjection(trim($post['Jml_permohonan_pinjaman_disetujui']));
+			
+			$affected = $this->Pinjaman_model->update_profil_pinjaman($updata1, $id);
+			
+			
+			//$user_data = $this->Pinjaman_model-> get_loan_detail($id);
+			//p_pinjam['User_id'] = $user_data['Id_pengguna'];
+			$userid = trim($post['user_id']);
+			$masterloan = trim($post['transaksi_id']);
+
+			$this->db->from('record_pinjaman');
+			$this->db->where('User_id', $userid);
+			//$this->db->where('Master_loan_id', $masterloan);
+			$this->db->like('Flag', 'CA', 'BOTH');
+			$hasil=$this->db->get()->num_rows();
+			// $p_pinjam2['user_id'] =$uid;
+			/*if($hasil>0){
+				$hasil+=1;	
+			}else{
+				$hasil="1";
+			}*/
+
+			$p_pinjam['Flag'] = 'CA';
+			$p_pinjam['Master_loan_id'] = $masterloan;
+			$p_pinjam['User_id'] = $userid;
+			$p_pinjam['Amount'] = $updata1['Jml_permohonan_pinjaman_disetujui'];
+			$p_pinjam['Tgl_pinjaman'] = date('Y-m-d H:i:s');
+			$pinjamID = $this->Pinjaman_model->insert_profil_pinjaman5($p_pinjam);
+						//$this->db->insert('record_pinjaman', $p_pinjam);
+						//$pinjamID = $this->Pinjaman_model->insert_profil_pinjaman($p_pinjam);
+							/*echo '<script language="javascript">
+						  	alert("message successfully sent");  
+						  	</script>';
+						*/
+
+			if($affected){
+				$this->session->set_userdata('message','Data has been updated.');
+				$this->session->set_userdata('message_type','success');
+				redirect('transaksi_pinjaman_kilat');
+					
+			}else{
+				$this->session->set_userdata('message','No Update.');
+				$this->session->set_userdata('message_type','warning');
+				redirect('transaksi_pinjaman_kilat');
+			}
+
+		}
+
+	}
+
+	
+
+	/*function submit_edit()
+	{
+		if($_SERVER["REQUEST_METHOD"] == "POST") {
+			$post = $this->input->post(NULL, TRUE);
+
+			_d($post);exit();
+			
+			$transaksi_id       = trim($post['transaksi_id']);
+			$pinjaman_pokok     = trim($post['pinjaman_pokok']);
+			$pinjaman_disetujui = trim($post['pinjaman_disetujui']);
+			$pinjaman_disetujui_awal = trim($post['pinjaman_disetujui_awal']);
+
+			$filter_pinj        = explode('.', $pinjaman_disetujui);
+			$pinjaman_disetujui = str_replace(',', '', $filter_pinj[0]);
+
+			if ($transaksi_id != '' && $pinjaman_pokok !='' && $pinjaman_disetujui != '' && $pinjaman_disetujui_awal !='')
+			{
+				$admin_fee = $pinjaman_pokok - $pinjaman_disetujui;
+
+				// update profil pinjaman
+				$uppj['Jml_permohonan_pinjaman_disetujui'] = $pinjaman_disetujui;
+				$this->Pinjaman_model->update_profil_pinjaman($uppj, $transaksi_id);
+				
+				// update log pinjaman
+				$ulp['ltp_total_pinjaman_disetujui'] = $pinjaman_disetujui;
+				$ulp['ltp_admin_fee']                = $admin_fee;
+				$this->Pinjaman_model->update_log_pinjaman($ulp, $transaksi_id);
+
+				$this->session->set_userdata('message','Data has been updated.');
+				$this->session->set_userdata('message_type','success');
+			}else{
+				$this->session->set_userdata('message','Error. Can not update.');
+				$this->session->set_userdata('message_type','error');
+			}
+
+			redirect('transaksi-pinjaman-kilat-draft');
+		}
+	}
+*/
+
+	//batas fungsi baru
+
+
+
+	/*public function edit()
+	{
+		$this->User_model->has_login();
+
+		//$id = antiInjection($this->uri->segment(3));
+		$output['data'] = $this->Pinjaman_model->get_edit_loan_byid($id);
+		//header('Content-type: image/jpeg');
+		$mainData['mainContent']  = $this->load->view('loan/vkilat_list_form', $output, true);
+		$this->load->view('vbase',$mainData);*/
+
+
+		/*$mainData['mainContent']  = $this->load->view('loan/vkilat_list_form', $output, true);
+			$this->load->view('vbase',$mainData);*/
+
+		/*$id             = antiInjection($this->uri->segment(3));
+		$output['mode'] = 2; // sbg tanda edit
+		$output['EDIT'] = $this->Member_model->get_usermember_by($id);
+		$output['membergroup'] = $this->Member_model->get_allgroup();*/
+		//$output['EDIT'] = $this->Member_model->get_allgroup($id);
+
+		/*$this->validation();
+		if ($this->form_validation->run() == FALSE)
+		{
+			$output['top_css']   ="";
+			$output['top_js']    ="";
+			$output['bottom_js'] ="";
+
+			$output['top_css']   .= add_css("plugins/fileinput/fileinput.min.css");
+			$output['top_css']   .= add_css("plugins/jquery-tags-input/dist/bootstrap-tagsinput.css");
+			$output['top_css']   .= add_css("plugins/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css");
+			$output['top_css']   .= add_css("plugins/bootstrap-timepicker/bootstrap-timepicker.css");
+			$output['top_css']   .= add_css("plugins/bootstrap-switch/css/bootstrap3/bootstrap-switch.min.css");
+			
+			$output['top_js']    .= add_js("plugins/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js");
+			$output['top_js']    .= add_js("plugins/bootstrap-timepicker/bootstrap-timepicker.js");
+			$output['top_js']    .= add_js('plugins/ckeditor/ckeditor.js');
+			$output['top_js']    .= add_js("plugins/autonumeric/autoNumeric.js");
+			$output['top_js']    .= add_js("plugins/fileinput/fileinput.min.js");
+			$output['top_js']    .= add_js('plugins/jquery-tags-input/dist/bootstrap-tagsinput.js');
+			$output['top_js']    .= add_js("plugins/friendurl/jquery.friendurl.min.js");
+			$output['top_js']    .= add_js("plugins/bootstrap-switch/js/bootstrap-switch.min.js");
+			$output['top_js']    .= add_js("plugins/numeric/jquery.numeric.min.js");
+			
+			//$output['bottom_js'] .= add_js('js/select2-data.js');
+			$output['bottom_js'] .= add_js('js/global.js');
+
+			$output['grade'] = $this->Grade_model->get_active_grade();
+			$mainData['membergroup'] = $this->Member_model->get_allgroup();
+
+			$mainData['mainContent'] = $this->load->view('member/vpeminjam_form', $output, TRUE);
+
+			$this->load->view('vbase', $mainData);
+		}else{
+			$post = $this->input->post(NULL, TRUE);
+
+			if (trim($post['grade']) != '' && !empty($id) )
+			{
+				$updata1['peringkat_pengguna'] = antiInjection(trim($post['grade']));
+				$updata1['id_user_group'] = antiInjection(trim($post['membergroup']));
+				$affected = $this->Member_model->update_user_ojk($updata1, $id);
+				if($affected){
+
+					$this->session->set_userdata('message','Data has been updated.');
+					$this->session->set_userdata('message_type','success');
+				}else{
+					$this->session->set_userdata('message','No Update.');
+					$this->session->set_userdata('message_type','warning');
+				}
+			}*/
+
+			// else {
+
+				//$post = $this->input->post(null, true);
+
+				// $ID = $post['Id_pengguna'];
+
+				// //$data['peringkat_pengguna'] = $post['grade'];
+				// $data['id_user_group'] = $post['membergroup'];
+				
+				// $update = $this->Member_model->update_user_group_ojk($data, $id);
+				// echo "<script>console.log(".$update.");</script>";
+				// if ($update){
+					
+				// 	$this->session->set_userdata('message','Data has been updated.');
+				// 	$this->session->set_userdata('message_type','success');
+				// }else{
+				// 	$this->session->set_userdata('message',$update);
+				// 	$this->session->set_userdata('message_type','warning');
+				// }
+			// }
+			/*if (trim($post['membergroup']) != '' && !empty($id) )
+			{
+				$updata['id_user_group'] = antiInjection(trim($post['membergroup']));
+				$affected = $this->Member_model->update_user_group_ojk($updata, $id);
+				if($affected){
+
+					$this->session->set_userdata('message','Data has been updated 123.');
+					$this->session->set_userdata('message_type','success');
+				}else{
+					$this->session->set_userdata('message','No Update 345.');
+					$this->session->set_userdata('message_type','warning');
+				}
+			}*/
+			
+			/*redirect('peminjam');*/
+		//}
+	//}
+
+	//batas tambahan fungsi baru
+
 	function json()
 	{
 		$data = $this->Pinjaman_model->get_all_kilat_dt();
@@ -124,7 +351,7 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
 			$tipe_produk = $produk['type_of_business_id'];
 			$totalweek   = $produk['Loan_term']/7;
 		
-			$pinjaman_rp = $loan_data['Jml_permohonan_pinjaman'];
+			$pinjaman_rp = $loan_data['Amount'];
 
 			//_d($produk);exit();
 
@@ -133,11 +360,37 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
 			$jml_pinjaman_disetujui = $pinjaman_rp - $admin_fee;
 
 			// Repayment
-			$bunga = ($pinjaman_rp * $produk['Loan_term'] * $produk['Investor_return'])/100;
-			$jml_repayment = $pinjaman_rp + $bunga;
+			if($type_of_interest_rate = 1){
+			   $bunga = ($pinjaman_rp * $produk['Loan_term'] * $produk['Investor_return'])/100;
+			   $jml_repayment = $pinjaman_rp + $bunga;
+			   
+			   $loan_term = $produk['Loan_term'];
+			   $tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
+			   }
+			   
+			if($type_of_interest_rate = 2){
+				$bunga = ($pinjaman_rp * ($produk['Loan_term'] * 30) * $produk['Investor_return'])/100;
+			   $jml_repayment = $pinjaman_rp + $bunga;
+
+			   $loan_term = $produk['Loan_term'];
+			   $tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
+			   }
+			   
+			if($type_of_interest_rate = 3){
+				$bunga = ($pinjaman_rp * ($produk['Loan_term'] * 7)* $produk['Investor_return'])/100;
+			   $jml_repayment = $pinjaman_rp + $bunga;
+			   
+			   $loan_term = $produk['Loan_term'];
+			   $tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." weeks"));
+				}
 			
-			$loan_term = $produk['Loan_term'];
-			$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
+			
+			
+			//$bunga = ($pinjaman_rp * $produk['Loan_term'] * $produk['Investor_return'])/100;
+			//$jml_repayment = $pinjaman_rp + $bunga;
+			
+			//$loan_term = $produk['Loan_term'];
+			//$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
 
 			// hitung total fundraise 15 menit
 			$date_fundraise = date('Y-m-d H:i:s', strtotime('+ 15 minute'));
@@ -201,7 +454,7 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
             <br>
             Jenis Transaksi: Pinjaman Kilat
             <br>
-            Jumlah Pinjaman: Rp '.number_format($loan_data['Jml_permohonan_pinjaman']).'
+            Jumlah Pinjaman: Rp '.number_format($loan_data['Amount']).'
             <br>
             Jumlah Pinjaman diterima: Rp '.number_format($jml_pinjaman_disetujui).'
             <br>
@@ -296,7 +549,7 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
             <br>
             Jenis Transaksi: Pinjaman Kilat
             <br>
-            Jumlah Pinjaman: Rp '.number_format($loan_data['Jml_permohonan_pinjaman']).'
+            Jumlah Pinjaman: Rp '.number_format($loan_data['Amount']).'
             <br>
             Status: <strong>Dibatalkan</strong>
             <br><br>

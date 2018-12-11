@@ -38,6 +38,12 @@ class Member extends CI_Controller {
 		print_r($data);
 	}
 
+	public function json_group()
+	{		
+		$result=$this->Member_model->get_user_group_dt();
+		print_r($result);
+	}
+
 	function detail()
 	{
 		$id = $this->input->post('id');
@@ -45,6 +51,17 @@ class Member extends CI_Controller {
 		$output['data'] = $this->Member_model->get_usermember_by($id);
 		$this->load->view('member/vdetail', $output);
 	}
+
+
+/*	function edit()
+	{
+		$this->Member_model->has_login();
+
+		$mainData['add_mode']  = 1; // sbg tanda edit
+		
+		$mainData['EDIT']      = $this->Member_model->get_member_byid($ID);
+		$mainData['membergroup'] = $this->Member_model->get_all_group();
+	}*/
 
 	function delete()
 	{
@@ -74,6 +91,344 @@ class Member extends CI_Controller {
 
 		redirect('member');
 	}
+
+
+	//-------------- tambahan terbaru -------------------
+
+	//  ============================= USER GROUP ===============================
+
+	function group()
+	{
+		// -------- Display user Group list ---------
+		$this->Member_model->has_login();
+		
+		$output['PAGE_TITLE'] = 'Member GROUP';
+
+
+		$mainData['top_css']   = '';
+		$mainData['top_js']    = '';
+		$mainData['bottom_js'] = '';
+
+		// use this js for this page
+		$mainData['bottom_js'] .= add_js('js/data/member_group.js');
+
+		$mainData['mainContent'] = $this->load->view('member/vmembergroup', $output, TRUE);
+
+		$this->load->view('vbase', $mainData);
+	}
+
+	function add_group()
+	{
+		$this->Member_model->has_login();
+
+		$mainData['add_mode'] = 1; // sbg tanda add new
+		$mainData['EDIT']     = NULL;
+
+		$a['top_css']   ="";
+		$a['top_js']    ="";
+		$a['bottom_js'] ="";
+		
+		$a['bottom_js'] .= add_js('js/global.js');
+		
+		$a['mainContent'] = $this->load->view('member/vmembergroup_form', $mainData, TRUE);
+
+		$this->load->view('vbase', $a);
+	}
+
+	/*function setting_role()
+	{
+		$this->User_model->has_login();
+
+		if($_SERVER['REQUEST_METHOD']!='POST'){
+			$ID                   = $this->uri->segment(3);
+			$mainData['EDIT']     = $this->User_model->get_role_access($ID);
+			$mainData['group']    = $this->User_model->get_group_by($ID);
+
+			$a['top_css']   ="";
+			$a['top_js']    ="";
+			$a['bottom_js'] ="";
+			
+			$a['bottom_js'] .= add_js('js/data/global.js');
+			
+			$a['mainContent'] = $this->load->view('user/vsetting_role_group', $mainData, TRUE);
+
+			$this->load->view('vbase', $a);
+		}else{
+			// ----- SUBMIT role access ------
+			$post   = $this->input->post(null, true);
+			$ID     = $post['idgroup'];
+			$access = $post['access'];
+
+			// Delete semua role dg id=$ID
+			// lalu insert baru
+			$this->User_model->delete_role_access($ID);
+			
+			if($access AND is_array($access)){
+				foreach($access as $ac){
+					$data = array();
+					$data['priv_id_group'] = $ID;
+					$data['access']        = $ac;
+					$this->User_model->insert_access_roles($data);
+				}
+			}
+			
+			$this->session->set_userdata('message','Data has been Saved.');
+			$this->session->set_userdata('message_type','success');
+			redirect('user/group'); 
+		}
+	}*/
+
+	function edit_group()
+	{
+		$this->Member_model->has_login();
+
+		$mainData['add_mode'] = 2; // sbg tanda edit
+		$ID                   = $this->uri->segment(3);
+		$mainData['EDIT']     = $this->Member_model->get_group_by($ID);
+
+		$a['top_css']   ="";
+		$a['top_js']    ="";
+		$a['bottom_js'] ="";
+		
+		$a['bottom_js'] .= add_js('js/data/global.js');
+		
+		$a['mainContent'] = $this->load->view('member/vmembergroup_form', $mainData, TRUE);
+
+		$this->load->view('vbase', $a);
+	}
+
+	function submit_group()
+	{
+		$this->Member_model->has_login();
+		$post = $this->input->post(null, true);
+
+		if ($post['add_mode'] == 1)
+		{
+			if (trim($post['gname']) != '') {
+				// --- INSERT NEW GROUP ---
+				$data['user_group_name'] = $post['gname'];
+
+				$insertg = $this->Member_model->insert_group($data);
+				if ($insertg){
+					$this->session->set_userdata('message','New Member Group Inserted.');
+					$this->session->set_userdata('message_type','success');
+				}else{
+					$this->session->set_userdata('message','No Insert.');
+					$this->session->set_userdata('message_type','error');
+				}
+			}
+
+		}elseif ($post['add_mode'] == 2){
+			// --- UPDATE GROUP ---
+
+			if (trim($post['gname']) != '') {
+
+				$ID = $post['idgroup'];
+				$data['user_group_name'] = $post['gname'];
+
+				$update = $this->Member_model->update_group($data, $ID);
+				if ($update){
+					$this->session->set_userdata('message','The Member Group has been updated.');
+					$this->session->set_userdata('message_type','success');
+				}else{
+					$this->session->set_userdata('message','No Update.');
+					$this->session->set_userdata('message_type','success');
+				}
+			}
+		}
+
+	 	redirect('member/group');
+	}
+
+	function delete_group()
+	{
+		$this->Member_model->has_login();
+
+		$id = $this->uri->segment(3);
+		$del = $this->Member_model->delete_user_group($id);
+		if($id && $del){
+
+			$this->session->set_userdata('message','Data has been deleted.');
+			$this->session->set_userdata('message_type','success');
+		}else{
+			$this->session->set_userdata('message','No Data was deleted.');
+			$this->session->set_userdata('message_type','warning');
+		}
+
+		redirect('member/group');
+	}
+
+
+	// -------------- batas tambahan terbaru -------------
+
+	/*// ----- Tambahan Baru -----
+
+		//  ============================= Member GROUP ===============================
+
+	function group()
+	{
+		// -------- Display Member Group list ---------
+		$this->User_model->has_login();
+		
+		$output['PAGE_TITLE'] = 'MEMBER GROUP';
+
+
+		$mainData['top_css']   = '';
+		$mainData['top_js']    = '';
+		$mainData['bottom_js'] = '';
+
+		// use this js for this page
+		$mainData['bottom_js'] .= add_js('js/data/member_group.js');
+
+		$mainData['mainContent'] = $this->load->view('member/vmembergroup', $output, TRUE);
+
+		$this->load->view('vbase', $mainData);
+	}
+
+	function add_group()
+	{
+		$this->User_model->has_login();
+
+		$mainData['add_mode'] = 1; // sbg tanda add new
+		$mainData['EDIT']     = NULL;
+
+		$a['top_css']   ="";
+		$a['top_js']    ="";
+		$a['bottom_js'] ="";
+		
+		$a['bottom_js'] .= add_js('js/global.js');
+		
+		$a['mainContent'] = $this->load->view('member/vmembergroup_form', $mainData, TRUE);
+
+		$this->load->view('vbase', $a);
+	}
+
+	function setting_role()
+	{
+		$this->User_model->has_login();
+
+		if($_SERVER['REQUEST_METHOD']!='POST'){
+			$ID                   = $this->uri->segment(3);
+			$mainData['EDIT']     = $this->User_model->get_role_access($ID);
+			$mainData['group']    = $this->User_model->get_group_by($ID);
+
+			$a['top_css']   ="";
+			$a['top_js']    ="";
+			$a['bottom_js'] ="";
+			
+			$a['bottom_js'] .= add_js('js/data/global.js');
+			
+			$a['mainContent'] = $this->load->view('member/vsetting_role_group', $mainData, TRUE);
+
+			$this->load->view('vbase', $a);
+		}else{
+			// ----- SUBMIT role access ------
+			$post   = $this->input->post(null, true);
+			$ID     = $post['idgroup'];
+			$access = $post['access'];
+
+			// Delete semua role dg id=$ID
+			// lalu insert baru
+			$this->User_model->delete_role_access($ID);
+			
+			if($access AND is_array($access)){
+				foreach($access as $ac){
+					$data = array();
+					$data['priv_id_group'] = $ID;
+					$data['access']        = $ac;
+					$this->User_model->insert_access_roles($data);
+				}
+			}
+			
+			$this->session->set_userdata('message','Data has been Saved.');
+			$this->session->set_userdata('message_type','success');
+			redirect('member_group'); 
+		}
+	}
+
+	function edit_group()
+	{
+		$this->User_model->has_login();
+
+		$mainData['add_mode'] = 2; // sbg tanda edit
+		$ID                   = $this->uri->segment(3);
+		$mainData['EDIT']     = $this->User_model->get_group_by($ID);
+
+		$a['top_css']   ="";
+		$a['top_js']    ="";
+		$a['bottom_js'] ="";
+		
+		$a['bottom_js'] .= add_js('js/data/global.js');
+		
+		$a['mainContent'] = $this->load->view('member/vmembergroup_form', $mainData, TRUE);
+
+		$this->load->view('vbase', $a);
+	}
+
+	function submit_group()
+	{
+		$this->User_model->has_login();
+		$post = $this->input->post(null, true);
+
+		if ($post['add_mode'] == 1)
+		{
+			if (trim($post['gname']) != '') {
+				// --- INSERT NEW GROUP ---
+				$data['group_name'] = $post['gname'];
+
+				$insertg = $this->User_model->insert_group($data);
+				if ($insertg){
+					$this->session->set_userdata('message','New Group Inserted.');
+					$this->session->set_userdata('message_type','success');
+				}else{
+					$this->session->set_userdata('message','No Insert.');
+					$this->session->set_userdata('message_type','error');
+				}
+			}
+
+		}elseif ($post['add_mode'] == 2){
+			// --- UPDATE GROUP ---
+
+			if (trim($post['gname']) != '') {
+
+				$ID = $post['idgroup'];
+				$data['group_name'] = $post['gname'];
+
+				$update = $this->User_model->update_group($data, $ID);
+				if ($update){
+					$this->session->set_userdata('message','The Group has been updated.');
+					$this->session->set_userdata('message_type','success');
+				}else{
+					$this->session->set_userdata('message','No Update.');
+					$this->session->set_userdata('message_type','success');
+				}
+			}
+		}
+
+	 	redirect('member_group');
+	}
+
+	function delete_group()
+	{
+		$this->User_model->has_login();
+
+		$id = $this->uri->segment(3);
+		$del = $this->User_model->delete_user_group($id);
+		if($id && $del){
+
+			$this->session->set_userdata('message','Data has been deleted.');
+			$this->session->set_userdata('message_type','success');
+		}else{
+			$this->session->set_userdata('message','No Data was deleted.');
+			$this->session->set_userdata('message_type','warning');
+		}
+
+		redirect('member_group');
+	}
+
+	// ----- Batas tambahan -----*/
+
+
 
 	/*function edit()
 	{

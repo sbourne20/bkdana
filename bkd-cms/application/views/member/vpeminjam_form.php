@@ -34,6 +34,40 @@
                                     </select>
                                 </div>
                             </div>  
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Member Group<span class="text-danger">*</span></label>
+                                <div class="col-sm-2">
+                                    <select name="membergroup" class="form-control">
+                                         <?php foreach ($membergroup as $key) { 
+                                            $selected= (strtolower($key['id_user_group']) == strtolower($EDIT['id_user_group']) )? 'selected="selected"' : '';
+                                        ?>
+                                            <option value="<?php echo $key['id_user_group']; ?>" <?php echo $selected; ?>> <?php echo $key['user_group_name']; ?></option>
+                                        <?php } ?>
+
+<!-- 
+                                            <?php 
+                                        foreach ($membergroup as $key) {
+                                            $selected = '';
+                                            if ($key['id_user_group'] == $EDIT['id_user_group'])
+                                            {
+                                                $selected = 'selected="selected"';
+                                            }
+                                        ?>
+                                        <option value="<?php echo $key['id_user_group']; ?>" <?php echo $selected; ?> ><?php echo $key['user_group_name']; ?></option>
+                                        <?php } ?> -->
+
+                                        <!-- <?php foreach ($membergroup as $key) { 
+                                            $selected= (strtolower($key['user_name_group']) == strtolower($EDIT['user_name_group']) )? 'selected="selected"' : '';
+                                        ?>
+                                            <option value="<?php echo $key['user_name_group']; ?>" <?php echo $selected; ?>> <?php echo $key['user_name_group']; ?></option>
+                                        <?php } ?> -->
+                                    </select>
+                                </div>
+                            </div>  
+
+
+
                              
                             <div class="position-center">
                                 <button type="submit" class="btn btn-primary">Submit</button> 

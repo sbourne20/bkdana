@@ -10,7 +10,7 @@
           { "data": "h_id" },
           { "data": function ( data, type, full, meta ) {return 'Rp ' + formatMoney(data.h_harga,0,'.',',');} },
           { "data": function ( data, type, full, meta ) {
-              return data.tenor + ' Hari';
+              return data.tenor  ;
             }
           },
           { "data": function ( data, type, full, meta ) {

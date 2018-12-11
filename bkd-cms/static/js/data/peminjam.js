@@ -11,6 +11,11 @@
           { "data": "Nama_pengguna" },
           { "data": "mum_email", "sClass": "hidden-xs"  },
           { "data": "Mobileno", "sClass": "hidden-xs" },
+          //{ "data": "user_group_name", "sClass": "hidden-xs" },
+            { "data": function ( data, type, full, meta ) {
+              return data.user_group_name ;
+            } 
+          },
           { "data": function ( data, type, full, meta ) {return garing_date_format(data.Tgl_record);} , "sClass": "hidden-xs" },
           { "data": function ( data, type, full, meta ) {
               return 'Grade: ' + data.peringkat_pengguna + '<br>Skor: '+data.skoring;

@@ -166,21 +166,132 @@ class Member extends CI_Controller {
 							$u_detail['images_ktp_name']  = $file_ktp_name;
 						}
 
-						if( isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] == ''){
-							$file_usaha_name   = '';
-						}else{
-							//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
-							// ----- Process Image Name -----
-							$img_info          = pathinfo($_FILES['usaha_file']['name']);
-							$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-							$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-							$fileExt           = $img_info['extension'];
-							$file_usaha_name   = $fileName.'.'.$fileExt;
-							// ----- END Process Image Name -----
-							//$u_detail['Photo_business_location'] = $upload_usaha;
-							//$u_detail['foto_usaha']              = $upload_usaha;
-							$u_detail['images_usaha_name']       = $file_usaha_name;
+						if ($memberdata['mum_type_peminjam']=='2'){//tambahan baru pengkondisian
+
+							if( isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] == ''){
+								$file_usaha_name   = '';
+							}else{
+								//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['usaha_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_usaha_name   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								//$u_detail['Photo_business_location'] = $upload_usaha;
+								//$u_detail['foto_usaha']              = $upload_usaha;
+								$u_detail['images_usaha_name']       = $file_usaha_name;
+							}
+								if( isset($_FILES['usaha_file2']['name']) && $_FILES['usaha_file2']['name'] == ''){
+								$file_usaha_name2   = '';
+							}else{
+								//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['usaha_file2']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_usaha_name2   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								//$u_detail['Photo_business_location'] = $upload_usaha;
+								//$u_detail['foto_usaha']              = $upload_usaha;
+								$u_detail['images_usaha_name2']       = $file_usaha_name2;
+							}
+								if( isset($_FILES['usaha_file3']['name']) && $_FILES['usaha_file3']['name'] == ''){
+								$file_usaha_name3  = '';
+							}else{
+								//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['usaha_file3']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_usaha_name3   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								//$u_detail['Photo_business_location'] = $upload_usaha;
+								//$u_detail['foto_usaha']              = $upload_usaha;
+								$u_detail['images_usaha_name3']       = $file_usaha_name3;
+							}
+								if( isset($_FILES['usaha_file4']['name']) && $_FILES['usaha_file4']['name'] == ''){
+								$file_usaha_name4   = '';
+							}else{
+								//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['usaha_file4']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_usaha_name4   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								//$u_detail['Photo_business_location'] = $upload_usaha;
+								//$u_detail['foto_usaha']              = $upload_usaha;
+								$u_detail['images_usaha_name4']       = $file_usaha_name4;
+							}
+								if( isset($_FILES['usaha_file5']['name']) && $_FILES['usaha_file5']['name'] == ''){
+								$file_usaha_name5   = '';
+							}else{
+								//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['usaha_file5']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_usaha_name5  = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								//$u_detail['Photo_business_location'] = $upload_usaha;
+								//$u_detail['foto_usaha']              = $upload_usaha;
+								$u_detail['images_usaha_name5']       = $file_usaha_name5;
+							}
 						}
+
+						// -----Tambahan Baru-----
+						if ($memberdata['mum_type_peminjam']=='1'){
+
+							if($_FILES['surat_keterangan_bekerja_file']['name'] == ''){
+								$file_surat_keterangan_bekerja_name   = '';
+							}else{
+								//$upload_surat_keterangan_bekerja_file  = file_get_contents($_FILES['surat_keterangan_bekerja_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['surat_keterangan_bekerja_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_surat_keterangan_bekerja_name  = $fileName.'.'.$fileExt;
+								$u_detail['	foto_surat_keterangan_bekerja']  = $file_surat_keterangan_bekerja_name;
+								// ----- END Process Image Name -----
+							}
+
+							if($_FILES['slip_gaji_file']['name'] == ''){
+								$file_slip_gaji_name   = '';
+							}else{
+								//$upload_slip_gaji  = file_get_contents($_FILES['slip_gaji_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['slip_gaji_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_slip_gaji_name   = $fileName.'.'.$fileExt;
+								$u_detail['foto_slip_gaji']  = $file_slip_gaji_name;
+								// ----- END Process Image Name -----
+							}
+
+							if($_FILES['pegang_ktp_file']['name'] == ''){
+								$file_pegang_ktp_name   = '';
+							}else{
+								//$pegang_ktp_file  = file_get_contents($_FILES['pegang_ktp_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['pegang_ktp_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_pegang_ktp_name  = $fileName.'.'.$fileExt;
+								$u_detail['foto_pegang_ktp']  = $file_pegang_ktp_name;
+								// ----- END Process Image Name -----
+							}
+						}
+
+						// -----batas tambahan-----
 
 						$userID = $memberdata['Id_pengguna'];
 						
@@ -235,6 +346,69 @@ class Member extends CI_Controller {
 						if (isset($post['status_kawin'])) {
 							$u_detail['status_nikah']  = antiInjection(trim($post['status_kawin']));
 						}
+						//start of user detail update
+						if (isset($post['nama_perusahaan'])) {
+							$u_detail['nama_perusahaan']  = antiInjection(trim($post['nama_perusahaan']));
+						}
+						if (isset($post['telepon_perusahaan'])) {
+							$u_detail['telepon_tempat_bekerja']  = antiInjection(trim($post['telepon_perusahaan']));
+						}
+						if (isset($post['status_karyawan'])) {
+							$u_detail['status_karyawan']  = antiInjection(trim($post['status_karyawan']));
+						}
+						if (isset($post['lama_bekerja'])) {
+							$u_detail['lama_bekerja']  = antiInjection(trim($post['lama_bekerja']));
+						}
+						if (isset($post['nama_atasan_langsung'])) {
+							$u_detail['nama_atasan_langsung']  = antiInjection(trim($post['nama_atasan_langsung']));
+						}
+						if (isset($post['telp_atasan_langsung'])) {
+							$u_detail['telp_atasan_langsung']  = antiInjection(trim($post['telp_atasan_langsung']));
+						}
+						if (isset($post['referensi_teman_1'])) {
+							$u_detail['referensi_teman_1']  = antiInjection(trim($post['referensi_teman_1']));
+						}
+						if (isset($post['telp_teman_1'])) {
+							$u_detail['telp_referensi_teman_1']  = antiInjection(trim($post['telp_teman_1']));
+						}
+						if (isset($post['referensi_teman_2'])) {
+							$u_detail['referensi_teman_2']  = antiInjection(trim($post['referensi_teman_2']));
+						}
+						if (isset($post['telp_teman_2'])) {
+							$u_detail['telp_referensi_teman_2']  = antiInjection(trim($post['telp_teman_2']));
+						}
+						if (isset($post['gaji_bulanan'])) {
+							$u_detail['gaji_bulanan']  = antiInjection(trim($post['gaji_bulanan']));
+						}
+						if (isset($post['usia'])) {
+							$u_detail['usia']  = antiInjection(trim($post['usia']));
+						}
+						if (isset($post['npwp'])) {
+							$u_detail['npwp']  = antiInjection(trim($post['npwp']));
+						}
+						if (isset($post['deskripsi_usaha'])) {
+							$u_detail['deskripsi_usaha']  = antiInjection(trim($post['deskripsi_usaha']));
+						}
+						if (isset($post['omzet_usaha'])) {
+							$u_detail['omzet_usaha']  = antiInjection(trim($post['omzet_usaha']));
+						}
+						if (isset($post['modal_usaha'])) {
+							$u_detail['modal_usaha']  = antiInjection(trim($post['modal_usaha']));
+						}
+						if (isset($post['margin_usaha'])) {
+							$u_detail['margin_usaha']  = antiInjection(trim($post['margin_usaha']));
+						}						
+						if (isset($post['biaya_operasional'])) {
+							$u_detail['biaya_operasional']  = antiInjection(trim($post['biaya_operasional']));
+						}
+						if (isset($post['laba_usaha'])) {
+							$u_detail['laba_usaha']  = antiInjection(trim($post['laba_usaha']));
+						}
+						//end of user detail update
+
+
+
+
 
 						$this->Content_model->update_userdetail($userID, $u_detail);
 						
@@ -265,6 +439,13 @@ class Member extends CI_Controller {
 						$destination_foto = $this->config->item('member_images_dir'). $userID."/foto/";
 						$destination_ktp  = $this->config->item('member_images_dir'). $userID."/ktp/";
 						$destination_usaha = $this->config->item('member_images_dir'). $userID."/usaha/";
+						$destination_usaha2 = $this->config->item('member_images_dir'). $userID."/usaha2/";
+						$destination_usaha3 = $this->config->item('member_images_dir'). $userID."/usaha3/";
+						$destination_usaha4 = $this->config->item('member_images_dir'). $userID."/usaha4/";
+						$destination_usaha5 = $this->config->item('member_images_dir'). $userID."/usaha5/";
+						$destination_surat_keterangan_bekerja = $this->config->item('member_images_dir'). $userID."/surat_keterangan_bekerja/";
+						$destination_slip_gaji = $this->config->item('member_images_dir'). $userID."/slip_gaji/";
+						$destination_pegang_ktp = $this->config->item('member_images_dir'). $userID."/pegang_ktp/";
 
 						if($_FILES['foto_file']['name'] != ''){
 							if (!is_file($destination_foto.$file_foto_name)) {
@@ -290,6 +471,66 @@ class Member extends CI_Controller {
 							unlink($destination_usaha.$post['old_usaha']);
 							move_uploaded_file($_FILES['usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
 						}
+						if(isset($_FILES['usaha_file2']['name']) && $_FILES['usaha_file2']['name'] != ''){
+							if (!is_file($destination_usaha2.$file_usaha_name2)) {
+								mkdir_r($destination_usaha2);
+							}
+							unlink($destination_usaha2.$post['old_usaha2']);
+							move_uploaded_file($_FILES['usaha_file2']['tmp_name'], $destination_usaha2.$file_usaha_name2);
+						}
+						if(isset($_FILES['usaha_file3']['name']) && $_FILES['usaha_file3']['name'] != ''){
+							if (!is_file($destination_usaha3.$file_usaha_name3)) {
+								mkdir_r($destination_usaha3);
+							}
+							unlink($destination_usaha3.$post['old_usaha3']);
+							move_uploaded_file($_FILES['usaha_file3']['tmp_name'], $destination_usaha3.$file_usaha_name3);
+						}
+						if(isset($_FILES['usaha_file4']['name']) && $_FILES['usaha_file4']['name'] != ''){
+							if (!is_file($destination_usaha4.$file_usaha_name4)) {
+								mkdir_r($destination_usaha4);
+							}
+							unlink($destination_usaha4.$post['old_usaha4']);
+							move_uploaded_file($_FILES['usaha_file4']['tmp_name'], $destination_usaha4.$file_usaha_name4);
+						}
+						if(isset($_FILES['usaha_file5']['name']) && $_FILES['usaha_file5']['name'] != ''){
+							if (!is_file($destination_usaha5.$file_usaha_name5)) {
+								mkdir_r($destination_usaha5);
+							}
+							unlink($destination_usaha5.$post['old_usaha5']);
+							move_uploaded_file($_FILES['usaha_file5']['tmp_name'], $destination_usaha5.$file_usaha_name5);
+						}
+
+
+
+
+
+						// ----- tambahan baru -----
+
+						if($_FILES['surat_keterangan_bekerja_file']['name'] != ''){
+							if (!is_file($destination_surat_keterangan_bekerja.$file_surat_keterangan_bekerja_name)) {
+								mkdir_r($destination_surat_keterangan_bekerja);
+							}
+							unlink($destination_surat_keterangan_bekerja.$post['old_surat_keterangan_bekerja']);
+							move_uploaded_file($_FILES['surat_keterangan_bekerja_file']['tmp_name'], $destination_surat_keterangan_bekerja.$file_surat_keterangan_bekerja_name);
+						}
+
+						if($_FILES['slip_gaji_file']['name'] != '') {
+							if (!is_file($destination_slip_gaji.$file_slip_gaji_name)) {
+								mkdir_r($destination_slip_gaji);
+							}
+							unlink($destination_slip_gaji.$post['old_slip_gaji']);
+							move_uploaded_file($_FILES['slip_gaji_file']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
+						}
+
+						if($_FILES['pegang_ktp_file']['name'] != ''){
+							if (!is_file($destination_pegang_ktp.$file_pegang_ktp_name)) {
+								mkdir_r($destination_pegang_ktp);
+							}
+							unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
+							move_uploaded_file($_FILES['pegang_ktp_file']['tmp_name'], $destination_pegang_ktp.$file_pegang_ktp_name);
+						}
+						
+						// -----batas tambahan baru -----
 
 						$this->session->set_userdata('message','Sukses ubah profil');
 						$this->session->set_userdata('message_type','success');

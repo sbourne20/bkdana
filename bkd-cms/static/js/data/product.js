@@ -16,9 +16,37 @@
           },
           { "data" : function ( data, type, full, meta ) {
             if (data.type_of_business_id == '1'){
-              return data.Loan_term + ' Hari';
+               if (data.type_of_interest_rate == 1)
+                {
+                   // $('#tipe_loan_term').text('days'); 
+                    return data.Loan_term + ' Hari';       
+                }
+                if (data.type_of_interest_rate == 3)
+                {
+                   // $('#tipe_loan_term').text('weeks');
+                    return data.Loan_term + ' Minggu';        
+                }
+                if(data.type_of_interest_rate == 2){
+                   // $('#tipe_loan_term').text('months');
+                    return data.Loan_term + ' Bulan';                 
+                }        
+                //return data.Loan_term + ' Hari';
             }else{
-              return data.Loan_term + ' Bulan';              
+               if (data.type_of_interest_rate == 1)
+                {
+                   // $('#tipe_loan_term').text('days'); 
+                    return data.Loan_term + ' Hari';       
+                }
+                if (data.type_of_interest_rate == 3)
+                {
+                   // $('#tipe_loan_term').text('weeks');
+                    return data.Loan_term + ' Minggu';        
+                }
+                if(data.type_of_interest_rate == 2){
+                   // $('#tipe_loan_term').text('months');
+                    return data.Loan_term + ' Bulan';                 
+                }
+              //return data.Loan_term + ' Bulan';              
             }
             }, "sClass": "hidden-xs"
           },
