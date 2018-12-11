@@ -16,6 +16,15 @@
 $foto_profil = '';
 $foto_ktp    = '';
 $foto_usaha  = '';
+$foto_usaha2  = '';
+$foto_usaha3  = '';
+$foto_usaha4  = '';
+$foto_usaha5  = '';
+// ----- tambahan baru -----
+$foto_surat_keterangan_bekerja = '';
+$foto_slip_gaji = '';
+$foto_pegang_ktp = '';
+// ----- batas tambahan baru -----
 
 if ($memberdata['images_foto_name'] != '')
 {
@@ -29,6 +38,40 @@ if ($memberdata['images_usaha_name'] != '')
 {
     $foto_usaha = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha/'. $memberdata['images_usaha_name'];
 }
+if ($memberdata['images_usaha_name2'] != '')
+{
+    $foto_usaha2 = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha2/'. $memberdata['images_usaha_name2'];
+}
+if ($memberdata['images_usaha_name3'] != '')
+{
+    $foto_usaha3 = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha3/'. $memberdata['images_usaha_name3'];
+}
+if ($memberdata['images_usaha_name4'] != '')
+{
+    $foto_usaha4 = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha4/'. $memberdata['images_usaha_name4'];
+}
+if ($memberdata['images_usaha_name5'] != '')
+{
+    $foto_usaha5 = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha5/'. $memberdata['images_usaha_name5'];
+}
+
+// -----tambahan baru-----
+
+if ($memberdata['foto_surat_keterangan_bekerja'] != '')
+{
+    $foto_surat_keterangan_bekerja = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/surat_keterangan_bekerja/'. $memberdata['foto_surat_keterangan_bekerja'];
+}
+if ($memberdata['foto_slip_gaji'] != '')
+{
+    $foto_slip_gaji= $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/slip_gaji/'. $memberdata['foto_slip_gaji'];
+}
+if ($memberdata['foto_pegang_ktp'] != '')
+{
+    $foto_pegang_ktp = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/pegang_ktp/'. $memberdata['foto_pegang_ktp'];
+}
+
+// -----batas tambahan-----
+
 ?>
 
 <!-- Content -->
@@ -189,6 +232,94 @@ if ($memberdata['images_usaha_name'] != '')
                                             </select>
                                         </div>
 
+                                        <!-- KILAT -->
+
+                                         <?php if ($memberdata['mum_type_peminjam']=='1') { ?>
+
+                                            <div class="form-group">
+                                                <label for="handphone">* Pendidikan</label>
+                                                <select class="form-control" name="pendidikan" id="pendidikan">
+                                                    <option value=""> -- Pilih --</option>
+                                                    <option value="1" <?php echo ($memberdata['Pendidikan']=='1')? 'selected="selected"' : '';  ?> > SD</option>
+                                                    <option value="2" <?php echo ($memberdata['Pendidikan']=='2')? 'selected="selected"' : '';  ?> > SLTP</option>
+                                                    <option value="3" <?php echo ($memberdata['Pendidikan']=='3')? 'selected="selected"' : '';  ?> > SLTA</option>
+                                                    <option value="4" <?php echo ($memberdata['Pendidikan']=='4')? 'selected="selected"' : '';  ?> > Diploma</option>
+                                                    <option value="5" <?php echo ($memberdata['Pendidikan']=='5')? 'selected="selected"' : '';  ?> > Sarjana</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Nama Perusahaan</label>
+                                                <input type="text" class="form-control" name="nama_perusahaan" id="nama_perusahaan" value="<?php echo $memberdata['nama_perusahaan']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Nama Perusahaan harus diisi!">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Telepon Tempat Bekerja</label>
+                                                <input type="text" class="form-control" name="telepon_perusahaan" id="telepon_perusahaan" value="<?php echo $memberdata['telepon_tempat_bekerja']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Telepon Tempat Bekerja harus diisi!">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Status Karyawan</label>
+                                                <select name="status_karyawan" class="form-control">
+                                                    <option value=""> -- Pilih --</option>
+                                                     <option value="1" <?php echo ($memberdata['status_karyawan']=='1')? 'selected="selected"' : '';  ?> > Kontrak</option>
+                                                    <option value="2" <?php echo ($memberdata['status_karyawan']=='2')? 'selected="selected"' : '';  ?> > Tetap</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Lama Bekerja</label>
+                                                <input type="text" class="form-control" name="lama_bekerja" id="lama_bekerja" value="<?php echo $memberdata['lama_bekerja']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Lama Bekerja harus diisi!">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Nama Atasan Langsung</label>
+                                                <input type="text" class="form-control" name="nama_atasan_langsung" id="nama_atasan_langsung" value="<?php echo $memberdata['nama_atasan_langsung']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Nama Atasan Langsung harus diisi!">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">No Telepon Atasan Langsung</label>
+                                                <input type="text" class="form-control" name="telp_atasan_langsung" id="telp_atasan_langsung" value="<?php echo $memberdata['telp_atasan_langsung']; ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Referensi Teman / Saudara 1</label>
+                                                <input type="text" class="form-control" name="referensi_teman_1" id="referensi_teman_1" value="<?php echo $memberdata['referensi_teman_1']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Referensi Teman / Saudara 1 harus diisi!">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">No Telepon Teman / Saudara 1</label>
+                                                <input type="text" class="form-control" name="telp_teman_1" id="telp_teman_1" value="<?php echo $memberdata['telp_referensi_teman_1']; ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Referensi Teman / Saudara 2</label>
+                                                <input type="text" class="form-control" name="referensi_teman_2" id="referensi_teman_2" value="<?php echo $memberdata['referensi_teman_2']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Referensi Teman / Saudara 2 harus diisi!">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">No Telepon Teman / Saudara 2</label>
+                                                <input type="text" class="form-control" name="telp_teman_2" id="telp_teman_2" value="<?php echo $memberdata['telp_referensi_teman_2']; ?>">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Upload Foto Surat Keterangan Bekerja</label>
+                                                <input type="file" name="surat_keterangan_bekerja_file" id="surat_keterangan_bekerja_file" data-show-upload="false" namafile="<?php  echo $foto_surat_keterangan_bekerja; ?>">
+                                                <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Gaji Bulanan</label>
+                                                <input type="text" class="form-control" name="gaji_bulanan" id="gaji_bulanan" value="<?php echo $memberdata['gaji_bulanan']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Gaji Bulanan harus diisi!">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Upload Foto Slip Gaji</label>
+                                                <input type="file" name="slip_gaji_file" id="slip_gaji_file" data-show-upload="false" namafile="<?php echo  $foto_slip_gaji; ?>">
+                                                <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Usia</label>
+                                                <input type="text" class="form-control" name="usia" id="usia" value="<?php $from = new DateTime($memberdata['Tanggal_lahir']);
+                                                    $to   = new DateTime('today');
+                                                    echo $from->diff($to)->y; ?>" disabled>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Upload Foto Pegang IDCard/eKTP</label>
+                                                <input type="file" name="pegang_ktp_file" id="pegang_ktp_file" data-show-upload="false" namafile="<?php echo  $foto_pegang_ktp;?>" >
+                                                <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                            </div>
+
+                                            <?php } ?>
+
+                                        <!-- End KILAT -->
 
                                         <!-- MIKRO -->
 
@@ -199,8 +330,32 @@ if ($memberdata['images_usaha_name'] != '')
                                                 <input type="text" class="form-control" name="usaha" id="usaha" value="<?php echo $memberdata['What_is_the_name_of_your_business']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Usaha harus diisi!">
                                             </div>
                                             <div class="form-group">
-                                                <label for="handphone">* Upload Foto Usaha</label>
-                                                <input type="file" name="usaha_file" id="usaha_file" data-show-upload="false" namafile="<?php echo $foto_usaha; ?>">
+                                                <label for="handphone">* Deskripsi Usaha</label>
+                                                <input type="text" class="form-control" name="deskripsi_usaha" id="deskripsi_usaha" value="<?php echo $memberdata['deskripsi_usaha']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Usaha harus diisi!">
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Upload Foto Usaha 1</label>
+                                                <input type="file" name="usaha_file" id="usaha_file" data-show-upload="false" namafile="<?php echo $foto_usaha; ?>" multiple>
+                                                <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Upload Foto Usaha 2</label>
+                                                <input type="file" name="usaha_file2" id="usaha_file2" data-show-upload="false" namafile="<?php echo $foto_usaha2; ?>" multiple>
+                                                <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Upload Foto Usaha 3</label>
+                                                <input type="file" name="usaha_file3" id="usaha_file3" data-show-upload="false" namafile="<?php echo $foto_usaha3; ?>" multiple>
+                                                <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Upload Foto Usaha 4</label>
+                                                <input type="file" name="usaha_file4" id="usaha_file4" data-show-upload="false" namafile="<?php echo $foto_usaha4; ?>" multiple>
+                                                <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* Upload Foto Usaha 5</label>
+                                                <input type="file" name="usaha_file5" id="usaha_file5" data-show-upload="false" namafile="<?php echo $foto_usaha5; ?>" multiple>
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
@@ -221,6 +376,30 @@ if ($memberdata['images_usaha_name'] != '')
                                                     <option value="10" <?php echo ($memberdata['How_many_years_have_you_been_in_business']=='10')? 'selected="selected"' : ''; ?> > 10 tahun</option>
                                                     <option value="11" <?php echo ($memberdata['How_many_years_have_you_been_in_business']=='11')? 'selected="selected"' : ''; ?> > Lebih dari 10 tahun</option>
                                                 </select>
+                                                <div class="form-group">
+                                                <label for="handphone">* Omzet Usaha</label>
+                                                <input type="text" class="form-control" name="omzet_usaha" id="omzet_usaha" value="<?php echo $memberdata['omzet_usaha'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Omzet harus diisi!">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="handphone">* Modal Usaha</label>
+                                                <input type="text" class="form-control" name="modal_usaha" id="modal_usaha" value="<?php echo $memberdata['modal_usaha'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Modal harus diisi!">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="handphone">* Margin Usaha</label>
+                                                <input type="text" class="form-control" name="margin_usaha" id="margin_usaha" value="<?php echo $memberdata['margin_usaha'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Margin harus diisi!">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="handphone">* Biaya Operasional</label>
+                                                <input type="text" class="form-control" name="biaya_operasional" id="biaya_operasional" value="<?php echo $memberdata['biaya_operasional'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Biaya operasional harus diisi!">
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label for="handphone">* Laba Usaha</label>
+                                                <input type="text" class="form-control" name="laba_usaha" id="laba_usaha" value="<?php echo $memberdata['laba_usaha'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Laba harus diisi!">
+                                            </div>
                                             </div>
 
                                             <?php } ?>
@@ -267,6 +446,10 @@ if ($memberdata['images_usaha_name'] != '')
                                                 <label for="jumlah_penghasilan">* Jumlah Penghasilan (Rp)</label>
                                                 <input type="text" class="form-control numeric" name="jumlah_penghasilan" id="jumlah_penghasilan" value="<?php echo (empty($memberdata['average_monthly_salary']))? '': $memberdata['average_monthly_salary']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="jumlah penghasilan harus diisi!">
                                             </div>
+                                            <div class="form-group">
+                                                <label for="handphone">* NPWP </label>
+                                                <input type="text" class="form-control" name="npwp" id="npwp" value="<?php echo $memberdata['npwp']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="NPWP harus diisi!">
+                                            </div>
                                             <!-- End PENDANA -->
                                             <?php } ?>
                                         <br>
@@ -274,6 +457,13 @@ if ($memberdata['images_usaha_name'] != '')
                                         <input type="hidden" name="old_foto" value="<?php echo $memberdata['images_foto_name']; ?>">
                                         <input type="hidden" name="old_ktp" value="<?php echo $memberdata['images_ktp_name']; ?>">
                                         <input type="hidden" name="old_usaha" value="<?php echo $memberdata['images_usaha_name']; ?>">
+                                        <input type="hidden" name="old_usaha2" value="<?php echo $memberdata['images_usaha_name2']; ?>">
+                                        <input type="hidden" name="old_usaha3" value="<?php echo $memberdata['images_usaha_name3']; ?>">
+                                        <input type="hidden" name="old_usaha4" value="<?php echo $memberdata['images_usaha_name4']; ?>">
+                                        <input type="hidden" name="old_usaha5" value="<?php echo $memberdata['images_usaha_name5']; ?>">
+                                        <input type="hidden" name="old_surat_keterangan_bekerja" value="<?php echo $memberdata['foto_surat_keterangan_bekerja']; ?>">
+                                        <input type="hidden" name="old_slip_gaji" value="<?php echo $memberdata['foto_slip_gaji']; ?>">
+                                        <input type="hidden" name="old_pegang_ktp" value="<?php echo $memberdata['foto_pegang_ktp']; ?>">
 
                                         <button type="submit" class="btn btn-blue">Submit</button> &nbsp; 
                                         <button type="button" class="btn btn-default" onclick="window.history.go(-1); return false;">Cancel</button>

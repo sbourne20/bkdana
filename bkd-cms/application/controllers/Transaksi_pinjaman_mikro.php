@@ -35,6 +35,79 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 		$this->load->view('vbase',$mainData);
 	}
 
+	//tambahan fungsi baru
+
+
+		function edit()
+	{
+		
+
+		$id = antiInjection($this->uri->segment(3));
+		//$output['mode'] = 2;
+		$output['data'] = $this->Pinjaman_model->get_loan_detail($id);
+		//header('Content-type: image/jpeg');
+		$mainData['mainContent'] = $this->load->view('loan/vmikro_list_form', $output, true);
+		//$output['data'] = $this->Pinjaman_model->get_loan_detail($id);
+		$this->load->view('vbase',$mainData);
+
+
+		$post = $this->input->post(NULL, TRUE);
+
+		if (trim($post['transaksi_id']) != '' && !empty($id) )
+		{
+			$updata1['Jml_permohonan_pinjaman_disetujui'] = antiInjection(trim($post['Jml_permohonan_pinjaman_disetujui']));
+			$updata1['Amount'] = antiInjection(trim($post['Jml_permohonan_pinjaman_disetujui']));
+			
+			$affected = $this->Pinjaman_model->update_profil_pinjaman($updata1, $id);
+			
+			
+			//$user_data = $this->Pinjaman_model-> get_loan_detail($id);
+			//p_pinjam['User_id'] = $user_data['Id_pengguna'];
+			$userid = trim($post['user_id']);
+			$masterloan = trim($post['transaksi_id']);
+
+			$this->db->from('record_pinjaman');
+			$this->db->where('User_id', $userid);
+			//$this->db->where('Master_loan_id', $masterloan);
+			$this->db->like('Flag', 'CA', 'BOTH');
+			$hasil=$this->db->get()->num_rows();
+			// $p_pinjam2['user_id'] =$uid;
+			/*if($hasil>0){
+				$hasil+=1;	
+			}else{
+				$hasil="1";
+			}*/
+
+			$p_pinjam['Flag'] = 'CA';
+			$p_pinjam['Master_loan_id'] = $masterloan;
+			$p_pinjam['User_id'] = $userid;
+			$p_pinjam['Amount'] = $updata1['Jml_permohonan_pinjaman_disetujui'];
+			$p_pinjam['Tgl_pinjaman'] = date('Y-m-d H:i:s');
+			$pinjamID = $this->Pinjaman_model->insert_profil_pinjaman5($p_pinjam);
+						//$this->db->insert('record_pinjaman', $p_pinjam);
+						//$pinjamID = $this->Pinjaman_model->insert_profil_pinjaman($p_pinjam);
+							/*echo '<script language="javascript">
+						  	alert("message successfully sent");  
+						  	</script>';
+						*/
+
+			if($affected){
+				$this->session->set_userdata('message','Data has been updated.');
+				$this->session->set_userdata('message_type','success');
+				redirect('transaksi_pinjaman_mikro');
+					
+			}else{
+				$this->session->set_userdata('message','No Update.');
+				$this->session->set_userdata('message_type','warning');
+				redirect('transaksi_pinjaman_mikro');
+			}
+
+		}
+
+	}
+
+	//batas fungsi baru
+
 	function json()
 	{			
 		$data = $this->Pinjaman_model->get_all_mikro_dt();
@@ -128,7 +201,7 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 				$produk = $this->Product_model->get_product_by($loan_data['Product_id']);
 				$tipe_produk = $produk['type_of_business_id'];
 			
-				$pinjaman_rp = $loan_data['Jml_permohonan_pinjaman'];
+				$pinjaman_rp = $loan_data['Amount'];
 
 				// ---------- hitung total pinjaman disetujui ------------			
 				$revenue                = ($pinjaman_rp * $produk['Fee_revenue_share'])/100;
@@ -136,17 +209,51 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 				$admin_fee              = ($pinjaman_rp * $produk['Secured_loan_fee'])/100;
 				// ----------- End hitung total pinjaman disetujui -------------------
 
+				//tambahan baru
+				$type_interest_rate = $produk['type_of_interest_rate'];
+				if($type_interest_rate=1){//harian
+					$totalweeks   = $produk['Loan_term'];
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+					$jml_repayment     = round($jml_angsuran);
+					$total_angsuran_rp = $jml_repayment*$totalweeks;
+					$bunga             = $total_angsuran_rp - $pinjaman_rp;
+					$loan_term = $produk['Loan_term'];
+					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
+				}
+				if($type_interest_rate=2){//bulanan
+					$totalweeks   = 4 * $produk['Loan_term'];
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+					$jml_repayment     = round($jml_angsuran);
+					$total_angsuran_rp = $jml_repayment*$totalweeks;
+					$bunga             = $total_angsuran_rp - $pinjaman_rp;
+					$loan_term = $produk['Loan_term'];
+					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
+				}
+				if($type_of_interest_rate=3){//mingguan
+					$totalweeks   = $produk['Loan_term'];
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+					$jml_repayment     = round($jml_angsuran);
+					$total_angsuran_rp = $jml_repayment*$totalweeks;
+					$bunga             = $total_angsuran_rp - $pinjaman_rp;
+					$loan_term = $produk['Loan_term'];
+					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." weeks"));
+				}
+				//batas tambahan baru
+
 				// ------- Hitung jumlah angsuran per minggu --------
-				$totalweeks   = 4 * $produk['Loan_term'];
+				/*$totalweeks   = 4 * $produk['Loan_term'];
 				$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
 				//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
 				$jml_repayment     = round($jml_angsuran);
 				$total_angsuran_rp = $jml_repayment*$totalweeks;
-				$bunga             = $total_angsuran_rp - $pinjaman_rp;
+				$bunga             = $total_angsuran_rp - $pinjaman_rp;*/
 				// ------- End of Hitung jumlah angsuran per minggu --------
 
-				$loan_term = $produk['Loan_term'];
-				$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
+				//$loan_term = $produk['Loan_term'];
+				//$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
 
 				// Frozen FEE
 				$frozen_fee = ($pinjaman_rp * $produk['Fee_revenue_share'])/100;
@@ -245,7 +352,7 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
             <br>
             Jenis Transaksi: Pinjaman Mikro
             <br>
-            Jumlah Pinjaman: Rp '.number_format($loan_data['Jml_permohonan_pinjaman']).'
+            Jumlah Pinjaman: Rp '.number_format($loan_data['Amount']).'
             <br>
             Jumlah Pinjaman diterima: Rp '.number_format($jml_pinjaman_disetujui).'
             <br>
@@ -416,7 +523,7 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
             <br>
             Jenis Transaksi: Pinjaman Mikro
             <br>
-            Jumlah Pinjaman: Rp '.number_format($loan_data['Jml_permohonan_pinjaman']).'
+            Jumlah Pinjaman: Rp '.number_format($loan_data['Amount']).'
             <br>
             Status: <strong>Dibatalkan</strong>
             <br><br>

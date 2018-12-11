@@ -104,20 +104,47 @@ if ($memberdata['mum_type'] == '1'){
                                                 foreach ($list_transaksi as $tra) { 
                                                     
                                                     if ($tra['id_mod_type_business'] == 1) {
-                                                        $jenis       = 'Pinjaman';
-                                                        $label_tenor = 'Hari';
+                                                       
+														if ($tra['type_of_interest_rate'] == 1) {
+															$jenis       = 'Pinjaman';
+															$label_tenor = 'Hari';
+														}if ($tra['type_of_interest_rate'] == 2) {
+															$jenis       = 'Pinjaman';
+															$label_tenor = 'Bulan';
+														}if ($tra['type_of_interest_rate'] == 3){
+															$jenis       = 'Pinjaman';
+															$label_tenor = 'Minggu';
+														}
+
+														 //$jenis      = 'Pinjaman';
+                                                        //$label_tenor = 'Hari';
                                                     }else if ($tra['id_mod_type_business'] == 3) {
-                                                        $jenis       = 'Pinjaman';
-                                                        $label_tenor = 'Bulan';
+														
+														if ($tra['type_of_interest_rate'] == 1) {
+															$jenis       = 'Pinjaman';
+															$label_tenor = 'Hari';
+														}if ($tra['type_of_interest_rate'] == 2) {
+															$jenis       = 'Pinjaman';
+															$label_tenor = 'Bulan';
+														}if ($tra['type_of_interest_rate'] == 3){
+															$jenis       = 'Pinjaman';
+															$label_tenor = 'Minggu';
+														}
+														
+                                                        //$jenis       = 'Pinjaman';
+                                                        //$label_tenor = 'Bulan';
                                                     }else{
                                                         $jenis       = 'Pendanaan';
                                                         $label_tenor = 'Bulan';
-                                                    }
-
+                                                    } 
+                                                    
                                                     // hitung jatuh tempo
                                                     if ($tra['tgl_approve'] != '0000-00-00 00:00:00')
                                                     {
                                                         $total_tenor = (int)$tra['Loan_term'];
+                                                        //$jmlhari = 28*$total_tenor;
+														
+														
 
                                                         if ($tra['id_mod_type_business'] == 1) {
                                                             $jatuhtempo = date('d/m/Y', strtotime("+".$total_tenor." days", strtotime($tra['tgl_approve'])));
@@ -166,7 +193,7 @@ if ($memberdata['mum_type'] == '1'){
                                                         <div class="sub-description">Tenor : <?php echo $tra['Loan_term'].' '.$label_tenor; ?></div>
                                                         <div class="sub-description">Jatuh Tempo : <?php echo $jatuhtempo; ?></div>
                                                     </td>
-                                                    <td><?php echo number_format($tra['totalrp']); ?></td>
+                                                    <td><?php echo number_format($tra['Amount']); ?></td>
                                                     <td><?php echo number_format($tra['total_approve']); ?></td>
                                                     <td>
                                                         <a href="<?php echo $link_detail; ?>" class="btn btn-action" title="Detil Transaksi">
@@ -238,7 +265,7 @@ if ($memberdata['mum_type'] == '1'){
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
             <div class="modal-body">
-                <?php if (count($pinjaman_active) > 1) { ?>
+                <?php if (count((array)$pinjaman_active) > 1) { ?>
                     
                     <div class="content">                        
                         <div class="alert alert-warning">

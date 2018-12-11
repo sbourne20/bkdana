@@ -607,6 +607,23 @@ class Pinjaman_model extends CI_Model
 		return $sql->row_array();
 	}
 
+	//TAMBAHAN BARU
+		function get_loan_detail($ID)
+	{
+		$this->db->select('*');
+		$this->db->from($this->tabel_pinjaman. ' p');
+		//$this->db->join($this->user_ojk. ' u', 'u.Id_pengguna=p.User_id', 'left');
+		//$this->db->join($this->user_ojk_detail. ' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
+		//$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
+		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
+		$this->db->join($this->mod_type_business. ' t', 't.id_mod_type_business=prod.type_of_business_id', 'left');
+		$this->db->where('Master_loan_id', $ID);
+		$sql = $this->db->get();
+
+		return $sql->row_array();
+	}
+	//batas tambahan baru
+
 	function find_expired_pinjaman()
 	{
 		// pinjaman mikro
@@ -639,5 +656,11 @@ class Pinjaman_model extends CI_Model
 		$this->db->where('ltp_Master_loan_id', $id);
 		$this->db->update($this->mod_log_transaksi_pinjaman, $data);
 		return $this->db->affected_rows();
+	}
+	function insert_profil_pinjaman5($data)
+	{
+		$this->db->insert('record_pinjaman', $data);
+		//$this->db->insert($this->record_pinjaman, $data);
+		return $this->db->insert_id();
 	}
 }

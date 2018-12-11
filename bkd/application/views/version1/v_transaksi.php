@@ -57,7 +57,7 @@
                                             </thead> 
                                             <tbody>
                                                 <?php
-                                                if (count($list_transaksi > 0)) { 
+                                                if (count(array($list_transaksi > 0))) { 
                                                 foreach ($list_transaksi as $tra) { 
 
                                                     $tenor_label = 'Bulan';
@@ -76,6 +76,8 @@
                                                     if ($tra['tgl_approve'] != '0000-00-00 00:00:00')
                                                     {
                                                         $totalbln = (int)$tra['Loan_term'];
+                                                        //$jmlhari = 28*$totalbln;
+                                                        //$jatuhtempo = date('d/m/Y', strtotime("+".$totalbln." months", strtotime($tra['tgl_approve'])));
                                                         $jatuhtempo = date('d/m/Y', strtotime("+".$totalbln." months", strtotime($tra['tgl_approve'])));
                                                     }else{
                                                         $jatuhtempo = '';

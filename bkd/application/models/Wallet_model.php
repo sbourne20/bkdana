@@ -90,4 +90,11 @@ class Wallet_model extends CI_Model
 		$sql = $this->db->get();
 		return $sql->result_array();
 	}
+
+	public function update_profil_pinjaman($data, $id)
+	{
+		$this->db->where('Master_loan_id', $id);
+		$this->db->update($this->tabel_pinjaman, $data);
+		return $this->db->affected_rows();
+	}
 }

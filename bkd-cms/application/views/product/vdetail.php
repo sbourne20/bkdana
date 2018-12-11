@@ -1,5 +1,22 @@
 <?php 
-$label_tenor = ($EDIT['type_of_business_id']=='1')? 'Hari' : 'Bulan';
+//if($EDIT['type_of_business_id']=='1')
+$type_interest_rate = $EDIT['type_of_interest_rate'];
+switch($type_interest_rate){
+    case '1':
+    //$('#tipe_loan_term').text('days');  
+    $label_tenor = 'days';
+    break;
+    case '2':
+     $label_tenor = 'months';
+   // $('#tipe_loan_term').text('months'); 
+    break; 
+    case '3':
+      $label_tenor = 'weeks';
+    //$('#tipe_loan_term').text('weeks');
+    break; 
+}
+
+ //$label_tenor = ($EDIT['type_of_business_id']=='1')? 'Hari' : 'Bulan';
 ?>
 <div class="modal-body">
 	<table class="display table table-striped dataTable">
@@ -19,7 +36,7 @@ $label_tenor = ($EDIT['type_of_business_id']=='1')? 'Hari' : 'Bulan';
 			<td>Interest Rate</td><td><?php echo $EDIT['Interest_rate']; ?>%</td>
 		</tr>
 		<tr>
-			<td>Loan Term</td><td><?php echo $EDIT['Loan_term'] .' '. $label_tenor; ?></td>
+			<td>Loan Term</td><td><?php echo $EDIT['Loan_term'] .' '. $EDIT['type_of_interest_rate_name']; ?></td>
 		</tr>
 		<tr>
 			<td>Max Loan</td><td><?php echo $EDIT['Max_loan']; ?></td>

@@ -12,11 +12,13 @@
           { "data": "Nama_pengguna" },
           { "data": "product_title", "sClass": "hidden-xs" },
           { "data": function ( data, type, full, meta ) {return 'Rp ' + formatMoney(data.Jml_permohonan_pinjaman,0,'.',',');}, "sClass": "hidden-xs" },
+          { "data": function ( data, type, full, meta ) {return 'Rp ' + formatMoney(data.Amount,0,'.',',');}, "sClass": "hidden-xs" },
           { "data": function ( data, type, full, meta ) {return 'Rp ' + formatMoney(data.Jml_permohonan_pinjaman_disetujui,0,'.',',');}, "sClass": "hidden-xs" },
+          { "data": function ( data, type, full, meta ) {return 'Rp ' + formatMoney(data.jml_kredit,0,'.',',');}, "sClass": "hidden-xs" },
           { "data": function ( data, type, full, meta ) {return garing_date_format(data.Tgl_permohonan_pinjaman);}, "sClass": "hidden-xs" },
           { "data": function ( data, type, full, meta ) {
                     var kredit = data.jml_kredit;
-                    var pinjaman = data.Jml_permohonan_pinjaman;
+                    var pinjaman = data.Amount;
                     var kuota = (kredit/pinjaman)*100;
                     
                       return Math.round(kuota) + '%';                    
@@ -47,9 +49,11 @@
               if ( loan_status=='approve' || loan_status=='lunas' || loan_status=='expired' || loan_status=='pending'  || loan_status=='complete' || loan_status=='reject') {
                   var btn_aprrove = '<li><a href="javascript:;" class="text-muted"><i class="fa fa-check"></i> Approve</a></li>';
                   var btn_reject = '<li><a href="javascript:;" class="text-muted"><i class="fa fa-thumbs-down"></i> Reject</a></li>';
+                  var btn_edit = '<li><a href="javascript:;" class="text-muted"><i class="fa fa-pencil"></i> Edit</a></li>';
               }else{
                   var btn_reject = '<li><a href="javascript:;" onclick="reject_(\''+data.Master_loan_id+'\')"><i class="fa fa-thumbs-down"></i> Reject</a></li>';
                   var btn_aprrove = '<li><a href="javascript:;" onclick="approve_(\''+data.Master_loan_id+'\')"><i class="fa fa-check"></i> Approve</a></li>';
+                  var btn_edit = '<li><a href="javascript:;" onclick="edit_(\''+data.Master_loan_id+'\')"><i class="fa fa-pencil"></i> Edit</a></li>';
               }
 
               var btn_group='<div class="btn-group">'+
@@ -59,6 +63,7 @@
                           '<li><a href="javascript:;" onclick="detail_([\''+data.Master_loan_id+'\'])"><i class="fa fa-building-o"></i> Detail </a></li>'+
                           btn_aprrove +
                           btn_reject +
+                          btn_edit +
                           '<li class="divider"></li>'+
                           '<li><a href="javascript:;" onclick="delete_(\''+data.Master_loan_id+'\')"><i class="fa fa-trash-o"></i> Delete</a></li>'+
                       '</ul>'+

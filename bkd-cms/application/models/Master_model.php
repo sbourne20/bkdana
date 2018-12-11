@@ -36,6 +36,8 @@ class Master_model extends CI_Model
 			'user_ojk'          => 'user',
 			'user_ojk_detail'   => 'user_detail',
 			'profile_geografi'  => 'profile_geografi',
+			'peminjam_group'  => 'user_group',
+			'record_pinjaman' => 'record_pinjaman',
 		);
 
 		/* initialize table name for this class */

@@ -68,7 +68,7 @@ Type : Main Settings Vendor
 		*/
 		$(document).keydown(function(objEvent){
 		    if(objEvent.keyCode == 9) {  //tab pressed
-		        objEvent.preventDefault(); // stops its action
+		    	return true;
 		    }
 		});
 		$('#telp').keyup(function(objEvent){

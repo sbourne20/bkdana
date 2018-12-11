@@ -6,7 +6,7 @@
                     <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                 </li>
                 <li>
-                    <a class="active-trail current" href="javascript:;"><strong> Harga Pinjaman Kilat </strong></a>
+                    <a class="active-trail current" href="javascript:;"><strong> Member Group </strong></a>
                 </li>
             </ul>
         </div>
@@ -15,7 +15,7 @@
 	    <div class="col-sm-12">
 	        <section class="panel">
 	            <header class="panel-heading">
-                    <a class="btn btn-success btn-sm" href="<?= site_url($this->uri->segment(1).'/add') ?>"><i class="fa fa-plus"></i> Add</a>
+                    <a class="btn btn-success btn-sm" href="<?= site_url('member/add_group') ?>"><i class="fa fa-plus"></i> Add Member Group</a>
 	                <span class="tools pull-right">
 	                    <a href="javascript:;" class="fa fa-chevron-down"></a>
 	                    <a href="javascript:;" class="fa fa-times"></a>
@@ -23,13 +23,11 @@
 	            </header>
                 <div class="panel-body">
                 <div class="adv-table">
-	                <table class="display table table-bordered table-striped" id="dynamic-table" width="100%">
+	                <table class="display table table-bordered table-striped" id="usergroup-table">
 	                <thead>
 		                <tr>
 		                    <th>No</th>
-		                    <th>Jumlah Pinjaman Kilat</th>
-		                    <th>Tenor</th>
-		                    <th>Status</th>
+		                    <th>Member Group</th>
 		                    <th>Action</th>
 		                </tr>
 	                </thead>
@@ -39,9 +37,7 @@
 	                <!-- <tfoot>
 		                <tr>
 		                    <th>No</th>
-		                    <th>Harga</th>
-		                    <th>Tenor</th>
-		                    <th>Status</th>
+		                    <th>Member Group</th>
 		                    <th>Action</th>
 		                </tr>
 	                </tfoot> -->

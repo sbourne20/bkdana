@@ -48,7 +48,7 @@ class Ajax extends CI_Controller {
 
 		$html = '';
 		foreach ($data as $prod) {
-			$html .= '<option value="'.$prod['Product_id'].'">'.$prod['Loan_term'].' hari</option>';
+			$html .= '<option value="'.$prod['Product_id'].'">'.$prod['Loan_term'].' '. $prod['type_of_interest_rate_name'].' </option>';
 		}
 
 		echo $html;
@@ -68,7 +68,7 @@ class Ajax extends CI_Controller {
 			//$productID    = trim($post['product']);
 
 			$check = $this->Content_model->check_existing_member($email, $notelp, '');
-			$count_member = count($check);
+			$count_member = count((array)$check);
 
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				$ret = array('error'=> '1', 'message'=>'Invalid Email format!');
@@ -108,7 +108,7 @@ class Ajax extends CI_Controller {
 			//$productID    = trim($post['product']);
 
 			$check = $this->Content_model->check_existing_member($email, $notelp, '');
-			$count_member = count($check);
+			$count_member = count((array)$check);
 
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				$ret = array('error'=> '1', 'message'=>'Invalid Email format!');

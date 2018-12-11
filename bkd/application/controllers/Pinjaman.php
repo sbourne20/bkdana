@@ -642,6 +642,10 @@ class Pinjaman extends CI_Controller {
 						$p_pinjam['Master_loan_id']          = $orderID;
 						$p_pinjam['Tgl_permohonan_pinjaman'] = $nowdatetime;
 						$p_pinjam['Jml_permohonan_pinjaman'] = $total_pinjam;
+						// tambahan baru
+						$p_pinjam['Amount'] =$total_pinjam;
+						$p_pinjam['Jml_permohonan_pinjaman_disetujui'] = $total_pinjam; 
+						// batas tambahan baru
 						$p_pinjam['User_id']                 = $user_data['Id_pengguna'];
 						$p_pinjam['Product_id']              = $productID;
 						$p_pinjam['Master_loan_status']      = 'review';
@@ -650,6 +654,29 @@ class Pinjaman extends CI_Controller {
 						$p_pinjam['nama_peminjam']                = $member_data['Nama_pengguna'];
 
 						$pinjamID = $this->Content_model->insert_profil_pinjaman($p_pinjam);
+						
+						//tambahan baru
+
+						$this->db->from('record_pinjaman');
+						$this->db->where('User_id', $user_data['Id_pengguna']);
+						$this->db->like('Flag', 'P', 'BOTH');
+						$hasil=$this->db->get()->num_rows();
+						// $p_pinjam2['user_id'] =$uid;
+					/*	if($hasil>0){
+							$hasil+=1;	
+						}else{
+							$hasil="1";
+						}*/
+
+						$p_pinjam2['Flag'] = 'P';
+						$p_pinjam2['Master_loan_id'] = $orderID;
+						$p_pinjam2['User_id'] = $user_data['Id_pengguna'];
+						$p_pinjam2['Amount'] = $total_pinjam;
+						$p_pinjam2['Tgl_pinjaman'] = date('Y-m-d H:i:s');
+						// $this->db->insert('record_pinjaman', $p_pinjam2);
+						$pinjamID2 = $this->Content_model->insert_profil_pinjaman1($p_pinjam2);
+
+						//batas tambahan baru
 
 						if ($pinjamID) {
 
@@ -793,9 +820,14 @@ class Pinjaman extends CI_Controller {
 				$stored_password = $member_data['mum_password'];
 
 				$user_data = $this->Content_model->get_user($uid); // get data from table user
+				$produk = $this->Content_model->get_produk($productID);
 				$min_pinjam = 2000000;
+				$max_pinjam = $produk['Max_loan'];
 				if ( (int)$total_pinjam < $min_pinjam ) {
 					$ret = array('error'=> '1', 'message'=>'Pinjaman tidak boleh dibawah Rp '.number_format($min_pinjam));
+				}
+				if ( (int)$total_pinjam > $max_pinjam ) {
+					$ret = array('error'=> '1', 'message'=>'Pinjaman tidak boleh diatas Rp '.number_format($max_pinjam));
 					
 				}else if ( $password == '' OR strlen($password) < 6 ) {
 					$ret = array('error'=> '1', 'message'=>'Password minimal 6 karakter.');
@@ -870,6 +902,10 @@ class Pinjaman extends CI_Controller {
 						$p_pinjam['Master_loan_id']          = $orderID;
 						$p_pinjam['Tgl_permohonan_pinjaman'] = $nowdatetime;
 						$p_pinjam['Jml_permohonan_pinjaman'] = $total_pinjam;
+						//tambahan baru
+						$p_pinjam['Amount'] =$total_pinjam;
+						$p_pinjam['Jml_permohonan_pinjaman_disetujui'] = $total_pinjam; 
+						//batas tambahan baru
 						$p_pinjam['User_id']                 = $user_data['Id_pengguna'];
 						$p_pinjam['Product_id']              = $productID;
 						$p_pinjam['Master_loan_status']      = 'review';
@@ -878,6 +914,29 @@ class Pinjaman extends CI_Controller {
 						$p_pinjam['nama_peminjam']           = $member_data['Nama_pengguna'];
 
 						$pinjamID =$this->Content_model->insert_profil_pinjaman($p_pinjam);
+
+												//tambahan baru
+
+						$this->db->from('record_pinjaman');
+						$this->db->where('User_id', $user_data['Id_pengguna']);
+						$this->db->like('Flag', 'P', 'BOTH');
+						$hasil=$this->db->get()->num_rows();
+						// $p_pinjam2['user_id'] =$uid;
+					/*	if($hasil>0){
+							$hasil+=1;	
+						}else{
+							$hasil="1";
+						}*/
+
+						$p_pinjam3['Flag'] = 'P';
+						$p_pinjam3['Master_loan_id'] = $orderID;
+						$p_pinjam3['User_id'] = $user_data['Id_pengguna'];
+						$p_pinjam3['Amount'] = $total_pinjam;
+						$p_pinjam3['Tgl_pinjaman'] = date('Y-m-d H:i:s');
+						// $this->db->insert('record_pinjaman', $p_pinjam2);
+						$pinjamID3 = $this->Content_model->insert_profil_pinjaman1($p_pinjam3);
+
+						//batas tambahan baru
 
 						if ($pinjamID) {
 

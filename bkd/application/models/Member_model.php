@@ -58,16 +58,17 @@ class Member_model extends CI_Model
 	{
 		$u = $this->db->escape_str($u);
 
-		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_password, mum_status, mum_type');
+		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_type');
 		$this->db->from($this->mod_user_member);
-		$this->db->where('mum_email', $u);
+		$this->db->where('mum_email' , $u);
+		$this->db->or_where('mum_telp' , $u);
 		//$this->db->where('mum_status', '1');
 		$this->db->limit('1');
 		$sql = $this->db->get();
 		return $sql->row_array();
 	}
 
-	function get_member_phone($id)
+/*	function get_member_phone($id)
 	{
 		$this->db->select('*');
 		$this->db->from($this->mod_user_member);
@@ -77,7 +78,7 @@ class Member_model extends CI_Model
 
 		return $sql->row_array();
 	}
-
+*/
 	function user_alldata($id) 
 	{
 		$this->db->select('*');
@@ -94,7 +95,7 @@ class Member_model extends CI_Model
 	function get_member_byid($id)
 	{
 		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
-			u.Id_pengguna, Nama_pengguna, Id_ktp, Profile_photo, Nomor_rekening, nama_bank, peringkat_pengguna, peringkat_pengguna_persentase, images_foto_name, Mobileno, Alamat, Kota, Provinsi, Kodepos');
+			u.Id_pengguna, Nama_pengguna, Id_ktp, Profile_photo, Nomor_rekening, nama_bank, npwp, deskripsi_usaha, omzet_usaha, modal_usaha, margin_usaha, biaya_operasional, laba_usaha, peringkat_pengguna, peringkat_pengguna_persentase, images_foto_name, Mobileno, Alamat, Kota, Provinsi, Kodepos');
 		$this->db->from($this->mod_user_member.' m');
 		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
 		$this->db->join($this->user_detail.' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');

@@ -589,7 +589,7 @@ class Cronjob extends CI_Controller
             <br>
             Jenis Transaksi: '.$type.'
             <br>
-            Jumlah permohonan pinjaman: Rp '.number_format($loan_data['Jml_permohonan_pinjaman']).'
+            Jumlah permohonan pinjaman: Rp '.number_format($loan_data['Amount']).'
             <br>
             Jumlah pinjaman diterima: Rp '.number_format($saldo_diterima).'
             <br>

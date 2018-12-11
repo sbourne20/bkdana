@@ -78,12 +78,13 @@ if ($memberdata['mum_type'] == '1'){
                                         </div>
                                         <div class="col-sm-4">
                                             <i class="big fas fa-coins"></i>
-                                            <div class="title">Total Slado</div>
+                                            <div class="title">Total Saldo</div>
                                             <strong class="counter"><?php echo number_format($total_saldo['Amount']); ?></strong> <span>IDR</span>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <div class="sub-title">Transaksi Repayment</div>
@@ -118,8 +119,8 @@ if ($memberdata['mum_type'] == '1'){
                                                     }else{
                                                         $link_detail = site_url('transaksi/detail-pendana/?tid='.$tra['transaksi_id']);
                                                     }
-
-                                                    if ($tra['id_mod_type_business'] == '1'){
+                                                                
+                                                    if ($tra['id_mod_type_business'] == '1'){ 
                                                         $label_tenor = 'Hari';
                                                     }else{
                                                         $label_tenor = 'Bulan';

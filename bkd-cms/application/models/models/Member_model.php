@@ -271,8 +271,19 @@ class Member_model extends CI_Model
 	{
 		$this->db->where('id_mod_user_member', $ID);
 		$this->db->update($this->user_ojk, $data);
+
+		// $this->db->where('id_pengguna', $ID);
+		// $this->db->update('user', $data2);
 		return $this->db->affected_rows();
 	}
+/*
+		public function update_user_ojk1($data, $ID)
+	{
+		$this->db->where('id_mod_user_member', $ID);
+		$this->db->update($this->user_ojk, $data);
+		// return $this->db->affected_rows();
+		return $data;
+	}*/
 
 	public function update_user_ojkdetail($data, $ID)
 	{

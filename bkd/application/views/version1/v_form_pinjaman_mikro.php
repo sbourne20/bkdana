@@ -36,8 +36,24 @@
                                 <label for="product">* Tenor</label>
                                 <select class="form-control" name="product" id="product" data-validation-engine="validate[required]" data-errormessage-value-missing="Pilih Tenor Pinjaman!">
                                     <option value=""> -- Pilih --</option>
-                                    <?php foreach ($products as $prod) { ?>
-                                    <option value="<?php echo $prod['Product_id']; ?>"> <?php echo $prod['Loan_term']; ?> Bulan</option>
+                                    <?php foreach ($products as $prod) {
+							/*			$type_interest_rate = $prod['type_of_interest_rate'];
+                                        switch($type_interest_rate){
+                                            case '1':
+                                            //$('#tipe_loan_term').text('days');  
+                                            $label_tenor = 'hari';
+                                            break;
+                                            case '2':
+                                             $label_tenor = 'bulan';
+                                           // $('#tipe_loan_term').text('months'); 
+                                            break; 
+                                            case '3':
+                                              $label_tenor = 'minggu';
+                                            //$('#tipe_loan_term').text('weeks');
+                                            break; */
+                                       // }
+                                        ?>
+                                    <option value="<?php echo $prod['Product_id']; ?>"> <?php echo $prod['Loan_term'].' '.$prod['type_of_interest_rate_name'] ; ?> </option>
                                     <?php } ?>
                                 </select>
                             </div>

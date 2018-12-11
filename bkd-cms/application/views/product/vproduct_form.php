@@ -57,23 +57,26 @@
                                     </div>
                                 </div>
                             </div>
+
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Interest Rate Type</label>
                                 <label class="checkbox-inline">
-                                    <input type="radio" name="type_interest_rate" value="1" <?php echo ($mode==1 OR ($mode==2 && $EDIT['type_of_interest_rate']==1))? 'checked="checked"' : ''; ?> > Harian
+                                    <input type="radio" class="radiocheck" name="type_interest_rate" value="1" <?php echo ($mode==2 && $EDIT['type_of_interest_rate']==1)? 'checked="checked"' : ''; ?> > Harian
                                 </label>
                                 <label class="checkbox-inline">
-                                    <input type="radio" name="type_interest_rate" value="2" <?php echo ($mode==2 && $EDIT['type_of_interest_rate']==2)? 'checked="checked"' : ''; ?> > Bulanan
+                                    <input type="radio" class="radiocheck" name="type_interest_rate" value="3" <?php echo ($mode==2 && $EDIT['type_of_interest_rate']==3)? 'checked="checked"' : ''; ?> > Mingguan
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" class="radiocheck" name="type_interest_rate" value="2" <?php echo ($mode==2 && $EDIT['type_of_interest_rate']==2)? 'checked="checked"' : ''; ?> > Bulanan
                                 </label>
                             </div>
 
-                            <?php $text_ll = ($mode==2 && $EDIT['type_of_business_id']==1)? 'days' : 'months';  ?>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Loan Term </label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
                                         <input type="text" name="loan_term" class="form-control" value="<?php echo isset($EDIT['Loan_term'])? $EDIT['Loan_term'] : ''; ?>" data-validation-engine="validate[required]">
-                                        <span class="input-group-addon" id="tipe_loan_term"> <?php echo $text_ll; ?></span>
+                                        <span class="input-group-addon" id="tipe_loan_term"> </span>
                                     </div>
                                 </div>
                             </div>
@@ -160,7 +163,7 @@
             </div>            
         </div>
     </section>
-
+<!-- 
     <script type="text/javascript">
         $('#type_bisnis').change(function() {
             var value = $(this).val();
@@ -174,4 +177,59 @@
                 $('#tipe_loan_term').text('months');                
             }
         });
-    </script>
+    </script> -->
+
+
+
+<!-- <script type="text/javascript">
+//var value = null;
+ $('#type_interest_rate').change(function(){
+//$("input[name='category']").change(function() {
+    var value = $(this).val();
+    var type = value[0];
+            if (type = 1)
+            {
+                $('#tipe_loan_term').text('days');       
+            }
+            if (type = 2)
+            {
+                $('#tipe_loan_term').text('weeks');       
+            }else{
+                $('#tipe_loan_term').text('months');                
+            }
+});
+ </script> -->
+
+ <script type="text/javascript">
+var type_interest_rate;
+$(':radio[name="type_interest_rate"]').change(function() {
+    type_interest_rate=this.value;
+             if (type_interest_rate == 1)
+            {
+                $('#tipe_loan_term').text('days');       
+            }
+            if (type_interest_rate == 3)
+            {
+                $('#tipe_loan_term').text('weeks');       
+            }
+            if(type_interest_rate == 2){
+                $('#tipe_loan_term').text('months');                
+            }
+   // alert(type_interest_rate);
+});
+
+$(".radiocheck:checked").each(function(){
+    check =this.value;
+    switch(check){
+    case '1':
+    $('#tipe_loan_term').text('days');  
+    break;
+    case '2':
+    $('#tipe_loan_term').text('months'); 
+    break; 
+    case '3':
+    $('#tipe_loan_term').text('weeks');
+    break;  
+}
+});
+ </script>

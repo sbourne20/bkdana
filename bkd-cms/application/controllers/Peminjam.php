@@ -122,6 +122,8 @@ class Peminjam extends CI_Controller {
 		$id             = antiInjection($this->uri->segment(3));
 		$output['mode'] = 2; // sbg tanda edit
 		$output['EDIT'] = $this->Member_model->get_usermember_by($id);
+		$output['membergroup'] = $this->Member_model->get_allgroup();
+		//$output['EDIT'] = $this->Member_model->get_allgroup($id);
 
 		$this->validation();
 		if ($this->form_validation->run() == FALSE)
@@ -150,7 +152,8 @@ class Peminjam extends CI_Controller {
 			$output['bottom_js'] .= add_js('js/global.js');
 
 			$output['grade'] = $this->Grade_model->get_active_grade();
-			
+			$mainData['membergroup'] = $this->Member_model->get_allgroup();
+
 			$mainData['mainContent'] = $this->load->view('member/vpeminjam_form', $output, TRUE);
 
 			$this->load->view('vbase', $mainData);
@@ -159,8 +162,9 @@ class Peminjam extends CI_Controller {
 
 			if (trim($post['grade']) != '' && !empty($id) )
 			{
-				$updata['peringkat_pengguna'] = antiInjection(trim($post['grade']));
-				$affected = $this->Member_model->update_user_ojk($updata, $id);
+				$updata1['peringkat_pengguna'] = antiInjection(trim($post['grade']));
+				$updata1['id_user_group'] = antiInjection(trim($post['membergroup']));
+				$affected = $this->Member_model->update_user_ojk($updata1, $id);
 				if($affected){
 
 					$this->session->set_userdata('message','Data has been updated.');
@@ -170,6 +174,40 @@ class Peminjam extends CI_Controller {
 					$this->session->set_userdata('message_type','warning');
 				}
 			}
+
+			// else {
+
+				//$post = $this->input->post(null, true);
+
+				// $ID = $post['Id_pengguna'];
+
+				// //$data['peringkat_pengguna'] = $post['grade'];
+				// $data['id_user_group'] = $post['membergroup'];
+				
+				// $update = $this->Member_model->update_user_group_ojk($data, $id);
+				// echo "<script>console.log(".$update.");</script>";
+				// if ($update){
+					
+				// 	$this->session->set_userdata('message','Data has been updated.');
+				// 	$this->session->set_userdata('message_type','success');
+				// }else{
+				// 	$this->session->set_userdata('message',$update);
+				// 	$this->session->set_userdata('message_type','warning');
+				// }
+			// }
+			/*if (trim($post['membergroup']) != '' && !empty($id) )
+			{
+				$updata['id_user_group'] = antiInjection(trim($post['membergroup']));
+				$affected = $this->Member_model->update_user_group_ojk($updata, $id);
+				if($affected){
+
+					$this->session->set_userdata('message','Data has been updated 123.');
+					$this->session->set_userdata('message_type','success');
+				}else{
+					$this->session->set_userdata('message','No Update 345.');
+					$this->session->set_userdata('message_type','warning');
+				}
+			}*/
 			
 			redirect('peminjam');
 		}

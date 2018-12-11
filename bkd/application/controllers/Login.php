@@ -46,11 +46,11 @@ class Login extends CI_Controller {
 				exit();
 			}
 
-			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			/*if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 				$this->session->set_userdata('message_login','Invalid Email format!');
 				redirect('login'); 
 				exit();
-			}
+			}*/
 
 			if (!empty($email) && !empty($post['password']) && (strlen($post['password'])>=6) ) {
 

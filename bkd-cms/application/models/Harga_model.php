@@ -62,8 +62,8 @@ class Harga_model extends CI_Model
 		$q->free_result();
 
 
-		$sql = " 	SELECT h_id, h_harga, h_status, hp_harga_id, hp_product_id, Loan_term,
-					GROUP_CONCAT(Loan_term SEPARATOR ', ')  as tenor
+		$sql = " 	SELECT h_id, h_harga, h_status, hp_harga_id, hp_product_id, p.type_of_interest_rate_name, Loan_term,
+					GROUP_CONCAT(Loan_term, ' ' ,p.type_of_interest_rate_name SEPARATOR ', ')  as tenor
 					FROM mod_harga h
 					LEFT JOIN mod_harga_produk hp ON (hp.hp_harga_id=h.h_id)
 					LEFT JOIN product p ON (p.Product_id=hp.hp_product_id)
@@ -75,6 +75,9 @@ class Harga_model extends CI_Model
 		
 		$query 	= $this->db->query($sql. $order. " LIMIT $start,$rows ");
 		$data 	= $query->result();
+		
+
+		
 
 		if( $search!='' ){
 			$iFilteredTotal = count($query->result());
@@ -92,8 +95,18 @@ class Harga_model extends CI_Model
          );
 
         $query->free_result();
+		//$this->result_id->fetchArray(SQLITE3_ASSOC)
 
+		//while($row = $query->fetchArray()){
+		//$tag_array = explode(',' , $row['tenor']);
+				
+		//}foreach($tag_array as $tag) {
+			//	list($Loan_term,$type_of_interest_rate SEPARATOR) = explode('',$tag,2);
+		//}
+		
 		return json_encode($output);
+		
+		
 	}
 
 	public function insert_harga($data)

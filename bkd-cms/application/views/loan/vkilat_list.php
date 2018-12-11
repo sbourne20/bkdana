@@ -25,6 +25,8 @@
 		                    <th>Product</th>
 		                    <th>Jumlah Pinjaman</th>
 		                    <th>Jumlah Pinjaman disetujui</th>
+		                    <th>Dana Disburse</th>
+		                    <th>Hasil Crowd Funding</th>
 		                    <th>Tanggal</th>
 		                    <th>Crowd Funding</th>
 		                    <th>Status</th>
@@ -33,7 +35,7 @@
 	                </thead>
 	                <tbody>
 	                </tbody>
-	                <tfoot>
+<!-- 	                <tfoot>
 		                <tr>
 		                    <th>No</th>
 		                    <th>No.Transaksi</th>
@@ -41,12 +43,13 @@
 		                    <th>Product</th>
 		                    <th>Jumlah Pinjaman</th>
 		                    <th>Jumlah Pinjaman disetujui</th>
+		                    <th>Hasil Crowd Funding</th>
 		                    <th>Tanggal</th>
 		                    <th>Crowd Funding</th>
 		                    <th>Status</th>
 		                    <th>Action</th>
 		                </tr>
-	                </tfoot>
+	                </tfoot> -->
 	                </table>
                 </div>
                 </div>

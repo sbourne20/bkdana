@@ -309,7 +309,7 @@ class Testmail extends CI_Controller {
             <br>
             Jenis Transaksi: Pinjaman Kilat
             <br>
-            Jumlah Pinjaman: Rp '.number_format($loan_data['Jml_permohonan_pinjaman']).'
+            Jumlah Pinjaman: Rp '.number_format($loan_data['Amount']).'
             <br>
             Jumlah Pinjaman diterima: Rp '.number_format($jml_pinjaman_disetujui).'
             <br>

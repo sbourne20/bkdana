@@ -28,7 +28,7 @@ switch ($transaksi['Master_loan_status']) {
         break;
 }
 
-$kuota = round(($transaksi['jml_kredit']/$transaksi['Jml_permohonan_pinjaman']) * 100);
+$kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
 ?>
 
 <!-- Header -->
@@ -93,18 +93,48 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Jml_permohonan_pinjaman']) 
                                             $status_bayar = $transaksi['Master_loan_status'];
                                         }
 
-                                        $tenor_label = 'Bulan';
+                                        //$tenor_label = 'Bulan';
                                         $max_looping = $transaksi['Loan_term'];
                                         
                                         if ($transaksi['type_of_business_id'] == 1)
                                         {
                                             // Pinjaman Kilat
-                                            $tenor_label = 'Hari';
-                                            $max_looping = 1;
-                                            $submit_url  = site_url('submit-bayar-cicilan-kilat');
+											if($transaksi['type_of_interest_rate']==1){
+												$tenor_label = 'Hari';
+												$max_looping = 1;
+												$submit_url  = site_url('submit-bayar-cicilan-kilat');   
+                                            }
+                                            if($transaksi['type_of_interest_rate']==2){
+												$tenor_label = 'Bulan';
+												$max_looping = 1;
+												$submit_url  = site_url('submit-bayar-cicilan-kilat');   
+                                            }
+                                            if($transaksi['type_of_interest_rate']==3){
+												$tenor_label = 'Minggu';
+												$max_looping = 1;
+												$submit_url  = site_url('submit-bayar-cicilan-kilat');   
+                                            }
+											
+											
+											
+                                            //$tenor_label = 'Hari';
+                                            //$max_looping = 1;
+                                            //$submit_url  = site_url('submit-bayar-cicilan-kilat');
                                         }else{
                                             // Mikro
-                                            $submit_url  = site_url('submit-bayar-cicilan-mikro');
+											if($transaksi['type_of_interest_rate']==1){
+												$tenor_label = 'Hari';
+												$submit_url  = site_url('submit-bayar-cicilan-mikro');  
+                                            }
+                                            if($transaksi['type_of_interest_rate']==2){
+												$tenor_label = 'Bulan';
+												$submit_url  = site_url('submit-bayar-cicilan-mikro');   
+                                            }
+                                            if($transaksi['type_of_interest_rate']==3){
+												$tenor_label = 'Minggu';                                
+												$submit_url  = site_url('submit-bayar-cicilan-mikro');   
+                                            }
+                                            //$submit_url  = site_url('submit-bayar-cicilan-mikro');
                                         }
                                         ?>
 
@@ -126,7 +156,7 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Jml_permohonan_pinjaman']) 
                                                 <td><span>Jatuh Tempo</span> <?php echo $jatuh_tempo; ?></td>
                                             </tr>
                                             <tr>
-                                                <td><span>Jumlah</span> <?php echo number_format($transaksi['Jml_permohonan_pinjaman']); ?> IDR</td>
+                                                <td><span>Jumlah</span> <?php echo number_format($transaksi['Amount']); ?> IDR</td>
                                                 <td><span>Total</span> <?php echo number_format($total_bayar); ?> IDR</td>
                                             </tr>
                                             <tr>

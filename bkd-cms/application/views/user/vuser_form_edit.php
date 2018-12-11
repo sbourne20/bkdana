@@ -60,7 +60,7 @@
                                 <label class="col-sm-3 control-label">Status</label>
                                 <div class="col-md-6">
                                   <select name="status" class="form-control" id="userform" style="width:150px;">
-                                    <option value="1" <?php echo (($add_mode==1 OR $EDIT['active']==1)? 'selected="selected"' : '') ?> >Active &nbsp; &nbsp;</option>
+                                    <option value="1" <?php echo (($add_mode==1 OR $EDIT['active']==1)? 'bselected="selected"' : '') ?> >Active &nbsp; &nbsp;</option>
                                     <option value="0" <?php echo (($EDIT['active']==0)? 'selected="selected"' : '') ?> >Not Active</option>
                                   </select>
                                 </div>

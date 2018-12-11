@@ -29,8 +29,8 @@
 
                         <form class="form-validation" method="POST" action="<?php echo site_url('submit-login'); ?>">
                             <div class="form-group">
-                                <label for="email">* E-mail</label>
-                                <input class="form-control" id="email" type="email" name="email" data-validation-engine="validate[required]" data-errormessage-value-missing="Email harus diisi!" autofocus>
+                                <label for="email">* E-mail / Phone Number</label>
+                                <input class="form-control" id="email" type="email1" name="email" data-validation-engine="validate[required]" data-errormessage-value-missing="Email / Phone Number harus diisi!" autofocus>
                             </div>
                             <div class="form-group">
                                 <label for="password">* Password</label>

@@ -26,12 +26,13 @@ $sub_menu    = $this->uri->segment(2);
                 </li>
 
                 <?php
-                $set_array = array( 'peminjam', 'pendana', 'wallet', 'koperasi' ); ?>
+                $set_array = array( 'member_group', 'peminjam', 'pendana', 'wallet', 'koperasi' ); ?>
                 <li class="sub-menu">
                     <a href="javascript:;" <?php echo (in_array($active_menu, $set_array)) ? "class='active'":"" ?>>
                         <i class="fa fa-group"></i> <span>Member</span>
                     </a>
                     <ul class="sub">
+                        <li <?php echo ($active_menu=='member_group') ? "class='active'":"" ?>><a href="<?php echo base_url('member/group') ?>"> Member Group</a></li>
                         <li <?php echo ($active_menu=='peminjam') ? "class='active'":"" ?>><a href="<?php echo base_url('peminjam') ?>"> Peminjam</a></li>
                         <li <?php echo ($active_menu=='pendana') ? "class='active'":"" ?>><a href="<?php echo base_url('pendana') ?>"> Pendana</a></li>
                         <li <?php echo ($active_menu=='wallet') ? "class='active'":"" ?>><a href="<?php echo base_url('wallet') ?>"> Wallet</a></li>

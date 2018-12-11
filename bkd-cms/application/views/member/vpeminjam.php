@@ -23,6 +23,7 @@
 		                    <th>Nama Peminjam</th>
 		                    <th>Email</th>
 		                    <th>Telp</th>
+		                    <th>Member Group</th>
 		                    <th>Join Date</th>
 		                    <th>Grade</th>
 		                    <th>Status</th>
@@ -31,7 +32,7 @@
 	                </thead>
 	                <tbody>
 	                </tbody>
-	                <tfoot>
+	               <!--  <tfoot>
 		                <tr>
 		                    <th>No</th>
 		                    <th>Name</th>
@@ -42,7 +43,7 @@
 		                    <th>Status</th>
 		                    <th>Action</th>
 		                </tr>
-	                </tfoot>
+	                </tfoot> -->
 	                </table>
                 </div>
                 </div>

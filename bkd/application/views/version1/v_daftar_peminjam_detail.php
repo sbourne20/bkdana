@@ -90,7 +90,7 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
                                         <div class="panel-body">
                                             <table class="table-custom">
                                                 <tr>
-                                                    <td><span>Total Pinjaman</span> <?php echo number_format($total_bayar); ?> IDR</td>
+                                                    <td><span>Total Pinjaman</span> <?php echo number_format($transaksi['Amount']); ?> IDR</td>
                                                     <td><span>Total Pendanaan</span> <?php echo number_format($transaksi['jml_kredit']); ?> IDR</td>
                                                 </tr>
                                                 <tr>
@@ -111,9 +111,24 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
                                 <?php 
                                 if ($transaksi['type_of_business_id']==1)
                                 {
-                                    $label_tenor = 'Hari';
+                                    //$label_tenor = 'Hari';
+                                    if ($transaksi['type_of_interest_rate'] == 1) {
+                                        $label_tenor = 'Hari';
+                                    }if ($transaksi['type_of_interest_rate'] == 2) {
+                                        $label_tenor = 'Bulan';
+                                    }if ($transaksi['type_of_interest_rate'] == 3){
+                                        $label_tenor = 'Minggu';
+                                    }
+
                                 }else{
-                                    $label_tenor = 'Bulan';
+                                    //$label_tenor = 'Bulan';
+                                     if ($transaksi['type_of_interest_rate'] == 1) {
+                                        $label_tenor = 'Hari';
+                                    }if ($transaksi['type_of_interest_rate'] == 2) {
+                                        $label_tenor = 'Bulan';
+                                    }if ($transaksi['type_of_interest_rate'] == 3){
+                                        $label_tenor = 'Minggu';
+                                    }
                                 }
                                 ?>
                                 
@@ -170,6 +185,46 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
                                                         <?php } ?>
                                                     </td>
                                                 </tr>
+                                                <!--tambahan foto usaha-->
+                                                <tr>
+                                                    <td>
+                                                         <?php if ($transaksi['images_usaha_name2'] != ''){ 
+                                                            $foto_usaha = $this->config->item('images_uri') . '/member/'.$transaksi['id_mod_user_member']. '/usaha2/'. $transaksi['images_usaha_name2'];
+                                                        ?>
+                                                        <span>Foto Usaha 2</span><br>
+                                                        <img class="img-pinjam" width="40" height="40" src="<?php echo $foto_usaha; ?>" alt="" />
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($transaksi['images_usaha_name3'] != ''){ 
+                                                            $foto_usaha = $this->config->item('images_uri') . '/member/'.$transaksi['id_mod_user_member']. '/usaha3/'. $transaksi['images_usaha_name3'];
+                                                        ?>
+                                                        <span>Foto Usaha 3</span><br>
+                                                        <img class="img-pinjam" width="40" height="40" src="<?php echo $foto_usaha; ?>" alt="" />
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+                                                 <tr>
+                                                    <td>
+                                                         <?php if ($transaksi['images_usaha_name4'] != ''){ 
+                                                            $foto_usaha = $this->config->item('images_uri') . '/member/'.$transaksi['id_mod_user_member']. '/usaha4/'. $transaksi['images_usaha_name4'];
+                                                        ?>
+                                                        <span>Foto Usaha 4</span><br>
+                                                        <img class="img-pinjam" width="40" height="40" src="<?php echo $foto_usaha; ?>" alt="" />
+                                                        <?php } ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php if ($transaksi['images_usaha_name5'] != ''){ 
+                                                            $foto_usaha = $this->config->item('images_uri') . '/member/'.$transaksi['id_mod_user_member']. '/usaha5/'. $transaksi['images_usaha_name5'];
+                                                        ?>
+                                                        <span>Foto Usaha 5</span><br>
+                                                        <img class="img-pinjam" width="40" height="40" src="<?php echo $foto_usaha; ?>" alt="" />
+                                                        <?php } ?>
+                                                    </td>
+                                                </tr>
+
+                                                <!--Batas tambahan foto usaha-->
+
                                                 <?php /*
                                                 <tr>
                                                     <td>
@@ -225,9 +280,9 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
 
                     <?php 
                     if (empty($transaksi['jml_kredit'])) {
-                        $penawaran = $total_bayar;
+                        $penawaran = $Amount;
                     }else{
-                        $penawaran = $total_bayar - $transaksi['jml_kredit'];
+                        $penawaran = $Amount - $transaksi['jml_kredit'];
                     }
 
                     $jmltagihan = $penawaran;
@@ -242,6 +297,7 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
                             <div class="balance">Saldo : <?php echo number_format($total_saldo['Amount']); ?> IDR</div>
                             <div class="bill">Tagihan : <?php echo number_format($jmltagihan); ?> IDR</div>
                             <br><br>
+                            <!-- <input type="" name="jml_analis" value="<?php echo $transaksi['Amount']; ?>"> -->
 
                             <?php if ($total_saldo['Amount'] >= 100000) {  
                                 ?>
@@ -249,6 +305,8 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
                                     <input type="hidden" name="transaksi_id" value="<?php echo $transaksi['Master_loan_id']; ?>">
                                     <input type="hidden" name="jml_pinjaman" value="<?php echo $total_bayar; ?>">
                                     <input type="hidden" name="jml_pinj_disetujui" value="<?php echo $pinjaman_disetujui; ?>">
+                                    <input type="hidden" name="Product_id" value="<?php echo $Product_id; ?>">
+
                                     <input type="hidden" name="id_peminjam" value="<?php echo $transaksi['Id_pengguna']; ?>">
                                     <input type="hidden" name="id_peminjam_member" value="<?php echo $transaksi['id_mod_user_member']; ?>">
                                     <input type="hidden" name="jml_kredit" value="<?php echo $transaksi['jml_kredit']; ?>">
