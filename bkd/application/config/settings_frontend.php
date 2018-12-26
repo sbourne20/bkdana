@@ -28,7 +28,7 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	$config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
 	//foto start
-	$config['showphoto']    = 'https://'.$_SERVER['HTTP_HOST'].'/data-bkd/';
+	$config['showphoto']    = 'https://'.$_SERVER['HTTP_HOST']. '/data-bkd/';
 	//foto end
 
 	$config['data_dir']    = '/var/www/html/data-bkd/';
