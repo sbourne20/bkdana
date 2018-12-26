@@ -36,14 +36,14 @@ if($_SERVER['HTTP_HOST']=='localhost')
 }
 
 // upload path
-$config['images_dir']         = $config['data_dir'] . 'images/';
+$config['images_dir']         = $config['data_dir'];
 $config['kilat_images_dir']   = $config['images_dir'] . 'pinjaman/kilat/';
 $config['mikro_images_dir']   = $config['images_dir'] . 'pinjaman/mikro/';
 $config['pendana_images_dir'] = $config['images_dir'] . 'pendana/';
 $config['member_images_dir']  = $config['images_dir'] . 'member/';
 
 $config['img_baseurl']  = $config['doc_root'];
-$config['images_uri']   = $config['showphoto'] . "images";
+$config['images_uri']   = $config['showphoto'];
 $config['page_img_uri'] = $config['images_uri'] . 'pages/';
 
 $config['template_frontend'] = 'version1';
