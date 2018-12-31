@@ -235,6 +235,18 @@ class Content_model extends CI_Model
 		return $ret;
 	}
 
+	function get_pinjaman_pengajuan($id)
+	{
+		$this->db->select('Product_id, Loan_term');
+		$this->db->from($this->product);
+		$this->db->where('type_of_business_id', $id);
+		$this->db->where('product_status', '1');
+		$sql = $this->db->get();
+		$ret = $sql->result_array();
+		$sql->free_result();
+		return $ret;
+	}
+
 	function get_produk($id)
 	{
 		$this->db->select('*');
@@ -1133,7 +1145,7 @@ class Content_model extends CI_Model
 
 	function get_harga_pinjaman_kilat()
 	{
-		$this->db->select('*');
+		$this->db->select('h_id as id, h_harga as nominal_pinjaman');
 		$this->db->from($this->mod_harga. ' h');
 		$this->db->where('h_status', '1');
 		$this->db->order_by('h_harga', 'asc');
