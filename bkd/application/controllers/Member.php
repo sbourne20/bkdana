@@ -166,7 +166,7 @@ class Member extends CI_Controller {
 							$u_detail['images_ktp_name']  = $file_ktp_name;
 						}
 
-						if ($memberdata['mum_type_peminjam']=='2'){//tambahan baru pengkondisian
+						if ($memberdata['mum_type_peminjam'] == '2'){//tambahan baru pengkondisian
 
 							if( isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] == ''){
 								$file_usaha_name   = '';
@@ -181,7 +181,7 @@ class Member extends CI_Controller {
 								// ----- END Process Image Name -----
 								//$u_detail['Photo_business_location'] = $upload_usaha;
 								//$u_detail['foto_usaha']              = $upload_usaha;
-								$u_detail['images_usaha_name']       = $file_usaha_name;
+								$u_detail['foto_usaha']       = $file_usaha_name;
 							}
 								if( isset($_FILES['usaha_file2']['name']) && $_FILES['usaha_file2']['name'] == ''){
 								$file_usaha_name2   = '';
@@ -196,7 +196,7 @@ class Member extends CI_Controller {
 								// ----- END Process Image Name -----
 								//$u_detail['Photo_business_location'] = $upload_usaha;
 								//$u_detail['foto_usaha']              = $upload_usaha;
-								$u_detail['images_usaha_name2']       = $file_usaha_name2;
+								$u_detail['foto_usaha2']       = $file_usaha_name2;
 							}
 								if( isset($_FILES['usaha_file3']['name']) && $_FILES['usaha_file3']['name'] == ''){
 								$file_usaha_name3  = '';
@@ -211,7 +211,7 @@ class Member extends CI_Controller {
 								// ----- END Process Image Name -----
 								//$u_detail['Photo_business_location'] = $upload_usaha;
 								//$u_detail['foto_usaha']              = $upload_usaha;
-								$u_detail['images_usaha_name3']       = $file_usaha_name3;
+								$u_detail['foto_usaha3']       = $file_usaha_name3;
 							}
 								if( isset($_FILES['usaha_file4']['name']) && $_FILES['usaha_file4']['name'] == ''){
 								$file_usaha_name4   = '';
@@ -226,7 +226,7 @@ class Member extends CI_Controller {
 								// ----- END Process Image Name -----
 								//$u_detail['Photo_business_location'] = $upload_usaha;
 								//$u_detail['foto_usaha']              = $upload_usaha;
-								$u_detail['images_usaha_name4']       = $file_usaha_name4;
+								$u_detail['foto_usaha4']       = $file_usaha_name4;
 							}
 								if( isset($_FILES['usaha_file5']['name']) && $_FILES['usaha_file5']['name'] == ''){
 								$file_usaha_name5   = '';
@@ -241,12 +241,12 @@ class Member extends CI_Controller {
 								// ----- END Process Image Name -----
 								//$u_detail['Photo_business_location'] = $upload_usaha;
 								//$u_detail['foto_usaha']              = $upload_usaha;
-								$u_detail['images_usaha_name5']       = $file_usaha_name5;
+								$u_detail['foto_usaha5']       = $file_usaha_name5;
 							}
 						}
 
 						// -----Tambahan Baru-----
-						if ($memberdata['mum_type_peminjam']=='1'){
+						if ($memberdata['mum_type_peminjam']== '1'){
 
 							if($_FILES['surat_keterangan_bekerja_file']['name'] == ''){
 								$file_surat_keterangan_bekerja_name   = '';
@@ -447,11 +447,12 @@ class Member extends CI_Controller {
 						$destination_slip_gaji = $this->config->item('member_images_dir'). $userID."/slip_gaji/";
 						$destination_pegang_ktp = $this->config->item('member_images_dir'). $userID."/pegang_ktp/";
 
+					
+
 						if($_FILES['foto_file']['name'] != ''){
 							if (!is_file($destination_foto.$file_foto_name)) {
 								mkdir_r($destination_foto);
 							}
-
 							unlink($destination_foto.$post['old_foto']);
 							move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);		
 						}
@@ -463,6 +464,9 @@ class Member extends CI_Controller {
 							unlink($destination_ktp.$post['old_ktp']);
 							move_uploaded_file($_FILES['ktp_file']['tmp_name'], $destination_ktp.$file_ktp_name);		
 						}
+					
+
+					if ($memberdata['mum_type_peminjam']=='2'){
 
 						if(isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] != ''){
 							if (!is_file($destination_usaha.$file_usaha_name)) {
@@ -499,12 +503,13 @@ class Member extends CI_Controller {
 							unlink($destination_usaha5.$post['old_usaha5']);
 							move_uploaded_file($_FILES['usaha_file5']['tmp_name'], $destination_usaha5.$file_usaha_name5);
 						}
-
+					}
 
 
 
 
 						// ----- tambahan baru -----
+						if ($memberdata['mum_type_peminjam']=='1'){
 
 						if($_FILES['surat_keterangan_bekerja_file']['name'] != ''){
 							if (!is_file($destination_surat_keterangan_bekerja.$file_surat_keterangan_bekerja_name)) {
@@ -529,6 +534,7 @@ class Member extends CI_Controller {
 							unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
 							move_uploaded_file($_FILES['pegang_ktp_file']['tmp_name'], $destination_pegang_ktp.$file_pegang_ktp_name);
 						}
+					}
 						
 						// -----batas tambahan baru -----
 
@@ -554,7 +560,6 @@ class Member extends CI_Controller {
 				exit();
 			}
 		}
-
 	}
-	
 }
+

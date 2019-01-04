@@ -28,11 +28,13 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	$config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
 	//foto start
-	$config['showphoto']    = 'https://'.$_SERVER['HTTP_HOST']. '/data-bkd/';
+	$config['showphoto']    = 'https://'.$_SERVER['HTTP_HOST']. '/images-data/';
 	//foto end
 
-	$config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
-	$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
+	//$config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
+	//$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
+	$config['data_dir'] = '/var/www/html/data-bkd/images/';
+        $config['attach_dir'] = '/var/www/html/data-file-bkd/';
 }
 
 // upload path
@@ -40,10 +42,12 @@ $config['images_dir']         = $config['data_dir'];
 $config['kilat_images_dir']   = $config['images_dir'] . 'pinjaman/kilat/';
 $config['mikro_images_dir']   = $config['images_dir'] . 'pinjaman/mikro/';
 $config['pendana_images_dir'] = $config['images_dir'] . 'pendana/';
-$config['member_images_dir']  = $config['images_dir'] . 'member/';
+//$config['member_images_dir']  = $config['showphoto'] . 'member/';
+$config['member_images_dir']  = $config['data_dir'] . 'member/';
 
 $config['img_baseurl']  = $config['doc_root'];
-$config['images_uri']   = $config['showphoto'];
+$config['images_uri']   = $config['showphoto']; // untuk menampilkan
+//$config['images_uri'] = $config['data_dir'];
 $config['page_img_uri'] = $config['images_uri'] . 'pages/';
 
 $config['template_frontend'] = 'version1';

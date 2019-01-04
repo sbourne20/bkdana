@@ -28,46 +28,46 @@ $foto_pegang_ktp = '';
 
 if ($memberdata['images_foto_name'] != '')
 {
-    $foto_profil = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/foto/'. $memberdata['images_foto_name'];
+    $foto_profil = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/foto/'. $memberdata['images_foto_name'];
 }
 if ($memberdata['images_ktp_name'] != '')
 {
-    $foto_ktp = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/ktp/'. $memberdata['images_ktp_name'];
+    $foto_ktp = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/ktp/'. $memberdata['images_ktp_name'];
 }
-if ($memberdata['images_usaha_name'] != '')
+if ($memberdata['foto_usaha'] != '')
 {
-    $foto_usaha = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha/'. $memberdata['images_usaha_name'];
+    $foto_usaha = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/usaha/'. $memberdata['foto_usaha'];
 }
-if ($memberdata['images_usaha_name2'] != '')
+if ($memberdata['foto_usaha2'] != '')
 {
-    $foto_usaha2 = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha2/'. $memberdata['images_usaha_name2'];
+    $foto_usaha2 = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/usaha2/'. $memberdata['foto_usaha2'];
 }
-if ($memberdata['images_usaha_name3'] != '')
+if ($memberdata['foto_usaha3'] != '')
 {
-    $foto_usaha3 = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha3/'. $memberdata['images_usaha_name3'];
+    $foto_usaha3 = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/usaha3/'. $memberdata['foto_usaha3'];
 }
-if ($memberdata['images_usaha_name4'] != '')
+if ($memberdata['foto_usaha4'] != '')
 {
-    $foto_usaha4 = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha4/'. $memberdata['images_usaha_name4'];
+    $foto_usaha4 = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/usaha4/'. $memberdata['foto_usaha4'];
 }
-if ($memberdata['images_usaha_name5'] != '')
+if ($memberdata['foto_usaha5'] != '')
 {
-    $foto_usaha5 = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/usaha5/'. $memberdata['images_usaha_name5'];
+    $foto_usaha5 = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/usaha5/'. $memberdata['foto_usaha5'];
 }
 
 // -----tambahan baru-----
 
 if ($memberdata['foto_surat_keterangan_bekerja'] != '')
 {
-    $foto_surat_keterangan_bekerja = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/surat_keterangan_bekerja/'. $memberdata['foto_surat_keterangan_bekerja'];
+    $foto_surat_keterangan_bekerja = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/surat_keterangan_bekerja/'. $memberdata['foto_surat_keterangan_bekerja'];
 }
 if ($memberdata['foto_slip_gaji'] != '')
 {
-    $foto_slip_gaji= $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/slip_gaji/'. $memberdata['foto_slip_gaji'];
+    $foto_slip_gaji= $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/slip_gaji/'. $memberdata['foto_slip_gaji'];
 }
 if ($memberdata['foto_pegang_ktp'] != '')
 {
-    $foto_pegang_ktp = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/pegang_ktp/'. $memberdata['foto_pegang_ktp'];
+    $foto_pegang_ktp = $this->config->item('images_uri') . 'member/'.$memberdata['id_mod_user_member']. '/pegang_ktp/'. $memberdata['foto_pegang_ktp'];
 }
 
 // -----batas tambahan-----
@@ -456,11 +456,11 @@ if ($memberdata['foto_pegang_ktp'] != '')
 
                                         <input type="hidden" name="old_foto" value="<?php echo $memberdata['images_foto_name']; ?>">
                                         <input type="hidden" name="old_ktp" value="<?php echo $memberdata['images_ktp_name']; ?>">
-                                        <input type="hidden" name="old_usaha" value="<?php echo $memberdata['images_usaha_name']; ?>">
-                                        <input type="hidden" name="old_usaha2" value="<?php echo $memberdata['images_usaha_name2']; ?>">
-                                        <input type="hidden" name="old_usaha3" value="<?php echo $memberdata['images_usaha_name3']; ?>">
-                                        <input type="hidden" name="old_usaha4" value="<?php echo $memberdata['images_usaha_name4']; ?>">
-                                        <input type="hidden" name="old_usaha5" value="<?php echo $memberdata['images_usaha_name5']; ?>">
+                                        <input type="hidden" name="old_usaha" value="<?php echo $memberdata['foto_usaha']; ?>">
+                                        <input type="hidden" name="old_usaha2" value="<?php echo $memberdata['foto_usaha2']; ?>">
+                                        <input type="hidden" name="old_usaha3" value="<?php echo $memberdata['foto_usaha3']; ?>">
+                                        <input type="hidden" name="old_usaha4" value="<?php echo $memberdata['foto_usaha4']; ?>">
+                                        <input type="hidden" name="old_usaha5" value="<?php echo $memberdata['foto_usaha5']; ?>">
                                         <input type="hidden" name="old_surat_keterangan_bekerja" value="<?php echo $memberdata['foto_surat_keterangan_bekerja']; ?>">
                                         <input type="hidden" name="old_slip_gaji" value="<?php echo $memberdata['foto_slip_gaji']; ?>">
                                         <input type="hidden" name="old_pegang_ktp" value="<?php echo $memberdata['foto_pegang_ktp']; ?>">
