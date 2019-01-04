@@ -1220,6 +1220,23 @@ class Content_model extends CI_Model
 		return $ret;
 	}
 
+	//tambahan baru - pendana
+	function get_log_transaksi_pinjam_pendana($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->detail_wallet. ' d');
+		$this->db->join($this->mod_log_transaksi_pendana. ' mltp', 'mltp.Id_pendanaan=d.kode_transaksi', 'left');
+		$this->db->join($this->mod_log_transaksi_pinjaman. ' mltj', 'mltj.ltp_Master_loan_id=mltp.Master_loan_id', 'left');
+		//$this->db->join($this->tabel_pinjaman. ' tp', 'tp.Master_loan_id=mltp.Master_loan_id', 'left');
+		//$this->db->from($this->mod_log_transaksi_pinjaman);
+		$this->db->where('d.kode_transaksi', $ordercode);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+	//batas tambahan baru - pendana
+
 	function update_log_transaksi_pinjaman($code, $data)
 	{
 		$this->db->where('ltp_Master_loan_id', $code);

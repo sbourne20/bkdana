@@ -97,6 +97,18 @@ $route['transaksi/detail-pendana']   = 'transaksi_pendana/detail';
 $route['transaksi-pendana']          = 'transaksi/pendanaan_index';
 $route['submit-bayar-cicilan-kilat'] = 'transaksi/submit_cicilan_kilat';
 $route['submit-bayar-cicilan-mikro'] = 'transaksi/submit_cicilan_mikro';
+//$route['rekening-koran/detail-rekening-koran']   = 'rekening_koran/detail';
+
+//rekening koran
+$route['detail-rekening-koran-kredit-kilat']  = 'rekening_koran/detail_kredit_kilat';
+$route['detail-rekening-koran-debet-kilat'] = 'rekening_koran/detail_debet_kilat';
+
+$route['detail-rekening-koran-kredit-mikro'] = 'rekening_koran/detail_kredit_mikro';
+$route['detail-rekening-koran-debet-mikro'] = 'rekening_koran/detail_debet_mikro';
+
+$route['detail-rekening-koran-kredit-pendana'] = 'rekening_koran/detail_kredit_pendana';
+$route['detail-rekening-koran-debet-pendana'] = 'rekening_koran/detail_debet_pendana';
+//batas rekening koran*/
 
 $route['ubah-profil']        = 'member/ubah_profil';
 $route['lengkapi-profil']    = 'member/ubah_profil';
@@ -118,3 +130,5 @@ $route['reset-password-success'] = 'password_reset/final_message';
 $route['submit-new-password']    = 'password_reset/submit_new_password';
 
 $route['resend-email-aktivasi']    = 'aktivasi/resend_email';
+
+$route['detail-profil-peminjam'] = 'rekening_koran/detail_profil_peminjam'; 
