@@ -91,6 +91,33 @@ class Member_model extends CI_Model
 		return $sql->row_array();
 	}
 
+	function data_member($id) 
+	{
+		$this->db->select('Nama_pengguna, 
+			Id_ktp as Nomor_ktp, 
+			Tempat_lahir, 
+			Tanggal_lahir, 
+			Jenis_kelamin, 
+			Pendidikan, 
+			Pekerjaan, 
+			Nomor_rekening, 
+			company as nama_perusahaan, 
+			Business_phone_no as no_telp_perusahaan,
+			How_many_years_have_you_been_in_business as lama bekerja,
+			Alamat, 
+			Kota, 
+			Provinsi, 
+			Kodepos');
+		$this->db->from($this->mod_user_member.' m');
+		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
+		$this->db->join($this->user_detail.' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
+		$this->db->join($this->profile_geografi.' g', 'g.User_id=u.Id_pengguna', 'left');
+		$this->db->where('m.id_mod_user_member', $id);
+		$this->db->limit(1);
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
+
 	function get_member_byid($id)
 	{
 		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
