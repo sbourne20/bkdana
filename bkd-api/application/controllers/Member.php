@@ -20,7 +20,9 @@ class Member extends REST_Controller {
         ini_set('display_errors', '1');
 	}
 
-	function index(){}
+	function index(){
+		echo 'index member';
+	}
 
 	function mydata_post()
 	{
