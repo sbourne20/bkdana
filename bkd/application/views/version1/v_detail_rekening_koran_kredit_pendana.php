@@ -32,7 +32,7 @@
                                             
                                             <tr>
                                                 <td><span>No. Transaksi Pinjaman</span> <?php echo $walletkoran['kode_transaksi'];  ?></td>
-                                                <td><span>Tanggal Transaksi</span><?php echo $walletkoran['Date_transaction'];  ?></td>
+                                                <td><span>Tanggal Transaksi</span><?php echo date('d/m/Y/ H:i:s' , strtotime($walletkoran['Date_transaction']));  ?></td>
                                             </tr>
                                             <tr>
                                                 <td><span>Notes</span> <?php echo $walletkoran['Notes'] ?></td>
@@ -53,19 +53,22 @@
                                                     ?></td>
                                             </tr>
                                               <tr>
-                                                <td><span>Nama Peminjam</span> <a href="" class="text-warning"
+                                                <?php
+                                                $link_detail = site_url('detail-profil-peminjam/?uname='.$walletkoran['nama_peminjam'].'&uname2='.$walletkoran['User_id']); 
+                                                ?>
+                                                <td><span>Nama Peminjam</span> <a href="<?php echo $link_detail ?>" class="text-warning"
                                                      data-toggle="tooltip" data-placement="right" data-original-title="Klik untuk melihat profil publik"><?php echo $walletkoran['nama_peminjam']; ?> <i class="fas fa-user-circle"></i></a></td>
                                             </tr>
                                             <tr>
-                                                 <td><span>Repayment Pokok Pinjaman</span> <?php echo $repayment['ltp_pokok_cicilan'] ?></td>
-                                                <td><span>Repayment Bunga Pinjaman</span> <?php echo $repayment['ltp_lender_fee'] ?></td>
+                                                 <td><span>Repayment Pokok Pinjaman</span> <?php echo number_format($repayment['ltp_pokok_cicilan']); ?> IDR</td>
+                                                <td><span>Repayment Bunga Pinjaman</span> <?php echo number_format($repayment['ltp_lender_fee']); ?> IDR</td>
                                             </tr>
                                             <tr>
                                                 <td><span>Denda Terlambat Bayar</span> <?php  ?> IDR</td>
                                             </tr>
                                             <tr>
-                                                <td><span>Jumlah Pinjaman</span> <?php echo $walletkoran['Amount'] ?> IDR</td>
-                                                <td><span>Balance</span> <?php echo $walletkoran['Balance'] ?> IDR</td>
+                                                <td><span>Jumlah Pinjaman</span> <?php echo number_format($walletkoran['Amount']); ?> IDR</td>
+                                                <td><span>Balance</span> <?php echo number_format($walletkoran['balance']); ?> IDR</td>
                                             </tr>
 
 

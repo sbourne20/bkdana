@@ -113,8 +113,8 @@
                                                         <td style="padding:5px" <?php echo $inclass; ?>><?php echo ($data['tipe_dana']=='1')? 'Kredit' : 'Debet'; ?></td>
                                                         <td style="padding:5px" <?php echo $inclass; ?>> <?php echo number_format($data['amount_detail']); ?></td>
                                                          <td style="padding:5px" <?php echo $inclass; ?>> <?php $sa= ($data['Balance'] - $data['amount_detail']);
-                                                             echo $sa; ?></td>
-                                                          <td style="padding:5px" <?php echo $inclass; ?>> <?php  echo $data['Balance']; ?></td>
+                                                             echo number_format($sa); ?></td>
+                                                          <td style="padding:5px" <?php echo $inclass; ?>> <?php  echo number_format($data['Balance']); ?></td>
                                                         <td style="padding:5px">
                                                             <a href="<?php                                                    
                                                             //echo site_url('detail-rekening-koran-kredit-kilat/?tid='.$data['kode_transaksi']); 

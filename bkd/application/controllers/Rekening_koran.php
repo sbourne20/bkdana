@@ -398,6 +398,8 @@ function detail_debet_mikro()
 		$logintype    = htmlentities($_SESSION['_bkdtype_']); // 1.peminjam, 2.pendana
 		$data['logintype'] = $logintype;
 		$data['memberid']  = $uid;
+		$data['memberdata']     = $this->Member_model->get_member_byid($uid);
+		$data['total_saldo']    = $this->Content_model->get_total_saldo($uid);
 
 		$username = antiInjection($this->input->get('uname', TRUE));
 		$username2 = antiInjection($this->input->get('uname2', TRUE));

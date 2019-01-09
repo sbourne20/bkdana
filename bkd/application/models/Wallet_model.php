@@ -182,10 +182,10 @@ class Wallet_model extends CI_Model
 	//pendana
 	function all_wallet_detail_kredit_pendana($uid, $ID2)
 	{
-
-		$this->db->select('d.Id, Detail_wallet_id, Date_transaction, d.Amount, Notes, tipe_dana, d.User_id, kode_transaksi, Balance, tp.nama_peminjam');
+		$this->db->select('*');
+		//$this->db->select('d.Id, Detail_wallet_id, Date_transaction, d.Amount, Notes, tipe_dana, d.User_id, kode_transaksi, Balance, tp.nama_peminjam');
 		$this->db->from($this->detail_wallet. ' d');
-		//$this->db->join($this->mod_log_transaksi_pendana. ' mltp', 'mltp.Id_pendanaan=d.kode_transaksi', 'left');
+		$this->db->join($this->mod_log_transaksi_pendana. ' mltp', 'mltp.Id_pendanaan=d.kode_transaksi', 'left');
 		$this->db->join($this->tabel_pinjaman. ' tp', 'tp.Master_loan_id=d.kode_transaksi', 'left');
 		//$this->db->join($this->master_wallet. ' m', 'd.Id=m.Id', 'left');
 		$this->db->where('kode_transaksi', $uid);

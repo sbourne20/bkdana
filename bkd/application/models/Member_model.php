@@ -225,4 +225,31 @@ class Member_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
+	//3desember
+	function get_user_alldata($id, $id2) 
+	{
+		$this->db->select('*');
+		// $this->db->from($this->detail_wallet. ' d');
+		// $this->db->join($this->mod_log_transaksi_pendana. ' ltp','ltp.Id_pendanaan=d.kode_transaksi', 'left');
+		// $this->db->join($this->tabel_pinjaman. ' tp','tp.Master_loan_id=ltp.Master_loan_id', 'left');
+		$this->db->from($this->user. ' u');
+		$this->db->join($this->user_detail. ' ud','ud.Id_pengguna=u.Id_pengguna', 'left');
+		$this->db->join($this->mod_user_member. ' mum','mum.id_mod_user_member=u.Id_pengguna','left');
+		$this->db->join($this->profile_geografi. ' pg','pg.User_id=u.Id_pengguna', 'left');
+		// // $this->db->join($this->master_wallet. ' m', 'd.Id=m.Id', 'left');
+		$this->db->where('u.Nama_pengguna', $id);
+		$this->db->where('u.Id_pengguna', $id2);
+		$this->db->limit('1');
+		// $this->db->where('tipe_dana', 2);
+		// $this->db->where('Date_transaction',$uid);
+		// $this->db->order_by('Detail_wallet_id', 'desc');
+		// $sql = $this->db->get();
+		// return $sql->result_array();
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->result_array();
+		return $ret;
+	}
+//3desember
+
 }

@@ -32,7 +32,7 @@
                                             
                                             <tr>
                                                 <td><span>No. Transaksi Pinjaman</span> <?php echo $walletkoran['kode_transaksi'];  ?></td>
-                                                 <td><span>Tanggal Transaksi</span> <?php echo $walletkoran['Date_transaction'];  ?> </td>
+                                                 <td><span>Tanggal Transaksi</span> <?php echo date('d/m/Y/ H:i:s' , strtotime($walletkoran['Date_transaction']));  ?> </td>
                                             </tr>
                                             <tr>
                                                 <td><span>Notes</span> <?php echo $walletkoran['Notes'] ?></td>
@@ -54,20 +54,20 @@
                                                     ?> </td>
                                             </tr>
                                             <tr>
-                                                <td><span>Repayment Pokok Pinjaman</span> <?php echo $repayment['ltp_pokok_cicilan'] ?></td>
-                                                <td><span>Repayment Bunga Pinjaman</span> <?php echo $repayment['ltp_bunga_cicilan'] ?></td>
+                                                <td><span>Repayment Pokok Pinjaman</span> <?php echo number_format($repayment['ltp_pokok_cicilan']); ?></td>
+                                                <td><span>Repayment Bunga Pinjaman</span> <?php echo number_format($repayment['ltp_bunga_cicilan']); ?></td>
                                                 
                                             </tr>
                                             <tr>
                                                 <?php
                                                     $totalrepayment = ($repayment['ltp_jml_angsuran'] * $repayment['ltp_lama_angsuran']);
                                                 ?>
-                                                <td><span>Total Repayment</span> <?php echo $totalrepayment ?></td>
+                                                <td><span>Total Repayment</span> <?php echo number_format($totalrepayment); ?></td>
                                                 <td><span>Denda Terlambat bayar Pinjaman</span> <i class="text-primary"> <?php  ?></i></td>
                                                 
                                             <tr>
-                                                <td><span>Jumlah Pinjaman</span> <?php  echo $walletkoran['Amount'] ?> IDR</td>
-                                                <td><span>Balance</span> <?php  echo $walletkoran['balance'] ?> IDR</td>
+                                                <td><span>Jumlah Pinjaman</span> <?php  echo number_format($walletkoran['Amount']); ?> IDR</td>
+                                                <td><span>Balance</span> <?php  echo number_format($walletkoran['balance']); ?> IDR</td>
                                             </tr>
 
                                             
