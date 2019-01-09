@@ -966,6 +966,9 @@ class Content_model extends CI_Model
 			Mobileno,
 			images_foto_name,
 			images_ktp_name,
+			foto_surat_keterangan_bekerja,
+			foto_slip_gaji,
+			foto_pegang_ktp,
 			Alamat,
 			Kota,
 			Provinsi,
@@ -1021,7 +1024,17 @@ class Content_model extends CI_Model
 			Mobileno,
 			images_foto_name,
 			images_ktp_name,
-			images_usaha_name,
+			foto_usaha,
+			foto_usaha2,
+			foto_usaha3,
+			foto_usaha4,
+			foto_usaha5,
+			deskripsi_usaha,
+			omzet_usaha,
+			modal_usaha,
+			margin_usaha,
+			biaya_operasional,
+			laba_usaha,
 			Alamat,
 			Kota,
 			Provinsi,
@@ -1219,23 +1232,6 @@ class Content_model extends CI_Model
 		$sql->free_result();
 		return $ret;
 	}
-
-	//tambahan baru - pendana
-	function get_log_transaksi_pinjam_pendana($ordercode)
-	{
-		$this->db->select('*');
-		$this->db->from($this->detail_wallet. ' d');
-		$this->db->join($this->mod_log_transaksi_pendana. ' mltp', 'mltp.Id_pendanaan=d.kode_transaksi', 'left');
-		$this->db->join($this->mod_log_transaksi_pinjaman. ' mltj', 'mltj.ltp_Master_loan_id=mltp.Master_loan_id', 'left');
-		//$this->db->join($this->tabel_pinjaman. ' tp', 'tp.Master_loan_id=mltp.Master_loan_id', 'left');
-		//$this->db->from($this->mod_log_transaksi_pinjaman);
-		$this->db->where('d.kode_transaksi', $ordercode);
-		$sql = $this->db->get();
-		$ret = $sql->row_array();
-		$sql->free_result();
-		return $ret;
-	}
-	//batas tambahan baru - pendana
 
 	function update_log_transaksi_pinjaman($code, $data)
 	{
