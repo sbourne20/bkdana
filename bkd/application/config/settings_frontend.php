@@ -29,12 +29,13 @@ if($_SERVER['HTTP_HOST']=='localhost')
 
 	//foto start
 	$config['showphoto']    = 'https://'.$_SERVER['HTTP_HOST']. '/images-data/';
+	//$config['showphoto1']    = 'https://'.$_SERVER['HTTP_HOST']. '/data-bkd/';
 	//foto end
 
 	//$config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
 	//$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
 	$config['data_dir'] = '/var/www/html/data-bkd/images/';
-        $config['attach_dir'] = '/var/www/html/data-file-bkd/';
+    $config['attach_dir'] = '/var/www/html/data-file-bkd/';
 }
 
 // upload path
@@ -44,6 +45,7 @@ $config['mikro_images_dir']   = $config['images_dir'] . 'pinjaman/mikro/';
 $config['pendana_images_dir'] = $config['images_dir'] . 'pendana/';
 //$config['member_images_dir']  = $config['showphoto'] . 'member/';
 $config['member_images_dir']  = $config['data_dir'] . 'member/';
+//$config['member_images_dir']  = $config['showphoto1'] . 'member/';
 
 $config['img_baseurl']  = $config['doc_root'];
 $config['images_uri']   = $config['showphoto']; // untuk menampilkan

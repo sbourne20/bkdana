@@ -335,27 +335,27 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 1</label>
-                                                <input type="file" name="usaha_file" id="usaha_file" data-show-upload="false" namafile="<?php echo $foto_usaha; ?>" multiple>
+                                                <input type="file" name="usaha_file" id="usaha_file" data-show-upload="false" namafile="<?php echo $foto_usaha; ?>">
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 2</label>
-                                                <input type="file" name="usaha_file2" id="usaha_file2" data-show-upload="false" namafile="<?php echo $foto_usaha2; ?>" multiple>
+                                                <input type="file" name="usaha_file2" id="usaha_file2" data-show-upload="false" namafile="<?php echo $foto_usaha2; ?>">
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 3</label>
-                                                <input type="file" name="usaha_file3" id="usaha_file3" data-show-upload="false" namafile="<?php echo $foto_usaha3; ?>" multiple>
+                                                <input type="file" name="usaha_file3" id="usaha_file3" data-show-upload="false" namafile="<?php echo $foto_usaha3; ?>">
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 4</label>
-                                                <input type="file" name="usaha_file4" id="usaha_file4" data-show-upload="false" namafile="<?php echo $foto_usaha4; ?>" multiple>
+                                                <input type="file" name="usaha_file4" id="usaha_file4" data-show-upload="false" namafile="<?php echo $foto_usaha4; ?>">
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 5</label>
-                                                <input type="file" name="usaha_file5" id="usaha_file5" data-show-upload="false" namafile="<?php echo $foto_usaha5; ?>" multiple>
+                                                <input type="file" name="usaha_file5" id="usaha_file5" data-show-upload="false" namafile="<?php echo $foto_usaha5; ?>">
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">

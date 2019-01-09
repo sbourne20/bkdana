@@ -167,7 +167,6 @@ class Member extends CI_Controller {
 						}
 
 						if ($memberdata['mum_type_peminjam'] == '2'){//tambahan baru pengkondisian
-
 							if( isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] == ''){
 								$file_usaha_name   = '';
 							}else{
@@ -243,8 +242,8 @@ class Member extends CI_Controller {
 								//$u_detail['foto_usaha']              = $upload_usaha;
 								$u_detail['foto_usaha5']       = $file_usaha_name5;
 							}
-						}
-
+						}	
+						
 						// -----Tambahan Baru-----
 						if ($memberdata['mum_type_peminjam']== '1'){
 
@@ -312,9 +311,12 @@ class Member extends CI_Controller {
 						$user['Nomor_rekening']     = antiInjection(trim($post['nomor_rekening']));
 						$user['nama_bank']          = antiInjection(trim($post['nama_bank']));
 
+					if ($memberdata['mum_type_peminjam']=='1'){
 						if (isset($post['pendidikan'])) {
 							$user['Pendidikan']     = antiInjection(trim($post['pendidikan']));
 						}
+						$this->Content_model->update_user($uid, $user);
+					}
 
 						$this->Content_model->update_user($uid, $user);
 
@@ -453,7 +455,9 @@ class Member extends CI_Controller {
 							if (!is_file($destination_foto.$file_foto_name)) {
 								mkdir_r($destination_foto);
 							}
+							if($post['old_foto']!=''){
 							unlink($destination_foto.$post['old_foto']);
+							}
 							move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);		
 						}
 
@@ -461,7 +465,9 @@ class Member extends CI_Controller {
 							if (!is_file($destination_ktp.$file_ktp_name)) {
 								mkdir_r($destination_ktp);
 							}
+							if($post['old_ktp']!=''){
 							unlink($destination_ktp.$post['old_ktp']);
+							}
 							move_uploaded_file($_FILES['ktp_file']['tmp_name'], $destination_ktp.$file_ktp_name);		
 						}
 					
@@ -472,35 +478,45 @@ class Member extends CI_Controller {
 							if (!is_file($destination_usaha.$file_usaha_name)) {
 								mkdir_r($destination_usaha);
 							}
+							if($post['old_usaha']!=''){
 							unlink($destination_usaha.$post['old_usaha']);
+							}
 							move_uploaded_file($_FILES['usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
 						}
 						if(isset($_FILES['usaha_file2']['name']) && $_FILES['usaha_file2']['name'] != ''){
 							if (!is_file($destination_usaha2.$file_usaha_name2)) {
 								mkdir_r($destination_usaha2);
 							}
+							if($post['old_usaha2']!=''){
 							unlink($destination_usaha2.$post['old_usaha2']);
+							}
 							move_uploaded_file($_FILES['usaha_file2']['tmp_name'], $destination_usaha2.$file_usaha_name2);
 						}
 						if(isset($_FILES['usaha_file3']['name']) && $_FILES['usaha_file3']['name'] != ''){
 							if (!is_file($destination_usaha3.$file_usaha_name3)) {
 								mkdir_r($destination_usaha3);
 							}
+							if($post['old_usaha3']!=''){
 							unlink($destination_usaha3.$post['old_usaha3']);
+							}
 							move_uploaded_file($_FILES['usaha_file3']['tmp_name'], $destination_usaha3.$file_usaha_name3);
 						}
 						if(isset($_FILES['usaha_file4']['name']) && $_FILES['usaha_file4']['name'] != ''){
 							if (!is_file($destination_usaha4.$file_usaha_name4)) {
 								mkdir_r($destination_usaha4);
 							}
+							if($post['old_usaha4']!=''){
 							unlink($destination_usaha4.$post['old_usaha4']);
+							}
 							move_uploaded_file($_FILES['usaha_file4']['tmp_name'], $destination_usaha4.$file_usaha_name4);
 						}
 						if(isset($_FILES['usaha_file5']['name']) && $_FILES['usaha_file5']['name'] != ''){
 							if (!is_file($destination_usaha5.$file_usaha_name5)) {
 								mkdir_r($destination_usaha5);
 							}
+							if($post['old_usaha5']!=''){
 							unlink($destination_usaha5.$post['old_usaha5']);
+							}
 							move_uploaded_file($_FILES['usaha_file5']['tmp_name'], $destination_usaha5.$file_usaha_name5);
 						}
 					}
@@ -509,13 +525,15 @@ class Member extends CI_Controller {
 
 
 						// ----- tambahan baru -----
-						if ($memberdata['mum_type_peminjam']=='1'){
+					else if ($memberdata['mum_type_peminjam']=='1'){
 
 						if($_FILES['surat_keterangan_bekerja_file']['name'] != ''){
 							if (!is_file($destination_surat_keterangan_bekerja.$file_surat_keterangan_bekerja_name)) {
 								mkdir_r($destination_surat_keterangan_bekerja);
 							}
+							if($post['old_surat_keterangan_bekerja']!=''){
 							unlink($destination_surat_keterangan_bekerja.$post['old_surat_keterangan_bekerja']);
+							}
 							move_uploaded_file($_FILES['surat_keterangan_bekerja_file']['tmp_name'], $destination_surat_keterangan_bekerja.$file_surat_keterangan_bekerja_name);
 						}
 
@@ -523,7 +541,9 @@ class Member extends CI_Controller {
 							if (!is_file($destination_slip_gaji.$file_slip_gaji_name)) {
 								mkdir_r($destination_slip_gaji);
 							}
+							if($post['old_slip_gaji']!=''){
 							unlink($destination_slip_gaji.$post['old_slip_gaji']);
+							}
 							move_uploaded_file($_FILES['slip_gaji_file']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
 						}
 
@@ -531,7 +551,9 @@ class Member extends CI_Controller {
 							if (!is_file($destination_pegang_ktp.$file_pegang_ktp_name)) {
 								mkdir_r($destination_pegang_ktp);
 							}
+							if($post['old_pegang_ktp']!=''){
 							unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
+							}
 							move_uploaded_file($_FILES['pegang_ktp_file']['tmp_name'], $destination_pegang_ktp.$file_pegang_ktp_name);
 						}
 					}
