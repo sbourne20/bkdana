@@ -94,7 +94,7 @@ class Member_model extends CI_Model
 	function data_member($id) 
 	{
 		$this->db->select('Nama_pengguna, 
-			Id_ktp as Nomor_ktp, 
+			Id_ktp as Nomor_nik, 
 			Tempat_lahir, 
 			Tanggal_lahir, 
 			Jenis_kelamin, 
@@ -137,7 +137,9 @@ class Member_model extends CI_Model
 	{
 		// tanpa foto//
 		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
-			u.Id_pengguna, Nama_pengguna, Id_ktp, Nomor_rekening, peringkat_pengguna, peringkat_pengguna_persentase');
+			u.Id_pengguna, Nama_pengguna, Id_ktp, Nomor_rekening, peringkat_pengguna, peringkat_pengguna_persentase,
+			images_foto_name, images_ktp_name, images_surat_keterangan_kerja_name, images_slip_gaji_name, images_with_idcard_name
+			');
 		$this->db->from($this->mod_user_member.' m');
 		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
 		$this->db->join($this->user_detail.' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
@@ -257,5 +259,7 @@ class Member_model extends CI_Model
 		$this->db->update($this->mod_member_resetcode);
 		return $this->db->affected_rows();
 	}
+
+	
 
 }
