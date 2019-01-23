@@ -66,9 +66,10 @@ class Auth extends REST_Controller
                         $tokenData['logtype'] = $getdata['mum_type'];
 
                         $response['response'] = 'success';
-                        $response['status'] = REST_Controller::HTTP_OK;
-                        $response['token']  = Authorization::generateToken($tokenData);
-                        $response['name']   = $getdata['mum_fullname'];
+                        $response['status']   = REST_Controller::HTTP_OK;
+                        $response['token']    = Authorization::generateToken($tokenData);
+                        $response['name']     = $getdata['mum_fullname'];
+                        $response['logtype']  = $getdata['mum_type'];
                         $this->set_response($response, REST_Controller::HTTP_OK);
                         return;
                     }

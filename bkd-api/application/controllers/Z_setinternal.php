@@ -24,13 +24,13 @@ class Z_setinternal extends REST_Controller {
 
 	function set_password_post() {
 
-		$headers = $this->input->request_headers();
+		// $headers = $this->input->request_headers();
 
-		if (Authorization::tokenIsExist($headers)) {
-            $token = Authorization::validateToken($headers['Authorization']);
-            if ($token != false) {
+		// if (Authorization::tokenIsExist($headers)) {
+  //           $token = Authorization::validateToken($headers['Authorization']);
+  //           if ($token != false) {
                 
-				$uid = 'iriawan.maarif@gmail.com';
+				$uid = 'iriawan.jakarta@yahoo.com';
 				$password = 'master199';
 
 				$stored_p = password_hash(base64_encode(hash('sha256', (trim($password)), true)), PASSWORD_DEFAULT);
@@ -44,7 +44,7 @@ class Z_setinternal extends REST_Controller {
 				}else{
 					echo 'gagal';
 				}
-			}
-		}
+			//}
+		//}
 	}
 }
