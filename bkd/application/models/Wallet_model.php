@@ -226,8 +226,79 @@ class Wallet_model extends CI_Model
 		return $ret;
 	}
 
+	function all_wallet_detail_debet_pendana_tarik_tunai($uid, $ID2)
+	{
+		$this->db->select('*');
+		$this->db->from($this->detail_wallet. ' d');
+		// $this->db->join($this->master_wallet. ' m', 'd.Id=m.Id', 'left');
+		//$this->db->join($this->mod_log_transaksi_pendana. ' mltp', 'mltp.Id_pendanaan=d.kode_transaksi', 'left');
+		//$this->db->join($this->tabel_pinjaman. ' tp', 'tp.Master_loan_id=mltp.Master_loan_id', 'left');
+		$this->db->where('d.kode_transaksi', $uid);
+		$this->db->where('tipe_dana', 2);
+		//$this->db->where('Detail_wallet_id', $ID);
+		$this->db->where('Date_transaction', $ID2);
+		//$this->db->where('User_id', $uid);
+		//$this->sb->where('Detail_wallet_id', $uid);
+		$this->db->order_by('Detail_wallet_id');
+		//$this->db->order_by('Date_transaction');
+		// $sql = $this->db->get();
+		// return $sql->result_array();
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
 
-	
+	function all_wallet_detail_debet_pendana_top_up($uid, $ID2)
+	{
+		$this->db->select('*');
+		$this->db->from($this->detail_wallet. ' d');
+		// $this->db->join($this->master_wallet. ' m', 'd.Id=m.Id', 'left');
+		//$this->db->join($this->mod_log_transaksi_pendana. ' mltp', 'mltp.Id_pendanaan=d.kode_transaksi', 'left');
+		//$this->db->join($this->tabel_pinjaman. ' tp', 'tp.Master_loan_id=mltp.Master_loan_id', 'left');
+		$this->db->where('d.kode_transaksi', $uid);
+		$this->db->where('tipe_dana', 1);
+		//$this->db->where('Detail_wallet_id', $ID);
+		$this->db->where('Date_transaction', $ID2);
+		//$this->db->where('User_id', $uid);
+		//$this->sb->where('Detail_wallet_id', $uid);
+		$this->db->order_by('Detail_wallet_id');
+		//$this->db->order_by('Date_transaction');
+		// $sql = $this->db->get();
+		// return $sql->result_array();
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
 
+	function update_record_repayment($data, $data1, $id)
+	{
+		//$id   = $this->db->escape_str($id);
+		//$data = $this->db->escape_str($data);
+
+		$sql = "UPDATE record_repayment SET tgl_pembayaran = '".$data."' , status_cicilan ='".$data1."' WHERE Master_loan_id= '".$id."' ";
+
+		$kueri = $this->db->query($sql);
+		return $this->db->affected_rows();
+	}
+
+	/*public function update_record_repayment1($data, $data1, $id)
+	{
+		$this->db->where('Master_loan_id', $id);
+		$this->db->update($this->record_repayment, $data, $data1);
+		return $this->db->affected_rows();
+	}*/
+
+	function update_Wallet_koperasi($uid, $saldo)
+	 {
+	  $uid   = $this->db->escape_str($uid);
+	  $saldo = $this->db->escape_str($saldo);
+
+	  $sql = "UPDATE {$this->master_wallet} SET Amount = Amount-{$saldo} WHERE User_id='{$uid}'";
+
+	  $kueri = $this->db->query($sql);
+	  return $this->db->affected_rows();
+	 }
 
 }

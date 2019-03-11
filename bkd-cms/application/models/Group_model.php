@@ -95,7 +95,7 @@ class Group_model extends CI_Model
 		return $this->db->insert_id();
 	}
 
-	function get_group_byid($id)
+	/*function get_group_byid($id)
 	{
 		$this->db->select('*');
 		$this->db->from('mod_group');
@@ -107,7 +107,7 @@ class Group_model extends CI_Model
 		$sql->free_result();
 
 		return $ret;
-	}
+	}*/
 
 	public function update_group($data, $ID)
 	{
@@ -121,7 +121,7 @@ class Group_model extends CI_Model
 		return $this->db->delete('mod_group', array('id_mod_group'=>$id));
 	}
 
-	function get_active_group()
+	/*function get_active_group()
 	{
 		$this->db->select('*');
 		$this->db->from('mod_group');
@@ -131,7 +131,7 @@ class Group_model extends CI_Model
 		$ret = $sql->result_array();
 		$sql->free_result();
 		return $ret;
-	}
+	}*/
 
 	function checkif_exist($name, $id='')
 	{

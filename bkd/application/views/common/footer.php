@@ -10,6 +10,18 @@ if ($login_status == 1)
 
 <footer <?php echo $classfooter; ?>>
     <div class="container">
+		<div class="row">
+            <div class="col-sm-6">
+                <div class="left">
+                    <div class="copyright" style="margin-bottom:-40px;">Terdaftar dan diawasi oleh</div>
+					<img src="<?php echo base_url(); ?>assets/images/OJK.png" class="img-responsive img-reset" style="height:180px; width:180px; margin-left:-20px; margin-bottom:-40px; "/>        
+				</div>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+        </div>
+		</br>
         <div class="row">
             <div class="col-sm-6">
                 <div class="left">
@@ -32,6 +44,7 @@ if ($login_status == 1)
                 </div>
             </div>
         </div>
+		
     </div>
 </footer>
 

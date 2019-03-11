@@ -52,6 +52,21 @@
                                                             echo $teks_tipe;
                                                     ?></td>
                                             </tr>
+                                            <?php 
+                                            if($walletkoran['Notes']=='Top Up'){
+                                                ?>
+                                            <tr>
+                                                <td><span>Jumlah Top Up</span> <?php  echo number_format($walletkoran1['Amount']) ?></td>
+                                            </tr>
+                                               <tr>
+                                                <td><span>Saldo Awal</span> <?php
+                                                $sa= ($walletkoran1['balance'] - $walletkoran1['Amount']);
+                                                echo number_format($sa);
+                                                ?></td>
+                                                <td><span>Saldo Akhir</span> <?php echo number_format($walletkoran1['balance']) ?> IDR</td>
+                                            </tr>
+                                            <?php }else{
+                                            ?>
                                               <tr>
                                                 <?php
                                                 $link_detail = site_url('detail-profil-peminjam/?uname='.$walletkoran['nama_peminjam'].'&uname2='.$walletkoran['User_id']); 
@@ -61,17 +76,20 @@
                                             </tr>
                                             <tr>
                                                  <td><span>Repayment Pokok Pinjaman</span> <?php echo number_format($repayment['ltp_pokok_cicilan']); ?> IDR</td>
-                                                <td><span>Repayment Bunga Pinjaman</span> <?php echo number_format($repayment['ltp_lender_fee']); ?> IDR</td>
+                                                 <td><span>Denda Terlambat Bayar</span> <?php  ?> IDR</td>
                                             </tr>
                                             <tr>
-                                                <td><span>Denda Terlambat Bayar</span> <?php  ?> IDR</td>
+                                                <?php
+                                                $pay_pph = $repayment['lender_fee']-($repayment['lender_fee']*$repayment['ltp_product_pph']/100);
+                                                ?>
+                                                <td><span>Repayment Bunga Pinjaman</span> <?php echo number_format($repayment['lender_fee']); ?> IDR</td>
+                                                <td><span>Repayment Bunga Pinjaman Setelah PPH</span> <?php echo number_format($repayment['lender_fee']).' - PPH23 '.'('.$repayment['ltp_product_pph'].'%) = '.number_format($pay_pph); ?> IDR</td>
                                             </tr>
                                             <tr>
                                                 <td><span>Jumlah Pinjaman</span> <?php echo number_format($walletkoran['Amount']); ?> IDR</td>
                                                 <td><span>Balance</span> <?php echo number_format($walletkoran['balance']); ?> IDR</td>
                                             </tr>
-
-
+                                        <?php } ?>
                                             
                                         </table>
                                     </div>

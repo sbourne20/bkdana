@@ -19,7 +19,7 @@ if($_SERVER['HTTP_HOST']=='localhost')
 }
 
 // ----- Upload Images dir -----
-$config['images_dir']           = $config['data_dir'] . 'images/';
+$config['images_dir']           = $config['data_dir'];
 $config['product_images_dir']   = $config['images_dir'] . 'product/';
 $config['category_images_dir']  = $config['images_dir'] . 'category/';
 $config['pages_images_dir']     = $config['images_dir'] . 'pages/';

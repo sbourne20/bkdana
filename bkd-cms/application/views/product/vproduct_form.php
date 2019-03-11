@@ -142,6 +142,32 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Charge</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" name="charge" class="form-control" value="<?php echo isset($EDIT['charge'])? $EDIT['charge'] : ''; ?>">
+                                        <span>
+                                            <select class="form-control" name="charge_type" style="border:1px; background-color:#eeeeee; width:44%; margin-top: -34px; margin-left: 90px;">
+                                                <option  value="1" <?php echo ($mode==2 && $EDIT['charge_type']==1)? 'selected="selected"' : ''; ?>>%</option>
+                                                <option value="2" <?php echo ($mode==2 && $EDIT['charge_type']==2)? 'selected="selected"' : ''; ?>>IDR</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="form-group">
+                                <label class="col-sm-2 control-label">Charge Type</label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" class="radiocheck" name="type_interest_rate" value="1" <?php echo ($mode==2 && $EDIT['charge_type']==1)? 'checked="checked"' : ''; ?> > Harian
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" class="radiocheck" name="type_interest_rate" value="3" <?php echo ($mode==2 && $EDIT['charge_type']==3)? 'checked="checked"' : ''; ?> > Mingguan
+                                </label>
+                                <label class="checkbox-inline">
+                                    <input type="radio" class="radiocheck" name="type_interest_rate" value="2" <?php echo ($mode==2 && $EDIT['charge_type']==2)? 'checked="checked"' : ''; ?> > Bulanan
+                                </label>
+                            </div> -->
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Status</label>
@@ -230,6 +256,6 @@ $(".radiocheck:checked").each(function(){
     case '3':
     $('#tipe_loan_term').text('weeks');
     break;  
-}
+    }
 });
  </script>

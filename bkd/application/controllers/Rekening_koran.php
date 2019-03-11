@@ -149,6 +149,7 @@ class Rekening_koran extends CI_Controller {
 		$data['transaksi']	= $this->Content_model->get_transaksi_pinjam_byid($ID);
 
 		$data['walletkoran'] = $this->Wallet_model->all_wallet_detail_kredit_kilat($ID, $ID2);
+		$data['walletkoran1'] = $this->Wallet_model->all_wallet_detail_debet_pendana_top_up($ID, $ID2);
 		
 		//$data['rk'] = $this->Wallet_model->all_wallet_detail($uid);
 		//_d($data['rk']);
@@ -192,6 +193,7 @@ class Rekening_koran extends CI_Controller {
 		$data['transaksi']	= $this->Content_model->get_transaksi_pinjam_byid($ID);
 
 		$data['walletkoran'] = $this->Wallet_model->all_wallet_detail_debet_kilat($ID, $ID2);
+		$data['walletkoran1'] = $this->Wallet_model->all_wallet_detail_debet_pendana_tarik_tunai($ID, $ID2);
 		$data['repayment']   = $this->Content_model->get_log_transaksi_pinjam($ID);
 		
 		//$data['rk'] = $this->Wallet_model->all_wallet_detail($uid);
@@ -235,6 +237,7 @@ class Rekening_koran extends CI_Controller {
 		$data['transaksi']	= $this->Content_model->get_transaksi_pinjam_byid($ID);
 
 		$data['walletkoran'] = $this->Wallet_model->all_wallet_detail_kredit_mikro($ID, $ID2);
+		$data['walletkoran1'] = $this->Wallet_model->all_wallet_detail_debet_pendana_top_up($ID, $ID2);
 		
 		//$data['rk'] = $this->Wallet_model->all_wallet_detail($uid);
 		//_d($data['rk']);
@@ -277,6 +280,7 @@ function detail_debet_mikro()
 		$data['transaksi']	= $this->Content_model->get_transaksi_pinjam_byid($ID);
 
 		$data['walletkoran'] = $this->Wallet_model->all_wallet_detail_debet_mikro($ID, $ID2);
+		$data['walletkoran1'] = $this->Wallet_model->all_wallet_detail_debet_pendana_tarik_tunai($ID, $ID2);
 		$data['repayment']   = $this->Content_model->get_log_transaksi_pinjam($ID);
 		
 		//$data['rk'] = $this->Wallet_model->all_wallet_detail($uid);
@@ -321,6 +325,7 @@ function detail_debet_mikro()
 		$data['transaksi']	= $this->Content_model->get_transaksi_pinjam_byid($ID);
 
 		$data['walletkoran'] = $this->Wallet_model->all_wallet_detail_kredit_pendana($ID, $ID2);
+		$data['walletkoran1'] = $this->Wallet_model->all_wallet_detail_debet_pendana_top_up($ID, $ID2);
 		$data['repayment']   = $this->Content_model->get_log_transaksi_pinjam($ID);
 		
 		//$data['rk'] = $this->Wallet_model->all_wallet_detail($uid);
@@ -365,6 +370,7 @@ function detail_debet_mikro()
 		$data['transaksi']	= $this->Content_model->get_transaksi_pinjam_byid($ID);
 
 		$data['walletkoran'] = $this->Wallet_model->all_wallet_detail_debet_pendana($ID, $ID2);
+		$data['walletkoran1'] = $this->Wallet_model->all_wallet_detail_debet_pendana_tarik_tunai($ID, $ID2);
 		$data['repayment']   = $this->Content_model->get_log_transaksi_pinjam_pendana($ID);
 		
 		//$data['rk'] = $this->Wallet_model->all_wallet_detail($uid);

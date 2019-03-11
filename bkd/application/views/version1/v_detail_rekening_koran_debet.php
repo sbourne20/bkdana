@@ -53,6 +53,21 @@
                                                             echo $teks_tipe;
                                                     ?> </td>
                                             </tr>
+                                            <?php 
+                                            if($walletkoran['Notes']=='Tarik Tunai'){
+                                                ?>
+                                            <tr>
+                                                <td><span>Jumlah Tarik Tunai</span> <?php  echo number_format($walletkoran1['Amount']) ?></td>
+                                            </tr>
+                                               <tr>
+                                                <td><span>Saldo Awal</span> <?php
+                                                $sa= ($walletkoran1['balance'] + $walletkoran1['Amount']);
+                                                echo number_format($sa);
+                                                ?></td>
+                                                <td><span>Saldo Akhir</span> <?php echo number_format($walletkoran1['balance']) ?> IDR</td>
+                                            </tr>
+                                            <?php }else{
+                                            ?>
                                             <tr>
                                                 <td><span>Repayment Pokok Pinjaman</span> <?php echo number_format($repayment['ltp_pokok_cicilan']); ?></td>
                                                 <td><span>Repayment Bunga Pinjaman</span> <?php echo number_format($repayment['ltp_bunga_cicilan']); ?></td>
@@ -69,7 +84,7 @@
                                                 <td><span>Jumlah Pinjaman</span> <?php  echo number_format($walletkoran['Amount']); ?> IDR</td>
                                                 <td><span>Balance</span> <?php  echo number_format($walletkoran['balance']); ?> IDR</td>
                                             </tr>
-
+                                             <?php } ?>
                                             
                                         </table>
                                     </div>

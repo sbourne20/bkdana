@@ -200,7 +200,9 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 				// get tipe produk: kilat, mikro ,usaha
 				$produk = $this->Product_model->get_product_by($loan_data['Product_id']);
 				$tipe_produk = $produk['type_of_business_id'];
-			
+				//tambahan baru repayment
+				$loan_data1 = $this->Product_model->get_record_repayment($loan_data['Master_loan_id']);
+				//batas tambahan baru repayment
 				$pinjaman_rp = $loan_data['Amount'];
 
 				// ---------- hitung total pinjaman disetujui ------------			
@@ -211,30 +213,33 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 
 				//tambahan baru
 				$type_interest_rate = $produk['type_of_interest_rate'];
-				if($type_interest_rate=1){//harian
+				if($type_interest_rate == 1){//harian
 					$totalweeks   = $produk['Loan_term'];
 					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
 					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
 					$total_angsuran_rp = $jml_repayment*$totalweeks;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
 					$loan_term = $produk['Loan_term'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
 				}
-				if($type_interest_rate=2){//bulanan
+				if($type_interest_rate == 2){//bulanan
 					$totalweeks   = 4 * $produk['Loan_term'];
 					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
 					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
 					$total_angsuran_rp = $jml_repayment*$totalweeks;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
 					$loan_term = $produk['Loan_term'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
 				}
-				if($type_of_interest_rate=3){//mingguan
+				if($type_of_interest_rate == 3){//mingguan
 					$totalweeks   = $produk['Loan_term'];
 					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
 					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
 					$total_angsuran_rp = $jml_repayment*$totalweeks;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
@@ -265,6 +270,8 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 				$angsuran_LO = ($pinjaman_rp * ($produk['Loan_organizer'] * $produk['Loan_term'])/100) / $totalweeks;
 
 				$lender_fee  = (($pinjaman_rp*$produk['Investor_return'] * $loan_term)/100)/$totalweeks;
+
+				$bunga_cicilan = ($angsuran_platform_fee + $angsuran_LO + $lender_fee );
 				/*echo 'platform fee: '.$angsuran_platform_fee;
 				echo '<br>';
 				echo 'LO: '.$angsuran_LO;
@@ -308,8 +315,41 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 					$inlog['ltp_platform_fee']             = $angsuran_platform_fee;
 					$inlog['ltp_LO_fee']                   = $angsuran_LO;
 					$inlog['ltp_lender_fee']               = $lender_fee;
+					$inlog['ltp_pokok_cicilan']		   	   = $pokok_cicilan;
+					$inlog['ltp_bunga_cicilan']			   = $bunga_cicilan;
 
 					$this->Pinjaman_model->update_log_pinjaman($inlog, $loan_data['Master_loan_id']);
+
+					//tambahan baru insert repayment
+					$k = 1;
+					for ($i=0; $i < $totalweeks; $i++) {  
+
+                    $jmlhari = 7 * $k;
+
+                    //$tempo_denda=date('d/m/Y', time('+1 days', $jatuh_tempo));
+                    //$tempo_denda=date('d/m/Y', time($jatuh_tempo. '+1 days'));
+                    //$tempo_denda1 =date('d-m-Y', strtotime('+1 days', strtotime("$jatuh_tempo1")));
+                    //$cicilan_duedate = date(strtotime("+".$jmlhari." day", $loan_data1['tgl_pinjaman_disetujui']));
+                     $cicilan_duedate1 = date('Y-m-d H:i:s',strtotime($loan_data1['tgl_pinjaman_disetujui']. "+".$jmlhari." day"));
+
+					$nowdatetime = date('Y-m-d H:i:s');
+
+					$repayment['Master_loan_id']		   = $loan_data['Master_loan_id'];
+					$repayment['User_id']				   = $loan_data['User_id'];
+					$repayment['jumlah_cicilan']		   = $jml_repayment;
+					$repayment['notes_cicilan']			   = $k;
+					$repayment['status_cicilan']		   = 'belum-bayar';
+					$repayment['tgl_jatuh_tempo']		   = $cicilan_duedate1;
+					//$repayment['tgl_pembayaran']		   = $nowdatetime;
+					$repayment['tgl_record_repayment']	   = $nowdatetime;
+					$this->Pinjaman_model->insert_record_repayment($repayment);
+                    
+
+					$k=$k+1; 
+                    }
+					//$this->Pinjaman_model->insert_record_repayment($repayment);
+                    
+					//batas tambahan baru
 
 					// --------- Generate pdf for email attachment ---------
 					/*$memberdata = $this->Member_model->get_usermember_less($loan_data['pinjam_member_id']);

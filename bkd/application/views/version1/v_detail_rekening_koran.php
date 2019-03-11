@@ -52,11 +52,26 @@
                                                             echo $teks_tipe;
                                                     ?></td>
                                             </tr>
+                                            <?php 
+                                            if($walletkoran['Notes']=='Top Up'){
+                                                ?>
+                                            <tr>
+                                                <td><span>Jumlah Top Up</span> <?php  echo number_format($walletkoran1['Amount']) ?></td>
+                                            </tr>
+                                               <tr>
+                                                <td><span>Saldo Awal</span> <?php
+                                                $sa= ($walletkoran1['balance'] - $walletkoran1['Amount']);
+                                                echo number_format($sa);
+                                                ?></td>
+                                                <td><span>Saldo Akhir</span> <?php echo number_format($walletkoran1['balance']) ?> IDR</td>
+                                            </tr>
+                                            <?php }else{
+                                            ?>
                                             <tr>
                                                 <td><span>Jumlah Pinjaman</span> <?php echo $walletkoran['Amount'] ?> IDR</td>
                                                 <td><span>Balance</span> <?php echo $walletkoran['balance'] ?> IDR</td>
                                             </tr>
-
+                                            <?php } ?>
 
                                             
                                         </table>

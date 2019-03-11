@@ -208,6 +208,44 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                                                 <div class="cbp_tmlabel">
                                                     <h4>Pembayaran</h4>
                                                     <p><?php echo number_format($jml_cicilan); ?> IDR</p>
+                                                    <?php
+                                                    //$tempo_denda=date('d/m/Y', time($jatuh_tempo. '+1 days'));
+                                                    //$tempo_denda1 =date('d-m-Y', strtotime('+1 days', strtotime("$jatuh_tempo1")));
+                                                    //$tempodenda2 = $jatuh_tempo->modify('+1 day');
+                                                    //$tempo_denda=date('d/m/Y', time('+1 days', $jatuh_tempo));
+                                                    $nowdate = date('Y-m-d');
+
+                                                    $date1=date_create("$jatuh_tempo1");
+                                                    $date2=date_create("$nowdate");
+                                                    $diff=date_diff($date1,$date2);
+                                                    $diff1 = $diff->format("%R%a");
+                                                    //secho $diff1;
+
+
+                                                    //$nowdate1 = strtotime($nowdate);
+                                                    //$jatuh_tempo1 = date($jatuh_tempo);
+                                                    //$tempo = date('d/m/Y',strtotime($jatuh_tempo3));
+                                                    //$tempo1 = ('d/m/Y');
+                                                    //$tempo1 = new DateTime("+1 day $jatuh_tempo")
+                                                    //$b=time($jatuh_tempo);
+                                                     //$Date = "2010/09/17";
+                                                        //$a = date('Y/m/d', strtotime($Date. ' + 1 days'));
+
+                                                    if(number_format($diff1) > 0){
+                                                   // if(time($nowdate) > time($jatuh_tempo)){ 
+                                                        //echo"$jatuh_tempo |";
+                                                       // echo"$tempo_denda |";
+                                                        //echo"$nowdate |";
+                                                        $bayar_denda = ($denda * $diff1);
+                                                        //echo $bayar_denda;
+
+                                                    }else(number_format($diff1) < 0){
+
+                                                        $bayar_denda = $denda * 0
+                                                    }
+                                                     ?>
+                                                    <h4>Denda Keterlambatan</h4>
+                                                    <p><?php echo number_format($bayar_denda); ?> IDR</p>
                                                     <span class="<?php echo $class; ?>">Status : <?php echo $status_cicilan; ?></span>
                                                 </div>
                                             </li>
@@ -254,6 +292,7 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                         <div class="col-sm-12">
                             <div class="balance">Saldo : <?php echo number_format($total_saldo['Amount']); ?> IDR</div>
                             <div class="bill">Tagihan : <?php echo number_format($jml_cicilan); ?> IDR</div>
+                            <div class="bill">Denda : <?php echo number_format($bayar_denda); ?> IDR</div>
                             <br><br>
 
                             <?php if ($jml_cicilan <= $total_saldo['Amount']) {  
@@ -262,12 +301,13 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                                     <input type="hidden" name="transaksi_id" value="<?php echo $transaksi['Master_loan_id']; ?>">
                                     <input type="hidden" name="jml_pinjaman" value="<?php echo $total_bayar; ?>">
                                     <input type="hidden" name="jml_cicilan" value="<?php echo $jml_cicilan; ?>">
+                                    <input type="hidden" name="bayar_denda" value="<?php echo $bayar_denda; ?>">
                                     <input type="hidden" name="id_peminjam" value="<?php echo $transaksi['Id_pengguna']; ?>">
                                     <input type="hidden" name="id_peminjam_member" value="<?php echo $transaksi['id_mod_user_member']; ?>">
 
                                     <div class="form-group">
                                         <label for="handphone">Jumlah Pembayaran</label>
-                                        <input type="text" name="jml_bayar" class="form-control text-center numeric" value="<?php echo $jml_cicilan; ?>">
+                                        <input type="text" name="jml_bayar" class="form-control text-center numeric" value="<?php echo ($jml_cicilan+$bayar_denda); ?>">
                                     </div>
                                     <button type="button" id="submit_bayarcicilan" style="background: transparent; border: none;">
                                     <a href="javascript:;" data-dismiss="modal" class="btn btn-purple">Submit</a>

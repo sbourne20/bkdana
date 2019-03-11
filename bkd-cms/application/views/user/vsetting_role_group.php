@@ -320,6 +320,43 @@
                                     <input type="checkbox" name="access[pages/edit]" value="pages/edit" <?php echo (check_role_access($EDIT, 'pages/edit')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Reject
                                 </td>
                             </tr>
+                            <tr class="gradeX">
+                                <td>
+                                    Rekening Koran
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[pages/index]" value="pages/index" <?php echo (check_role_access($EDIT, 'pages/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[pages/add]" value="pages/add" <?php echo (check_role_access($EDIT, 'pages/add')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Approve
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[pages/edit]" value="pages/edit" <?php echo (check_role_access($EDIT, 'pages/edit')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Reject
+                                </td>
+                            </tr>
+                            <tr class="gradeX">
+                                <td>
+                                    Member Group
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[member/group]" value="member/group" <?php echo (check_role_access($EDIT, 'member/group')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[member/add_group]" value="member/add_group" <?php echo (check_role_access($EDIT, 'member/add_group')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Add
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[member/delete_group]" value="member/delete_group" <?php echo (check_role_access($EDIT, 'member/delete_group')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Delete
+                                </td>
+                            </tr>
+
+                             <tr class="gradeX">
+                                <td>
+                                    BKD Wallet
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[bkdwallet/index]" value="bkdwallet/index" <?php echo (check_role_access($EDIT, 'bkdwallet/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
+                                </td>
+                            </tr>
                             
                             </tbody>
                     </table>
