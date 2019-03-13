@@ -29,7 +29,7 @@ if ( $_SERVER['SERVER_ADDR'] =='172.31.33.98' OR $_SERVER['SERVER_ADDR'] == '149
 	/* LIVE */
 	$config['base_url'] = $docroot .'://'.$_SERVER['HTTP_HOST'];	
 }else{
-	$config['base_url'] = $docroot .'://'.$_SERVER['HTTP_HOST'] .'/bkd-cms/';
+	$config['base_url'] = $docroot .'://'.$_SERVER['HTTP_HOST'] .'/bkdana/bkd-cms/';
 }
 
 /*
