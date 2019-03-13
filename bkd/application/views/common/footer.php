@@ -61,7 +61,6 @@ if ($login_status == 1)
 <!-- Overflow Content -->
 <div class="wrapper-content overflow-wrapp">
     <div class="section-info">
-
         <div class="container">
             <div class="row">
                 <div class="col-sm-6">
@@ -126,21 +125,22 @@ if ($login_status == 1)
                 </div>
             </div>
         </div>
-
+	</div>
+	<div class="section-ojk">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<h4>Terdaftar dan diawasi oleh</h4>
+					<img src="<?php echo base_url(); ?>assets/images/OJK.png" class="img-responsive" style="width:200px;"/>        
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 
 
 <footer <?php echo $classfooter; ?>>
     <div class="container">
-		<div class="row">
-            <div class="col-sm-6">
-                <div class="left">
-                    <div class="copyright" style="margin-bottom:-40px;">Terdaftar dan diawasi oleh</div>
-					<img src="<?php echo base_url(); ?>assets/images/OJK.png" class="img-responsive img-reset" style="height:180px; width:180px; margin-left:-20px; margin-bottom:-40px; "/>        
-				</div>
-            </div>
-        </div>
         <div class="row">
             <div class="col-sm-6">
                 <div class="left">
