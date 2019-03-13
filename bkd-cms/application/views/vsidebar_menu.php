@@ -86,6 +86,11 @@ $sub_menu    = $this->uri->segment(2);
                     </a>
                 </li>
                 <li>
+                    <a <?php echo ( ($active_menu=='bkdwallet')? 'class="active"' : ''); ?> href="<?= base_url('bkdwallet') ?>">
+                        <i class="fa fa-dollar"></i> <span>BKD Wallet</span>
+                    </a>
+                </li>
+                <li>
                     <a <?php echo ( ($active_menu=='reporting')? 'class="active"' : ''); ?> href="<?= base_url('reporting') ?>">
                         <i class="fa fa-list-alt"></i> <span>Reporting</span>
                     </a>

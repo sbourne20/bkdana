@@ -75,7 +75,7 @@ if ($memberdata['mum_type'] == '1'){
                                         </div>
                                         <div class="col-sm-4">
                                             <i class="big fas fa-coins"></i>
-                                            <div class="title">Total Slado</div>
+                                            <div class="title">Total Saldo</div>
                                             <strong class="counter"><?php echo number_format($total_saldo['Amount']); ?></strong> <span>IDR</span>
                                         </div>
                                     </div>

@@ -23,6 +23,7 @@
 		                    <th>Nama Peminjam</th>
 		                    <th>Email</th>
 		                    <th>Telp</th>
+		                    <th>Tipe Peminjam</th>
 		                    <th>Member Group</th>
 		                    <th>Join Date</th>
 		                    <th>Grade</th>

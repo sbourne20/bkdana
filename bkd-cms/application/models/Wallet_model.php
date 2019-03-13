@@ -164,4 +164,53 @@ class Wallet_model extends CI_Model
 		$id = $this->db->escape_str($id);
 		return $this->db->delete($this->detail_wallet, array('User_id'=>$id));
 	}
+
+	// 24 Januari 2019
+	function get_wallet_bymember($uid)
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_wallet);
+		$this->db->where('wallet_member_id', $uid);
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
+
+	function get_wallet_bkd($id)
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_wallet);
+		$this->db->where('User_id', $id);
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
+
+	function update_bkd_wallet($id,$money)
+	{
+		$data = array(
+			'Amount' => $money,
+		);
+		$this->db->where('User_id', $id);
+		$this->db->update($this->master_wallet, $data);
+		return $this->db->affected_rows();
+	}
+
+	function insert_detail_wallet_bkd($data)
+	{
+		$this->db->insert($this->detail_wallet, $data);
+		$this->db->where('User_id', 9);
+		return $this->db->insert_id();
+	}
+
+	function get_log_transaksi_pinjam($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->mod_log_transaksi_pinjaman. ' mltj');
+		$this->db->join($this->mod_log_transaksi_pendana. ' mltp','mltp.Master_loan_id=mltj.ltp_Master_loan_id', 'LEFT');
+		$this->db->where('ltp_Master_loan_id', $ordercode);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+	// 24 Januari 2019
 }

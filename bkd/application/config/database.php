@@ -76,6 +76,9 @@ $active_group = 'default';
 $query_builder = TRUE;
 
 if($_SERVER['HTTP_HOST']=='localhost') {
+	//$db_host = 'rm-d9jxms81910c50lvi8o.mysql.ap-southeast-5.rds.aliyuncs.com';
+	//$db_user = 'root';
+	//$db_pass = 'Master199';
 	$db_host = 'localhost';
 	$db_user = 'root';
 	$db_pass = '';

@@ -784,7 +784,8 @@ class Pinjaman extends CI_Controller {
 
 		$content_mikro = $this->Content_model->screening_mikro_rows($data['memberdata']['Id_pengguna']);
 
-		if (empty($content_mikro['What_is_the_name_of_your_business']) OR empty($content_mikro['images_usaha_name'])  )
+		if (empty($content_mikro['What_is_the_name_of_your_business']) )
+			//OR empty($content_mikro['images_usaha_name'])  )
 		{
 			//echo 'belum lengkap';
 			$data['pages']    = 'v_form_pinjaman_mikro_lengkap';

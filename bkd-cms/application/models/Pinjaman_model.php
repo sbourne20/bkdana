@@ -657,9 +657,17 @@ class Pinjaman_model extends CI_Model
 		$this->db->update($this->mod_log_transaksi_pinjaman, $data);
 		return $this->db->affected_rows();
 	}
+	
 	function insert_profil_pinjaman5($data)
 	{
 		$this->db->insert('record_pinjaman', $data);
+		//$this->db->insert($this->record_pinjaman, $data);
+		return $this->db->insert_id();
+	}
+
+	function insert_record_repayment($data)
+	{
+		$this->db->insert('record_repayment', $data);
 		//$this->db->insert($this->record_pinjaman, $data);
 		return $this->db->insert_id();
 	}

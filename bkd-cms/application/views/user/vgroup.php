@@ -26,21 +26,21 @@
 	                <table class="display table table-bordered table-striped" id="usergroup-table">
 	                <thead>
 		                <tr>
-		                    <th>No 132131</th>
-		                    <th>Group 1321</th>
-		                    <th>Action 13131</th>
+		                    <th>No</th>
+		                    <th>Group</th>
+		                    <th>Action</th>
 		                </tr>
 	                </thead>
 	                <tbody>
 		                
 	                </tbody>
-	                <tfoot>
+	               <!--  <tfoot>
 		                <tr>
 		                    <th>No</th>
 		                    <th>Group</th>
 		                    <th>Action</th>
 		                </tr>
-	                </tfoot>
+	                </tfoot> -->
 	                </table>
                 </div>
                 </div>

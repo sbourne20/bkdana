@@ -102,6 +102,15 @@ class Rekening_koran_model extends CI_Model
 		return json_encode($output);
 	}
 
+	function get_rekening_koran_bkd($uid)
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_wallet);
+		$this->db->where('User_id', $uid);
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
+	
 	function get_rekening_koran_dt($uid)
 	{
 		// ---- Get All data show as Json ----

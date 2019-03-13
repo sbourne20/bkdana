@@ -66,7 +66,7 @@
 		<tr>
 			<td>Foto Profil</td>
 			<td>
-				<img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']; ?>" alt="" />		
+				<img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']; ?>"" alt="" />		
 			</td>
 		</tr>
 		<tr>

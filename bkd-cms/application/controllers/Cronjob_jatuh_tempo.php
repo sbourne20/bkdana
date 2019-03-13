@@ -23,6 +23,107 @@ class Cronjob_jatuh_tempo extends CI_Controller
 
 	function index(){}
 
+	//tambahan baru
+	function get_denda(){
+		$data = $this->Cronjob_model->get_denda2();
+		
+		//$data1 = $this->Cronjob_model->get_my_denda1();
+		//$totaldata = count($data);
+		$totaldata = count($data);
+
+		echo 'Found '.$totaldata;
+
+		foreach ($data as $key ) {
+			$data1 = $this->Cronjob_model->get_denda1($key['Master_loan_id']);
+		
+		//$totaldata1 = count($data1);
+		//echo 'Found '.$totaldata1;
+		
+		}
+		$data2 = $this->Cronjob_model->get_my_denda1($key['Master_loan_id']);
+		
+		$denda 			= $data2['charge'];
+		$nowdate 		= date('Y-m-d');
+
+		if (count($data1) > 0) {
+			foreach ($data1 as $rep) {
+		
+			$info = getdate();
+		    if ($info['hours'] >= 23 && $info['minutes'] >= 59) {
+		
+		$tgl_jth_tempo1 	= $rep['tgl_jatuh_tempo'];
+		$tgl_jth_tempo = date_format(date_create_from_format('Y-m-d H:i:s', $tgl_jth_tempo1), 'Y-m-d');
+
+		$date1=date_create("$tgl_jth_tempo");
+        $date2=date_create("$nowdate");
+        $diff=date_diff($date1,$date2);
+        $diff1 = $diff->format("%R%a");
+
+        echo '</br>';
+        echo $diff1;
+        echo '</br>';
+        echo 'tgl jth tempo : </br>';
+        echo $tgl_jth_tempo;
+        echo '</br>';
+
+        $array[] = array($diff1);
+
+        if(number_format($diff1 > 0)){
+                                                   
+        $bayar_denda = ($denda * $diff1);
+
+        $repayment['jml_denda']      = $bayar_denda;
+
+        echo $repayment['jml_denda'];
+        echo '  ';
+        echo $key['Master_loan_id'];
+        echo '</br> jatuhh tempo '.$rep['tgl_jatuh_tempo'];
+
+       /* date_default_timezone_set('Asia/Bangkok');
+		$hours = date('h:i:s A', time());
+		if ($hours == 00:00:00 AM){*/
+
+		$this->Cronjob_model->update_record_repayment($repayment['jml_denda'], $key['Master_loan_id'], $rep['tgl_jatuh_tempo']);
+		//}
+        
+	    }else if(number_format($diff1 < 0)){
+
+                                                    
+        $bayar_denda =  0;
+        //$bayar_denda = ($denda * $diff1);
+
+        $repayment['jml_denda']      = $bayar_denda;
+
+
+        echo $repayment['jml_denda'];
+        echo '  ';
+        echo $key['Master_loan_id'];
+        echo '</br> tgl sekarang '.$nowdate;
+
+       $this->Cronjob_model->update_record_repayment($repayment['jml_denda'], $key['Master_loan_id'], $rep['tgl_jatuh_tempo']);
+
+    	}
+	    }else {
+	    	echo "belum waktunya update";
+	    }
+
+
+         }
+         }                                         
+        //$denda1 = str_replace('/', '-', $cicilan_duedate);
+        //$denda2 = date('Y-m-d', strtotime($denda1));
+		echo '</br> batas';
+		echo '</br> tgl sekarang </br>';
+		echo $nowdate;
+		echo '</br>';
+		//echo $tgl_jth_tempo;
+        //baru
+
+
+		
+}
+	//batas tambahan baru
+
 	// akan jatuh tempo (H-1)
 	function soon()
 	{

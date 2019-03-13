@@ -191,6 +191,7 @@ class Payment extends CI_Controller {
 				$inwallet['User_id']          = $data_topup['user_id'];
 				$inwallet['Amount']           = $gross_amount;
 				$inwallet['wallet_member_id'] = $data_topup['member_id'];
+				$inwallet['loan_organizer_id'] = 1;
 
 				$master_wallet_id = $this->Wallet_model->insert_master_wallet($inwallet);
 
