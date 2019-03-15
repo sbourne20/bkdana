@@ -26,7 +26,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $docroot = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
 
 
-if ($_SERVER['SERVER_ADDR'] == '::1') {
+if ($_SERVER['SERVER_ADDR']=='149.129.213.30' OR $_SERVER['SERVER_ADDR']=='172.31.33.98') {
 	/* dev */
 	$config['base_url'] = $docroot.'://'.$_SERVER['HTTP_HOST'];
 }else{

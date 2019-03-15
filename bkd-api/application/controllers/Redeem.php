@@ -63,8 +63,9 @@ class Redeem extends REST_Controller {
 
 			    		$response = [
 		            		'response' => 'fail',
-			                'status'   => REST_Controller::HTTP_OK,
-			                'content'  => 'data kosong',
+			                'status'   => 400,
+			                'content'  => '',
+			                'message'  => 'data kosong',
 			            ];
 			    		$http_status = REST_Controller::HTTP_OK;
 			    	}
@@ -73,6 +74,7 @@ class Redeem extends REST_Controller {
 			    	$response = [
 	            		'response' => 'fail',
 		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'response_code' => 401,
 		                'message'  => 'Unauthorized',
 		            ];
 		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
@@ -82,6 +84,7 @@ class Redeem extends REST_Controller {
 				$response = [
 	            		'response' => 'fail',
 		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'response_code' => 401,
 		                'message'  => 'Unauthorized',
 		            ];
 		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
@@ -176,7 +179,7 @@ class Redeem extends REST_Controller {
 								$response['response'] = 'success';
 			                    $response['status']   = REST_Controller::HTTP_OK;
 			                    $response['content']  = '';
-			                    $response['message']  = '';
+			                    $response['message']  = 'Pengajuan Redeem Berhasil';
 			                    $this->set_response($response, REST_Controller::HTTP_OK);
 			                    return;
 							}else{
@@ -208,6 +211,7 @@ class Redeem extends REST_Controller {
 			    	$response = [
 	            		'response' => 'fail',
 		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'response_code' => 401,
 		                'message'  => 'Unauthorized',
 		            ];
 		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
@@ -217,6 +221,7 @@ class Redeem extends REST_Controller {
 				$response = [
 	            		'response' => 'fail',
 		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'response_code' => 401,
 		                'message'  => 'Unauthorized',
 		            ];
 		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;

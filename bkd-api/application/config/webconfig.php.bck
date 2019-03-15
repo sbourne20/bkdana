@@ -1,0 +1,83 @@
+<?php 
+defined('BASEPATH') OR exit('No direct script access allowed');
+
+$config['doc_root'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
+$config['http']     = $config['doc_root'];
+$config['doc_root'] .= "://".$_SERVER['HTTP_HOST'];
+$config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
+
+$server_name = $_SERVER['SERVER_ADDR'];
+switch ($server_name) {
+     case  "10.10.112.8": // Live
+        $config['data_dir'] = 'C:/xampp/htdocs/data/';
+        $production         = '1';
+        $err_reporting      = "0";
+        $config['url_tiro'] = $config['http'] .'://www.tokotigaroda.com/';
+
+        // Production Semen
+        $config['DOKU_MALLID']       = '3113';
+        $config['DOKU_Sharekey']     = 'Yr30tbS26XPm';
+
+        // Production RMC
+        $config['DOKU_rmc_MALLID']   = '3111';
+        $config['DOKU_rmc_Sharekey'] = 'Yr30tbS26XPm';
+        break;
+
+    default: // Development
+        $config['data_dir'] = '/mainData/data-str-ecommerce/';
+        $production         = '0';
+        $err_reporting      = "E_ALL ^ E_NOTICE";
+        $config['url_tiro'] = $config['http'] .'://tokotigaroda.sibertama.com/';
+
+        // SANDBOX Semen
+        $config['DOKU_MALLID']       = '4268';
+        $config['DOKU_Sharekey']     = 'Yr30tbS26XPm';
+
+        // SANDBOX RMC
+        $config['DOKU_rmc_MALLID']   = '4617';
+        $config['DOKU_rmc_Sharekey'] = 'Yr30tbS26XPm';
+        break;
+}
+
+$config['production']        = $production;
+$config['err_reporting']     = $err_reporting;
+
+$config['template_uri']      = $config['doc_root'] . 'assets/';
+$config['images_uri']        = $config['doc_root'] . 'assets/images/';
+
+$config['images_dir']         = $config['data_dir'] . 'images/';
+$config['member_dir']         = $config['images_dir'] . 'member/';
+
+// URL
+$config['images_data_uri']        = $config['doc_root'] . "images-data/";
+$config['images_slider_uri']      = $config['images_data_uri'] . "slider/";
+$config['images_merchant_uri']    = $config['images_data_uri'] . "merchant/";
+$config['images_product_uri']     = $config['images_data_uri'] . "product/";
+$config['images_product_rmc_uri'] = $config['images_data_uri'] . "readymix/";
+$config['images_pages_uri']       = $config['images_data_uri'] . "pages/";
+
+$config['googleapi_clientid']     = '619203579307-2dh0u9uq4ftfschctbeffm863kpm9bj9.apps.googleusercontent.com';
+$config['googleapi_clientsecret'] = 'w3SHXeWbCckYKbNf_agxHmCp';
+$config['googleapi_redirect']     = $config['doc_root']. 'callbackgoogleplus';
+$config['googlemaps_api']         = 'AIzaSyDSNHVehjw7__NQ47Fp9iqdnsMGy7J5Leg';
+
+$config['fb_id']                  = '654528154736344';
+$config['fb_secret']              = '56ac236b44a5146e840bf576ad5f1bc1';
+$config['fbcallback']             = $config['doc_root']. 'fbcallback';
+
+$config['cache']                  = $config['data_dir']. 'cache';
+$config['secret_server_key']      = 's143rt487h7ALkp';
+$config['secret_pswd']            = 'j4v4k7uSS';
+
+$config['mail_from']       = 'noreply@tokotigaroda.com';
+$config['mail_from_title'] = 'Toko Tiga Roda';
+$config['mail_addcc1']     = 'vidya.iskandar@indocement.co.id';
+
+$config['contact_email'] = 'kontak@tokotigaroda.com';
+$config['contact_phone'] = '(+6221) 255 33 555';
+
+// Prefix Code
+$config['DOKU_paycode_prefix_smn'] = '88560465';    // Semen
+$config['DOKU_paycode_prefix_rmc'] = '88560464';    // Readymix
+
+$config['Firebase_API_KEY'] = 'AAAA_qT6l2A:APA91bF95u9gR-3OuQseNbU3AUrUF4HRzqeuky3EsoQ-49FYn8TH60oIIuR9zU4M9B0U-up4FOqE34CMeHymbKYOAiuoy5LFi5-gXx1Mg5XAbAq1VpslBICandDIpUl9F1SQhlO8uk8j';

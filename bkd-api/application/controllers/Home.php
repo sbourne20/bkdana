@@ -1,113 +1,143 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Home extends CI_Controller {
+require_once APPPATH . 'libraries/REST_Controller.php';
+require_once APPPATH . 'libraries/ExpiredException.php';
+require_once APPPATH . 'libraries/BeforeValidException.php';
+require_once APPPATH . 'libraries/SignatureInvalidException.php';
+
+use Restserver\Libraries\REST_Controller;
+
+class Home extends REST_Controller {
+
+	/* Submit pendanaan */
 
 	function __construct()
 	{
 		parent::__construct();
 
-		//$this->load->model('Product_model', 'pmodel');
 		$this->load->model('Content_model');
+		$this->load->model('Member_model');
+		$this->load->model('Wallet_model');
+		$this->load->model('Pendanaan_model');
+
+		error_reporting(E_ALL);
+        ini_set('display_errors', '1');
 	}
 
 	function index(){
-		echo 'index';
+		// echo 'index';
+		header("Location: https://bkdana.id");
+		die();
 	}
 
-	function slider($limit)
+	function data_transaksi_get()
 	{
-		$limit = (empty($limit))? '0' : (int)(antiInjection($limit));
-		$data = $this->Content_model->get_slide($limit);
-        
-        if (count($data)>0) {
-            $json_format = json_encode($data) ;
-            echo "{ \"response\": \"success\" , \"Slider\":" . $json_format. "}";
-        }
-        else
-        {
-            echo "{ \"response\": \"fail\" , \"Slider\":[\"kosong\" ]}";
-        }
-//		echo json_encode($data);
-	}
+		$headers = $this->input->request_headers();
 
-	function get_data_merchant()
-	{
-		//$id   = (empty($id))? '1' : (int)(antiInjection($id));
-		$alldata = $this->Content_model->get_merchant();
+		if (Authorization::tokenIsExist($headers)) {
+            $token = Authorization::validateToken($headers['Authorization']);
+            if ($token != false) {
+                
+				$uid = (int)antiInjection($token->id);
+				$logintype = (int)antiInjection($token->logtype);
 
-		$data   = array();
-		$output = array();
-		foreach ($alldata as $key) {			
-			$ins['merchant_id']   = $key['merchant_id'];
-            $ins['merchant_name'] = $key['merchant_name'];
-            $ins['merchant_slug'] = $key['merchant_slug'];
-            $ins['merchant_description'] = $key['merchant_description'];
-            $ins['merchant_position']    = $key['merchant_position'];
-			$ins['image_link']    = $this->config->item('url_tiro') . 'images-data/merchant/'.$key['merchant_id'].'/'.$key['merchant_image'];
-		    $data[] = array_merge($output, $ins);
-		}
-        
-        if (count($data)>0) {
-            $json_format = json_encode($data) ;
-            echo "{ \"response\": \"success\" , \"content\":" . $json_format. "}";
-        }
-        else
-        {
-            echo "{ \"response\": \"fail\" , \"content\":[\"kosong\" ]}";
-        }
-	}
+				if (!empty($uid) && is_numeric($logintype)) {
 
-	function get_str_rss()
-	{
-		// RSS
+					if ($logintype == '1') {
+						// Peminjam
+						$list_transaksi = $this->Content_model->get_my_transactions_pinjam($uid);
+						$nominal_all_transaksi = $this->Content_model->get_total_mypinjaman($uid);
+						$tipe_user = 'Peminjam';
+					}else{
+						// Pendana
+						$list_transaksi = $this->Content_model->get_my_transactions_pendana($uid);
+						$nominal_all_transaksi = $this->Content_model->get_total_mypendanaan($uid);
+						$tipe_user = 'Pendana';
+					}
 
-		$limit = (int)(antiInjection($this->input->get('total', TRUE)));
+					$total_repayment = count($list_transaksi);
+					$save_arr = array();
+					
+					if ($total_repayment > 0) {
 
-		if ($limit)
-		{
-			if ($limit > 10) { $limit = 10; }
+						$i=0;
+						foreach ($list_transaksi as $l) {
+							$save_arr[$i]['no_transaksi']      = $l['transaksi_id'];
+							$save_arr[$i]['nominal_transaksi'] = $l['totalrp'];
 
-			include (APPPATH . 'libraries/simplepie-1.5/autoloader.php');
-			
-			if ($_SERVER['SERVER_ADDR'] == '10.5.5.46') {
-				$rss_url = 'http://www.bisnis.com/rss';
+
+							if ($logintype == '1') {
+								// Peminjam
+								$save_arr[$i]['title_transaksi'] = $l['product_title'];
+							}else{
+								// Pendana
+								$save_arr[$i]['title_transaksi'] = 'Pendanaan - ' . $l['product_title'];
+							}
+
+							if ($l['tgl_approve'] != '0000-00-00 00:00:00') {
+								// hitung jatuh tempo
+								$save_arr[$i]['jatuh_tempo_transaksi'] = date('d/m/Y', strtotime($l['tgl_approve']));
+								
+							}else{
+								$save_arr[$i]['jatuh_tempo_transaksi'] = '-';
+							}
+
+							$i++;
+
+						}
+					}
+
+					$data['list_repayment'] = $save_arr;
+
+					// Saldo
+					$mysaldo = $this->Content_model->get_total_saldo($uid);
+					if (isset($mysaldo['Amount'])) {
+						$data['saldo']             = ($mysaldo['Amount']);
+					}else{
+						$data['saldo']             = '0';						
+					}
+
+					if (isset($nominal_all_transaksi['itotal_transaksi'])) {
+						$data['jml_all_transaksi'] = number_format($nominal_all_transaksi['itotal_transaksi']);
+					}else{
+						$data['jml_all_transaksi'] = '0';						
+					}
+					
+					$data['tipe_user']         = $tipe_user;
+
+					$response['response'] = 'success';
+	                $response['status']   = REST_Controller::HTTP_OK;
+	                $response['content']  = $data;
+	                $this->set_response($response, REST_Controller::HTTP_OK);
+	                return;
+
+				}else{
+			    	$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Member Not Found',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			    }
+
 			}else{
-				$rss_url = 'http://www.sementigaroda.com/rss';	
+				$response = [
+	            		'response' => 'fail',
+		                'status'   => 404,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = 404;
 			}
-
-			$feed = new SimplePie();
-			$feed->set_feed_url($rss_url);
-			$feed->enable_cache(false);
-			$feed->init();		 
-			// This makes sure that the content is sent to the browser as text/html and the UTF-8 character set (since we didn't change it).
-			$feed->handle_content_type();
-			$rss_feed = $feed->get_items(0,$limit);
-
-			$i=0;
-			$data_rss = '';
-
-			foreach ($rss_feed as $item) {
-				$data_rss[$i]['url']  = $item->get_permalink();
-				$data_rss[$i]['title'] = $item->get_title();
-				$data_rss[$i]['image'] = $item->get_enclosure()->link;
-
-				$i = $i+1;
-			}
-
-			if (is_array($data_rss))
-			{
-				$resp = 'success';
-				$data = json_encode($data_rss);
-			}else{
-				$resp = 'fail';
-				$data = '["kosong" ]';
-			}
-
-			echo '{ "response": "'.$resp.'" , "content": '.$data.'}';
-
 		}else{
-			//echo 'not ok';
+			$response = [
+        		'response' => 'fail',
+                'status'   => REST_Controller::HTTP_FORBIDDEN,
+                'message'  => 'Forbidden',
+            ];
+            $http_status = REST_Controller::HTTP_FORBIDDEN;
 		}
-		
+
+		$this->set_response($response, $http_status);
+        return;
 	}
 }

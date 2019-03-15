@@ -93,21 +93,50 @@ class Member_model extends CI_Model
 
 	function data_member($id) 
 	{
-		$this->db->select('Nama_pengguna, 
-			Id_ktp as Nomor_nik, 
-			Tempat_lahir, 
-			Tanggal_lahir, 
-			Jenis_kelamin, 
-			Pendidikan, 
-			Pekerjaan, 
-			Nomor_rekening, 
-			company as nama_perusahaan, 
-			Business_phone_no as no_telp_perusahaan,
-			How_many_years_have_you_been_in_business as lama bekerja,
-			Alamat, 
-			Kota, 
-			Provinsi, 
-			Kodepos');
+		$this->db->select('m.id_mod_user_member as member_id,
+			mum_email as email,
+			Nama_pengguna, 
+			IFNULL(Id_ktp, "") as Nomor_nik, 
+			IFNULL(Tempat_lahir, "") as Tempat_lahir, 
+			IFNULL(Tanggal_lahir, "") as Tanggal_lahir, 
+			IFNULL(Jenis_kelamin, "") as Jenis_kelamin, 
+			IFNULL(Pendidikan, "") as Pendidikan, 
+			IFNULL(Pekerjaan, "") as Pekerjaan, 
+			Mobileno,
+			IFNULL(Nomor_rekening, "") as Nomor_rekening, 
+			IFNULL(company, "") as nama_perusahaan, 
+			IFNULL(Business_phone_no, "") as no_telp_perusahaan,
+			IFNULL(How_many_years_have_you_been_in_business, "") as lama_bekerja,
+			IFNULL(What_is_the_name_of_your_business, "") as usaha,
+			IFNULL(deskripsi_usaha, "") as deskripsi_usaha,
+			IFNULL(omzet_usaha, "") as omzet_usaha,
+			IFNULL(margin_usaha, "") as margin_usaha,
+			IFNULL(biaya_operasional_usaha, "") as biaya_operasional_usaha,
+			IFNULL(laba_usaha, "") as laba_usaha,
+			IFNULL(jml_bunga_usaha, "") as jml_bunga_usaha,
+			IFNULL(How_many_years_have_you_been_in_business, "") as lama_usaha,
+			IFNULL(status_karyawan, "") as status_karyawan,
+			IFNULL(nama_atasan, "") as nama_atasan,
+			IFNULL(referensi_orang_1, "") as referensi_1,
+			IFNULL(referensi_orang_2, "") as referensi_2,
+			IFNULL(referensi_nama_1, "") as referensi_nama_1,
+			IFNULL(referensi_nama_2, "") as referensi_nama_2,
+			IFNULL(average_monthly_salary, "") as gaji,
+			IFNULL(nama_bank, "") as nama_bank,
+			IFNULL(Alamat, "") as Alamat, 
+			IFNULL(Kota, "") as Kota, 
+			IFNULL(Provinsi, "") as Provinsi, 
+			IFNULL(Kodepos, "") as Kodepos,
+			peringkat_pengguna,
+			peringkat_pengguna_persentase,
+			skoring,
+			IFNULL(images_foto_name, "") as foto_file,
+			IFNULL(images_ktp_name, "") as nik_file,
+			IFNULL(images_surat_keterangan_kerja_name, "") as foto_surat_ket_kerja,
+			IFNULL(images_slip_gaji_name, "") as foto_slip_gaji,
+			IFNULL(images_with_idcard_name, "") as foto_pegang_idcard,
+			IFNULL(images_usaha_name, "") as foto_usaha_file,
+			');
 		$this->db->from($this->mod_user_member.' m');
 		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
 		$this->db->join($this->user_detail.' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
@@ -120,8 +149,8 @@ class Member_model extends CI_Model
 
 	function get_member_byid($id)
 	{
-		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
-			u.Id_pengguna, Nama_pengguna, Id_ktp, Profile_photo, Nomor_rekening, nama_bank, peringkat_pengguna, peringkat_pengguna_persentase, images_foto_name, Mobileno, Alamat, Kota, Provinsi, Kodepos');
+		$this->db->select("m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
+			u.Id_pengguna, Nama_pengguna, Id_ktp, Profile_photo, Nomor_rekening, nama_bank, peringkat_pengguna, peringkat_pengguna_persentase, images_foto_name, Mobileno, Alamat, Kota, Provinsi, Kodepos, Id_ktp as nik, DATE_FORMAT(Tanggal_lahir, '%d-%m-%Y') as tgl_lahir, Jenis_kelamin");
 		$this->db->from($this->mod_user_member.' m');
 		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
 		$this->db->join($this->user_detail.' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
@@ -138,7 +167,8 @@ class Member_model extends CI_Model
 		// tanpa foto//
 		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
 			u.Id_pengguna, Nama_pengguna, Id_ktp, Nomor_rekening, peringkat_pengguna, peringkat_pengguna_persentase,
-			images_foto_name, images_ktp_name, images_surat_keterangan_kerja_name, images_slip_gaji_name, images_with_idcard_name
+			images_foto_name, images_ktp_name, images_surat_keterangan_kerja_name, images_slip_gaji_name, images_with_idcard_name,
+			images_usaha_name
 			');
 		$this->db->from($this->mod_user_member.' m');
 		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
@@ -167,11 +197,27 @@ class Member_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
+	function update_member_bank_byid($uid, $data)
+	{
+		$this->db->where('Id_pengguna', $uid);
+		$this->db->update($this->user, $data);
+		return $this->db->affected_rows();
+	}
+
 	function update_member_byemail($uid, $data)
 	{
 		$this->db->where('mum_email', $uid);
 		$this->db->update($this->mod_user_member, $data);
 		return $this->db->affected_rows();
+	}
+
+	function check_password_member($oldpass, $uid)
+	{
+		$this->db->select('mum_password');
+		$this->db->from($this->mod_user_member);
+		$this->db->where('id_mod_user_member', $uid);
+		$sql = $this->db->get();
+		return $sql->row_array();
 	}
 
 	function update_password_member($newpass, $uid)
@@ -260,6 +306,14 @@ class Member_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	
+	function check_notelp($telp)
+	{
+		$this->db->select('Mobileno');
+		$this->db->from('user_detail');
+		$this->db->where('Mobileno', $telp);
+		$this->db->limit('1');
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
 
 }

@@ -98,7 +98,7 @@ class Register_peminjam extends REST_Controller {
 				$mem_data['mum_email']         = trim($post['email']);
 				$mem_data['mum_telp']          = trim($post['telp']);
 				$mem_data['mum_password']      = $stored_p;
-				$mem_data['mum_status']        = 0;
+				$mem_data['mum_status']        = 1;
 				$mem_data['mum_create_date']   = $nowdatetime;
 				$mem_data['mum_type']          = '1'; // 1.peminjam, 2.pendana
 				$mem_data['mum_type_peminjam'] = $type; // 1.Kilat, 2.mikro
@@ -252,7 +252,7 @@ class Register_peminjam extends REST_Controller {
 				$mem_data['mum_email']         = trim($post['email']);
 				$mem_data['mum_telp']          = trim($post['telp']);
 				$mem_data['mum_password']      = $stored_p;
-				$mem_data['mum_status']        = 0;
+				$mem_data['mum_status']        = 1;
 				$mem_data['mum_create_date']   = $nowdatetime;
 				$mem_data['mum_type']          = '1'; // 1.peminjam, 2.pendana
 				$mem_data['mum_type_peminjam'] = '1'; // 1.Kilat, 2.mikro
@@ -331,7 +331,22 @@ class Register_peminjam extends REST_Controller {
 		$ciphertext = urlencode($this->encryption->encrypt($email));
 		//$url = site_url('aktivasi?t='.$ciphertext);
 		$url = 'https://bkdana.id/aktivasi?t='.$ciphertext;
+
 		$html_content = '
+        Hai '.$email.',<br><br>
+
+            Anda telah terdaftar melalui Aplikasi BKDana.<br>
+            <br><br>
+
+            <span style="color:#858C93;">
+            	Email ini dibuat secara otomatis. Mohon tidak mengirimkan balasan ke Email ini.
+            	<br><br>
+
+            	&copy; BKDana, '.date("Y").'. All rights reserved.
+            </span>
+			';
+
+		/*$html_content = '
         Hai '.$email.',<br><br>
 
             Anda telah terdaftar melalui Aplikasi BKDana.<br>
@@ -347,7 +362,7 @@ class Register_peminjam extends REST_Controller {
 
             	&copy; BKDana, '.date("Y").'. All rights reserved.
             </span>
-			';
+			';*/
 
 		include(APPPATH.'libraries/phpmailer-5.2.23/PHPMailerAutoload.php');
     	$mail = new phpmailer();
@@ -455,7 +470,7 @@ class Register_peminjam extends REST_Controller {
 				$mem_data['mum_email']          = trim($post['email']);
 				$mem_data['mum_telp']           = trim($post['telp']);
 				$mem_data['mum_password']       = $stored_p;
-				$mem_data['mum_status']         = 0;
+				$mem_data['mum_status']         = 1;
 				$mem_data['mum_create_date']    = $nowdatetime;
 				$mem_data['mum_type']           = '1'; // 1.peminjam, 2.pendana
 				$mem_data['mum_type_peminjam']  = '2'; // 1.Kilat, 2.mikro

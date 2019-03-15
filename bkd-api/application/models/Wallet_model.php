@@ -80,13 +80,14 @@ class Wallet_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	function all_wallet_detail($uid)
+	function all_wallet_detail($uid, $start, $limit)
 	{
-		$this->db->select('d.Id, Detail_wallet_id, Date_transaction, d.Amount as amount_detail, Notes, tipe_dana, d.User_id, kode_transaksi, wallet_member_id');
+		$this->db->select("d.Id, Detail_wallet_id, Date_transaction, FORMAT(d.Amount, 0) as amount_detail, Notes, tipe_dana, IF(tipe_dana=1, 'kredit','debet') as tipe_dana_text, d.User_id, kode_transaksi, wallet_member_id");
 		$this->db->from($this->detail_wallet. ' d');
 		$this->db->join($this->master_wallet. ' m', 'd.Id=m.Id', 'left');
 		$this->db->where('wallet_member_id', $uid);
 		$this->db->order_by('Detail_wallet_id', 'desc');
+		$this->db->limit($limit, $start);
 		$sql = $this->db->get();
 		return $sql->result_array();
 	}

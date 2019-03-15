@@ -308,7 +308,7 @@ class Content_model extends CI_Model
 
 	function check_ordercode_pinjaman($code)
 	{
-		$this->db->select('Master_loan_id');
+		$this->db->select('Master_loan_id, Master_loan_status');
 		$this->db->from($this->profil_permohonan_pinjaman);
 		$this->db->where('Master_loan_id', $code);		
 		$this->db->limit('1');
@@ -378,7 +378,7 @@ class Content_model extends CI_Model
 
 	function get_total_saldo($uid)
 	{
-		$this->db->select('Amount');
+		$this->db->select('FORMAT(Amount, 0) as Amount');
 		$this->db->from($this->master_wallet);
 		$this->db->where('wallet_member_id', $uid);
 		$sql = $this->db->get();
@@ -430,9 +430,51 @@ class Content_model extends CI_Model
 		$sql = "SELECT 
 			Master_loan_id as transaksi_id, 
 			tgl_permohonan_pinjaman as tgl_transaksi, 
-			Jml_permohonan_pinjaman as totalrp, 
+			FORMAT(Jml_permohonan_pinjaman, 0) as totalrp, 
 			Jml_permohonan_pinjaman_disetujui as total_approve, 
 			Master_loan_status as transaksi_status, 
+			date_close, 
+			tgl_pinjaman_disetujui as tgl_approve,
+			product_title, Loan_term, id_mod_type_business, type_business_name
+			FROM {$this->profil_permohonan_pinjaman} p
+			LEFT JOIN {$this->product} prod ON(prod.Product_id=p.Product_id)
+			LEFT JOIN {$this->mod_type_business} tb ON(tb.id_mod_type_business=prod.type_of_business_id)
+			WHERE (tb.id_mod_type_business='1' OR tb.id_mod_type_business='3')
+			AND p.pinjam_member_id='{$uid}' 
+			{$search_query}
+			ORDER BY tgl_permohonan_pinjaman DESC
+		";
+
+		if ($limit !=NULL && $start !=NULL) {
+			$sql .= "LIMIT {$start}, {$limit}";
+		}
+
+		$queries = $this->db->query($sql);
+		$ret = $queries->result_array();
+		$queries->free_result();
+		return $ret;
+	}
+
+	function get_my_transactions_pinjam_mod2($uid, $limit=NULL, $start=NULL, $search=NULL)
+	{
+		$search_query = '';
+		if ($search != NULL && $search !='')
+		{
+			$search_query = " AND Master_loan_id like '%{$search}%' ";
+		}
+
+		$sql = "SELECT 
+			Master_loan_id as transaksi_id, 
+			tgl_permohonan_pinjaman as tgl_transaksi, 
+			FORMAT(Jml_permohonan_pinjaman, 0) as totalrp, 
+			FORMAT(Jml_permohonan_pinjaman_disetujui, 0) as total_approve,
+			CASE Master_loan_status
+			    WHEN 'review' THEN 'Proses Review'
+			    WHEN 'approve' THEN 'Menunggu Pendanaan'
+			    WHEN 'complete' THEN 'Menunggu Pembayaran'
+			    WHEN 'lunas' THEN 'Lunas'
+			    ELSE Master_loan_status
+			  END AS transaksi_status,
 			date_close, 
 			tgl_pinjaman_disetujui as tgl_approve,
 			product_title, Loan_term, id_mod_type_business, type_business_name
@@ -492,8 +534,8 @@ class Content_model extends CI_Model
 
 		$sql = "SELECT Id as transaksi_id, 
 			Tgl_penawaran_pemberian_pinjaman as tgl_transaksi, 
-			Jml_penawaran_pemberian_pinjaman as totalrp, 
-			Jml_penawaran_pemberian_pinjaman_disetujui as total_approve, 
+			FORMAT(Jml_penawaran_pemberian_pinjaman, 0) as totalrp, 
+			FORMAT(Jml_penawaran_pemberian_pinjaman_disetujui, 0) as total_approve, 
 			tgl_disetujui as tgl_approve,
 			pendanaan_status as transaksi_status,
 			product_title, Loan_term, id_mod_type_business, type_business_name
@@ -544,16 +586,18 @@ class Content_model extends CI_Model
 		$sql = "SELECT 
 			Master_loan_id as transaksi_id, 
 			tgl_permohonan_pinjaman as tgl_transaksi, 
-			Jml_permohonan_pinjaman as total_pinjam, 
-			Jml_permohonan_pinjaman_disetujui as total_approve, 
-			jml_kredit as jml_kredit,
+			FORMAT(Jml_permohonan_pinjaman, 0) as total_pinjam, 
+			FORMAT(Jml_permohonan_pinjaman_disetujui, 0) as total_approve, 
+			FORMAT(jml_kredit, 0) as jml_kredit,
+			FORMAT(jml_kredit, 0) as total_pendanaan,
 			Master_loan_status as transaksi_status, 
 			date_close, 
 			tgl_pinjaman_disetujui as tgl_approve,
 			Nama_pengguna as nama_peminjam,
 			peringkat_pengguna,
 			product_title, Loan_term, id_mod_type_business, type_business_name,
-			(select count(*) as itotal from {$this->profile_pendanaan} where Master_loan_id=transaksi_id) as total_lender
+			(select count(*) as itotal from {$this->profile_pendanaan} where Master_loan_id=transaksi_id) as total_lender,
+			concat(round(jml_kredit/Jml_permohonan_pinjaman * 100 ),'%') AS kuota_dana
 			FROM {$this->profil_permohonan_pinjaman} p
 			LEFT JOIN {$this->product} prod ON(prod.Product_id=p.Product_id)
 			LEFT JOIN {$this->mod_type_business} tb ON(tb.id_mod_type_business=prod.type_of_business_id)
@@ -783,7 +827,7 @@ class Content_model extends CI_Model
 
 	function history_topup_member($id)
 	{
-		$this->db->select('*');
+		$this->db->select('kode_top_up, FORMAT(jml_top_up, 0) as jml_top_up, tgl_top_up, status_top_up');
 		$this->db->from($this->mod_top_up);
 		$this->db->where('member_id', $id);
 		$this->db->order_by('id_top_up', 'DESC');
@@ -909,11 +953,13 @@ class Content_model extends CI_Model
 	}
 
 	// ====== REDEEEM =======//
-	function get_list_myredeem($uid)
+	function get_list_myredeem($uid, $start, $limit)
 	{
-		$this->db->select('*');
+		$this->db->select('mod_redeem_id, redeem_kode, FORMAT(redeem_amount, 0) as redeem_amount, redeem_nomor_rekening, redeem_nama_bank, redeem_date, redeem_status, redeem_status_date');
 		$this->db->from($this->mod_redeem);
 		$this->db->where('redeem_member_id', $uid);
+		$this->db->limit($limit, $start);
+		$this->db->order_by('mod_redeem_id', 'DESC');
 		$sql = $this->db->get();
 		$ret = $sql->result_array();
 		$sql->free_result();
@@ -1163,6 +1209,24 @@ class Content_model extends CI_Model
 		return $sql->result_array();
 	}
 
+	function check_active_pinjaman_bymember($uid)
+	{
+		$this->db->select('Master_loan_id, Jml_permohonan_pinjaman, Master_loan_status, Id_pengguna, Nama_pengguna');
+		$this->db->from($this->profil_permohonan_pinjaman. ' p');
+		$this->db->join($this->user. ' u', 'u.Id_pengguna=p.User_id', 'left');
+		$this->db->where('u.Id_pengguna', $uid);
+		// $this->db->where('Master_loan_status !=', 'lunas');
+		// $this->db->where('Master_loan_status !=', 'expired');
+		// $this->db->where('Master_loan_status !=', 'reject');
+		// $this->db->where('Master_loan_status =', 'review');
+		// $this->db->where('Master_loan_status =', 'approve');
+		// $this->db->where('Master_loan_status =', 'complete');
+		$this->db->where_in('Master_loan_status', array('review', 'approve', 'complete'));
+		$this->db->limit('1');
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
+
 	function check_active_pinjaman($uid)
 	{
 		$this->db->select('Master_loan_id, Jml_permohonan_pinjaman, Master_loan_status, Id_pengguna, Nama_pengguna');
@@ -1209,7 +1273,34 @@ class Content_model extends CI_Model
 
 	function get_log_transaksi_pinjam($ordercode)
 	{
-		$this->db->select('*');
+		$this->db->select('ltp_id,
+			ltp_Id_pengguna,
+			ltp_Master_loan_id,
+			ltp_total_pinjaman,
+			ltp_total_pinjaman_disetujui,
+			ltp_admin_fee,
+			ltp_bunga_pinjaman,
+			ltp_jml_angsuran,
+			ltp_lama_angsuran,
+			ltp_tgl_jatuh_tempo,
+			ltp_frozen,
+			ltp_platform_fee,
+			ltp_LO_fee,
+			ltp_lender_fee,
+			ltp_product_title,
+			ltp_product_id,
+			ltp_product_interest_rate,
+			ltp_product_loan_term,
+			ltp_product_platform_rate,
+			ltp_product_loan_organizer,
+			ltp_product_investor_return,
+			ltp_product_revenue_share,
+			ltp_product_secured_loan_fee,
+			ltp_product_interest_rate_type,
+			ltp_product_pph,
+			ltp_type_of_business_id,
+			ltp_loan_organizer_id,
+			ltp_date_created');
 		$this->db->from($this->mod_log_transaksi_pinjaman);
 		$this->db->where('ltp_Master_loan_id', $ordercode);
 		$sql = $this->db->get();
@@ -1289,6 +1380,17 @@ class Content_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
+	function get_tempo_pinjaman_bycode($ordercode)
+	{
+		$this->db->select('tempo_id, kode_transaksi, tgl_jatuh_tempo, no_angsuran, is_paid, date_paid, telah_jatuh_tempo, nominal_telat_bayar');
+		$this->db->from($this->mod_tempo);
+		$this->db->where('kode_transaksi', $ordercode);
+		$sql = $this->db->get();
+		$ret = $sql->result_array();
+		$sql->free_result();
+		return $ret;
+	}
+
 	function get_pinjaman_member($ordercode)
 	{
 		$this->db->select('Master_loan_id, Tgl_permohonan_pinjaman, Jml_permohonan_pinjaman, Jml_permohonan_pinjaman_disetujui,
@@ -1350,6 +1452,87 @@ class Content_model extends CI_Model
 		$ret = $queries->result_array();
 		$queries->free_result();
 		return $ret;
+	}
+
+	function get_list_bank()
+	{
+		$this->db->select('*');
+		$this->db->from($this->mod_bank);
+		$this->db->order_by('bank_name', 'asc');
+		$sql = $this->db->get();
+		$ret = $sql->result_array();
+		$sql->free_result();
+		return $ret;
+	}
+
+	function get_topup_bycode($code)
+	{
+		$this->db->select('*');
+		$this->db->from($this->mod_top_up);
+		$this->db->order_by('kode_top_up', $code);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+
+	function get_total_mypinjaman($uid)
+	{
+		$this->db->select('SUM(Jml_permohonan_pinjaman) as itotal_transaksi');
+		$this->db->from($this->profil_permohonan_pinjaman);
+		$this->db->where('pinjam_member_id', $uid);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+
+	function get_total_mypendanaan($uid)
+	{
+		$this->db->select('SUM(Jml_penawaran_pemberian_pinjaman) as itotal_transaksi');
+		$this->db->from($this->profile_pendanaan);
+		$this->db->where('dana_member_id', $uid);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+
+	function get_product_byid($id)
+	{
+		$this->db->select('*');
+		$this->db->from($this->product);
+		$this->db->where('Product_id', $id);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+
+	function get_presentase_mobile($uid)
+	{
+		$this->db->select('
+			Nama_pengguna,
+			Id_ktp,
+			Tanggal_lahir,
+			Jenis_kelamin,
+			Nomor_rekening,
+			nama_bank,
+			Mobileno,
+			Alamat,
+			Kodepos,
+			Kota,
+			Provinsi,
+			mum_email
+			');
+		$this->db->from($this->user. ' u');
+		$this->db->join($this->user_detail. ' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
+		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
+		$this->db->join($this->mod_user_member. ' m', 'm.id_mod_user_member=u.id_mod_user_member', 'left');
+		$this->db->where('u.Id_pengguna', $uid);
+		$this->db->limit('1');
+		$sql = $this->db->get();
+		return $sql->row_array();
 	}
 
 }

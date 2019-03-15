@@ -16,12 +16,174 @@ class Pinjaman extends REST_Controller {
 		$this->load->model('Content_model');
 		$this->load->model('Member_model');
 
-		error_reporting(E_ALL);
-        ini_set('display_errors', '1');
+		//error_reporting(E_ALL);
+        //ini_set('display_errors', '1');
 	}
 
 	function index_post(){
 		echo 'kilat';
+	}
+
+	function cek_pinjaman_aktif_ios_get()
+	{
+		$headers = $this->input->request_headers();
+
+		if (Authorization::tokenIsExist($headers)) {
+            $token = Authorization::validateToken($headers['Authorization']);
+            if ($token != false) {
+                
+				$uid = (int)antiInjection($token->id);
+
+				$logintype = (int)antiInjection($token->logtype);
+
+				if (!empty($uid) && is_numeric($logintype)) {
+
+					$memberID  = $uid;
+
+					if ($logintype=='2') {	
+						$response = [
+		            		'response' => 'fail',
+			                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+			                'message'  => 'Unauthorized',
+			            ];
+			            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			            $this->set_response($response, $http_status);
+				        return;
+					}
+
+					$pinjaman_active = $this->Content_model->check_active_pinjaman_bymember($memberID);
+
+					$data['pinjaman_list'] = $pinjaman_active;
+
+					if (count($pinjaman_active) > 1)
+					{
+						$response['response']  = 'fail';
+		                $response['status']    = REST_Controller::HTTP_OK;
+		                $response['message']   = 'Tidak dapat meminjam, peminjaman anda sedang berjalan';
+		                // $response['content']   = '';
+		                $response['active'] = FALSE;
+						$this->set_response($response, REST_Controller::HTTP_OK);
+		                return;
+
+					}else{
+
+						$response['response']  = 'success';
+		                $response['status']    = REST_Controller::HTTP_OK;
+		                $response['message']   = 'Dapat Meminjam';
+		                // $response['content']   = $data;
+		                $response['active'] = TRUE;
+						$this->set_response($response, REST_Controller::HTTP_OK);
+		                return;
+					}
+
+				}else{
+			    	$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			    }
+
+			}else{
+				$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			}
+		}else{
+			$response = [
+        		'response' => 'fail',
+                'status'   => REST_Controller::HTTP_FORBIDDEN,
+                'message'  => 'Forbidden',
+            ];
+            $http_status = REST_Controller::HTTP_FORBIDDEN;
+		}
+
+		$this->set_response($response, $http_status);
+        return;
+	}
+
+	function cek_pinjaman_aktif_get()
+	{
+		$headers = $this->input->request_headers();
+
+		if (Authorization::tokenIsExist($headers)) {
+            $token = Authorization::validateToken($headers['Authorization']);
+            if ($token != false) {
+                
+				$uid = (int)antiInjection($token->id);
+
+				$logintype = (int)antiInjection($token->logtype);
+
+				if (!empty($uid) && is_numeric($logintype)) {
+
+					$memberID  = $uid;
+
+					if ($logintype=='2') {	
+						$response = [
+		            		'response' => 'fail',
+			                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+			                'message'  => 'Unauthorized',
+			            ];
+			            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			            $this->set_response($response, $http_status);
+				        return;
+					}
+
+					$pinjaman_active = $this->Content_model->check_active_pinjaman_bymember($memberID);
+
+					$data['pinjaman_list'] = $pinjaman_active;
+
+					if (count($pinjaman_active) > 1)
+					{
+						$response['response']  = 'fail';
+		                $response['status']    = REST_Controller::HTTP_OK;
+		                $response['message']   = 'Tidak dapat meminjam, peminjaman anda sedang berjalan';
+		                $response['content']   = '';
+						$this->set_response($response, REST_Controller::HTTP_OK);
+		                return;
+
+					}else{
+
+						$response['response']  = 'success';
+		                $response['status']    = REST_Controller::HTTP_OK;
+		                $response['message']   = 'Dapat Meminjam';
+		                // $response['content']   = $data;
+						$this->set_response($response, REST_Controller::HTTP_OK);
+		                return;
+					}
+
+				}else{
+			    	$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			    }
+
+			}else{
+				$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			}
+		}else{
+			$response = [
+        		'response' => 'fail',
+                'status'   => REST_Controller::HTTP_FORBIDDEN,
+                'message'  => 'Forbidden',
+            ];
+            $http_status = REST_Controller::HTTP_FORBIDDEN;
+		}
+
+		$this->set_response($response, $http_status);
+        return;
 	}
 
 	function pengajuan_kilat_post()
@@ -217,6 +379,8 @@ class Pinjaman extends REST_Controller {
 						$indata_udetail['nama_atasan']                              = trim($post['nama_atasan']);
 						$indata_udetail['referensi_orang_1']                        = trim($post['referensi_1']);
 						$indata_udetail['referensi_orang_2']                        = trim($post['referensi_2']);
+						$indata_udetail['referensi_nama_1']                         = trim($post['referensi_nama_1']);
+						$indata_udetail['referensi_nama_2']                         = trim($post['referensi_nama_2']);
 						$this->Content_model->update_userdetail($id_pengguna, $indata_udetail);
 						
 						$response['response'] = 'success';
@@ -469,6 +633,14 @@ class Pinjaman extends REST_Controller {
 									move_uploaded_file($_FILES['foto_pegang_idcard']['tmp_name'], $destination_hold_idcard.$file_foto_pegang_idcard_name);
 								}
 							}
+
+							// --- Set Ranking pengguna ---
+							$get_ranking = set_ranking_pengguna($id_pengguna, $memberdata['mum_type'], $memberdata['mum_type_peminjam']); // (Id_pengguna, peminjam/pendana, kilat/mikro)
+
+							$update_pengguna['peringkat_pengguna']            = $get_ranking['grade'];
+							$update_pengguna['peringkat_pengguna_persentase'] = $get_ranking['ranking'];
+							$this->Content_model->update_user_byid($id_pengguna, $update_pengguna);
+							// --- End of Set Ranking pengguna ---
 							
 							$response['response'] = 'success';
 		                    $response['status']   = REST_Controller::HTTP_OK;
@@ -798,6 +970,33 @@ class Pinjaman extends REST_Controller {
 
 							$nowdate     = date('Y-m-d');
 							$nowdatetime = date('Y-m-d H:i:s');
+							$total_pinjam = trim($post['jumlah_pinjaman']);
+							$productID    = trim($post['product_id']); // tenor
+
+							// cek jml pinjaman
+							$produk = $this->Content_model->get_produk($productID);
+
+							$min_pinjam = $this->config->item('minimum_mikro');
+							
+							if ( (int)$total_pinjam < (int)$min_pinjam ) {
+							
+								$response['response'] = 'failed';
+			                    $response['status']   = REST_Controller::HTTP_BAD_REQUEST;
+			                    $response['content']  = '';
+			                    $response['message']  = 'Pinjaman tidak boleh dibawah Rp '.number_format($min_pinjam);
+			                    $this->set_response($response, REST_Controller::HTTP_BAD_REQUEST);
+			                    return;
+			                }
+					
+
+							if ( (int)$total_pinjam > (int)$produk['Max_loan']) {
+								$response['response'] = 'failed';
+			                    $response['status']   = REST_Controller::HTTP_BAD_REQUEST;
+			                    $response['content']  = '';
+			                    $response['message']  = 'Jumlah Pinjaman Maksimal Rp 5000,000';
+			                    $this->set_response($response, REST_Controller::HTTP_BAD_REQUEST);
+			                    return;
+							}
 
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
 								// ----- Process Image Name -----
@@ -839,8 +1038,7 @@ class Pinjaman extends REST_Controller {
 							}
 
 							// ------------ Insert pinjaman ---------------//
-							$total_pinjam = trim($post['jumlah_pinjaman']);
-							$productID    = trim($post['product_id']); // tenor
+							
 
 							$prefixID    = 'PM-APP';
 							$orderID     = $prefixID.$uid.strtoupper(substr(uniqid(sha1(time().$uid)),0,12));
@@ -867,7 +1065,7 @@ class Pinjaman extends REST_Controller {
 
 							if ($pinjamID) {
 
-								$produk = $this->Content_model->get_produk($productID);
+								
 
 								// insert Log Transaksi
 								$inlog['ltp_Id_pengguna']              = $p_pinjam['User_id'];
@@ -940,6 +1138,14 @@ class Pinjaman extends REST_Controller {
 										unlink($destination_usaha.$memberdata['images_usaha_name']);
 										move_uploaded_file($_FILES['foto_usaha_file']['tmp_name'], $destination_usaha.$foto_usaha);		
 									}
+
+									// --- Set Ranking pengguna ---
+									$get_ranking = set_ranking_pengguna($id_pengguna, $memberdata['mum_type'], $memberdata['mum_type_peminjam']); // (Id_pengguna, peminjam/pendana, kilat/mikro)
+
+									$update_pengguna['peringkat_pengguna']            = $get_ranking['grade'];
+									$update_pengguna['peringkat_pengguna_persentase'] = $get_ranking['ranking'];
+									$this->Content_model->update_user_byid($id_pengguna, $update_pengguna);
+									// --- End of Set Ranking pengguna ---
 
 									$response['response'] = 'success';
 				                    $response['status']   = REST_Controller::HTTP_OK;

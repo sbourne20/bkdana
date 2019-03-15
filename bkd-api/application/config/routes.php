@@ -69,3 +69,5 @@ $route['notif/(.*)']         = "notif/index";
 
 $route['callback-google']    = "auth/callback_google";
 $route['callback-facebook']  = "auth/callback_facebook";
+
+$route['mobile-payment/vtweb/(.*)/(.*)'] = 'mobile_payment/vtweb/$1/$2';

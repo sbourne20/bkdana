@@ -222,7 +222,8 @@ class Auth extends REST_Controller
                     // Generate JWT Token
                     $issuedAt   = time();
                     $notBefore  = $issuedAt;             //Adding 10 seconds
-                    $expire     = $notBefore + 1209600;         // in seconds. Adding 2 weeks
+                    //$expire     = $notBefore + 1209600;         // in seconds. Adding 2 weeks
+                    $expire     = 30;         // in seconds. Adding 2 weeks
 
                     $tokenData          = array();
                     $tokenData['id']    = $check_user['member_id'];

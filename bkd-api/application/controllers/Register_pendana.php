@@ -124,7 +124,7 @@ class Register_pendana extends REST_Controller {
 				$mem_data['mum_email']       = $email;
 				$mem_data['mum_telp']        = $notelp;
 				$mem_data['mum_password']    = $stored_p;
-				$mem_data['mum_status']      = 0;	// 1. active, 2. tidak bisa melakukan pendanaan
+				$mem_data['mum_status']      = 1;	// 1. active, 2. tidak bisa melakukan pendanaan
 				$mem_data['mum_create_date'] = $nowdatetime;
 				$mem_data['mum_type']        = '2'; // 1.peminjam, 2.pendana
 				// $mem_data['mum_nomor_rekening'] = antiInjection(trim($post['nomor_rekening']));
@@ -216,6 +216,21 @@ class Register_pendana extends REST_Controller {
         Hai '.$email.',<br><br>
 
             Anda telah terdaftar sebagai Pendana melalui Aplikasi BKDana.<br>
+                        
+            <br><br>
+
+            <span style="color:#858C93;">
+            	Email ini dibuat secara otomatis. Mohon tidak mengirimkan balasan ke Email ini.
+            	<br><br>
+
+            	&copy; BKDana, '.date("Y").'. All rights reserved.
+            </span>
+			';
+
+		/*$html_content = '
+        Hai '.$email.',<br><br>
+
+            Anda telah terdaftar sebagai Pendana melalui Aplikasi BKDana.<br>
             Klik link berikut untuk aktivasi Akun Anda:
             <br><br>
             <a href="'.$url.'">'.$url.'</a>
@@ -228,7 +243,7 @@ class Register_pendana extends REST_Controller {
 
             	&copy; BKDana, '.date("Y").'. All rights reserved.
             </span>
-			';
+			';*/
 
 		include(APPPATH.'libraries/phpmailer-5.2.23/PHPMailerAutoload.php');
     	$mail = new phpmailer();

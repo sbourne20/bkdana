@@ -165,7 +165,7 @@ function set_ranking_pengguna($uid, $logintype, $tipe_peminjam=0)
     $CI =& get_instance();
 
     // tentukan tipe user
-    if ($logintype == 1){
+    /*if ($logintype == 1){
 
         // tentukan tipe peminjam: kilat atau mikro (saat register)
         if ($tipe_peminjam == 1){
@@ -175,7 +175,8 @@ function set_ranking_pengguna($uid, $logintype, $tipe_peminjam=0)
         }
     }else{
         $result = $CI->Content_model->get_data_pendana_rows($uid);
-    }
+    }*/
+    $result = $CI->Content_model->get_presentase_mobile($uid);
 
     $totalloop   = count($result);
     $empty_count = 0;
@@ -214,6 +215,138 @@ function set_ranking_pengguna($uid, $logintype, $tipe_peminjam=0)
         $ret['ranking'] = $ranking;
         $ret['grade']   = $grade_user;
     
+    return $ret;
+}
+
+function parseDateTimeIndex($date){
+    $int = preg_match("/(\d{4})-(\d{2})-(\d{2})/",$date,$match);
+    if (!$int) return false;
+    $data['year']   = $match[1];
+    $data['month']  = $match[2];
+    $data['day']    = $match[3];
+    $data['day_of_week'] = date("N",mktime(0,0,0,intval($data['month']),intval($data['day']),intval($data['year'])));
+    $data['month_ind_name'] = getIndMonth(intval($data['month']));
+    $data['day_ind_name'] = getIndDay($data['day_of_week']);
+    return $data;
+}
+function getIndMonth($int=1){
+    $data[1] = "Januari";
+    $data[2] = "Februari";
+    $data[3] = "Maret";
+    $data[4] = "April";
+    $data[5] = "Mei";
+    $data[6] = "Juni";
+    $data[7] = "Juli";
+    $data[8] = "Agustus";
+    $data[9] = "September";
+    $data[10] = "Oktober";
+    $data[11] = "November";
+    $data[12] = "Desember";
+    $intint = intval($int);
+    if ($intint <= 12 && $intint >= 1 )
+        return $data[$intint];
+    else
+        return false;
+}
+function getIndDay($int="1"){
+    switch($int){
+        case "7":
+            $strDay = "Minggu";
+        break;
+        case "6":
+            $strDay = "Sabtu";
+        break;
+        case "5":
+            $strDay = "Jum'at";
+        break;
+        case "4":
+            $strDay = "Kamis";
+        break;
+        case "3":
+            $strDay = "Rabu";
+        break;
+        case "2":
+            $strDay = "Selasa";
+        break;
+        case "1":
+        default:
+            $strDay = "Senin";
+        break;
+    }
+    return $strDay;
+}
+
+function create_pdf($html, $ordercode, $filename, $title)
+{
+    $CI =& get_instance();
+    // create new PDF document
+    $pdf = new TCPDF(PDF_PAGE_ORIENTATION, PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+
+    // set document information
+    $pdf->SetCreator(PDF_CREATOR);
+    $pdf->SetAuthor('BKDana');
+    $pdf->SetTitle($title);
+    $pdf->SetSubject($title);
+
+    // remove default header/footer
+    $pdf->setPrintHeader(false);
+    $pdf->setPrintFooter(false);
+
+    // set default monospaced font
+    $pdf->SetDefaultMonospacedFont(PDF_FONT_MONOSPACED);
+
+    // set margins
+    //$pdf->SetMargins(PDF_MARGIN_LEFT, PDF_MARGIN_TOP, PDF_MARGIN_RIGHT);
+
+    $pdf->SetMargins(12, 15, 16,true);
+
+    $pdf->SetHeaderMargin(0);
+    $pdf->SetFooterMargin(0);
+
+    // set image scale factor
+    $pdf->setImageScale(PDF_IMAGE_SCALE_RATIO);
+
+    // set some language-dependent strings (optional)
+    if (@file_exists(dirname(__FILE__).'/lang/eng.php')) {
+        require_once(dirname(__FILE__).'/lang/eng.php');
+        $pdf->setLanguageArray($l);
+    }
+
+    // ---------------------------------------------------------
+
+    // set default font subsetting mode
+    $pdf->setFontSubsetting(true);
+
+    // Set font
+    // dejavusans is a UTF-8 Unicode font, if you only need to
+    // print standard ASCII chars, you can use core fonts like
+    // helvetica or times to reduce file size.
+    $pdf->SetFont('helvetica', '', 9);
+
+    // Add a page
+    // This method has several options, check the source code documentation for more information.
+    $pdf->AddPage();
+
+    // set text shadow effect
+    //$pdf->setTextShadow(array('enabled'=>true, 'depth_w'=>0.2, 'depth_h'=>0.2, 'color'=>array(196,196,196), 'opacity'=>1, 'blend_mode'=>'Normal'));
+
+    ob_start();
+    $pdf->writeHTML($html, true, false, false, false, '');
+    ob_end_clean();
+    // ---------------------------------------------------------
+
+    $output_file = $CI->config->item('attach_dir') . $filename;
+
+    // Close and output PDF document
+    // This method has several options, check the source code documentation for more information.
+    //$pdf->Output($ordercode. '.pdf', 'I');
+    $pdf->Output($output_file,'F');
+
+    $ret = array(
+            'filename'    => $filename,
+            'output_file' =>$output_file
+            );
+
     return $ret;
 }
 ?>
