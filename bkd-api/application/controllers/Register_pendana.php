@@ -124,7 +124,7 @@ class Register_pendana extends REST_Controller {
 				$mem_data['mum_email']       = $email;
 				$mem_data['mum_telp']        = $notelp;
 				$mem_data['mum_password']    = $stored_p;
-				$mem_data['mum_status']      = 1;	// 1. active, 2. tidak bisa melakukan pendanaan
+				$mem_data['mum_status']      = 2;	// 1. active, 2. tidak bisa melakukan pendanaan
 				$mem_data['mum_create_date'] = $nowdatetime;
 				$mem_data['mum_type']        = '2'; // 1.peminjam, 2.pendana
 				// $mem_data['mum_nomor_rekening'] = antiInjection(trim($post['nomor_rekening']));
