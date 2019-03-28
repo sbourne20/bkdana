@@ -311,6 +311,54 @@ class Member extends CI_Controller {
 							}
 						}
 
+						// -----Tambahan Baru-----
+						if ($memberdata['mum_type_peminjam']=='1'){
+
+							if($_FILES['surat_keterangan_bekerja_file']['name'] == ''){
+								$file_surat_keterangan_bekerja_name   = '';
+							}else{
+								//$upload_surat_keterangan_bekerja_file  = file_get_contents($_FILES['surat_keterangan_bekerja_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['surat_keterangan_bekerja_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_surat_keterangan_bekerja_name  = $fileName.'.'.$fileExt;
+								$u_detail['	foto_surat_keterangan_bekerja']  = $file_surat_keterangan_bekerja_name;
+								// ----- END Process Image Name -----
+							}
+
+							if($_FILES['slip_gaji_file']['name'] == ''){
+								$file_slip_gaji_name   = '';
+							}else{
+								//$upload_slip_gaji  = file_get_contents($_FILES['slip_gaji_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['slip_gaji_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_slip_gaji_name   = $fileName.'.'.$fileExt;
+								$u_detail['foto_slip_gaji']  = $file_slip_gaji_name;
+								// ----- END Process Image Name -----
+							}
+
+							if($_FILES['pegang_ktp_file']['name'] == ''){
+								$file_pegang_ktp_name   = '';
+							}else{
+								//$pegang_ktp_file  = file_get_contents($_FILES['pegang_ktp_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['pegang_ktp_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_pegang_ktp_name  = $fileName.'.'.$fileExt;
+								$u_detail['foto_pegang_ktp']  = $file_pegang_ktp_name;
+								// ----- END Process Image Name -----
+							}
+						}
+
+						// -----batas tambahan-----
+
 						$userID = $memberdata['Id_pengguna'];
 						
 						$mem_data['mum_fullname']       = antiInjection(trim($post['fullname']));
