@@ -82,7 +82,6 @@ if($_SERVER['HTTP_HOST']=='localhost') {
 	$db_host = 'localhost';
 	$db_user = 'root';
 	$db_pass = '';
-	
 }else if($_SERVER['HTTP_HOST']=='149.129.213.30' OR $_SERVER['HTTP_HOST']=='www.bkdana.com') {
 	// Dev
 	//$db_host = '172.31.33.106';
