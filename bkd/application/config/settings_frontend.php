@@ -17,11 +17,11 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	$config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
 	//foto start
-	$config['showphoto']    = 'http://'.$_SERVER['HTTP_HOST']. '/data-bkd/';
+	$config['showphoto']    = 'http://'.$_SERVER['HTTP_HOST']. '/bkdana/data-bkd/';
 	//foto end
 
-	$config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
-	$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
+	$config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/bkdana/data-bkd/';
+	$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/bkdana/data-file-bkd/';
 
 }else{	// LIVE
 	$config['doc_root'] = "https://".$_SERVER['HTTP_HOST'];
