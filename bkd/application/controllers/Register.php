@@ -91,10 +91,11 @@ class Register extends CI_Controller {
 			$check = $this->Content_model->check_existing_member($email, $notelp, '');
 			$count_member = count($check);
 
-			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-				$ret = array('error'=> '1', 'message'=>'Invalid Email format!');
+			//if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			//	$ret = array('error'=> '1', 'message'=>'Invalid Email format!');
 
-			}else if ( $count_member > 1){
+			//}else 
+			if ( $count_member > 1){
 				$ret = array('error'=> '1', 'message'=>'Email/No.Telp Anda sudah terdaftar!');
 
 			}else if ( $password == '' OR strlen($password) < 6 ) {

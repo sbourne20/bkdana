@@ -123,6 +123,30 @@ class Peminjam extends CI_Controller {
 		$output['mode'] = 2; // sbg tanda edit
 		$output['EDIT'] = $this->Member_model->get_usermember_by($id);
 		$output['membergroup'] = $this->Member_model->get_allgroup();
+		$output['usergroup'] = $this->Member_model->get_usergroup();
+		$usergroup1 = $this->Member_model->get_usermember_by($id);
+		//get id_grup from select in js
+		$idusrgrp = $POST['id_usr_grp'];
+		$secondP1 = antiInjection($this->uri->segment(3));
+		if(isset($_POST['secondP1']))
+		{
+    		$usr = $_POST['secondP1'];
+
+    		// Do whatever you want with the $uid
+		}
+		else{
+			echo "tidak ada data";
+		}
+
+		$output['id_grup'] = $usr;
+		//batas
+		$idusergroup = antiInjection(trim($usergroup1['id_user_group']));
+		//$usergroup2 = $usergroup1['id_user_group'];
+		//$usergroup1 = $usergroup['id_user_group'];
+		//$updata2['id_user_group'] = antiInjection(trim($post['membergroup']));
+		//$updata1['id_user_group'] = antiInjection(trim($post['membergroup']));
+		$countgroup = $this->Member_model->get_count_group($idusergroup);
+		$output['countgroup1'] = $countgroup['itotal'];
 		//$output['EDIT'] = $this->Member_model->get_allgroup($id);
 
 		$this->validation();
@@ -164,7 +188,12 @@ class Peminjam extends CI_Controller {
 			{
 				$updata1['peringkat_pengguna'] = antiInjection(trim($post['grade']));
 				$updata1['id_user_group'] = antiInjection(trim($post['membergroup']));
+				$updata2['id_user_group'] = antiInjection(trim($post['membergroup']));
+
 				$affected = $this->Member_model->update_user_ojk($updata1, $id);
+				$affected = $this->Member_model->update_mod_ltpinjaman($updata2, $id);
+
+
 				if($affected){
 
 					$this->session->set_userdata('message','Data has been updated.');

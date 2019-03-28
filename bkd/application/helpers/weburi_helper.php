@@ -130,9 +130,13 @@ function set_ranking_pengguna($uid, $logintype, $tipe_peminjam=0)
         // tentukan tipe peminjam: kilat atau mikro (saat register)
         if ($tipe_peminjam == 1){
             $result = $CI->Content_model->get_data_peminjam_kilat_rows($uid);
-        }else{
+        }else if($tipe_peminjam == 2){
             $result = $CI->Content_model->get_data_peminjam_mikro_rows($uid);
         }
+        else if($tipe_peminjam == 3){
+            $result = $CI->Content_model->get_data_peminjam_agri_rows($uid);
+        }
+        
     }else{
         $result = $CI->Content_model->get_data_pendana_rows($uid);
     }

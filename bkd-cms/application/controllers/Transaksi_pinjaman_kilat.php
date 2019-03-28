@@ -356,33 +356,36 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
 			//_d($produk);exit();
 
 			// admin fee = pinjaman - (pinjaman * secure loan fee)
+			
 			$admin_fee = ($pinjaman_rp * $produk['Secured_loan_fee'])/100;
 			$jml_pinjaman_disetujui = $pinjaman_rp - $admin_fee;
 
 			// Repayment
-			if($type_of_interest_rate = 1){
-			   $bunga = ($pinjaman_rp * $produk['Loan_term'] * $produk['Investor_return'])/100;
+			$tir = $produk['type_of_interest_rate'];
+			
+			if($tir == 1){
+			   $bunga = ($pinjaman_rp * $produk['Loan_term'] * $produk['Interest_rate'])/100;
 			   $jml_repayment = $pinjaman_rp + $bunga;
 			   
 			   $loan_term = $produk['Loan_term'];
 			   $tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
 			   }
 			   
-			if($type_of_interest_rate = 2){
-				$bunga = ($pinjaman_rp * ($produk['Loan_term'] * 30) * $produk['Investor_return'])/100;
+			if($tir == 2){
+			   $bunga = ($pinjaman_rp * ($produk['Loan_term'] * 30) * $produk['Interest_rate'])/100;
 			   $jml_repayment = $pinjaman_rp + $bunga;
 
 			   $loan_term = $produk['Loan_term'];
 			   $tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
 			   }
 			   
-			if($type_of_interest_rate = 3){
-				$bunga = ($pinjaman_rp * ($produk['Loan_term'] * 7)* $produk['Investor_return'])/100;
+			if($tir == 3){
+			   $bunga = ($pinjaman_rp * ($produk['Loan_term'] * 7)* $produk['Interest_rate'])/100;
 			   $jml_repayment = $pinjaman_rp + $bunga;
 			   
 			   $loan_term = $produk['Loan_term'];
 			   $tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." weeks"));
-				}
+			   }
 			
 			
 			
@@ -411,8 +414,26 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
 				$inlog['ltp_tgl_jatuh_tempo']          = $tgl_jatuh_tempo;
 				$inlog['ltp_platform_fee']             = $inlog['ltp_admin_fee'];
 				$inlog['ltp_lender_fee']               = $lender_fee;
+				$inlog['ltp_pokok_cicilan']		   	   = $pinjaman_rp;
+				$inlog['ltp_bunga_cicilan']			   = $bunga;
 				
 				$this->Pinjaman_model->update_log_pinjaman($inlog, $loan_data['Master_loan_id']);
+
+				//tambahan baru insert repayment
+				$nowdatetime = date('Y-m-d H:i:s');
+
+				$repayment['Master_loan_id']		   = $loan_data['Master_loan_id'];
+				$repayment['User_id']				   = $loan_data['User_id'];
+				$repayment['jumlah_cicilan']		   = $jml_repayment;
+				$repayment['notes_cicilan']			   = 'cicilan ke 1';
+				$repayment['status_cicilan']		   = 'belum-bayar';
+				$repayment['tgl_jatuh_tempo']		   = $tgl_jatuh_tempo;
+				//$repayment['tgl_pembayaran']		   = $nowdatetime;
+				$repayment['tgl_record_repayment']	   = $nowdatetime;
+
+				$this->Pinjaman_model->insert_record_repayment($repayment);
+
+				//batas tambahan baru
 
 				//$this->send_mail($loan_data, $jml_pinjaman_disetujui);
 
@@ -426,6 +447,9 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
 				// --------- End create pdf perjanjian ---------
 
 				$this->send_mail($loan_data, $jml_pinjaman_disetujui, $attach_file);*/
+				echo'<script>
+				alert("I am an alert box!");
+				</script>';
 
 				$this->session->set_userdata('message','Success APPROVE Transaction.');
 				$this->session->set_userdata('message_type','success');
@@ -436,6 +460,7 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
 		}
 		
 		redirect('transaksi_pinjaman_kilat');
+		
 	}
 
 	function send_mail($loan_data, $jml_pinjaman_disetujui, $file)

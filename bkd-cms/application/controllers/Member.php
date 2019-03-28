@@ -100,7 +100,7 @@ class Member extends CI_Controller {
 	function group()
 	{
 		// -------- Display user Group list ---------
-		$this->Member_model->has_login();
+		$this->User_model->has_login();
 		
 		$output['PAGE_TITLE'] = 'Member GROUP';
 
@@ -119,7 +119,7 @@ class Member extends CI_Controller {
 
 	function add_group()
 	{
-		$this->Member_model->has_login();
+		$this->User_model->has_login();
 
 		$mainData['add_mode'] = 1; // sbg tanda add new
 		$mainData['EDIT']     = NULL;
@@ -180,7 +180,7 @@ class Member extends CI_Controller {
 
 	function edit_group()
 	{
-		$this->Member_model->has_login();
+		$this->User_model->has_login();
 
 		$mainData['add_mode'] = 2; // sbg tanda edit
 		$ID                   = $this->uri->segment(3);
@@ -199,7 +199,7 @@ class Member extends CI_Controller {
 
 	function submit_group()
 	{
-		$this->Member_model->has_login();
+		$this->User_model->has_login();
 		$post = $this->input->post(null, true);
 
 		if ($post['add_mode'] == 1)
@@ -242,7 +242,7 @@ class Member extends CI_Controller {
 
 	function delete_group()
 	{
-		$this->Member_model->has_login();
+		$this->User_model->has_login();
 
 		$id = $this->uri->segment(3);
 		$del = $this->Member_model->delete_user_group($id);

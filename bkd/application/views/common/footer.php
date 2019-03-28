@@ -10,6 +10,18 @@ if ($login_status == 1)
 
 <footer <?php echo $classfooter; ?>>
     <div class="container">
+		<div class="row">
+            <div class="col-sm-6">
+                <div class="left">
+                    <div class="copyright" style="margin-bottom:-40px;">Terdaftar dan diawasi oleh</div>
+					<img src="<?php echo base_url(); ?>assets/images/OJK.png" class="img-responsive img-reset" style="height:180px; width:180px; margin-left:-20px; margin-bottom:-40px; "/>        
+				</div>
+            </div>
+            <div class="col-sm-6">
+
+            </div>
+        </div>
+		</br>
         <div class="row">
             <div class="col-sm-6">
                 <div class="left">
@@ -32,6 +44,7 @@ if ($login_status == 1)
                 </div>
             </div>
         </div>
+		
     </div>
 </footer>
 
@@ -64,7 +77,7 @@ if ($login_status == 1)
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-kilat'); ?>" title="Daftar Pinjaman Kilat">
                                     <img src="<?php echo base_url(); ?>assets/images/icon-register-1.png" class="img-responsive" alt="Daftar Pinjaman Kilat" title="Daftar Pinjaman Kilat" />
@@ -73,7 +86,7 @@ if ($login_status == 1)
                             <a href="<?php echo site_url('register-pinjaman-kilat'); ?>">Daftar BKDana Kilat</a>
                             <p>Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!</p>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-mikro'); ?>" title="Daftar Pinjaman Mikro">
                                     <img src="<?php echo base_url(); ?>assets/images/icon-register-2.png" class="img-responsive" alt="Daftar Pinjaman Mikro" title="Daftar Pinjaman Mikro" />
@@ -81,6 +94,15 @@ if ($login_status == 1)
                             </div>
                             <a href="<?php echo site_url('register-pinjaman-mikro'); ?>">Daftar BKDana Mikro</a>
                             <p>Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!</p>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="img-wrapp">
+                                <a href="<?php echo site_url('register-pinjaman-agri'); ?>" title="Daftar Pinjaman Agri">
+                                    <img src="<?php echo base_url(); ?>assets/images/icon-register-3.png" class="img-responsive" alt="Daftar Pinjaman Agri" title="Daftar Pinjaman Agri" />
+                                </a>
+                            </div>
+                            <a href="<?php echo site_url('register-pinjaman-agri'); ?>">Daftar BKDana Agri</a>
+                            <p>Pinjaman Agri merupakan solusi bagi Petani. Platform maksimal sampai dengan 100 juta!</p>
                         </div>
                     </div>
                 </div>

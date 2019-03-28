@@ -34,7 +34,7 @@
 	                </thead>
 	                <tbody>
 	                </tbody>
-	                <tfoot>
+	              <!--   <tfoot>
 		                <tr>
 		                    <th>No</th>
 		                    <th>Name</th>
@@ -45,7 +45,7 @@
 		                    <th>Status</th>
 		                    <th>Action</th>
 		                </tr>
-	                </tfoot>
+	                </tfoot> -->
 	                </table>
                 </div>
                 </div>

@@ -356,6 +356,92 @@ class Pinjaman_model extends CI_Model
 		return json_encode($output);
 	}
 
+		function get_all_agri_dt()
+	{
+		// ---- Get All data show as Json ----
+		
+		// variable initialization
+		$search 		= "";
+		$start 			= 0;
+		$rows 			= 10;
+		$iTotal 		= 0;
+		$iFilteredTotal = 0;
+		$_sql_where 	= array( "prod.type_of_business_id = '5'" );
+		$sql_where 		= '';
+		$cols 			= array( "pinjam_primary_id", "Master_loan_id", "Tgl_permohonan_pinjaman", "Nama_pengguna", "product_title", "Jml_permohonan_pinjaman", "Jml_permohonan_pinjaman_disetujui", "Master_loan_status", "");
+		$sort 			= "desc";
+		
+		// get search value (if any)
+		if (isset($_GET['sSearch']) && $_GET['sSearch'] != "" ) {
+			$search = $_GET['sSearch'];
+		}
+
+		// limit
+		$start 		= $this->Datatables_model->get_start();
+		$rows 		= $this->Datatables_model->get_rows();
+		// sort
+		$sort 		= $this->Datatables_model->get_sort($cols);		
+		$sort_dir 	= $this->Datatables_model->get_sort_dir();	
+
+		// Kolom Pencarian
+		if( $search!='' ){
+			$_sql_where[] = "
+				(
+					UCASE(Master_loan_id) LIKE '%".strtoupper($this->db->escape_str($search))."%'
+					OR UCASE(Nama_pengguna) LIKE '%".strtoupper($this->db->escape_str($search))."%'
+					OR UCASE(product_title) LIKE '%".strtoupper($this->db->escape_str($search))."%'
+					OR UCASE(Jml_permohonan_pinjaman) LIKE '%".strtoupper($this->db->escape_str($search))."%'
+				)
+			";
+		}
+
+		if(count($_sql_where)>0) $sql_where = " WHERE ".implode(' AND ',$_sql_where);	
+		        
+        //running query		
+		$sql = " 	SELECT count(0) as iTotal
+					FROM profil_permohonan_pinjaman p 
+					LEFT JOIN user u ON (u.Id_pengguna=p.User_id)
+					LEFT JOIN product prod ON (prod.Product_id=p.Product_id)
+					$sql_where
+				";
+
+		$q = $this->db->query($sql);
+		$iTotal = $q->row('iTotal');
+
+		$q->free_result();
+
+		$sql = " 	SELECT * 
+					FROM profil_permohonan_pinjaman p 
+					LEFT JOIN user u ON (u.Id_pengguna=p.User_id)
+					LEFT JOIN product prod ON (prod.Product_id=p.Product_id)
+					$sql_where
+			    ";
+
+		if($sort!='' && $sort_dir!='') $order = " ORDER BY $sort $sort_dir ";
+		
+		$query 	= $this->db->query($sql. $order. " LIMIT $start,$rows ");
+		$data 	= $query->result();
+
+		if( $search!='' ){
+			$iFilteredTotal = count($query->result());
+		}else{
+			$iFilteredTotal = $iTotal;
+		}
+		
+        //    * Output
+         
+         $output = array(
+             "sEcho" => $this->Datatables_model->get_echo(),
+             "iTotalRecords" => $iTotal,
+             "iTotalDisplayRecords" => $iFilteredTotal,
+             "aaData" => $data
+         );
+
+        $query->free_result();
+
+		return json_encode($output);
+	}
+
 	function get_all_dt()
 	{
 		// ---- Get All data show as Json ----
@@ -657,9 +743,17 @@ class Pinjaman_model extends CI_Model
 		$this->db->update($this->mod_log_transaksi_pinjaman, $data);
 		return $this->db->affected_rows();
 	}
+	
 	function insert_profil_pinjaman5($data)
 	{
 		$this->db->insert('record_pinjaman', $data);
+		//$this->db->insert($this->record_pinjaman, $data);
+		return $this->db->insert_id();
+	}
+
+	function insert_record_repayment($data)
+	{
+		$this->db->insert('record_repayment', $data);
 		//$this->db->insert($this->record_pinjaman, $data);
 		return $this->db->insert_id();
 	}

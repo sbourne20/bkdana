@@ -12,6 +12,7 @@ class Member extends CI_Controller {
 	
 	public function ubah_profil()
 	{
+		//error_reporting(1);
 		$this->Content_model->has_login();
 
 		if ($this->uri->segment(1) == 'ubah-profil') {
@@ -293,6 +294,23 @@ class Member extends CI_Controller {
 
 						// -----batas tambahan-----
 
+						if ($memberdata['mum_type_peminjam']=='3'){
+
+							if($_FILES['pegang_ktp_file']['name'] == ''){
+								$file_pegang_ktp_name   = '';
+							}else{
+								//$pegang_ktp_file  = file_get_contents($_FILES['pegang_ktp_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['pegang_ktp_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_pegang_ktp_name  = $fileName.'.'.$fileExt;
+								$u_detail['foto_pegang_ktp']  = $file_pegang_ktp_name;
+								// ----- END Process Image Name -----
+							}
+						}
+
 						$userID = $memberdata['Id_pengguna'];
 						
 						$mem_data['mum_fullname']       = antiInjection(trim($post['fullname']));
@@ -313,6 +331,7 @@ class Member extends CI_Controller {
 						$user['nama_bank']          = antiInjection(trim($post['nama_bank']));
 
 						if (isset($post['pendidikan'])) {
+							//return $post['pendidikan'];
 							$user['Pendidikan']     = antiInjection(trim($post['pendidikan']));
 						}
 
@@ -332,9 +351,9 @@ class Member extends CI_Controller {
 							$u_detail['How_many_years_have_you_been_in_business'] = antiInjection(trim($post['lama_usaha']));
 						}
 
-						if (isset($post['pendidikan'])) {
-							$u_detail['Highest_Education'] = antiInjection(trim($post['pendidikan']));
-						}
+						/*if (isset($post['pendidikan'])) {
+							$u_detail['pendidikan'] = antiInjection(trim($post['pendidikan']));
+						}*/
 						if (isset($post['jumlah_penghasilan'])) {
 							$filterh         = explode('.', trim($post['jumlah_penghasilan']));
 							$jml_penghasilan = antiInjection(str_replace(',', '', $filterh[0]));
@@ -404,6 +423,16 @@ class Member extends CI_Controller {
 						if (isset($post['laba_usaha'])) {
 							$u_detail['laba_usaha']  = antiInjection(trim($post['laba_usaha']));
 						}
+						if (isset($post['bidang_pekerjaan'])) {
+							$u_detail['bidang_pekerjaan']  = antiInjection(trim($post['bidang_pekerjaan']));
+						}
+						if (isset($post['jumlah_anak'])) {
+							$u_detail['jumlah_anak']  = antiInjection(trim($post['jumlah_anak']));
+						}
+						if (isset($post['status_tempat_tinggal'])) {
+							$u_detail['status_tempat_tinggal']  = antiInjection(trim($post['status_tempat_tinggal']));
+						}
+
 						//end of user detail update
 
 
@@ -413,6 +442,7 @@ class Member extends CI_Controller {
 						$this->Content_model->update_userdetail($userID, $u_detail);
 						
 						// profile_geografi
+						$u_geo['Agama']       = antiInjection(trim($post['agama']));
 						$u_geo['Alamat']      = antiInjection(trim($post['alamat']));
 						$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
 						$u_geo['Kota']        = antiInjection(trim($post['kota']));
@@ -451,8 +481,9 @@ class Member extends CI_Controller {
 							if (!is_file($destination_foto.$file_foto_name)) {
 								mkdir_r($destination_foto);
 							}
-
+							if($post['old_foto']!=''){
 							unlink($destination_foto.$post['old_foto']);
+							}
 							move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);		
 						}
 
@@ -460,7 +491,9 @@ class Member extends CI_Controller {
 							if (!is_file($destination_ktp.$file_ktp_name)) {
 								mkdir_r($destination_ktp);
 							}
+							if($post['old_ktp']!=''){
 							unlink($destination_ktp.$post['old_ktp']);
+							}
 							move_uploaded_file($_FILES['ktp_file']['tmp_name'], $destination_ktp.$file_ktp_name);		
 						}
 
@@ -468,35 +501,45 @@ class Member extends CI_Controller {
 							if (!is_file($destination_usaha.$file_usaha_name)) {
 								mkdir_r($destination_usaha);
 							}
+							if($post['old_usaha']!=''){
 							unlink($destination_usaha.$post['old_usaha']);
+							}
 							move_uploaded_file($_FILES['usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
 						}
 						if(isset($_FILES['usaha_file2']['name']) && $_FILES['usaha_file2']['name'] != ''){
 							if (!is_file($destination_usaha2.$file_usaha_name2)) {
 								mkdir_r($destination_usaha2);
 							}
+							if($post['old_usaha2']!=''){
 							unlink($destination_usaha2.$post['old_usaha2']);
+							}
 							move_uploaded_file($_FILES['usaha_file2']['tmp_name'], $destination_usaha2.$file_usaha_name2);
 						}
 						if(isset($_FILES['usaha_file3']['name']) && $_FILES['usaha_file3']['name'] != ''){
 							if (!is_file($destination_usaha3.$file_usaha_name3)) {
 								mkdir_r($destination_usaha3);
 							}
+							if($post['old_usaha3']!=''){
 							unlink($destination_usaha3.$post['old_usaha3']);
+							}
 							move_uploaded_file($_FILES['usaha_file3']['tmp_name'], $destination_usaha3.$file_usaha_name3);
 						}
 						if(isset($_FILES['usaha_file4']['name']) && $_FILES['usaha_file4']['name'] != ''){
 							if (!is_file($destination_usaha4.$file_usaha_name4)) {
 								mkdir_r($destination_usaha4);
 							}
+							if($post['old_usaha4']!=''){
 							unlink($destination_usaha4.$post['old_usaha4']);
+							}
 							move_uploaded_file($_FILES['usaha_file4']['tmp_name'], $destination_usaha4.$file_usaha_name4);
 						}
 						if(isset($_FILES['usaha_file5']['name']) && $_FILES['usaha_file5']['name'] != ''){
 							if (!is_file($destination_usaha5.$file_usaha_name5)) {
 								mkdir_r($destination_usaha5);
 							}
+							if($post['old_usaha5']!=''){
 							unlink($destination_usaha5.$post['old_usaha5']);
+							}
 							move_uploaded_file($_FILES['usaha_file5']['tmp_name'], $destination_usaha5.$file_usaha_name5);
 						}
 
@@ -505,12 +548,15 @@ class Member extends CI_Controller {
 
 
 						// ----- tambahan baru -----
+					if ($memberdata['mum_type_peminjam']=='1'){
 
 						if($_FILES['surat_keterangan_bekerja_file']['name'] != ''){
 							if (!is_file($destination_surat_keterangan_bekerja.$file_surat_keterangan_bekerja_name)) {
 								mkdir_r($destination_surat_keterangan_bekerja);
 							}
+							if($post['old_surat_keterangan_bekerja']!=''){
 							unlink($destination_surat_keterangan_bekerja.$post['old_surat_keterangan_bekerja']);
+							}
 							move_uploaded_file($_FILES['surat_keterangan_bekerja_file']['tmp_name'], $destination_surat_keterangan_bekerja.$file_surat_keterangan_bekerja_name);
 						}
 
@@ -518,7 +564,9 @@ class Member extends CI_Controller {
 							if (!is_file($destination_slip_gaji.$file_slip_gaji_name)) {
 								mkdir_r($destination_slip_gaji);
 							}
+							if($post['old_slip_gaji']!=''){
 							unlink($destination_slip_gaji.$post['old_slip_gaji']);
+							}
 							move_uploaded_file($_FILES['slip_gaji_file']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
 						}
 
@@ -526,12 +574,28 @@ class Member extends CI_Controller {
 							if (!is_file($destination_pegang_ktp.$file_pegang_ktp_name)) {
 								mkdir_r($destination_pegang_ktp);
 							}
+							if($post['old_pegang_ktp']!=''){
 							unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
+							}
 							move_uploaded_file($_FILES['pegang_ktp_file']['tmp_name'], $destination_pegang_ktp.$file_pegang_ktp_name);
 						}
+					}
+
+					if ($memberdata['mum_type_peminjam']=='3'){
+
+						if($_FILES['pegang_ktp_file']['name'] != ''){
+							if (!is_file($destination_pegang_ktp.$file_pegang_ktp_name)) {
+								mkdir_r($destination_pegang_ktp);
+							}
+							if($post['old_pegang_ktp']!=''){
+							unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
+							}
+							move_uploaded_file($_FILES['pegang_ktp_file']['tmp_name'], $destination_pegang_ktp.$file_pegang_ktp_name);
+						}
+					}
 						
 						// -----batas tambahan baru -----
-
+						
 						$this->session->set_userdata('message','Sukses ubah profil');
 						$this->session->set_userdata('message_type','success');
 					}else{

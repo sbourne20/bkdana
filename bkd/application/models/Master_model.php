@@ -31,6 +31,8 @@ class Master_model extends CI_Model
 			'mod_setting_home'           => 'mod_setting_home',
 			'mod_tempo'                  => 'mod_tempo',
 			'tabel_pinjaman'   			 => 'profil_permohonan_pinjaman',
+			'record_repayment'			 => 'record_repayment',
+			'record_repayment_log'		 => 'record_repayment_log',
 		);
 
 		/* initialize table name for this class */
