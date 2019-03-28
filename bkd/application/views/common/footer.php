@@ -16,7 +16,7 @@ if ($login_status == 1)
             <div class="row">
                 <div class="col-sm-12">
 					<img src="<?php echo base_url(); ?>assets/images/logo.png" class="img-responsive" alt="Keyword" title="Keyword" style="width:200px" />
-                    <h3>Partner Bisnis Keuangan Anda</h3>
+                    <h3>Berkah Untuk Semua</h3>
                 </div>
             </div>
         </div>
@@ -60,6 +60,16 @@ if ($login_status == 1)
 
 <!-- Overflow Content -->
 <div class="wrapper-content overflow-wrapp">
+	<div class="section-ojk">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12 text-center">
+					<h4>Terdaftar dan diawasi oleh</h4>
+					<img src="<?php echo base_url(); ?>assets/images/OJK.png" class="img-responsive" style="width:200px;"/>        
+				</div>
+			</div>
+		</div>
+	</div>
     <div class="section-info">
         <div class="container">
             <div class="row">
@@ -67,7 +77,7 @@ if ($login_status == 1)
                     <div class="description">
                         <h2>Perhatian</h2>
                             <ol>
-                                <li>BKDana adalah platform Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi
+                                <!-- <li>BKDana adalah platform Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi
                                 (Fintech Lending) yang hanya menfasilitasi bertemunya Pemberi Pinjaman dan
                                 Peminjam.
                                 </li>
@@ -96,20 +106,27 @@ if ($login_status == 1)
                                 </li>
                                 <li>Masyarakat Pengguna wajib membaca dan memahami informasi ini secara teliti
                                 sebelum mengambil keputusan sebagai Pemberi Pinjaman maupun Penerima Pinjaman.
-                                </li>
+                                </li> -->
+								<li>Layanan Pinjam Meminjam Berbasis Teknologi Informasi merupakan kesepakatan perdata antara Pemberi Pinjaman dengan Penerima Pinjaman, sehingga segala risiko yang timbul dari kesepakatan tersebut ditanggung sepenuhnya oleh masing-masing pihak.</li>
+								<li>Resiko Kredit atau Gagal Bayar dan seluruh kerugian dari atau terkait dengan kesepakatan pinjam meminjam ditanggung sepenuhnya oleh Pemberi Pinjaman. Tidak ada lembaga atau otoritas negara yang bertanggung jawab atas resiko gagal bayar dan kerugian tersebut.</li>
+								<li>Penyelenggara dengan persetujuan dari masing-masing Pengguna (Pemberi Pinjaman dan/atau Penerima Pinjaman) mengakses, memperoleh, menyimpan, mengelola dan/atau menggunakan data pribadi Pengguna ('Pemanfaatan Data') pada atau di dalam benda, perangkat elektronik (termasuk smartphone atau telepon seluler), perangkat keras (hardware) maupun lunak (software), dokumen elektronik, aplikasi atau sistem elektronik milik Pengguna atau yang dikuasai Pengguna, dengan memberitahukan tujuan, batasan dan mekanisme Pemanfaatan Data tersebut kepada Pengguna yang bersangkutan sebelum memperoleh persetujuan yang dimaksud.</li>
+								<li>Pemberi Pinjaman yang belum memiliki pengetahuan dan pengalaman pinjam meminjam, disarankan untuk tidak menggunakan layanan ini.</li>
+								<li>Penerima Pinjaman harus mempertimbangkan tingkat bunga pinjaman dan biaya lainnya sesuai dengan kemampuan dalam melunasi pinjaman.</li>
+								<li>Setiap kecurangan tercatat secara digital di dunia maya dan dapat diketahui masyarakat luas di media sosial.</li>
+								<li>Pengguna harus membaca dan memahami informasi ini sebelum membuat keputusan menjadi Pemberi Pinjaman atau Penerima Pinjaman</li>
+								<li>Pemerintah yaitu dalam hal ini Otoritas Jasa Keuangan,tidak bertanggung jawab atas setiap pelanggaran atau ketidakpatuhan oleh Pengguna,baik Pemberi Pinjaman maupun Penerima Pinjaman(baik karena kesengajaan atau kelalaian Pengguna)terhadap ketentuan peraturan perundang-undangan maupun kesepakatan atau perikatan antara Penyelenggara dengan Pemberi Pinjaman dan/atau Penerima Pinjaman.</li>
+								<li>Setiap transaksi dan kegiatan pinjam meminjam atau pelaksanaan kesepakatan mengenai pinjam meminjam antara atau yang melibatkan Penyelenggara,Pemberi Pinjaman dan/atau Penerima Pinjaman wajib dilakukan melalui escrow account dan virtual account sebagai mana yang diwajibkan berdasarkan Peraturan Otoritas Jasa Keuangan Nomor77/POJK.01/2016 tentang Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi dan pelanggaran atau ketidakpatuhan terhadap ketentuan tersebut merupakan bukti telah terjadinya pelanggaran hukum oleh Penyelenggara sehingga Penyelenggara wajib menanggung ganti rugi yang diderita oleh masing-masing Pengguna sebagai akibat langsung dari pelanggaran hukum tersebut diatas tanpa mengurangi hak Pengguna yang menderita kerugian menurut Kitab Undang-Undang Hukum Perdata</li>
                             </ol>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <div class="description">
                             <br><br>
-                            <p>PT Berkah Kelola Dana ("BKDana") sedang memproses pendaftaran di Otoritas Jasa
-                            Keuangan ("OJK") sebagai Penyelenggara Layanan Pinjam Meminjam Uang Berbasis
-                            Teknologi Informasi dengan Surat Tanda Terima dari OJK Nomor OJK-011249 tanggal 27
-                            Februari 2018 sehingga setelah nanti mendapat status terdaftar maka pelaksanaan kegiatan
-                            usaha kami akan diawasi secara ketat oleh OJK berdasarkan Peraturan Otoritas Jasa
-                            Keuangan Nomor 77/POJK.01/2016 tentang Layanan Pinjam Meminjam Uang Berbasis
-                            Teknologi Informasi.</p>
+                            <p>PT Berkah Kelola Dana (“BKDana”) adalah perusahaan pendanaan yang terdaftar dan diawasi oleh OJK 
+							sebagai Penyelenggara Layanan Pinjam Meminjam Uang Berbasis Teknologi Informasi dengan Surat terdaftar 
+							dari OJK No S-62/NB.213/2019 Tanggal 1 Februari 2019. Kegiatan usaha kami diawasi secara ketat oleh OJK 
+							berdasarkan Peraturan Otoritas Jasa Keuangan Nomor 77/POJK.01/2016 tentang Layanan Pinjam Meminjam Uang 
+							Berbasis Teknologi Informasi.</p>
                             <p>Isi dan materi yang tersedia pada situs bkdana.id dimaksudkan untuk memberikan informasi
                             dan tidak dianggap sebagai sebuah penawaran, permohonan, undangan, saran, maupun
                             rekomendasi untuk menginvestasikan sekuritas, produk pasar modal, atau jasa keuangan
@@ -125,16 +142,6 @@ if ($login_status == 1)
                 </div>
             </div>
         </div>
-	</div>
-	<div class="section-ojk">
-		<div class="container">
-			<div class="row">
-				<div class="col-sm-12 text-center">
-					<h4>Terdaftar dan diawasi oleh</h4>
-					<img src="<?php echo base_url(); ?>assets/images/OJK.png" class="img-responsive" style="width:200px;"/>        
-				</div>
-			</div>
-		</div>
 	</div>
 </div>
 
