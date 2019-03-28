@@ -177,20 +177,58 @@ class Transaksi extends CI_Controller {
 			
 			$data['jml_cicilan'] = $log_transaksi_pinjam['ltp_jml_angsuran'];
 			
-			//tambahan baru denda keterlambatan
+/*			//tambahan baru denda keterlambatan
 			if($produk['charge_type']=='1'){
 
 			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
 			}else if($produk['charge_type']=='2'){
-			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit']);
+			$data['denda']= ($produk['charge']);
 			}
-			//batas tambahan baru
+			//batas tambahan baru*/
 
 			$data['pages']    = 'v_transaksi_detail_kilat';
 
 			if ( $transaksi['Master_loan_status'] == 'complete' || $transaksi['Master_loan_status'] == 'lunas') {
 				$data['jatuh_tempo'] = date('d/m/Y', strtotime($log_transaksi_pinjam['ltp_tgl_jatuh_tempo']));
 			}
+
+		}else if ($transaksi['type_of_business_id'] == '5'){
+
+			//echo 'Pinjaman Agri';
+			
+			$data['jml_cicilan']   = $log_transaksi_pinjam['ltp_jml_angsuran'];
+			$data['lama_angsuran'] = $log_transaksi_pinjam['ltp_lama_angsuran']; // berapa minggu
+			//tambahan baru repayment
+			$data['jumlah_cicilan']   = $repayment1['jumlah_cicilan'];
+			$data['jumlah_denda']     = $repayment1['jml_denda'];
+			//batas tambahan baru repayment
+
+
+			//tambahan baru repayment
+			$data['repayment']			   = $this->Content_model->get_record_repayment($ID);
+			$data['record_repayment_log']  = $this->Content_model->get_record_repayment_log($ID);
+			$data['repaymentdenda']		   = $this->Content_model->get_record_repaymentdenda($ID);
+			//$data['repayment1']			   = $this->Content_model->get_record_repayment1($ID);
+			//batas tambahan baru repayment
+
+			/*//tambahan baru denda keterlambatan
+			if($produk['charge_type']=='1'){
+
+			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
+			}else if($produk['charge_type']=='2'){
+			$data['denda']= ($produk['charge']);
+			}
+			//batas tambahan baru*/
+
+			$data['pages']         = 'v_transaksi_detail_agri';
+
+			if ($transaksi['Master_loan_status'] == 'complete' || $transaksi['Master_loan_status'] == 'lunas') {
+				//$data['jatuh_tempo'] = date('d/m/Y', strtotime("+3 months", strtotime($transaksi['tgl_pinjaman_disetujui'])));
+				$total_tenor = (int)$transaksi['Loan_term'];
+				$data['jatuh_tempo'] = date('d/m/Y', strtotime("+".$total_tenor." months", strtotime($transaksi['tgl_pinjaman_disetujui'])));
+			}
+
+
 		}else{
 			//echo 'Pinjaman Mikro';
 			
@@ -204,18 +242,19 @@ class Transaksi extends CI_Controller {
 
 			//tambahan baru repayment
 			$data['repayment']			   = $this->Content_model->get_record_repayment($ID);
+			$data['record_repayment_log']  = $this->Content_model->get_record_repayment_log($ID);
 			$data['repaymentdenda']		   = $this->Content_model->get_record_repaymentdenda($ID);
 			//$data['repayment1']			   = $this->Content_model->get_record_repayment1($ID);
 			//batas tambahan baru repayment
 
-			//tambahan baru denda keterlambatan
+			/*//tambahan baru denda keterlambatan
 			if($produk['charge_type']=='1'){
 
 			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
 			}else if($produk['charge_type']=='2'){
 			$data['denda']= ($produk['charge']);
 			}
-			//batas tambahan baru
+			//batas tambahan baru*/
 
 			$data['pages']         = 'v_transaksi_detail_mikro';
 

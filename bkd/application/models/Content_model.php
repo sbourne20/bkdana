@@ -188,9 +188,10 @@ class Content_model extends CI_Model
 		$this->db->from('mod_user_member m');
 		$this->db->join('user u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
 		$this->db->join('user_detail ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
-		$this->db->where('mum_email', $email);
-		$this->db->or_where('Mobileno', $telp);
-
+		$this->db->where('Mobileno', $telp);
+		if ($email !=''){
+			$this->db->or_where('mum_email', $email);
+		}
 		if ($ktp !=''){
 			$this->db->or_where('ID_No', $ktp);
 		}
@@ -696,8 +697,8 @@ class Content_model extends CI_Model
 			What_is_the_name_of_your_business, 
 			How_many_years_have_you_been_in_business, 
 			Kota, 
-			Master_loan_id, 
-			Master_loan_id as transaksi_id, 
+			p.Master_loan_id, 
+			p.Master_loan_id as transaksi_id, 
 			Jml_permohonan_pinjaman, 
 			Informasi_kredit, 
 			Jml_permohonan_pinjaman_disetujui,
@@ -727,6 +728,7 @@ class Content_model extends CI_Model
 			images_usaha_name5,
 			nama_peminjam,
 			Alamat, Kota, Provinsi, prod.type_of_interest_rate,
+			rr.jml_denda,
 			(select count(*) as itotal from '.$this->profile_pendanaan.' where Master_loan_id=transaksi_id) as total_lender ');
 		$this->db->from($this->profil_permohonan_pinjaman. ' p');
 		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
@@ -734,6 +736,7 @@ class Content_model extends CI_Model
 		$this->db->join($this->user. ' u', 'u.Id_pengguna=p.User_id', 'left');
 		$this->db->join($this->user_detail. ' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
 		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
+		$this->db->join($this->record_repayment. ' rr', 'rr.Master_loan_id=p.Master_loan_id', 'left');
 		$this->db->where('p.Master_loan_id', $id);
 		$sql = $this->db->get();
 		$ret = $sql->row_array();
@@ -1038,6 +1041,71 @@ class Content_model extends CI_Model
 			Kodepos,
 			What_is_the_name_of_your_business,
 			How_many_years_have_you_been_in_business			
+			');
+		/*$this->db->select('
+			u.Id_pengguna as Id_pengguna_user,
+			Tgl_record,
+			Nama_pengguna,
+			Jenis_pengguna,
+			Id_ktp,
+			Tempat_lahir,
+			Tanggal_lahir,
+			Jenis_kelamin,
+			Pekerjaan,
+			Nomor_rekening,
+			id_mod_user_member,
+			ud.Id_pengguna,
+			user_type,
+			Mobileno,
+			Profile_photo,
+			Photo_id,
+			Occupation,
+			ID_type,
+			ID_No,
+			What_is_the_name_of_your_business,
+			How_many_years_have_you_been_in_business,
+			Photo_business_location,
+			foto_usaha,
+			Alamat,
+			Kodepos,
+			Kota,
+			Provinsi,
+			g.User_id
+			');*/
+		$this->db->from($this->user. ' u');
+		$this->db->join($this->user_detail. ' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
+		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
+		$this->db->where('u.Id_pengguna', $uid);
+		$this->db->limit('1');
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
+
+	function get_data_peminjam_agri_rows($uid)
+	{
+		$this->db->select('
+			Nama_pengguna,
+			Id_ktp,
+			Tempat_lahir,
+			Tanggal_lahir,
+			Jenis_kelamin,
+			Pekerjaan,
+			Nomor_rekening,
+			nama_bank,
+			Mobileno,
+			images_foto_name,
+			images_ktp_name,
+			foto_pegang_ktp,
+			Pendidikan,
+			Agama,
+			ud.bidang_pekerjaan,
+			status_nikah,
+			jumlah_anak,
+			status_tempat_tinggal,
+			Alamat,
+			Kota,
+			Provinsi,
+			Kodepos				
 			');
 		/*$this->db->select('
 			u.Id_pengguna as Id_pengguna_user,
@@ -1548,5 +1616,24 @@ class Content_model extends CI_Model
 		$this->db->where('tgl_jatuh_tempo', $tempo);
 		$this->db->update($this->record_repayment);
 		return $this->db->affected_rows();
+	}
+
+		function get_record_repayment_log($ordercode)
+	{
+		$nowdate = date('Y-m-d');
+
+		$this->db->select('*');
+		$this->db->from($this->record_repayment_log);
+		$this->db->where('Master_loan_id', $ordercode);
+		//$this->db->where('notes_cicilan', $cicilan);
+		//$this->db->where('tgl_record_repayment_log', $ordercode);
+		$this->db->order_by('tgl_record_repayment_log', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+
+/*		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;*/
 	}
 }

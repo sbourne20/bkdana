@@ -57,11 +57,15 @@ class Member_model extends CI_Model
 	function do_login_byemail($u)
 	{
 		$u = $this->db->escape_str($u);
-
+		$u2 = $u;
+		if(substr($u2, 0, 1)=='0'){
+			$u2 = '+62'.substr($u2, 1);
+		}
 		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_type');
 		$this->db->from($this->mod_user_member);
 		$this->db->where('mum_email' , $u);
 		$this->db->or_where('mum_telp' , $u);
+		$this->db->or_where('mum_telp' , $u2);
 		//$this->db->where('mum_status', '1');
 		$this->db->limit('1');
 		$sql = $this->db->get();
@@ -126,7 +130,8 @@ class Member_model extends CI_Model
 	{
 		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_status, mum_type');
 		$this->db->from($this->mod_user_member);
-		$this->db->where('mum_email', $email);		
+		$this->db->where('mum_email', $email);
+		$this->db->or_where('mum_telp', '+'.$email);		
 		$this->db->limit('1');
 		$sql = $this->db->get();
 		return $sql->row_array();

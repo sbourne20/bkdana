@@ -12,6 +12,7 @@ class Member extends CI_Controller {
 	
 	public function ubah_profil()
 	{
+		//error_reporting(1);
 		$this->Content_model->has_login();
 
 		if ($this->uri->segment(1) == 'ubah-profil') {
@@ -293,6 +294,71 @@ class Member extends CI_Controller {
 
 						// -----batas tambahan-----
 
+						if ($memberdata['mum_type_peminjam']=='3'){
+
+							if($_FILES['pegang_ktp_file']['name'] == ''){
+								$file_pegang_ktp_name   = '';
+							}else{
+								//$pegang_ktp_file  = file_get_contents($_FILES['pegang_ktp_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['pegang_ktp_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_pegang_ktp_name  = $fileName.'.'.$fileExt;
+								$u_detail['foto_pegang_ktp']  = $file_pegang_ktp_name;
+								// ----- END Process Image Name -----
+							}
+						}
+
+						// -----Tambahan Baru-----
+						if ($memberdata['mum_type_peminjam']=='1'){
+
+							if($_FILES['surat_keterangan_bekerja_file']['name'] == ''){
+								$file_surat_keterangan_bekerja_name   = '';
+							}else{
+								//$upload_surat_keterangan_bekerja_file  = file_get_contents($_FILES['surat_keterangan_bekerja_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['surat_keterangan_bekerja_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_surat_keterangan_bekerja_name  = $fileName.'.'.$fileExt;
+								$u_detail['	foto_surat_keterangan_bekerja']  = $file_surat_keterangan_bekerja_name;
+								// ----- END Process Image Name -----
+							}
+
+							if($_FILES['slip_gaji_file']['name'] == ''){
+								$file_slip_gaji_name   = '';
+							}else{
+								//$upload_slip_gaji  = file_get_contents($_FILES['slip_gaji_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['slip_gaji_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_slip_gaji_name   = $fileName.'.'.$fileExt;
+								$u_detail['foto_slip_gaji']  = $file_slip_gaji_name;
+								// ----- END Process Image Name -----
+							}
+
+							if($_FILES['pegang_ktp_file']['name'] == ''){
+								$file_pegang_ktp_name   = '';
+							}else{
+								//$pegang_ktp_file  = file_get_contents($_FILES['pegang_ktp_file']['tmp_name']);
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['pegang_ktp_file']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$file_pegang_ktp_name  = $fileName.'.'.$fileExt;
+								$u_detail['foto_pegang_ktp']  = $file_pegang_ktp_name;
+								// ----- END Process Image Name -----
+							}
+						}
+
+						// -----batas tambahan-----
+
 						$userID = $memberdata['Id_pengguna'];
 						
 						$mem_data['mum_fullname']       = antiInjection(trim($post['fullname']));
@@ -313,6 +379,7 @@ class Member extends CI_Controller {
 						$user['nama_bank']          = antiInjection(trim($post['nama_bank']));
 
 						if (isset($post['pendidikan'])) {
+							//return $post['pendidikan'];
 							$user['Pendidikan']     = antiInjection(trim($post['pendidikan']));
 						}
 
@@ -332,9 +399,9 @@ class Member extends CI_Controller {
 							$u_detail['How_many_years_have_you_been_in_business'] = antiInjection(trim($post['lama_usaha']));
 						}
 
-						if (isset($post['pendidikan'])) {
-							$u_detail['Highest_Education'] = antiInjection(trim($post['pendidikan']));
-						}
+						/*if (isset($post['pendidikan'])) {
+							$u_detail['pendidikan'] = antiInjection(trim($post['pendidikan']));
+						}*/
 						if (isset($post['jumlah_penghasilan'])) {
 							$filterh         = explode('.', trim($post['jumlah_penghasilan']));
 							$jml_penghasilan = antiInjection(str_replace(',', '', $filterh[0]));
@@ -404,6 +471,16 @@ class Member extends CI_Controller {
 						if (isset($post['laba_usaha'])) {
 							$u_detail['laba_usaha']  = antiInjection(trim($post['laba_usaha']));
 						}
+						if (isset($post['bidang_pekerjaan'])) {
+							$u_detail['bidang_pekerjaan']  = antiInjection(trim($post['bidang_pekerjaan']));
+						}
+						if (isset($post['jumlah_anak'])) {
+							$u_detail['jumlah_anak']  = antiInjection(trim($post['jumlah_anak']));
+						}
+						if (isset($post['status_tempat_tinggal'])) {
+							$u_detail['status_tempat_tinggal']  = antiInjection(trim($post['status_tempat_tinggal']));
+						}
+
 						//end of user detail update
 
 
@@ -413,6 +490,7 @@ class Member extends CI_Controller {
 						$this->Content_model->update_userdetail($userID, $u_detail);
 						
 						// profile_geografi
+						$u_geo['Agama']       = antiInjection(trim($post['agama']));
 						$u_geo['Alamat']      = antiInjection(trim($post['alamat']));
 						$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
 						$u_geo['Kota']        = antiInjection(trim($post['kota']));
@@ -539,6 +617,19 @@ class Member extends CI_Controller {
 							}
 							move_uploaded_file($_FILES['slip_gaji_file']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
 						}
+
+						if($_FILES['pegang_ktp_file']['name'] != ''){
+							if (!is_file($destination_pegang_ktp.$file_pegang_ktp_name)) {
+								mkdir_r($destination_pegang_ktp);
+							}
+							if($post['old_pegang_ktp']!=''){
+							unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
+							}
+							move_uploaded_file($_FILES['pegang_ktp_file']['tmp_name'], $destination_pegang_ktp.$file_pegang_ktp_name);
+						}
+					}
+
+					if ($memberdata['mum_type_peminjam']=='3'){
 
 						if($_FILES['pegang_ktp_file']['name'] != ''){
 							if (!is_file($destination_pegang_ktp.$file_pegang_ktp_name)) {

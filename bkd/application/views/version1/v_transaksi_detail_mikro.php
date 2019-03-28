@@ -320,13 +320,15 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                                                         //echo"$jatuh_tempo |";
                                                         //echo"$tempo_denda |";
                                                         //echo"$nowdate |";
-                                                        $bayar_denda = ($denda * $diff1);
+                                                        //$bayar_denda = ($denda * $diff1);
+                                                        $bayar_denda = $data['jml_denda'];
                                                          //$items[] = $diff1;
                                                         //echo $bayar_denda;
 
                                                     }else if(number_format($diff1 < 0)){
 
-                                                         $bayar_denda = 0;
+                                                         //$bayar_denda = 0;
+                                                        $bayar_denda = $data['jml_denda'];
                                                        // $bayar_denda = ($denda * $diff1);
                                                         //echo $bayar_denda;
                                                      
@@ -338,14 +340,54 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
 
                                                      ?>
                                                     <h4>Denda Keterlambatan</h4>
-                                                    <p><?php echo number_format($bayar_denda); ?> IDR</p>
-                                                    <span class="<?php echo $class; ?>">Status : <?php echo $status_cicilan; ?></span>
+                                                    <p><?php echo number_format($data['jml_denda']); ?> IDR <a data-toggle="modal" data-target="#modalRiwayatDenda<?=$data['notes_cicilan']?>" href="#" class="" title="Riwayat Denda"> <i class='fas fa-info-circle'></i></a>
+                                                    <div class="modal fade" id="modalRiwayatDenda<?=$data['notes_cicilan']?>" tabindex="-1" role="dialog">
+                                                        <div class="modal-dialog modal-sm" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    Riwayat Denda Cicilan ke <?=$data['notes_cicilan']?>
+                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>  
+                                                                </div>
+                                                                <div class="modal-body">      
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12">
+        
+                                                                            <table class="display table table-bordered table-striped" id="dynamic-table">
+                                                                                <thead>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                <tr>
+                                                                                    <td><span>Tanggal</span></td>
+                                                                                     <td><span>Denda</span></td>
+                                                                                </tr>
+                                                                                <?php
+                                                                                foreach($record_repayment_log as $data1){
+                                                                                    if($data1['notes_cicilan']==$data['notes_cicilan']){
+                                                                                ?>
+                                                                                <tr>
+                                                                                    <td><?php echo date_format(date_create($data1['tgl_record_repayment_log']), "Y-m-d"); ?></td>
+                                                                                    <td><?php echo number_format($data1['jml_denda']); ?> IDR</td>
+                                                                                </tr>
+                                                                                 <?php
+                                                                                 }
+                                                                                 }
+                                                                                 ?>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div> 
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    </p>
+                                                <span class="<?php echo $class; ?>">Status : <?php echo $status_cicilan; ?></span>
                                                 </div>
                                             </li>
                                             <?php //$k=$k+1; 
                                             }
                                             }
-                                            //} ?>
+                                        //} ?>
                                         </ul>
                                         <div class="text-center">
                                             <a href="" class="btn btn-green" title="Kembali" onclick="window.history.go(-1); return false;">Kembali</a>

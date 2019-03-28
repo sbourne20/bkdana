@@ -426,7 +426,7 @@ class Transaksi_pinjaman_kilat extends CI_Controller {
 				$repayment['User_id']				   = $loan_data['User_id'];
 				$repayment['jumlah_cicilan']		   = $jml_repayment;
 				$repayment['notes_cicilan']			   = 'cicilan ke 1';
-				$repayment['status_cicilan']		   = 'belum bayar';
+				$repayment['status_cicilan']		   = 'belum-bayar';
 				$repayment['tgl_jatuh_tempo']		   = $tgl_jatuh_tempo;
 				//$repayment['tgl_pembayaran']		   = $nowdatetime;
 				$repayment['tgl_record_repayment']	   = $nowdatetime;

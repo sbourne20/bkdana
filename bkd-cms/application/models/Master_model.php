@@ -39,6 +39,7 @@ class Master_model extends CI_Model
 			'peminjam_group'  => 'user_group',
 			'record_pinjaman' => 'record_pinjaman',
 			'record_repayment' => 'record_repayment',
+			'record_repayment_log' => 'record_repayment_log',
 		);
 
 		/* initialize table name for this class */

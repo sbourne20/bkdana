@@ -409,7 +409,7 @@ class Cronjob_model extends CI_Model
 		//return $data;
 	}
 
-	function get_denda1($code)
+	function get_tgl_jth_tempo($code)
 	{
 		$this->db->select('*');
 		$this->db->from($this->record_repayment);
@@ -421,17 +421,39 @@ class Cronjob_model extends CI_Model
 		return $sql->result_array();
 	}
 
-	function get_denda2()
-	{
-		$this->db->select('*');
-		$this->db->from($this->record_repayment);
-		//$this->db->where('Master_loan_id', 'PM-2539D0CD7E71F3B');
+	function get_record_repayment()
+	{	
+		$this->db->select('rr.*,m.id_user_group,prod.Product_id, prod.charge, pp.jml_kredit, prod.charge_type, prod.type_of_business_id, DATEDIFF(now(),rr.tgl_jatuh_tempo) as diff, x.jml_belum_bayar');
+		$this->db->from($this->record_repayment. ' rr');
+		$this->db->join($this->mod_log_transaksi_pinjaman. ' m','m.ltp_Master_loan_id=rr.Master_loan_id');
+		$this->db->join($this->tabel_pinjaman. ' pp','pp.Master_loan_id=m.ltp_Master_loan_id');
+		$this->db->join($this->product. ' prod','prod.Product_id=m.ltp_product_id');
+		//subquery jumlah belum bayar dalam 1 grup
+		$this->db->join('(SELECT tp2.id_user_group, notes_cicilan, COUNT(User_id) as jml_belum_bayar '.
+    					'FROM record_repayment rr2 ' .
+    					'INNER JOIN mod_log_transaksi_pinjaman tp2 '.
+    					'ON rr2.Master_loan_id = tp2.ltp_Master_loan_id '.
+    					'WHERE status_cicilan = \'belum-bayar\' '.
+    					'AND DATEDIFF(now(),rr2.tgl_jatuh_tempo) > 0 '.
+    					'GROUP BY id_user_group, notes_cicilan) as x', 'm.id_user_group = x.id_user_group AND rr.notes_cicilan = x.notes_cicilan');
 		$this->db->where('status_cicilan','belum-bayar');
-		//$this->db->where('tgl_jatuh_tempo <= now()', null);
+		$this->db->where('DATEDIFF(NOW(),tgl_jatuh_tempo) > 0', null);
 		$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		//print_r($this->db->get_compiled_select());
+		
 		$sql = $this->db->get();
 		return $sql->result_array();
 	}
+
+	/*function get_record_repayment1(){
+		$this->db->select('rr.*,m.id_user_group,prod.Product_id, prod.charge, pp.jml_kredit, prod.charge_type, prod.type_of_business_id, DATEDIFF(now(),rr.tgl_jatuh_tempo) as diff, x.jml_belum_bayar');
+		$this->db->from($this->record_repayment. ' rr');
+		$this->db->join($this->mod_log_transaksi_pinjaman. ' m','m.ltp_Master_loan_id=rr.Master_loan_id');
+		$this->db->join($this->tabel_pinjaman. ' pp','pp.Master_loan_id=m.ltp_Master_loan_id');
+		$this->db->join($this->product. ' prod','prod.Product_id=m.ltp_product_id');
+	}*/
+
+
 
 	function get_my_denda($ordercode)
 	{
@@ -483,6 +505,25 @@ class Cronjob_model extends CI_Model
 		return $ret;*/
 	}
 
+	//tambahan baru, masih ngetes
+	function get_my_denda3($code)
+	{
+		$this->db->select('*');
+		$this->db->from($this->mod_log_transaksi_pinjaman. ' m');
+		$this->db->join($this->record_repayment. ' rr', 'rr.Master_loan_id=m.ltp_Master_loan_id', 'left');
+		//$this->db->join($this->record_repayment. ' rec_rep', 'rec_rep.Master_loan_id=m.ltp_Master_loan_id', 'left');
+		$this->db->where('ltp_Master_loan_id', $code);
+
+		//$sql = $this->db->get();
+		//return $sql->result_array();
+
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	} 
+	//batas tambahan baru
+
 
 
 
@@ -501,5 +542,80 @@ class Cronjob_model extends CI_Model
 
 		$kueri = $this->db->query($sql);
 		return $this->db->affected_rows();
+	}
+
+	function get_user()
+	{
+
+		$sql = " SELECT * 
+				 FROM {$this->user_ojk}";
+				 
+		$query 	= $this->db->query($sql);
+		$data 	= $query->result_array();
+
+		/*echo $this->db->last_query();*/
+		return $data;
+
+
+		/*$this->db->select('*');
+		$this->db->from($this->user_ojk);
+		//$this->db->where('Id_pengguna', $id);
+		$sql = $this->db->get();
+		return $sql->result_array();*/
+	}
+
+	function get_jumlah_group_member($code){
+		$this->db->select('count(ltp_Id_pengguna) as ttlmembr,DATEDIFF(now(),rr.tgl_jatuh_tempo) as diff');
+		$this->db->from($this->mod_log_transaksi_pinjaman. ' m');
+		$this->db->join($this->record_repayment. ' rr','rr.Master_loan_id=m.ltp_Master_loan_id');
+		//$this->db->join($this->product. ' prod','prod.Product_id=m.ltp_product_id');
+		$this->db->where('rr.status_cicilan','belum-bayar');
+		$this->db->where('DATEDIFF(NOW(),rr.tgl_jatuh_tempo) > 0', null);
+		$this->db->where('id_user_group',$code);
+		//$this->db->where('DATEDIFF(NOW(),tgl_jatuh_tempo) > 0', null);
+		//$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+		//return $sql->result_array();
+	}
+
+		function insert_log_record_repayment($data)
+	{
+		
+		$this->db->select('*');
+		$this->db->from($this->record_repayment_log);
+		$this->db->where('Master_loan_id',$data['Master_loan_id']);
+		$this->db->where('notes_cicilan',$data['notes_cicilan']);
+		$this->db->where('DATEDIFF(NOW(),tgl_record_repayment_log) = 0', null);
+		
+		$sql = $this->db->get();
+		$rowcount = $sql->num_rows();
+
+		if($rowcount==0){
+			$this->db->insert($this->record_repayment_log, $data);
+			return $this->db->insert_id();
+		}else{
+			$this->db->where('Master_loan_id',$data['Master_loan_id']);
+			$this->db->where('notes_cicilan',$data['notes_cicilan']);
+			$this->db->where('DATEDIFF(NOW(),tgl_record_repayment_log) = 0', null);
+			$this->db->update($this->record_repayment_log, $data);
+			return $this->db->affected_rows();
+		}		
+	}
+
+		function get_count_group($idgroup)
+	{
+		$this->db->select('count(*) as itotal');
+		$this->db->from($this->user_ojk);
+		$this->db->where('id_user_group', $idgroup);
+		//$sql = $this->db->get();
+		//return $sql->result_array();
+
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
 	}
 }

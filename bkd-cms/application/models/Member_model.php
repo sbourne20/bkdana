@@ -552,6 +552,13 @@ class Member_model extends CI_Model
 		return $ret;
 	}
 
-		
+	//update grup ke mod ltp
+		public function update_mod_ltpinjaman($data, $ID)
+	{
+		$this->db->where('ltp_Id_pengguna', $ID) ;
+		$this->db->update($this->mod_log_transaksi_pinjaman, $data);
+		return $this->db->affected_rows();
+	}
+	//batas update	
 
 }

@@ -54,6 +54,21 @@ class Ajax extends CI_Controller {
 		echo $html;
 	}
 
+	//agri
+		function tenor_pinjaman_agri()
+	{
+		$id_harga = $this->input->post('id_harga', TRUE);
+
+		$data = $this->Content_model->product_by_harga($id_harga);
+
+		$html = '';
+		foreach ($data as $prod) {
+			$html .= '<option value="'.$prod['Product_id'].'">'.$prod['Loan_term'].' '. $prod['type_of_interest_rate_name'].' </option>';
+		}
+
+		echo $html;
+	}
+
 	function register_check()
 	{
 			$post = $this->input->post(NULL, TRUE);
@@ -70,7 +85,7 @@ class Ajax extends CI_Controller {
 			$check = $this->Content_model->check_existing_member($email, $notelp, '');
 			$count_member = count((array)$check);
 
-			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+			if (!filter_var($email, FILTER_VALIDATE_EMAIL) && $email!='') {
 				$ret = array('error'=> '1', 'message'=>'Invalid Email format!');
 
 			}else if ( $count_member > 1){

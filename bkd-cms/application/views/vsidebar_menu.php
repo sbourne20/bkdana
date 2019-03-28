@@ -68,7 +68,7 @@ $sub_menu    = $this->uri->segment(2);
                 */?>
 
                 <?php 
-                $set_array = array( 'transaksi_pinjaman_kilat', 'transaksi_pinjaman_mikro' ); ?>
+                $set_array = array( 'transaksi_pinjaman_kilat', 'transaksi_pinjaman_mikro', 'transaksi_pinjaman_agri' ); ?>
                 <li class="sub-menu">
                     <a href="javascript:;" <?php echo (in_array($active_menu, $set_array)) ? "class='active'":"" ?>>
                         <i class="fa fa-bar-chart-o"></i> <span>Transaksi Pinjaman</span>
@@ -76,6 +76,7 @@ $sub_menu    = $this->uri->segment(2);
                     <ul class="sub">
                         <li <?php echo ($active_menu=='transaksi_pinjaman_kilat') ? "class='active'":"" ?>><a href="<?php echo base_url('transaksi_pinjaman_kilat') ?>"> Pinjaman Kilat</a></li>
                         <li <?php echo ($active_menu=='transaksi_pinjaman_mikro') ? "class='active'":"" ?>><a href="<?php echo base_url('transaksi_pinjaman_mikro') ?>">Pinjaman Mikro</a></li>
+                        <li <?php echo ($active_menu=='transaksi_pinjaman_agri') ? "class='active'":"" ?>><a href="<?php echo base_url('transaksi_pinjaman_agri') ?>">Pinjaman Agri</a></li>
                         <!-- <li <?php echo ($active_menu=='transaksi_jatuh_tempo') ? "class='active'":"" ?>><a href="<?php echo base_url('transaksi_jatuh_tempo') ?>">Pinjaman Jatuh Tempo</a></li> -->
                     </ul>
                 </li>

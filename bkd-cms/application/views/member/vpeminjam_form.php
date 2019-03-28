@@ -21,13 +21,13 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Hitung</label>
+                                <label class="col-sm-2 control-label">id_grup</label>
                                 <div class="col-sm-6">
                                     <input type="text" name="id_user_group" class="form-control" value="<?php echo $EDIT['id_user_group'] ?>">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="col-sm-2 control-label">Jumlah</label>
+                                <label class="col-sm-2 control-label">Jumlah member</label>
                                 <div class="col-sm-6">
                                     <input type="text" name="count" class="form-control" value="<?php echo $countgroup1 ?>">                                  
                                 </div>
