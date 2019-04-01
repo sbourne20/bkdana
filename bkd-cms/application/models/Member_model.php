@@ -68,8 +68,10 @@ class Member_model extends CI_Model
 
 		$q->free_result();
 
-		$sql = " 	SELECT m.id_mod_user_member, mum_email, mum_type, mum_status, mum_telp, mum_nomor_rekening, mum_usaha, m.mum_type_peminjam,
-					Tgl_record, Id_penyelenggara, u.Id_pengguna, p.id_user_group, Nama_pengguna, peringkat_pengguna, skoring,
+
+		$sql = " 	SELECT m.id_mod_user_member, mum_email, mum_type, mum_status, mum_telp, mum_nomor_rekening, m.mum_type_peminjam,
+					Tgl_record, u.Id_pengguna, p.id_user_group, Nama_pengguna, peringkat_pengguna, skoring,
+
 					Mobileno, p.user_group_name
 					FROM mod_user_member m 
 					LEFT JOIN {$this->user_ojk} u ON(u.id_mod_user_member=m.id_mod_user_member)
@@ -552,13 +554,5 @@ class Member_model extends CI_Model
 		return $ret;
 	}
 
-	//update grup ke mod ltp
-		public function update_mod_ltpinjaman($data, $ID)
-	{
-		$this->db->where('ltp_Id_pengguna', $ID) ;
-		$this->db->update($this->mod_log_transaksi_pinjaman, $data);
-		return $this->db->affected_rows();
-	}
-	//batas update	
 
 }

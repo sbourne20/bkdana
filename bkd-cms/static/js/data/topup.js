@@ -79,3 +79,26 @@ function approve_(id) {
   }
   return false;
 }
+
+$('#member').change(function() {
+    var member   = $(this).val();
+    // var member    = $('data-member');
+    console.log(member);
+    var base_uri  = window.location.href;
+
+    var send_data = {'id_member' : member };
+    $.ajax({
+            type: "POST",
+            url: baseURL + "Top_up/rekening_tujuan",
+            data: send_data,
+            beforeSend: function() {
+            },
+            success: function(html_data)
+            {
+              $('#darirekening').html(html_data);
+            },
+            error: function (request, status, error) {
+                /*alert(request.responseText);*/
+            }
+        });
+});
