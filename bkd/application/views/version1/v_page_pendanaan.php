@@ -11,8 +11,8 @@
                     <div class="row">
                         <div class="col-md-6 drag-this-left drag-left">
                             <div class="carousel-caption">
-                                <h2>Investasikan dana Anda dan dapatkan keuntungan hingga 18% per tahun</h2>
-                                <p>Solusi investasi yang terpercaya dengan resiko terukur serta keuntungan yang tinggi. Dengan berinvestasi di Kaspia, anda membantu perekonomian masyarakat untuk mengembangkan usahanya.</p>
+                                <h2>Investasikan dana Anda dan dapatkan keuntungan hingga 15% per tahun</h2>
+                                <p>Solusi investasi yang terpercaya dengan resiko terukur serta keuntungan yang tinggi. Dengan berinvestasi di BKDana, anda membantu perekonomian masyarakat untuk mengembangkan usahanya.</p>
                                 <br><br>
                             </div>
 						</div>
@@ -36,9 +36,6 @@
 										<option value="13">13%</option>
 										<option value="14">14%</option>
 										<option value="15">15%</option>
-										<option value="16">16%</option>
-										<option value="17">17%</option>
-										<option value="18">18%</option>
 									</select>
 								</div>
 								<div class="form-group">
@@ -79,7 +76,7 @@
 		
 		<div class="section-pendanaan-keuntungan">
 			<div class="row text-center">
-				<h2 class="title-raleway kaspia-color">Apa Keuntungan Investasi di BKDana ?</h2>
+				<h2 class="title-raleway ">Apa Keuntungan Investasi di BKDana ?</h2>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-8 col-md-offset-2">
@@ -101,7 +98,7 @@
 
 		<div class="section-pendanaan-proses">
 			<div class="row text-center">
-				<h2 class="title-raleway kaspia-color">Proses Menjadi Pendana</h2>
+				<h2 class="title-raleway ">Proses Menjadi Pendana</h2>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-10 col-md-offset-1">
@@ -115,7 +112,7 @@
 					</div>
 					<div class="col-md-3 col-sm-12">
 						<img src="<?php echo base_url(); ?>assets/images/pendanaan-3.png" class="img-responsive">
-						<h4>3. Pengembalian dana oleh peminjam sesuai tenor</h4>
+						<h4>3. Pengembalian dana oleh peminjam</h4>
 					</div>
 					<div class="col-md-3 col-sm-12">
 						<img src="<?php echo base_url(); ?>assets/images/pendanaan-4.png" class="img-responsive">
@@ -127,7 +124,7 @@
 
 		<div class="section-pendanaan-register">
 			<div class="row text-center">
-				<h2 class="title-raleway kaspia-color">Jadi Pendana Sekarang</h2>
+				<h2 class="title-raleway ">Jadi Pendana Sekarang</h2>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 col-md-offset-4">

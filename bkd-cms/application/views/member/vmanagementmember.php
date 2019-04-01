@@ -6,7 +6,7 @@
                     <a href="<?php echo site_url('dashboard'); ?>">Dashboard</a>
                 </li>
                 <li>
-                    <a class="active-trail current" href="javascript:;"><strong> Top Up </strong></a>
+                    <a class="active-trail current" href="javascript:;"><strong> User Management </strong></a>
                 </li>
             </ul>
         </div>
@@ -14,8 +14,8 @@
 	<div class="row">
 	    <div class="col-sm-12">
 	        <section class="panel">
-	        	<header class="panel-heading">
-                    <a class="btn btn-success btn-sm" href="<?= site_url('Top_up/add_topup') ?>"><i class="fa fa-plus"></i> Manual Top Up</a>
+	            <header class="panel-heading">
+                    <a class="btn btn-success btn-sm" href="<?= site_url('user/add') ?>"><i class="fa fa-plus"></i> Add User</a>
 	                <span class="tools pull-right">
 	                    <a href="javascript:;" class="fa fa-chevron-down"></a>
 	                    <a href="javascript:;" class="fa fa-times"></a>
@@ -27,27 +27,26 @@
 	                <thead>
 		                <tr>
 		                    <th>No</th>
-		                    <th>No.Transaksi</th>
-		                    <th>Nama</th>
-		                    <th>Jumlah</th>
-		                    <th>Tanggal</th>
-		                    <th>Status</th>
+		                    <th>Username</th>
+		                    <th class="hidden-xs">Email</th>
+		                    <th class="hidden-xs">Privilege</th>
+		                    <th>Active</th>
 		                    <th>Action</th>
 		                </tr>
 	                </thead>
 	                <tbody>
+		                
 	                </tbody>
-	                <tfoot>
+	                <!-- <tfoot>
 		                <tr>
 		                    <th>No</th>
-		                    <th>No.Transaksi</th>
-		                    <th>Nama</th>
-		                    <th>Jumlah</th>
-		                    <th>Tanggal</th>
-		                    <th>Status</th>
+		                    <th>Username</th>
+		                    <th class="hidden-xs">Email</th>
+		                    <th class="hidden-xs">Privilege</th>
+		                    <th>Active</th>
 		                    <th>Action</th>
 		                </tr>
-	                </tfoot>
+	                </tfoot> -->
 	                </table>
                 </div>
                 </div>

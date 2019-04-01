@@ -33,8 +33,10 @@ class bkdwallet extends CI_Controller {
 	{
 		$this->User_model->has_login();
 		$output['member_id'] = strip_tags($this->uri->segment(3));
-		$output['datamember'] = $this->Member_model->get_user_ojk_bymember(269);
-		$output['wallet'] = $this->Rekening_koran_model->get_rekening_koran_bkd(269); 
+
+		$output['datamember'] = $this->Member_model->get_user_ojk_bymember(9);
+		$output['wallet'] = $this->Rekening_koran_model->get_rekening_koran_bkd(9); 
+
 
 		$output['PAGE_TITLE'] = 'Rekening koran';
 
@@ -64,7 +66,9 @@ class bkdwallet extends CI_Controller {
 	function json_detail()
 	{
 		$uid = strip_tags($this->uri->segment(3));
-		$data = $this->Rekening_koran_model->get_rekening_koran_dt(269);
+
+		$data = $this->Rekening_koran_model->get_rekening_koran_dt(9);
+
 		print_r($data);
 	}
 
