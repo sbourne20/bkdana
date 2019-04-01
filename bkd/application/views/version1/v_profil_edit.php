@@ -123,7 +123,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                         </div>
                                         <div class="form-group">
                                             <label for="telp">* Nomor Telepon</label>
-                                            <input class="form-control" id="telp" type="text" name="telp" value="<?php echo $memberdata['mum_telp']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="No.Telepon harus diisi!" >
+                                            <input class="form-control" id="telp" type="text" name="telp" value="<?php echo $memberdata['mum_telp']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="No.Telepon harus diisi!" readonly >
                                         </div>
                                         <div class="form-group">
                                             <label for="tempat_lahir">* Tempat Lahir</label>
@@ -136,6 +136,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                         <div class="form-group">
                                             <label for="handphone">* Jenis Kelamin</label>
                                             <select name="gender" class="form-control">
+                                                <option value=""> -- Pilih --</option>
                                                 <option value="pria" <?php echo ($memberdata['Jenis_kelamin']=='pria')? 'selected="selected"' : ''; ?>>Pria</option>
                                                 <option value="wanita" <?php echo ($memberdata['Jenis_kelamin']=='wanita')? 'selected="selected"' : ''; ?>>Wanita</option>
                                             </select>
@@ -224,6 +225,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                         <div class="form-group">
                                             <label for="nama_bank">* Bank</label>
                                             <select class="form-control" name="nama_bank" id="nama_bank" data-validation-engine="validate[required]" data-errormessage-value-missing="Bank harus diisi!">
+                                                <option value=""> -- Pilih --</option>
                                                 <option value="Bank Mandiri" <?php echo ($memberdata['nama_bank']=='Bank Mandiri')? 'selected="selected"' : ''; ?> > Bank Mandiri</option>
                                                 <option value="Bank BNI 46" <?php echo ($memberdata['nama_bank']=='Bank BNI 46')? 'selected="selected"' : ''; ?> >Bank BNI 46</option>
                                                 <option value="Bank BRI" <?php echo ($memberdata['nama_bank']=='Bank BRI')? 'selected="selected"' : ''; ?> >Bank BRI</option>
@@ -323,7 +325,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 
                                         <!-- MIKRO -->
 
-                                        <?php if ($memberdata['mum_type_peminjam']=='2' OR $memberdata['What_is_the_name_of_your_business'] !='') { ?>
+                                        <?php if ($memberdata['mum_type_peminjam']=='2' ) { ?>
 
                                         <div class="form-group">
                                                 <label for="handphone">* Usaha</label>
@@ -404,6 +406,73 @@ if ($memberdata['foto_pegang_ktp'] != '')
 
                                             <?php } ?>
                                             <!-- End MIKRO -->
+
+                                            <!-- Agri -->
+                                            <?php if ($memberdata['mum_type_peminjam']=='3') { ?>
+
+                                                <div class="form-group">
+                                                    <label for="handphone">* Pendidikan</label>
+                                                        <select class="form-control" name="pendidikan" id="pendidikan">
+                                                            <option value=""> -- Pilih --</option>
+                                                            <option value="1" <?php echo ($memberdata['Pendidikan']=='1')? 'selected="selected"' : '';  ?> > SD</option>
+                                                            <option value="2" <?php echo ($memberdata['Pendidikan']=='2')? 'selected="selected"' : '';  ?> > SLTP</option>
+                                                            <option value="3" <?php echo ($memberdata['Pendidikan']=='3')? 'selected="selected"' : '';  ?> > SLTA</option>
+                                                            <option value="4" <?php echo ($memberdata['Pendidikan']=='4')? 'selected="selected"' : '';  ?> > Diploma</option>
+                                                            <option value="5" <?php echo ($memberdata['Pendidikan']=='5')? 'selected="selected"' : '';  ?> > Sarjana</option>
+                                                        </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="lama_usaha">* Bidang Pekerjaan</label>
+                                                    <select class="form-control" name="bidang_pekerjaan" id="bidang_pekerjaan" data-validation-engine="validate[required]" data-errormessage-value-missing="bidang pekerjaan harus diisi!" >
+                                                        <option value="agrikultur"> Agrikultur</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="handphone">* Agama</label>
+                                                     <select class="form-control" name="agama" id="agama">
+                                                            <option value=""> -- Pilih --</option>
+                                                            <option value="islam" <?php echo ($memberdata['Agama']=='islam')? 'selected="selected"' : '';  ?> > Islam</option>
+                                                            <option value="katolik" <?php echo ($memberdata['Agama']=='katolik')? 'selected="selected"' : '';  ?> > Katolik</option>
+                                                            <option value="protestan" <?php echo ($memberdata['Agama']=='protestan')? 'selected="selected"' : '';  ?> > Protestan</option>
+                                                            <option value="budha" <?php echo ($memberdata['Agama']=='budha')? 'selected="selected"' : '';  ?> > Budha</option>
+                                                            <option value="hindu" <?php echo ($memberdata['Agama']=='hindu')? 'selected="selected"' : '';  ?> > Hindu</option>
+                                                            <option value="lain-lain" <?php echo ($memberdata['Agama']=='lain-lain')? 'selected="selected"' : '';  ?> > Lain-lain</option>
+                                                        </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label>* Status Pernikahan</label>
+                                                    <br>
+                                                    <label class="checkbox-inline">
+                                                        <input type="radio" name="status_kawin" value="belum menikah" <?php echo ($memberdata['status_nikah']=='belum menikah')? 'checked="checked"' : ''; ?> > Belum Menikah
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="radio" name="status_kawin" value="menikah" <?php echo ($memberdata['status_nikah']=='menikah')? 'checked="checked"' : ''; ?> > Menikah
+                                                    </label> 
+                                                     <label class="checkbox-inline">
+                                                        <input type="radio" name="status_kawin" value="bercerai" <?php echo ($memberdata['status_nikah']=='bercerai')? 'checked="checked"' : ''; ?> > Bercerai
+                                                    </label>                                                
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="handphone">* Jumlah Anak</label>
+                                                    <input type="text" class="form-control" name="jumlah_anak" id="jumlah_anak" value="<?php echo $memberdata['jumlah_anak']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Jumlah Anak harus diisi!">
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="lama_usaha">* Status Tempat Tinggal</label>
+                                                    <select class="form-control" name="status_tempat_tinggal" id="status_tempat_tinggal" data-validation-engine="validate[required]" data-errormessage-value-missing="status tempat tinggal harus diisi!">
+                                                        <option value=""> -- Pilih --</option>
+                                                        <option value="1" <?php echo ($memberdata['status_tempat_tinggal']=='1')? 'selected="selected"' : ''; ?> > Milik Keluarga</option>
+                                                        <option value="2" <?php echo ($memberdata['status_tempat_tinggal']=='2')? 'selected="selected"' : ''; ?> > Milik Sendiri</option>
+                                                        <option value="3" <?php echo ($memberdata['status_tempat_tinggal']=='3')? 'selected="selected"' : ''; ?> > Sewa</option>
+                                                    </select>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label for="handphone">* Upload Foto Pegang IDCard/eKTP</label>
+                                                    <input type="file" name="pegang_ktp_file" id="pegang_ktp_file" data-show-upload="false" namafile="<?php echo  $foto_pegang_ktp;?>" >
+                                                    <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                                </div>
+
+                                            <?php } ?>
+                                            <!-- End Agri -->
 
                                             <!-- PENDANA -->
                                             <?php if ($memberdata['mum_type']=='2') { // PENDANA ?>

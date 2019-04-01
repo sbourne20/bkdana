@@ -200,27 +200,29 @@ var Wizard = function () {
       var _totalElm = 1;
       var totalElm;
       $('#panel'+panelActive+' form :input').each(function(index, el){
-        if(el.value.length == 0 && el.type != 'submit' && el.type != 'file' && el.type != 'button'){
+       // if(el.value.length == 0 && el.type != 'submit' && el.type != 'file' && el.type != 'button'){
           // alert(el.name+' require ' +el.type);
-          this.focus();
-          this.style.border = '2px #dc3545 solid';
-          this.style['boxShadow'] = '0 0 0 #DC3545';
-          this.placeholder = 'Kolom tidak boleh kosong';
-          return false;
+         // this.focus();
+         // this.style.border = '2px #dc3545 solid';
+         // this.style['boxShadow'] = '0 0 0 #DC3545';
+         // this.placeholder = 'Kolom tidak boleh kosong';
+         // return false;
 
         // Email Checking
-        }if(el.name == 'email'){
-          if(!checkEmail(this.value)){
-            alert('Email tidak valid');
-            this.focus();
-            this.style.border = '2px #dc3545 solid';
-            this.style['boxShadow'] = '0 0 0 #DC3545';
-            this.placeholder = 'Email tidak valid';
-            return false;
-          }
+        //}
+        //if(el.name == 'email'){
+        //  if(!checkEmail(this.value)){
+         //   alert('Email tidak valid');
+         //   this.focus();
+         //   this.style.border = '2px #dc3545 solid';
+         //   this.style['boxShadow'] = '0 0 0 #DC3545';
+         //   this.placeholder = 'Email tidak valid';
+         //   return false;
+         // }
 
         // Phone Checking
-        }if($('#telp').val() == '+62'){
+       // }
+        if($('#telp').val() == '+62'){
           alert('Nomor telepon minimal 10 karakter');
           return false;
         

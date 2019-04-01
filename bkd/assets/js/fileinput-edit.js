@@ -8,6 +8,7 @@ var IMG_B5                                  = $("#usaha_file5").attr("namafile")
 var IMG_surat_keterangan_bekerja_file      = $("#surat_keterangan_bekerja_file").attr("namafile");
 var IMG_slip_gaji_file                     = $("#slip_gaji_file").attr("namafile");
 var IMG_pegang_ktp_file                    = $("#pegang_ktp_file").attr("namafile");
+var IMG_CF                                  = $("#cf_file").attr("namafile");
 
 $("#foto_file").fileinput({
   initialPreview: ["<img src="+IMG_profil+" class='file-preview-image' onerror=\"this.onerror=null;this.src=BASEURL+'assets/images/no-image.png';\" />"],
@@ -97,6 +98,16 @@ $("#slip_gaji_file").fileinput({
 
 $("#pegang_ktp_file").fileinput({
   initialPreview: ["<img src="+IMG_pegang_ktp_file+" class='file-preview-image' onerror=\"this.onerror=null;this.src=BASEURL+'assets/images/no-image.png';\" />"],
+    allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],
+    removeClass: "btn btn-danger",
+    //removeLabel: "Remove",
+    //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
+    maxFileSize: 1000,
+    showUpload: false
+});
+
+$("#cf_file").fileinput({
+  initialPreview: ["<img src="+IMG_CF+" class='file-preview-image' onerror=\"this.onerror=null;this.src=BASEURL+'assets/images/no-image.png';\" />"],
     allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",

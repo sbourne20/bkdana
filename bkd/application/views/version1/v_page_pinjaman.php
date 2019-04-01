@@ -34,21 +34,22 @@
 		
 		<div class="section-pinjaman-keuntungan">
 			<div class="row text-center">
-				<h2 class="title-raleway kaspia-color">Pinjam Modal di BKDana ?</h2>
+				<h2 class="title-raleway ">Pinjam Modal di BKDana ?</h2>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-8 col-md-offset-2">
-					<div class="col-md-4 col-sm-12">
-						<img src="<?php echo base_url(); ?>assets/images/high-return.png" class="img-responsive">
-						<h4>Return Tinggi</h4>
-					</div>
 					<div class="col-md-4 col-sm-12">
 						<img src="<?php echo base_url(); ?>assets/images/mudah-cepat.png" class="img-responsive">
 						<h4>Mudah dan cepat</h4>
 					</div>
 					<div class="col-md-4 col-sm-12">
-						<img src="<?php echo base_url(); ?>assets/images/start-100.png" class="img-responsive">
-						<h4>Mulai Dengan Rp.100.000</h4>
+						<img src="<?php echo base_url(); ?>assets/images/tanpa-anggunan.png" class="img-responsive">
+						<h4>Tanpa anggunan</h4>
+					</div>
+				
+					<div class="col-md-4 col-sm-12">
+						<img src="<?php echo base_url(); ?>assets/images/bunga-kompetitif.png" class="img-responsive">
+						<h4>Bunga kompetitif</h4>
 					</div>
 				</div>
 			</div>
@@ -56,7 +57,7 @@
 
 		<div class="section-pinjaman-proses">
 			<div class="row text-center">
-				<h2 class="title-raleway kaspia-color">Proses Menjadi Peminjam</h2>
+				<h2 class="title-raleway ">Proses Menjadi Peminjam</h2>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-10 col-md-offset-1">
@@ -82,7 +83,7 @@
 
 		<div class="section-pinjaman-register">
 			<div class="row text-center">
-				<h2 class="title-raleway kaspia-color">Jadi Peminjam Sekarang</h2>
+				<h2 class="title-raleway ">Jadi Peminjam Sekarang</h2>
 			</div>
 			<div class="row text-center">
 				<div class="col-md-4 col-md-offset-4">

@@ -28,6 +28,7 @@ class Input_otp extends CI_Controller {
 			if (trim($email) != '')
 			{
 				$member = $this->Member_model->get_member_by($email);
+				
 
 				if ($member['mum_status'] !='0')
 				{

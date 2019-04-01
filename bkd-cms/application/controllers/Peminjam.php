@@ -188,7 +188,12 @@ class Peminjam extends CI_Controller {
 			{
 				$updata1['peringkat_pengguna'] = antiInjection(trim($post['grade']));
 				$updata1['id_user_group'] = antiInjection(trim($post['membergroup']));
+				$updata2['id_user_group'] = antiInjection(trim($post['membergroup']));
+
 				$affected = $this->Member_model->update_user_ojk($updata1, $id);
+				$affected = $this->Member_model->update_mod_ltpinjaman($updata2, $id);
+
+
 				if($affected){
 
 					$this->session->set_userdata('message','Data has been updated.');

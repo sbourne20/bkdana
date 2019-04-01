@@ -127,4 +127,51 @@ class Topup_model extends CI_Model
 		$id = $this->db->escape_str($id);
 		return $this->db->delete($this->mod_top_up, array('id_top_up'=>$id));
 	}
+
+	function get_all_member()
+	{
+		$this->db->select('*');
+		$this->db->from($this->user_ojk);
+		$this->db->order_by('Nama_pengguna', 'asc');
+		$sql = $this->db->get();
+		
+		return $sql->result_array();
+	}
+
+	function get_all_member1($code)
+	{
+		$this->db->select('*');
+		$this->db->from($this->user_ojk);
+		$this->db->where('Id_pengguna', $code);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+
+	function getmum($code)
+	{
+		$this->db->select('*');
+		$this->db->from($this->mod_user_member);
+		$this->db->where('id_mod_user_member', $code);
+		$sql = $this->db->get();
+		
+		return $sql->result_array();
+	}
+
+	function get_all_member2()
+	{
+		$this->db->select('Id_pengguna','Nama_pengguna');
+		$this->db->from($this->user_ojk);
+		$this->db->order_by('Nama_pengguna', 'asc');
+		$query 	= $this->db->get();
+		$data 	= $query->row_array();
+		return $data;
+	}
+
+	function insert_topup($data) 
+	{
+		$this->db->insert($this->mod_top_up, $data);
+		return $this->db->insert_id();
+	}
 }
