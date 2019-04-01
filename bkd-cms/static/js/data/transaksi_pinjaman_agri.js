@@ -96,7 +96,7 @@ function view(id) {
       }; 
 
     $.ajax({
-      url: baseURL + 'transaksi_pinjaman_mikro/detail/' +id,
+      url: baseURL + 'transaksi_pinjaman_agri/detail/' +id,
       type: 'POST',
       data: pData,
       success: function(data) {

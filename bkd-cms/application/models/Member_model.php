@@ -540,16 +540,20 @@ class Member_model extends CI_Model
 
 	function get_count_group($idgroup)
 	{
-		$this->db->select('count(*) as itotal');
-		$this->db->from($this->user_ojk);
-		$this->db->where('id_user_group', $idgroup);
-		//$sql = $this->db->get();
-		//return $sql->result_array();
+		if($idgroup == 0){
+			return array('itotal' => '----');
+		}
+		else{
+			$this->db->select('count(*) as itotal');
+			$this->db->from($this->user_ojk);
+			$this->db->where('id_user_group', $idgroup);
+			
 
-		$sql = $this->db->get();
-		$ret = $sql->row_array();
-		$sql->free_result();
-		return $ret;
+			$sql = $this->db->get();
+			$ret = $sql->row_array();
+			$sql->free_result();
+			return $ret;
+		}
 	}
 
 	//update grup ke mod ltp

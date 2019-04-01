@@ -20,7 +20,7 @@
                                     <input type="text" name="email" class="form-control" value="<?php echo (isset($EDIT['mum_email'])? $EDIT['mum_email'] : ''); ?>" disabled="disabled">
                                 </div>
                             </div>
-                            <div class="form-group">
+                           <!--  <div class="form-group">
                                 <label class="col-sm-2 control-label">id_grup</label>
                                 <div class="col-sm-6">
                                     <input type="text" name="id_user_group" class="form-control" value="<?php echo $EDIT['id_user_group'] ?>">
@@ -29,7 +29,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Jumlah member</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="count" class="form-control" value="<?php echo $countgroup1 ?>">                                  
+                                    <input type="text" name="count" id="count" class="form-control" value="<?php echo $countgroup1 ?>">                                  
                                 </div>
                             </div>
                             <div class="form-group">
@@ -38,14 +38,14 @@
                                     <input type="text" name="count" class="form-control" value="<?php echo $id_grup ?>">                                  
                                 </div>
                             </div>
-
+ -->
 
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Grade <span class="text-danger">*</span></label>
                                 <div class="col-sm-2">
                                     <select name="grade" class="form-control" data-validation-engine="validate[required]" data-errormessage-value-missing="Harus diisi!">
-                                        <option value=""> --- Pilih ---</option>
+                                        <option value="PILIH"> --- Pilih ---</option>
                                         <?php foreach ($grade as $key) { 
                                             $selected= (strtolower($key['grade_name']) == strtolower($EDIT['peringkat_pengguna']) )? 'selected="selected"' : '';
                                         ?>
@@ -65,8 +65,8 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Member Group<span class="text-danger">*</span></label>
                                 <div class="col-sm-2">
-                                    <select name="membergroup" class="form-control"  onchange="showData()">
-                                         <option value=""> --- Pilih ---</option>
+                                    <select name="membergroup" id="membergroup" class="form-control"  onchange="showData()">
+                                         <option value="0" readonly> --- Tanpa Grup ---</option>
                                          <?php foreach ($membergroup as $key) { 
                                             $selected= (strtolower($key['id_user_group']) == strtolower($EDIT['id_user_group']) )? 'selected="selected"' : '';
                                         ?>
@@ -94,9 +94,23 @@
                                 </div>
                             </div>  
 
-                            <p id="firstP">&nbsp;</p>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Jumlah member</label>
+                                <div class="col-sm-2">
+                                    <input type="text" name="count" id="count" class="form-control" value="<?php echo $countgroup ?>"  disabled="disabled">
+                                </div>
+                            </div>
+
+                            <!--  <div class="form-group">
+                                <label class="col-sm-2 control-label">Jumlah orang</label>
+                                <div class="col-sm-2">
+                                    <input type="text" name="count" id="count" class="form-control" value="<?php echo $jmlmember ?>"  disabled="disabled">
+                                </div>
+                            </div> -->
+
+                            <!-- <p id="firstP">&nbsp;</p>
                             <p id="secondP">&nbsp;</p>
-                            <p id="thirdP">&nbsp;</p>
+                            <p id="thirdP">&nbsp;</p> -->
 
                             <?php
                             }
@@ -107,7 +121,7 @@
                                 <button type="submit" class="btn btn-primary">Submit</button> 
                                 <button type="button" class="btn btn-white" id="btn-cancel" onclick="history.back(-1)">Cancel</button>
                             </div>  
-                            <script>document.write(theSelect[theSelect.selectedIndex].value)</script> 
+                            <!-- <script>document.write(theSelect[theSelect.selectedIndex].value)</script>  -->
                         </form>
                     </div>
                 </section>
@@ -118,40 +132,36 @@
 <script type="text/javascript">
 
     function showData() {
-        var theSelect = formpeminjam.membergroup;
-        var firstP = document.getElementById('firstP');
-        var secondP = document.getElementById('secondP');
-        var thirdP = document.getElementById('thirdP');
-        firstP.innerHTML = ('This option\'s index number is: ' + theSelect.selectedIndex + ' (Javascript index numbers start at 0)');
+        var theSelect = $('#membergroup');
         
-        //$('#idgrup').theSelect[theSelect.selectedIndex].value;
-        secondP.innerHTML = ('Its value is: ' + theSelect[theSelect.selectedIndex].value);
-        thirdP.innerHTML = ('Its text is: ' + theSelect[theSelect.selectedIndex].text);
-
         var base_uri = window.location.href;
-         function view(id1) {
-         var pData = {
-        'secondP1' : secondP
-        }; 
-         $(function(){
+        
+         var pData = {'memberid' : theSelect.val()}
+         
+        
         $.ajax({
-            url: baseURL  + 'peminjam/edit/',  // define here controller then function name
+            url: baseURL  + 'peminjam/getgroupcount',  // define here controller then function name
             type: 'POST',
              //method: 'POST',
+            //dataType :'json',
+            //data : {'secondP1' : secondP}; 
             data: pData,    // pass here your date variable into controller
             success: function(data) {
-                $('#sub_content').html('');
-                $('#sub_content').html(data);
+                //$('#sub_content').html('');
+                //$('#sub_content').html(data);
+                console.log(data);
+                $('#count').val(data);
             },
             error: function(e) {
                 //called when there is an error
                 //console.log(e.message);
             }
         });
-        });
-    }
 
-     }
+    };
+    
+
+     
 
       /*  $.ajax({
         url:'peminjam.php',

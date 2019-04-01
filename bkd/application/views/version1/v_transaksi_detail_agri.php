@@ -120,7 +120,7 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                                             //$tenor_label = 'Hari';
                                             //$max_looping = 1;
                                             //$submit_url  = site_url('submit-bayar-cicilan-kilat');
-                                        }else{
+                                        }else if($transaksi['type_of_business_id'] == 3){
                                             // Mikro
 											if($transaksi['type_of_interest_rate']==1){
 												$tenor_label = 'Hari';
@@ -133,6 +133,21 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                                             if($transaksi['type_of_interest_rate']==3){
 												$tenor_label = 'Minggu';                                
 												$submit_url  = site_url('submit-bayar-cicilan-mikro');   
+                                            }
+                                            //$submit_url  = site_url('submit-bayar-cicilan-mikro');
+                                        }else{
+                                            // Agri
+                                            if($transaksi['type_of_interest_rate']==1){
+                                                $tenor_label = 'Hari';
+                                                $submit_url  = site_url('submit-bayar-cicilan-agri');  
+                                            }
+                                            if($transaksi['type_of_interest_rate']==2){
+                                                $tenor_label = 'Bulan';
+                                                $submit_url  = site_url('submit-bayar-cicilan-agri');   
+                                            }
+                                            if($transaksi['type_of_interest_rate']==3){
+                                                $tenor_label = 'Minggu';                                
+                                                $submit_url  = site_url('submit-bayar-cicilan-agri');   
                                             }
                                             //$submit_url  = site_url('submit-bayar-cicilan-mikro');
                                         }

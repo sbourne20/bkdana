@@ -296,7 +296,7 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$date_fundraise = date('Y-m-d', strtotime('+ '.$fundraise.' days'));
 				// -------- End of hitung total fundraise date (tgl maximum pendanaan) ------
 
-				if ($tipe_produk == '3' OR $tipe_produk == '4') {
+				if ($tipe_produk == '3' OR $tipe_produk == '4' OR $tipe_produk == '5') {
 					// pinjaman mikro
 					$affected = $this->Pinjaman_model->approval_pinjaman($id, $jml_pinjaman_disetujui, $date_fundraise, $total_angsuran_rp, $produk['Fundraising_period']);
 				}
