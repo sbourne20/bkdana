@@ -132,7 +132,13 @@ function exec_submit()
                 alertify.alert('Error Message!',objdata.message);
                 return false;
               }else{
-                 window.location.replace(BASEURL + 'message/registrasi_success');                  
+                //prompt('link ', objdata.activation_url);
+                if(objdata.activation_url != null){
+                    window.location.replace(objdata.activation_url);                  
+                }
+                else{
+                    window.location.replace(BASEURL + 'message/registrasi_success');                  
+                }
               }
               //alert(html_data);                  
             },

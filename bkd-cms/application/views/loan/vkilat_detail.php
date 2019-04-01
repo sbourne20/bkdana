@@ -93,6 +93,12 @@
 			<td>Bank</td><td><?php echo $data['nama_bank']; ?></td>
 		</tr>
 		<tr>
+			<td>Nama Perusahaan</td><td><?php echo $data['nama_perusahaan']; ?></td>
+		</tr>
+		<tr>
+			<td>Nomor Telepon Tempat Bekerja</td><td><?php echo $data['telepon_tempat_bekerja']; ?></td>
+		</tr>
+		<tr>
 			<td>Grade</td><td><?php echo $data['peringkat_pengguna']; ?></td>
 		</tr>
 		<tr>

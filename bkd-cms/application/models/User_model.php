@@ -276,7 +276,7 @@ class User_model extends CI_Model
 			//_d($acc);exit();
 
 			if( ! isset($acc[$controller.'/'.$action]) ){
-				$this->session->set_userdata('message','You do not have permission to access / take action on the page that you are headed.');
+				$this->session->set_userdata('message',' to access / take action on the page that you are headed.');
 				$this->session->set_userdata('message_type','error');
 				$ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : site_url();
 				redirect($ref);

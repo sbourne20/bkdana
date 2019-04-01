@@ -51,11 +51,15 @@
                                         <table class="table table-hover">
                                             <thead>
                                                 <tr>
-                                                    <th>No.</th>
-                                                    <th>Tanggal</th>
-                                                    <th>Deskripsi</th>
-                                                    <th>Tipe</th>
-                                                    <th>Jumlah</th>
+                                                    <th style="padding:5px">No.</th>
+                                                    <th style="padding:5px">Tanggal</th>
+                                                    <th style="padding:5px">No. Transaksi</th>
+                                                    <th style="padding:5px">Deskripsi</th>
+                                                    <th style="padding:5px">Tipe</th>
+                                                    <th style="padding:5px">Jumlah</th>
+                                                    <th style="padding:5px">Saldo Awal</th>
+                                                    <th style="padding:5px">Saldo Akhir</th>
+                                                    <th style="padding:5px">&nbsp;</th>
                                                 </tr>
                                             </thead> 
                                             <tbody>
@@ -71,13 +75,62 @@
                                                         }else{
                                                             $inclass='class="warning"'; 
                                                         }
+
+                                                       
+                                                //tambahan filter login
+                                                               if($tipe_pengguna['mum_type'] == '1'){
+                                                               
+                                                                if($tipe_pengguna['mum_type_peminjam'] == '1'){
+                                                                    if ($data['tipe_dana'] == '1') {
+                                                                    $link_detail2 = site_url('detail-rekening-koran-kredit-kilat/?tid='.$data['kode_transaksi'].'&tid2='.$data['Date_transaction']);
+                                                                    }else{
+                                                                    $link_detail2 = site_url('detail-rekening-koran-debet-kilat/?tid='.$data['kode_transaksi'].'&tid2='.$data['Date_transaction']); 
+                                                                    }
+                                                                }else{
+                                                                    if ($data['tipe_dana'] == '1') {
+                                                                    $link_detail2 = site_url('detail-rekening-koran-kredit-mikro/?tid='.$data['kode_transaksi'].'&tid2='.$data['Date_transaction']);
+                                                                    }else{
+                                                                    $link_detail2 = site_url('detail-rekening-koran-debet-mikro/?tid='.$data['kode_transaksi'].'&tid2='.$data['Date_transaction']); 
+                                                                    }
+                                                                }
+                                                                   
+                                                            }
+                                                            if($tipe_pengguna['mum_type'] == '2'){
+                                                                if ($data['tipe_dana'] == '1') {
+                                                                   $link_detail2 = site_url('detail-rekening-koran-kredit-pendana/?tid='.$data['kode_transaksi'].'&tid2='.$data['Date_transaction']);
+                                                                       }else{
+                                                                             $link_detail2 = site_url('detail-rekening-koran-debet-pendana/?tid='.$data['kode_transaksi'].'&tid2='.$data['Date_transaction']); 
+                                                                            }   
+                                                            }
+                                                    
+                                                //end of tambahan filter logins
                                                     ?>
                                                     <tr>
-                                                        <td <?php echo $inclass; ?>><?php echo $i; ?></td>
-                                                        <td <?php echo $inclass; ?>><?php echo date('d/m/Y', strtotime($data['Date_transaction'])); ?></td>
-                                                        <td <?php echo $inclass; ?>><?php echo $data['Notes']; ?></td>
-                                                        <td <?php echo $inclass; ?>><?php echo ($data['tipe_dana']=='1')? 'Kredit' : 'Debet'; ?></td>
-                                                        <td <?php echo $inclass; ?>> <?php echo number_format($data['amount_detail']); ?></td>
+                                                        <td style="padding:5px" <?php echo $inclass; ?>><?php echo $i; ?></td>
+                                                        <td style="padding:5px" <?php echo $inclass; ?>><?php echo date('d/m/Y', strtotime($data['Date_transaction'])); ?></td>
+                                                        <td style="padding:5px" <?php echo $inclass; ?>><?php echo $data['kode_transaksi']; ?></td>
+                                                        <td style="padding:5px" <?php echo $inclass; ?>><?php echo $data['Notes']; ?></td>
+                                                        <td style="padding:5px" <?php echo $inclass; ?>><?php echo ($data['tipe_dana']=='1')? 'Kredit' : 'Debet'; ?></td>
+                                                        <td style="padding:5px" <?php echo $inclass; ?>> <?php echo number_format($data['amount_detail']); ?></td>
+                                                         <td style="padding:5px" <?php echo $inclass; ?>> <?php 
+                                                            if ($data['tipe_dana'] == '1'){
+                                                                $sa= ($data['Balance'] - $data['amount_detail']);
+                                                                echo number_format($sa);
+                                                            }
+                                                            else{
+                                                                $sa= ($data['Balance'] + $data['amount_detail']);
+                                                                echo number_format($sa);
+                                                            }
+                                                          ?></td>
+                                                          <td style="padding:5px" <?php echo $inclass; ?>> <?php  echo number_format($data['Balance']); ?></td>
+                                                        <td style="padding:5px">
+                                                            <a href="<?php                                                    
+                                                            //echo site_url('detail-rekening-koran-kredit-kilat/?tid='.$data['kode_transaksi']); 
+                                                            echo $link_detail2
+                                                            ?>" class="btn btn-action" title="Detail Rekening Koran">
+                                                            <i class="far fa-clipboard"></i>
+                                                            </a>
+                                                        </td>
                                                     </tr>
                                                     <?php 
                                                         if ($useclass == 0)

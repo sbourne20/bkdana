@@ -61,10 +61,11 @@ class Login extends CI_Controller {
 					$stored_password = $getdata['mum_password'];
 
 					if (password_verify(base64_encode(hash('sha256', $password, true)), $stored_password)) {
-
+						
 						// check sudah aktif atau belum
 						if ($getdata['mum_status'] == 0)
 						{
+							
 							// belum aktif, redirect ke login OTP
 							// $_SESSION['_bkd_otp_'] = $email;
 							// redirect('input-otp');

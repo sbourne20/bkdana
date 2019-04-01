@@ -21,9 +21,4 @@ class Welcome extends CI_Controller {
 	public function index()
 	{
 	}
-
-	function akutahu122()
-	{
-		phpinfo();
-	}
 }

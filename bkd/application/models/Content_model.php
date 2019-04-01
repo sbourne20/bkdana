@@ -188,9 +188,10 @@ class Content_model extends CI_Model
 		$this->db->from('mod_user_member m');
 		$this->db->join('user u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
 		$this->db->join('user_detail ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
-		$this->db->where('mum_email', $email);
-		$this->db->or_where('Mobileno', $telp);
-
+		$this->db->where('Mobileno', $telp);
+		if ($email !=''){
+			$this->db->or_where('mum_email', $email);
+		}
 		if ($ktp !=''){
 			$this->db->or_where('ID_No', $ktp);
 		}
@@ -696,8 +697,8 @@ class Content_model extends CI_Model
 			What_is_the_name_of_your_business, 
 			How_many_years_have_you_been_in_business, 
 			Kota, 
-			Master_loan_id, 
-			Master_loan_id as transaksi_id, 
+			p.Master_loan_id, 
+			p.Master_loan_id as transaksi_id, 
 			Jml_permohonan_pinjaman, 
 			Informasi_kredit, 
 			Jml_permohonan_pinjaman_disetujui,
@@ -727,6 +728,7 @@ class Content_model extends CI_Model
 			images_usaha_name5,
 			nama_peminjam,
 			Alamat, Kota, Provinsi, prod.type_of_interest_rate,
+			rr.jml_denda,
 			(select count(*) as itotal from '.$this->profile_pendanaan.' where Master_loan_id=transaksi_id) as total_lender ');
 		$this->db->from($this->profil_permohonan_pinjaman. ' p');
 		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
@@ -734,6 +736,7 @@ class Content_model extends CI_Model
 		$this->db->join($this->user. ' u', 'u.Id_pengguna=p.User_id', 'left');
 		$this->db->join($this->user_detail. ' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
 		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
+		$this->db->join($this->record_repayment. ' rr', 'rr.Master_loan_id=p.Master_loan_id', 'left');
 		$this->db->where('p.Master_loan_id', $id);
 		$sql = $this->db->get();
 		$ret = $sql->row_array();
@@ -1022,12 +1025,87 @@ class Content_model extends CI_Model
 			images_foto_name,
 			images_ktp_name,
 			images_usaha_name,
+			images_usaha_name2,
+			images_usaha_name3,
+			images_usaha_name4,
+			images_usaha_name5,
+			deskripsi_usaha,
+			omzet_usaha,
+			modal_usaha,
+			margin_usaha,
+			biaya_operasional,
+			laba_usaha,
 			Alamat,
 			Kota,
 			Provinsi,
 			Kodepos,
 			What_is_the_name_of_your_business,
 			How_many_years_have_you_been_in_business			
+			');
+		/*$this->db->select('
+			u.Id_pengguna as Id_pengguna_user,
+			Tgl_record,
+			Nama_pengguna,
+			Jenis_pengguna,
+			Id_ktp,
+			Tempat_lahir,
+			Tanggal_lahir,
+			Jenis_kelamin,
+			Pekerjaan,
+			Nomor_rekening,
+			id_mod_user_member,
+			ud.Id_pengguna,
+			user_type,
+			Mobileno,
+			Profile_photo,
+			Photo_id,
+			Occupation,
+			ID_type,
+			ID_No,
+			What_is_the_name_of_your_business,
+			How_many_years_have_you_been_in_business,
+			Photo_business_location,
+			foto_usaha,
+			Alamat,
+			Kodepos,
+			Kota,
+			Provinsi,
+			g.User_id
+			');*/
+		$this->db->from($this->user. ' u');
+		$this->db->join($this->user_detail. ' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
+		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
+		$this->db->where('u.Id_pengguna', $uid);
+		$this->db->limit('1');
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
+
+	function get_data_peminjam_agri_rows($uid)
+	{
+		$this->db->select('
+			Nama_pengguna,
+			Id_ktp,
+			Tempat_lahir,
+			Tanggal_lahir,
+			Jenis_kelamin,
+			Pekerjaan,
+			Nomor_rekening,
+			nama_bank,
+			Mobileno,
+			images_foto_name,
+			images_ktp_name,
+			foto_pegang_ktp,
+			Pendidikan,
+			Agama,
+			ud.bidang_pekerjaan,
+			status_nikah,
+			jumlah_anak,
+			status_tempat_tinggal,
+			Alamat,
+			Kota,
+			Provinsi,
+			Kodepos				
 			');
 		/*$this->db->select('
 			u.Id_pengguna as Id_pengguna_user,
@@ -1212,13 +1290,31 @@ class Content_model extends CI_Model
 	function get_log_transaksi_pinjam($ordercode)
 	{
 		$this->db->select('*');
-		$this->db->from($this->mod_log_transaksi_pinjaman);
+		$this->db->from($this->mod_log_transaksi_pinjaman. ' mltj');
+		$this->db->join($this->mod_log_transaksi_pendana. ' mltp','mltp.Master_loan_id=mltj.ltp_Master_loan_id', 'LEFT');
 		$this->db->where('ltp_Master_loan_id', $ordercode);
 		$sql = $this->db->get();
 		$ret = $sql->row_array();
 		$sql->free_result();
 		return $ret;
 	}
+
+	//tambahan baru - pendana
+	function get_log_transaksi_pinjam_pendana($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->detail_wallet. ' d');
+		$this->db->join($this->mod_log_transaksi_pendana. ' mltp', 'mltp.Id_pendanaan=d.kode_transaksi', 'left');
+		$this->db->join($this->mod_log_transaksi_pinjaman. ' mltj', 'mltj.ltp_Master_loan_id=mltp.Master_loan_id', 'left');
+		//$this->db->join($this->tabel_pinjaman. ' tp', 'tp.Master_loan_id=mltp.Master_loan_id', 'left');
+		//$this->db->from($this->mod_log_transaksi_pinjaman);
+		$this->db->where('d.kode_transaksi', $ordercode);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+	//batas tambahan baru - pendana
 
 	function update_log_transaksi_pinjaman($code, $data)
 	{
@@ -1335,4 +1431,209 @@ class Content_model extends CI_Model
 		return $this->db->insert_id();
 	}
 
+	//tambahan baru denda
+		function get_my_denda($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->mod_log_transaksi_pinjaman. ' m');
+		$this->db->join($this->product. ' prod', 'prod.Product_id=m.ltp_product_id', 'left');
+		//$this->db->join($this->record_repayment. ' rec_rep', 'rec_rep.Master_loan_id=m.ltp_Master_loan_id', 'left');
+		$this->db->where('ltp_Master_loan_id', $ordercode);
+		//$this->db->order_by('record_repayment_id', 'asc');
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+
+		//$this->db->select('*');
+		//$this->db->from($this->profil_permohonan_pinjaman. ' p');
+		//$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
+		//$this->db->from($this->product. ' prod');
+		//$this->db->join($this->profil_permohonan_pinjaman. ' p', 'p.Product_id=prod.Product_id', 'left');
+		//$this->db->join($this->mod_type_business. ' tb', 'tb.id_mod_type_business=prod.type_of_business_id', 'left');
+		//$this->db->where('tb.id_mod_type_business', '1');
+		//$this->db->where('Product_id', $id);
+		//$this->db->where('p.Master_loan_id', $id);
+		//$this->db->where('prod.product_status', '1');
+		//$sql = $this->db->get();
+		//$ret = $sql->result_array();
+		//$sql->free_result();
+
+		//echo $this->db->last_query();
+		//return $ret;
+	}
+
+	function get_jml_kredit($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->tabel_pinjaman);
+		$this->db->where('Master_loan_id', $ordercode);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+
+	function get_record_repayment($ordercode)
+	{
+		$nowdate = date('Y-m-d');
+
+		$this->db->select('*');
+		$this->db->from($this->record_repayment);
+		$this->db->where('Master_loan_id', $ordercode);
+		//$this->db->where('status_cicilan','belum-bayar');
+		//$this->db->where('tgl_jatuh_tempo', $tgl);
+		//$this->db->where('tgl_jatuh_tempo <= now()', null);
+		$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		//$this->db->order_by('record_repayment_id', 'asc');
+		
+		//$this->db->limit(1);
+		//$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+
+/*		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;*/
+	}
+
+	function get_record_repayment1($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->record_repayment);
+		$this->db->where('Master_loan_id', $ordercode);
+		//$this->db->order_by('record_repayment_id', 'desc');
+		$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		$this->db->limit(1);
+		//$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+
+	}
+
+	/*function get_nomor_angsuran1($ordercode)
+	{
+		$this->db->select('count(*) as itotal');
+		$this->db->from($this->record_repayment);
+		$this->db->where('Master_loan_id ', $ordercode);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+*/
+/*	function get_record_repayment1($ordercode, $k)
+	{
+		$this->db->select('*');
+		$this->db->from($this->record_repayment);
+		$this->db->where('Master_loan_id', $ordercode);
+		$this->db->where('notes_cicilan', $k);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}*/
+		function get_record_repayment_tempo($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->record_repayment);
+		$this->db->where('Master_loan_id', $ordercode);
+		//$this->db->order_by('record_repayment_id', 'desc');
+		$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		//$this->db->limit(1);
+		//$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+
+
+		function get_nomor_angsuran1($ordercode)
+	{
+		$this->db->select('count(*) as itotal');
+		$this->db->from($this->record_repayment);
+		$this->db->where('Master_loan_id ', $ordercode);
+		$this->db->where('status_cicilan ', 'belum-bayar');
+		$this->db->order_by('tgl_jatuh_tempo ', 'asc');
+
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+	/*	function get_record_repayment2($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->record_repayment);
+		$this->db->where('Master_loan_id', $ordercode);
+		$this->db->where('status_cicilan', 'belum-bayar');
+		//$this->db->order_by('record_repayment_id', 'desc');
+		$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		//$this->db->limit(1);
+		//$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+
+	}*/
+	function get_record_repaymentdenda($ordercode)
+	{
+		$nowdate = date('Y-m-d');
+
+		$this->db->select('*');
+		$this->db->from($this->record_repayment);
+		$this->db->where('Master_loan_id', $ordercode);
+		$this->db->where('status_cicilan','belum-bayar');
+		//$this->db->where('tgl_jatuh_tempo', $tgl);
+		//$this->db->where('tgl_jatuh_tempo <= now()', null);
+		$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		//$this->db->order_by('record_repayment_id', 'asc');
+		
+		$this->db->limit(1);
+		//$this->db->order_by('tgl_jatuh_tempo', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+
+/*		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;*/
+	}
+
+
+	function update_record_repayment($id, $tempo)
+	{
+		$nowdatetime = date('Y-m-d H:i:s');
+
+		$this->db->set('status_cicilan', 'lunas');
+		$this->db->set('tgl_pembayaran', $nowdatetime);
+		$this->db->where('Master_loan_id', $id);
+		$this->db->where('tgl_jatuh_tempo', $tempo);
+		$this->db->update($this->record_repayment);
+		return $this->db->affected_rows();
+	}
+
+		function get_record_repayment_log($ordercode)
+	{
+		$nowdate = date('Y-m-d');
+
+		$this->db->select('*');
+		$this->db->from($this->record_repayment_log);
+		$this->db->where('Master_loan_id', $ordercode);
+		//$this->db->where('notes_cicilan', $cicilan);
+		//$this->db->where('tgl_record_repayment_log', $ordercode);
+		$this->db->order_by('tgl_record_repayment_log', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+
+/*		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;*/
+	}
 }

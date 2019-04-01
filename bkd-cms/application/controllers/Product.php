@@ -104,6 +104,8 @@ class Product extends CI_Controller {
 			$data['type_of_business_id']   = $type_business_id;
 			$data['type_of_interest_rate'] = trim($post['type_interest_rate']);
 			$data['PPH']                   = trim($post['pajak']);
+			$data['charge']                = trim($post['charge']);
+			$data['charge_type']           = trim($post['charge_type']);
 			//$data['type_of_interest_rate_name'] = trim($post['type_interest_rate']);
 			
 			//if(isset($_POST['submit'])){
@@ -202,6 +204,8 @@ class Product extends CI_Controller {
 			$updata['type_of_business_id']   = $type_business_id;
 			$updata['type_of_interest_rate'] = trim($post['type_interest_rate']);
 			$updata['PPH']                   = trim($post['pajak']);
+			$updata['charge']                = trim($post['charge']);
+			$updata['charge_type']           = trim($post['charge_type']);
 			
 			$radioVal = trim($post["type_interest_rate"]);
 			switch($radioVal){
