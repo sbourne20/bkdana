@@ -205,7 +205,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             </select>
                                         </div>
                                         <div class="form-group">
-                                            <label>* Upload Foto Diri / </label>        
+                                            <label>* Upload Foto Diri / Selfie </label>        
                                                 <input type="file" name="foto_file" id="foto_file" data-show-upload="false" accept="image/*" capture namafile="<?php echo $foto_profil; ?>" >
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>                                            
                                         </div>
@@ -453,8 +453,8 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                                     </label>                                                
                                                 </div>
                                                 <div class="form-group">
-                                                    <label for="handphone">* Jumlah Anak</label>
-                                                    <input type="text" class="form-control" name="jumlah_anak" id="jumlah_anak" value="<?php echo $memberdata['jumlah_anak']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Jumlah Anak harus diisi!">
+                                                    <label for="handphone">* Jumlah Tanggungan (Istri dan Anak)</label>
+                                                    <input type="text" class="form-control" name="jumlah_anak" id="jumlah_anak" value="<?php echo $memberdata['How_many_people_do_you_financially_support']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Jumlah Anak harus diisi!">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="lama_usaha">* Status Tempat Tinggal</label>
