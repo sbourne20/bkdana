@@ -554,7 +554,7 @@ class Pinjaman extends CI_Controller {
 		}
 	}
 
-		public function daftar_agri()
+	public function daftar_agri()
 	{
 		// ====== Daftar pinjaman Agri belum login ====== //
 
@@ -612,7 +612,7 @@ class Pinjaman extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 
-		function submit_reg_agri()
+	function submit_reg_agri()
 	{
 		if($_SERVER["REQUEST_METHOD"] == "POST")
 		{
@@ -1309,12 +1309,10 @@ class Pinjaman extends CI_Controller {
 		$data['memberdata'] = $this->Member_model->get_member_byid($memberID);
 
 		//$content_mikro = $this->Content_model->screening_mikro_rows($data['memberdata']['Id_pengguna']);
-
 		
-			//echo 'belum lengkap';
-			$data['pages']    = 'v_form_pinjaman_agri';
+		//echo 'belum lengkap';
+		$data['pages']    = 'v_form_pinjaman_agri';
 		
-
 		$this->load->view('template', $data);
 	}
 
@@ -1370,14 +1368,13 @@ class Pinjaman extends CI_Controller {
 
 					if ($post['kelengkapan'] == '0'){
 						// jika kelengkapan Agri belum lengkap
-						if ($_FILES['cf_file']['tmp_name']  == '' OR $_FILES['progress_report_file']['tmp_name']  == '' OR $_FILES['hasil_panen_file1']['tmp_name']  == '' OR $_FILES['hasil_panen_file2']['tmp_name']  == '' OR $_FILES['hasil_panen_file3']['tmp_name']  == '' ) {
-							$ret = array('error'=> '1', 'message'=>'Anda harus Upload Contract Farming, Progress Report, Foto Hasil Panen 1, Foto Hasil Panen 2, Foto Hasil Panen 3 !');
+						if ($_FILES['cf_file']['tmp_name']  == '' OR $_FILES['progress_report_file']['tmp_name']  == '' ) {
+							$ret = array('error'=> '1', 'message'=>'Anda harus Upload Contract Farming, Progress Report!');
 							echo json_encode($ret);
 							exit();
 						}else{
 
 							//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
-
 							if( isset($_FILES['cf_file']['name']) && $_FILES['cf_file']['name'] != ''){
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['cf_file']['name']);
@@ -1392,7 +1389,6 @@ class Pinjaman extends CI_Controller {
 								$file_cf_name   = '';
 							}
 							
-
 							if( isset($_FILES['progress_report_file']['name']) && $_FILES['progress_report_file']['name'] != ''){
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['progress_report_file']['name']);
