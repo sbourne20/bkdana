@@ -280,6 +280,30 @@ class Daftar_peminjam extends CI_Controller {
 					}
 					$total_pendapatan_bersih = $jmldana + $pendapatan_bersih;
 				}
+				else if ($log_tran_pinjam['ltp_type_of_business_id'] == '5') {
+					// AGRI
+					// angsuran ke pendana per minggu
+					$cicilan_pokok = $jmldana/$log_tran_pinjam['ltp_lama_angsuran'];
+					// lender fee per minggu
+					$lender_fee    = (($jmldana*$log_tran_pinjam['ltp_product_investor_return'] * $log_tran_pinjam['ltp_product_loan_term'])/100) /$log_tran_pinjam['ltp_lama_angsuran'];
+					$lender_fee_tax = ((($jmldana*$log_tran_pinjam['ltp_product_investor_return'] * $log_tran_pinjam['ltp_product_loan_term'])/100) /$log_tran_pinjam['ltp_lama_angsuran'])* $log_tran_pinjam['ltp_product_pph']/100;
+					$lender_fee_after_tax = $lender_fee - $lender_fee_tax;
+					$platform_fee  = (($jmldana * $log_tran_pinjam['ltp_product_platform_rate'] * $log_tran_pinjam['ltp_product_loan_term'])/100)/$log_tran_pinjam['ltp_lama_angsuran'];
+					$LO_fee        = (($jmldana * $log_tran_pinjam['ltp_product_loan_organizer'] * $log_tran_pinjam['ltp_product_loan_term'])/100)/$log_tran_pinjam['ltp_lama_angsuran'];
+					
+					$angsuran_ke_pendana = round($cicilan_pokok) + $lender_fee;
+					$laba                = ($angsuran_ke_pendana * $log_tran_pinjam['ltp_lama_angsuran']) - $jmldana;
+					$total_pendapatan_pendana = $jmldana + ($lender_fee*$log_tran_pinjam['ltp_lama_angsuran']);
+
+					// hitung TAX -> PPH
+					if ($log_tran_pinjam['ltp_product_pph'] != '0')
+					{
+						$hitung_tax = ($laba * $log_tran_pinjam['ltp_product_pph'])/100;
+						$angsuran_ke_pendana      = $angsuran_ke_pendana - ($hitung_tax/$log_tran_pinjam['ltp_lama_angsuran']);
+						$pendapatan_bersih = $laba - $hitung_tax;
+					}
+					$total_pendapatan_bersih = $jmldana + $pendapatan_bersih;
+				}
 
 					/*echo ($angsuran_ke_pendana);
 					echo '<br>';

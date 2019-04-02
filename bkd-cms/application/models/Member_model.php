@@ -159,7 +159,7 @@ class Member_model extends CI_Model
 
 		$q->free_result();
 
-		$sql = " 	SELECT m.id_mod_user_member, mum_email, mum_type, mum_status, mum_telp, mum_status, mum_nomor_rekening, mum_usaha, m.mum_type_peminjam,
+		$sql = " 	SELECT m.id_mod_user_member, mum_email, mum_type, mum_status, mum_telp, mum_status, mum_nomor_rekening, m.mum_type_peminjam,
 					Tgl_record, Id_penyelenggara, u.Id_pengguna, p.id_user_group, Nama_pengguna, peringkat_pengguna, skoring,
 					Mobileno, p.user_group_name, mum_create_date
 					FROM mod_user_member m 
@@ -542,16 +542,20 @@ class Member_model extends CI_Model
 
 	function get_count_group($idgroup)
 	{
-		$this->db->select('count(*) as itotal');
-		$this->db->from($this->user_ojk);
-		$this->db->where('id_user_group', $idgroup);
-		//$sql = $this->db->get();
-		//return $sql->result_array();
+		if($idgroup == 0){
+			return array('itotal' => '----');
+		}
+		else{
+			$this->db->select('count(*) as itotal');
+			$this->db->from($this->user_ojk);
+			$this->db->where('id_user_group', $idgroup);
+			
 
-		$sql = $this->db->get();
-		$ret = $sql->row_array();
-		$sql->free_result();
-		return $ret;
+			$sql = $this->db->get();
+			$ret = $sql->row_array();
+			$sql->free_result();
+			return $ret;
+		}
 	}
 
 

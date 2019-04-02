@@ -43,27 +43,27 @@
                             </div> 
                             <div class="form-group">
                                 <label for="handphone">* Upload CF</label>
-                                <input type="file" name="cf_file" id="cf_file">
+                                <input type="file" name="cf_file" id="cf_file" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
                             </div>
                             <div class="form-group">
                                 <label for="handphone">* Upload Progress Report</label>
-                                <input type="file" name="progress_report_file" id="progress_report_file">
+                                <input type="file" name="progress_report_file" id="progress_report_file" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
                             </div>
                             <div class="form-group">
                                 <label for="handphone">* Upload hasil Panen 1</label>
-                                <input type="file" name="hasil_panen_file1" id="hasil_panen_file1">
+                                <input type="file" name="hasil_panen_file1" id="hasil_panen_file1" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
                             </div>
                             <div class="form-group">
                                 <label for="handphone">* Upload hasil Panen 2</label>
-                                <input type="file" name="hasil_panen_file2" id="hasil_panen_file2">
+                                <input type="file" name="hasil_panen_file2" id="hasil_panen_file2" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
                             </div>
                             <div class="form-group">
                                 <label for="handphone">* Upload hasil Panen 3</label>
-                                <input type="file" name="hasil_panen_file3" id="hasil_panen_file3">
+                                <input type="file" name="hasil_panen_file3" id="hasil_panen_file3" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
                             </div>
                             <div class="form-group">

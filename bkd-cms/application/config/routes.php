@@ -71,3 +71,11 @@ $route['transaksi-pinjaman-mikro-draft/approve/(.*)'] = 'transaksi_pinjaman_mikr
 $route['transaksi-pinjaman-mikro-draft/submit_edit']  = 'transaksi_pinjaman_mikro_draft/submit_edit';
 $route['transaksi-pinjaman-mikro-draft/detail_transaksi/(.*)'] = 'transaksi_pinjaman_mikro_draft/detail_transaksi/$1';
 //$route['cronjob/find_expired_pinjaman_kilat/(.*)'] = 'cronjob/find_expired_pinjaman_kilat';
+
+//agri
+$route['transaksi-pinjaman-agri-draft']               = 'transaksi_pinjaman_agri_draft/index';
+$route['transaksi-pinjaman-agri-draft/json']         = 'transaksi_pinjaman_agri_draft/json';
+$route['transaksi-pinjaman-agri-draft/edit/(.*)']    = 'transaksi_pinjaman_agri_draft/edit/$1';
+$route['transaksi-pinjaman-agri-draft/approve/(.*)'] = 'transaksi_pinjaman_agri_draft/approve/$1';
+$route['transaksi-pinjaman-agri-draft/submit_edit']  = 'transaksi_pinjaman_agri_draft/submit_edit';
+$route['transaksi-pinjaman-agri-draft/detail_transaksi/(.*)'] = 'transaksi_pinjaman_agri_draft/detail_transaksi/$1';

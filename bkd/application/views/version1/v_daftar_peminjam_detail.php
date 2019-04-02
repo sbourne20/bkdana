@@ -120,8 +120,17 @@ switch ($transaksi['How_many_years_have_you_been_in_business']) {
                                         $label_tenor = 'Minggu';
                                     }
 
-                                }else{
+                                }else if($transaksi['type_of_business_id']==3){
                                     //$label_tenor = 'Bulan';
+                                     if ($transaksi['type_of_interest_rate'] == 1) {
+                                        $label_tenor = 'Hari';
+                                    }if ($transaksi['type_of_interest_rate'] == 2) {
+                                        $label_tenor = 'Bulan';
+                                    }if ($transaksi['type_of_interest_rate'] == 3){
+                                        $label_tenor = 'Minggu';
+                                    }
+                                }else if($transaksi['type_of_business_id']==5){
+                                     //$label_tenor = 'Bulan';
                                      if ($transaksi['type_of_interest_rate'] == 1) {
                                         $label_tenor = 'Hari';
                                     }if ($transaksi['type_of_interest_rate'] == 2) {

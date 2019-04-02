@@ -107,6 +107,7 @@ $route['transaksi/detail-pendana']   = 'transaksi_pendana/detail';
 $route['transaksi-pendana']          = 'transaksi/pendanaan_index';
 $route['submit-bayar-cicilan-kilat'] = 'transaksi/submit_cicilan_kilat';
 $route['submit-bayar-cicilan-mikro'] = 'transaksi/submit_cicilan_mikro';
+$route['submit-bayar-cicilan-agri'] = 'transaksi/submit_cicilan_agri';
 //$route['rekening-koran/detail-rekening-koran']   = 'rekening_koran/detail';
 
 //rekening koran

@@ -133,6 +133,19 @@ if ($memberdata['mum_type'] == '1'){
 														
                                                         //$jenis       = 'Pinjaman';
                                                         //$label_tenor = 'Bulan';
+                                                    }else if ($tra['id_mod_type_business'] == 5) {
+                                                        
+                                                        if ($tra['type_of_interest_rate'] == 1) {
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Hari';
+                                                        }if ($tra['type_of_interest_rate'] == 2) {
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Bulan';
+                                                        }if ($tra['type_of_interest_rate'] == 3){
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Minggu';
+                                                        }
+
                                                     }else{
                                                         $jenis       = 'Pendanaan';
                                                         $label_tenor = 'Bulan';

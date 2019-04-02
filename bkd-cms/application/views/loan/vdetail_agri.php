@@ -89,6 +89,91 @@
 			<td>Bank</td><td><?php echo $data['nama_bank']; ?></td>
 		</tr>
 		<tr>
+			<?php
+				switch ($data['Pendidikan']) {
+				    case '1':
+				        $label_pendidikan = 'SD';
+				        break;
+				    case '2':
+				        $label_pendidikan = 'SMP';
+				        break;
+				    case '3':
+				        $label_pendidikan = 'SMA';
+				        break;
+				    case '4':
+				        $label_pendidikan = 'DIPLOMA';
+				        break;
+				    case '4':
+				        $label_pendidikan = 'SARJANA';
+				        break;
+				    
+				    //default:
+				       // $label_pendidikan = 'lain-lain';
+				        //break;
+				}
+			?>
+			<td>Pendidikan</td><td><?php echo $label_pendidikan; ?></td>
+		</tr>
+		<tr>
+			<td>Bidang Pekerjaan</td><td><?php echo $data['Bidang_pekerjaan']; ?></td>
+		</tr>
+		<tr>
+			<td>Agama</td><td><?php echo $data['Agama']; ?></td>
+		</tr>
+		<tr>
+			<td>Status Pernikahan</td><td><?php echo $data['status_nikah']; ?></td>
+		</tr>
+		<tr>
+			<td>Jumlah Tanggungan</td><td><?php echo $data['How_many_people_do_you_financially_support']; ?></td>
+		</tr>
+		<tr>
+			<?php
+				switch ($data['status_tempat_tinggal']) {
+				    case '1':
+				        $label_status_tempat_tinggal = 'Milik Keluarga';
+				        break;
+				    case '2':
+				        $label_status_tempat_tinggal = 'Milik Sendiri';
+				        break;
+				    case '3':
+				        $label_status_tempat_tinggal = 'Sewa';
+				        break;
+				    
+				    
+				    //default:
+				       // $label_pendidikan = 'lain-lain';
+				        //break;
+				}
+			?>
+			<td>Status Tempat Tinggal</td><td><?php echo $label_status_tempat_tinggal; ?></td>
+		</tr>
+		<tr>
+			<td>Foto Pegang IDCard/EKTP</td>
+			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/pegang_ktp/'. $data['images_ktp_name']; ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto CF</td>
+			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/contract_farming/'. $data['images_cf_name']; ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto Progress Report File</td>
+			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/progress_report/'. $data['images_progress_report_name']; ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto Hasil Panen 1</td>
+			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/hasil_panen1/'. $data['images_hasil_panen_name1']; ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto Hasil Panen 2</td>
+			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/hasil_panen2/'. $data['images_hasil_panen_name2']; ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto Progress Hasil Panen 3</td>
+			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/hasil_panen3/'. $data['images_hasil_panen_name3']; ?>" alt="" /></td>
+		</tr>
+
+
+		<!-- <tr>
 			<td>Usaha</td><td><?php echo $data['What_is_the_name_of_your_business']; ?></td>
 		</tr>
 		<tr>
@@ -108,7 +193,9 @@
 		<tr>
 			<td>Foto Usaha</td>
 			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/usaha/'. $data['images_usaha_name']; ?>" alt="" /></td>
-		</tr>
+		</tr> -->
+
+
 		<tr>
 			<td>Grade</td><td><?php echo $data['peringkat_pengguna']; ?></td>
 		</tr>

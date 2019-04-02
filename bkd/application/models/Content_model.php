@@ -440,7 +440,7 @@ class Content_model extends CI_Model
 			FROM {$this->profil_permohonan_pinjaman} p
 			LEFT JOIN {$this->product} prod ON(prod.Product_id=p.Product_id)
 			LEFT JOIN {$this->mod_type_business} tb ON(tb.id_mod_type_business=prod.type_of_business_id)
-			WHERE (tb.id_mod_type_business='1' OR tb.id_mod_type_business='3')
+			WHERE (tb.id_mod_type_business='1' OR tb.id_mod_type_business='3' OR tb.id_mod_type_business='5')
 			AND p.pinjam_member_id='{$uid}' 
 			{$search_query}
 			ORDER BY tgl_permohonan_pinjaman DESC
@@ -468,7 +468,7 @@ class Content_model extends CI_Model
 			FROM {$this->profil_permohonan_pinjaman} p
 			LEFT JOIN {$this->product} prod ON(prod.Product_id=p.Product_id)
 			LEFT JOIN {$this->mod_type_business} tb ON(tb.id_mod_type_business=prod.type_of_business_id)
-			WHERE (tb.id_mod_type_business='1' OR tb.id_mod_type_business='3')
+			WHERE (tb.id_mod_type_business='1' OR tb.id_mod_type_business='3' OR tb.id_mod_type_business='5')
 			AND p.pinjam_member_id='{$uid}'
 			AND (p.Master_loan_status = 'approve' OR p.Master_loan_status = 'complete')
 			ORDER BY tgl_permohonan_pinjaman DESC
@@ -555,7 +555,7 @@ class Content_model extends CI_Model
 			LEFT JOIN {$this->product} prod ON(prod.Product_id=p.Product_id)
 			LEFT JOIN {$this->mod_type_business} tb ON(tb.id_mod_type_business=prod.type_of_business_id)
 			LEFT JOIN {$this->user} u ON(u.Id_pengguna=p.User_id)
-			WHERE  (tb.id_mod_type_business='1' OR tb.id_mod_type_business='3' OR tb.id_mod_type_business='4')
+			WHERE  (tb.id_mod_type_business='1' OR tb.id_mod_type_business='3' OR tb.id_mod_type_business='4' OR tb.id_mod_type_business='5')
 			AND (p.Master_loan_status='approve')
 			ORDER BY tgl_permohonan_pinjaman DESC
 			LIMIT {$start}, {$limit}
@@ -648,6 +648,7 @@ class Content_model extends CI_Model
 			$this->db->where('type_of_business_id', '1'); // kilat
 			$this->db->or_where('type_of_business_id', '3'); // mikro
 			$this->db->or_where('type_of_business_id', '4'); // usaha
+			$this->db->or_where('type_of_business_id', '5'); // agri
 		$this->db->group_end();
 		
 		$this->db->group_start();
@@ -1100,7 +1101,7 @@ class Content_model extends CI_Model
 			Agama,
 			ud.bidang_pekerjaan,
 			status_nikah,
-			jumlah_anak,
+			How_many_people_do_you_financially_support,
 			status_tempat_tinggal,
 			Alamat,
 			Kota,
