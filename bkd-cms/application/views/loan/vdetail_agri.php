@@ -124,7 +124,7 @@
 			<td>Status Pernikahan</td><td><?php echo $data['status_nikah']; ?></td>
 		</tr>
 		<tr>
-			<td>Jumlah Anak</td><td><?php echo $data['jumlah_anak']; ?></td>
+			<td>Jumlah Tanggungan</td><td><?php echo $data['How_many_people_do_you_financially_support']; ?></td>
 		</tr>
 		<tr>
 			<?php

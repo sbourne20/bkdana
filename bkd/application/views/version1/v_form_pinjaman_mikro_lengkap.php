@@ -34,7 +34,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="handphone">* Upload Foto Usaha</label>
-                                <input type="file" name="usaha_file" id="usaha_file">
+                                <input type="file" name="usaha_file" id="usaha_file" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
                             </div>
                             <div class="form-group">
