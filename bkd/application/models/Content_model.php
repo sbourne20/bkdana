@@ -1101,7 +1101,7 @@ class Content_model extends CI_Model
 			Agama,
 			ud.bidang_pekerjaan,
 			status_nikah,
-			jumlah_anak,
+			How_many_people_do_you_financially_support,
 			status_tempat_tinggal,
 			Alamat,
 			Kota,

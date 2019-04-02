@@ -474,8 +474,8 @@ class Member extends CI_Controller {
 						if (isset($post['bidang_pekerjaan'])) {
 							$u_detail['bidang_pekerjaan']  = antiInjection(trim($post['bidang_pekerjaan']));
 						}
-						if (isset($post['jumlah_anak'])) {
-							$u_detail['How_many_people_do_you_financially_support']  = antiInjection(trim($post['jumlah_anak']));
+						if (isset($post['jumlah_tanggungan'])) {
+							$u_detail['How_many_people_do_you_financially_support']  = antiInjection(trim($post['jumlah_tanggungan']));
 						}
 						if (isset($post['status_tempat_tinggal'])) {
 							$u_detail['status_tempat_tinggal']  = antiInjection(trim($post['status_tempat_tinggal']));

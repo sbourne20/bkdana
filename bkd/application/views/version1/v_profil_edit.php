@@ -454,7 +454,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="handphone">* Jumlah Tanggungan (Istri dan Anak)</label>
-                                                    <input type="text" class="form-control" name="jumlah_anak" id="jumlah_anak" value="<?php echo $memberdata['How_many_people_do_you_financially_support']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Jumlah Anak harus diisi!">
+                                                    <input type="text" class="form-control" name="jumlah_tanggungan" id="jumlah_tanggungan" value="<?php echo $memberdata['How_many_people_do_you_financially_support']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Jumlah Tanggungan harus diisi!">
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="lama_usaha">* Status Tempat Tinggal</label>
