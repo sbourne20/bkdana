@@ -481,6 +481,34 @@ class Content_model extends CI_Model
 		return $ret;
 	}
 
+	function get_my_transactions_analyst_approved($uid, $limit, $start)
+	{
+		$sql = "SELECT 
+			Master_loan_id as transaksi_id, 
+			tgl_permohonan_pinjaman as tgl_transaksi, 
+			Jml_permohonan_pinjaman as totalrp,
+			Amount as Amount, 
+			Jml_permohonan_pinjaman_disetujui as total_approve, 
+			Master_loan_status as transaksi_status, 
+			date_close, 
+			tgl_pinjaman_disetujui as tgl_approve,
+			product_title, Loan_term, id_mod_type_business, type_business_name, prod.type_of_interest_rate
+			FROM {$this->profil_permohonan_pinjaman} p
+			LEFT JOIN {$this->product} prod ON(prod.Product_id=p.Product_id)
+			LEFT JOIN {$this->mod_type_business} tb ON(tb.id_mod_type_business=prod.type_of_business_id)
+			WHERE (tb.id_mod_type_business='5')
+			AND p.pinjam_member_id='{$uid}'
+			AND (p.Master_loan_status = 'user')
+			ORDER BY tgl_permohonan_pinjaman DESC
+			LIMIT {$start}, {$limit}
+		";
+
+		$queries = $this->db->query($sql);
+		$ret = $queries->result_array();
+		$queries->free_result();
+		return $ret;
+	}
+
 	function get_my_transactions_pendana($uid, $limit, $start, $search=NULL)
 	{
 		$search_query = '';

@@ -268,6 +268,105 @@ class Transaksi extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 
+
+	function approve()
+	{
+		// ====== Detail Pinjaman ========
+
+		$data['top_css']   = '';
+		$data['top_js']    = '';
+		$data['bottom_js'] = '';
+
+		$data['top_css'] .= add_css('js/validationengine/validationEngine.jquery.css');
+		$data['top_css'] .= add_css('js/alertify/css/alertify.min.css');
+		$data['top_css'] .= add_css('js/alertify/css/themes/default.min.css');
+
+		$data['bottom_js'] .= add_js('js/jquery-loading-overlay/dist/loadingoverlay.min.js');
+		$data['bottom_js'] .= add_js('js/validationengine/languages/jquery.validationEngine-en.js');
+		$data['bottom_js'] .= add_js('js/validationengine/jquery.validationEngine.js');
+		$data['bottom_js'] .= add_js('js/alertify/alertify.min.js');
+		$data['bottom_js'] .= add_js('js/autoNumeric/autoNumeric.min.js');
+		$data['bottom_js'] .= add_js('js/autoNumeric-init.js');
+		$data['bottom_js'] .= add_js('js/dsn.js');
+		$data['bottom_js'] .= add_js('js/transaction.js');
+
+		$data['title'] = $this->M_settings->title;
+		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('bkdana.com', 'website bkdana.com');
+
+		$uid = htmlentities($_SESSION['_bkduser_']);
+		$logintype = htmlentities($_SESSION['_bkdtype_']); // 1.peminjam, 2.pendana
+		$data['logintype'] = $logintype;
+		$data['memberid']  = $uid;
+		$data['memberdata']     = $this->Member_model->get_member_byid($uid);
+		$data['total_saldo']    = $this->Content_model->get_total_saldo($uid);
+
+		$ID = antiInjection($this->input->get('tid', TRUE)); // transaksi id
+
+		$log_transaksi_pinjam     = $this->Content_model->get_log_transaksi_pinjam($ID);
+		$transaksi                = $this->Content_model->get_transaksi_pinjam_byid($ID); // pinjaman
+		//tambahan baru denda
+		$produk					  = $this->Content_model->get_my_denda($ID);
+		//batas tambahan baru denda
+		//tambahan baru jml kredit untuk denda
+		$pinjaman				  = $this->Content_model->get_jml_kredit($ID);
+		//batas tambahan baru
+		//tambahan baru repayment
+		$repayment1			      = $this->Content_model->get_record_repayment1($ID);
+		//$data['repayment1']			   = $this->Content_model->get_record_repayment1($ID);
+		//batas tambahan baru repayment
+		
+		$data['detail_transaksi'] = $this->Content_model->get_detail_pinjam_byid($ID); // cicilan
+		$data['transaksi']        = $transaksi;
+		$data['log_pinjaman']     = $log_transaksi_pinjam;
+
+		$total_bayar = $transaksi['Jml_permohonan_pinjaman_disetujui'];
+		$data['total_bayar'] = $total_bayar;
+		$data['jatuh_tempo'] = '-';
+		//$data['jatuh_tempo1'] = date('d/m/Y', strtotime($log_transaksi_pinjam['ltp_tgl_jatuh_tempo']));
+		$data['jatuh_tempo1'] = $log_transaksi_pinjam['ltp_tgl_jatuh_tempo'];
+		//$data['jatuh_tempo3'] = $log_transaksi_pinjam['ltp_tgl_jatuh_tempo'];
+		$tgl = $repayment1['tgl_jatuh_tempo'];
+
+		 if ($transaksi['type_of_business_id'] == '5'){
+
+			//echo 'Pinjaman Agri';
+			
+			$data['jml_cicilan']   = $log_transaksi_pinjam['ltp_jml_angsuran'];
+			$data['lama_angsuran'] = $log_transaksi_pinjam['ltp_lama_angsuran']; // berapa minggu
+			//tambahan baru repayment
+			$data['jumlah_cicilan']   = $repayment1['jumlah_cicilan'];
+			$data['jumlah_denda']     = $repayment1['jml_denda'];
+			//batas tambahan baru repayment
+
+
+			//tambahan baru repayment
+			$data['repayment']			   = $this->Content_model->get_record_repayment($ID);
+			$data['record_repayment_log']  = $this->Content_model->get_record_repayment_log($ID);
+			$data['repaymentdenda']		   = $this->Content_model->get_record_repaymentdenda($ID);
+			//$data['repayment1']			   = $this->Content_model->get_record_repayment1($ID);
+			//batas tambahan baru repayment
+
+			/*//tambahan baru denda keterlambatan
+			if($produk['charge_type']=='1'){
+
+			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
+			}else if($produk['charge_type']=='2'){
+			$data['denda']= ($produk['charge']);
+			}
+			//batas tambahan baru*/
+
+			$data['pages']         = 'v_transaksi_detail_approve_agri';
+
+			if ($transaksi['Master_loan_status'] == 'complete' || $transaksi['Master_loan_status'] == 'lunas') {
+				//$data['jatuh_tempo'] = date('d/m/Y', strtotime("+3 months", strtotime($transaksi['tgl_pinjaman_disetujui'])));
+				$total_tenor = (int)$transaksi['Loan_term'];
+				$data['jatuh_tempo'] = date('d/m/Y', strtotime("+".$total_tenor." months", strtotime($transaksi['tgl_pinjaman_disetujui'])));
+			}
+		}
+
+		$this->load->view('template', $data);
+	}
+
 	function submit_cicilan_kilat()
 	{
 		// ========= Bayar cicilan Kilat pakai Saldo ============= //

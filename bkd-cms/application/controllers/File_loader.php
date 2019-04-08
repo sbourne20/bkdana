@@ -95,7 +95,7 @@ function get_mime_type($filename) {
         $paramuid = $param_array[1]; 
 
         $mime_type_or_return = $this->get_mime_type($param);
-        $filepath = FCPATH . "../../../tes/data-bkd/" . $param;
+        $filepath = FCPATH . "../../../data-bkd/" . $param;
         // echo $filepath;
 
         $userfile = $this->Member_model->get_file_name($paramuid);

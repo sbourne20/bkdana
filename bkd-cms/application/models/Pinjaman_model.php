@@ -627,7 +627,7 @@ class Pinjaman_model extends CI_Model
 
 		$data = array(
 			'Jml_permohonan_pinjaman_disetujui' => $money,
-			'Master_loan_status'                => 'approve',
+			'Master_loan_status'                => 'user',
 			'date_fundraise'					=> $date_fundraise,
 			'fundraising_period'                => $period,
 			'Total_loan_outstanding'            => $pinjaman,

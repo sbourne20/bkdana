@@ -6,14 +6,14 @@ $config['doc_root']   .= str_replace('index.php', '', isset($_SERVER['DOCUMENT_U
 
 if($_SERVER['HTTP_HOST']=='localhost')
 {
-	$config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
-	$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
+	$config['data_dir']    = FCPATH . "../../../data-bkd/";
+	$config['attach_dir']  = FCPATH . "../../../data-file-bkd/";
 	$config['img_baseurl'] = $config['doc_root'];
 	$config['images_member_uri'] = $config['doc_root'] ."images-data/member/";
 
 }else{	// LIVE
-	$config['data_dir']    = '/var/www/html/data-bkd/';
-	$config['attach_dir']  = '/var/www/html/data-file-bkd/';
+	$config['data_dir']    = FCPATH . "../../../data-bkd/";
+	$config['attach_dir']  = FCPATH . "../../../data-file-bkd/";
 	$config['img_baseurl'] = $ishttp ."://".$_SERVER['HTTP_HOST'] .'/';
 	$config['images_member_uri']    = "https://bkdana.id/images-data/member/";
 }

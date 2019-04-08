@@ -215,33 +215,42 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$type_interest_rate = $produk['type_of_interest_rate'];
 				if($type_interest_rate == 1){//harian
 					$totalweeks   = $produk['Loan_term'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 );
+					// $jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
 					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
-					$pokok_cicilan = $pinjaman_rp / $totalweeks;
+					// $pokok_cicilan = $pinjaman_rp / $totalweeks;
+					$pokok_cicilan = $pinjaman_rp;
 					$jml_repayment     = round($jml_angsuran);
-					$total_angsuran_rp = $jml_repayment*$totalweeks;
+					// $total_angsuran_rp = $jml_repayment*$totalweeks;
+					$total_angsuran_rp = 0;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
 					$loan_term = $produk['Loan_term'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
 				}
 				if($type_interest_rate == 2){//bulanan
 					$totalweeks   = 4 * $produk['Loan_term'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 );
+					// $jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
 					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
-					$pokok_cicilan = $pinjaman_rp / $totalweeks;
+					// $pokok_cicilan = $pinjaman_rp / $totalweeks;
+					$pokok_cicilan = $pinjaman_rp;
 					$jml_repayment     = round($jml_angsuran);
-					$total_angsuran_rp = $jml_repayment*$totalweeks;
+					// $total_angsuran_rp = $jml_repayment*$totalweeks;
+					$total_angsuran_rp = 0;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
 					$loan_term = $produk['Loan_term'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
 				}
 				if($type_of_interest_rate == 3){//mingguan
 					$totalweeks   = $produk['Loan_term'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 );
+					// $jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
 					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
-					$pokok_cicilan = $pinjaman_rp / $totalweeks;
+					// $pokok_cicilan = $pinjaman_rp / $totalweeks;
+					$pokok_cicilan = $pinjaman_rp;
 					$jml_repayment     = round($jml_angsuran);
-					$total_angsuran_rp = $jml_repayment*$totalweeks;
+					// $total_angsuran_rp = $jml_repayment*$totalweeks;
+					$total_angsuran_rp = 0;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
 					$loan_term = $produk['Loan_term'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." weeks"));
@@ -264,12 +273,15 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$frozen_fee = ($pinjaman_rp * $produk['Fee_revenue_share'])/100;
 
 				// Platform  fee = P*D*C/Jumlah Minggu
-				$angsuran_platform_fee = ($pinjaman_rp * ($produk['Platform_rate'] * $produk['Loan_term'])/100) / $totalweeks;
+				// $angsuran_platform_fee = ($pinjaman_rp * ($produk['Platform_rate'] * $produk['Loan_term'])/100) / $totalweeks;
+				$angsuran_platform_fee = ($pinjaman_rp * ($produk['Platform_rate'] * $produk['Loan_term'])/100);
 
 				// LO = (P*E*C)/Jumlah Minggu
-				$angsuran_LO = ($pinjaman_rp * ($produk['Loan_organizer'] * $produk['Loan_term'])/100) / $totalweeks;
+				// $angsuran_LO = ($pinjaman_rp * ($produk['Loan_organizer'] * $produk['Loan_term'])/100) / $totalweeks;
+				$angsuran_LO = ($pinjaman_rp * ($produk['Loan_organizer'] * $produk['Loan_term'])/100);
 
-				$lender_fee  = (($pinjaman_rp*$produk['Investor_return'] * $loan_term)/100)/$totalweeks;
+				// $lender_fee  = (($pinjaman_rp*$produk['Investor_return'] * $loan_term)/100)/$totalweeks;
+				$lender_fee  = (($pinjaman_rp*$produk['Investor_return'] * $loan_term)/100);
 
 				$bunga_cicilan = ($angsuran_platform_fee + $angsuran_LO + $lender_fee );
 				/*echo 'platform fee: '.$angsuran_platform_fee;
