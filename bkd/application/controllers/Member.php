@@ -24,8 +24,9 @@ class Member extends CI_Controller {
 
 	    // clean up the file resource
 	    fclose( $ifp ); 
-
-	    return $output_file; 
+	    //print_r($data);
+	    //exit();
+	    return base64_decode( $output_file ); 
 	}
 	
 	public function ubah_profil()
@@ -61,6 +62,8 @@ class Member extends CI_Controller {
 		$data['bottom_js'] .= add_js('js/date-init.js');
 		$data['bottom_js'] .= add_js('js/fileinput-edit.js');
 		$data['bottom_js'] .= add_js('js/dsn.js');
+		$data['bottom_js'] .= add_js('js/ImageTools.js');
+
 
 		$data['title'] = $this->M_settings->title;
 		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('bkdana.com', 'website bkdana.com');
@@ -699,27 +702,42 @@ class Member extends CI_Controller {
 								mkdir_r($destination_pegang_ktp);
 							}
 							if($post['old_pegang_ktp']!=''){
+								if (!is_file($destination_pegang_ktp.$file_pegang_ktp_name)){
 								unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
+								}
 							}
-							//tambahan baru resize image
-							//move_uploaded_file($fileName, $uploadPath. $resizeFileName. ".". $fileExt);
-					        //$imageProcess = 1;
-							//batas tambahan baru resize
 							move_uploaded_file($_FILES['pegang_ktp_file']['tmp_name'], $destination_pegang_ktp.$file_pegang_ktp_name);
 							
-							if($post['pegang_ktp_file_hidden']!=''){
-								//$output_file = $this->base64_to_jpeg($post['pegang_ktp_file_hidden'],'hidden.jpeg');	
-								file_put_contents($destination_pegang_ktp, base64_decode($post['pegang_ktp_file_hidden']));
+							if($post['pegang_ktp_file_hidden']!=''){	
+
+								$data = $_POST['pegang_ktp_file_hidden'];
+								//$data = str_replace('data:image/png;base64,', '', $data);
+								//$data = str_replace(' ', '+', $data);
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        //if($extension=='javascript')$extension='js';
+							        //if($extension=='text')$extension='txt';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+
+								$data = base64_decode($data);
+								$file = $destination_pegang_ktp.$output_file_with_extension;
+								$success = file_put_contents($file, $data);
+					
 							}
-							// else{
-							// 	echo('no hidden');
-							// 	exit();
-							// }
-
-							
+							 else{
+							 	echo('no hidden');
+							 	exit();
+							 }							
 						}
-
-
 					}
 						
 						// -----batas tambahan baru -----

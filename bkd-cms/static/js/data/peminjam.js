@@ -16,7 +16,9 @@
                     if (mum_type_peminjam=='1') {
                       var ret="Kilat"; 
                     }else if (mum_type_peminjam=='2') {
-                      var ret="Mikro"; 
+                      var ret="Mikro";
+                    }else if (mum_type_peminjam=='3') {
+                      var ret="Agri";  
                     }else{
                       var ret=""; 
                     }
