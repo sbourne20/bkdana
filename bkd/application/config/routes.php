@@ -146,3 +146,5 @@ $route['email-aktivasi']    = 'aktivasi/index';
 //batas aktivasi
 
 $route['detail-profil-peminjam'] = 'rekening_koran/detail_profil_peminjam'; 
+
+$route['fileload'] = 'file_loader/file';
