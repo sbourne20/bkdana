@@ -70,6 +70,30 @@
                                     <input type="radio" class="radiocheck" name="type_interest_rate" value="2" <?php echo ($mode==2 && $EDIT['type_of_interest_rate']==2)? 'checked="checked"' : ''; ?> > Bulanan
                                 </label>
                             </div>
+                            <?php
+                            //agri
+                            if($b['id_mod_type_business']=='5'){ ?>
+
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Min Tenor</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" name="min_tenor" class="form-control" value="<?php echo isset($EDIT['Min_tenor'])? $EDIT['Min_tenor'] : ''; ?>" data-validation-engine="validate[required]">
+                                        <span class="input-group-addon" id="tipe_min_tenor"> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Max Tenor</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" name="max_tenor" class="form-control" value="<?php echo isset($EDIT['Max_tenor'])? $EDIT['Max_tenor'] : ''; ?>" data-validation-engine="validate[required]">
+                                        <span class="input-group-addon" id="tipe_max_tenor"> </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- batas agri -->
+                            <?php }else{ ?>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Loan Term </label>
@@ -80,6 +104,22 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <?php 
+                            } 
+                            //agri
+                            if($b['id_mod_type_business']=='5'){
+                            ?>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Min Loan </label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" name="min_loan" class="form-control" value="<?php echo isset($EDIT['Min_loan'])? $EDIT['Min_loan'] : ''; ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
+                            <!-- batas agri -->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Max Loan </label>
                                 <div class="col-sm-2">
@@ -244,6 +284,41 @@ $(':radio[name="type_interest_rate"]').change(function() {
    // alert(type_interest_rate);
 });
 
+var type_interest_rate;
+$(':radio[name="type_interest_rate"]').change(function() {
+    type_interest_rate=this.value;
+             if (type_interest_rate == 1)
+            {
+                $('#tipe_min_tenor').text('days');       
+            }
+            if (type_interest_rate == 3)
+            {
+                $('#tipe_min_tenor').text('weeks');       
+            }
+            if(type_interest_rate == 2){
+                $('#tipe_min_tenor').text('months');                
+            }
+   // alert(type_interest_rate);
+});
+
+var type_interest_rate;
+$(':radio[name="type_interest_rate"]').change(function() {
+    type_interest_rate=this.value;
+             if (type_interest_rate == 1)
+            {
+                $('#tipe_max_tenor').text('days');       
+            }
+            if (type_interest_rate == 3)
+            {
+                $('#tipe_max_tenor').text('weeks');       
+            }
+            if(type_interest_rate == 2){
+                $('#tipe_max_tenor').text('months');                
+            }
+   // alert(type_interest_rate);
+});
+
+
 $(".radiocheck:checked").each(function(){
     check =this.value;
     switch(check){
@@ -255,6 +330,36 @@ $(".radiocheck:checked").each(function(){
     break; 
     case '3':
     $('#tipe_loan_term').text('weeks');
+    break;  
+    }
+});
+
+$(".radiocheck:checked").each(function(){
+    check =this.value;
+    switch(check){
+    case '1':
+    $('#tipe_min_tenor').text('days');  
+    break;
+    case '2':
+    $('#tipe_min_tenor').text('months'); 
+    break; 
+    case '3':
+    $('#tipe_min_tenor').text('weeks');
+    break;  
+    }
+});
+
+$(".radiocheck:checked").each(function(){
+    check =this.value;
+    switch(check){
+    case '1':
+    $('#tipe_max_tenor').text('days');  
+    break;
+    case '2':
+    $('#tipe_max_tenor').text('months'); 
+    break; 
+    case '3':
+    $('#tipe_max_tenor').text('weeks');
     break;  
     }
 });

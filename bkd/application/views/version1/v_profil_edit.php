@@ -295,7 +295,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Surat Keterangan Bekerja</label>
-                                                <input type="file" name="surat_keterangan_bekerja_file" id="surat_keterangan_bekerja_file" data-show-upload="false" ccept="image/*" capture namafile="<?php  echo $foto_surat_keterangan_bekerja; ?>">
+                                                <input type="file" name="surat_keterangan_bekerja_file" id="surat_keterangan_bekerja_file" data-show-upload="false" accept="image/*" capture namafile="<?php  echo $foto_surat_keterangan_bekerja; ?>">
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
@@ -304,7 +304,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Slip Gaji</label>
-                                                <input type="file" name="slip_gaji_file" id="slip_gaji_file" data-show-upload="false" ccept="image/*" capture namafile="<?php echo  $foto_slip_gaji; ?>">
+                                                <input type="file" name="slip_gaji_file" id="slip_gaji_file" data-show-upload="false" accept="image/*" capture namafile="<?php echo  $foto_slip_gaji; ?>">
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
@@ -315,7 +315,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Pegang IDCard/eKTP</label>
-                                                <input type="file" name="pegang_ktp_file" id="pegang_ktp_file" data-show-upload="false" ccept="image/*" capture namafile="<?php echo  $foto_pegang_ktp;?>" >
+                                                <input type="file" name="pegang_ktp_file" id="pegang_ktp_file" data-show-upload="false" accept="image/*" capture namafile="<?php echo  $foto_pegang_ktp;?>" >
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
 
@@ -337,27 +337,27 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 1</label>
-                                                <input type="file" name="usaha_file" id="usaha_file" data-show-upload="false" ccept="image/*" capture namafile="<?php echo $foto_usaha; ?>" multiple>
+                                                <input type="file" name="usaha_file" id="usaha_file" data-show-upload="false" accept="image/*" capture namafile="<?php echo $foto_usaha; ?>" multiple>
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 2</label>
-                                                <input type="file" name="usaha_file2" id="usaha_file2" data-show-upload="false" ccept="image/*" capture namafile="<?php echo $foto_usaha2; ?>" multiple>
+                                                <input type="file" name="usaha_file2" id="usaha_file2" data-show-upload="false" accept="image/*" capture namafile="<?php echo $foto_usaha2; ?>" multiple>
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 3</label>
-                                                <input type="file" name="usaha_file3" id="usaha_file3" data-show-upload="false" ccept="image/*" capture namafile="<?php echo $foto_usaha3; ?>" multiple>
+                                                <input type="file" name="usaha_file3" id="usaha_file3" data-show-upload="false" accept="image/*" capture namafile="<?php echo $foto_usaha3; ?>" multiple>
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 4</label>
-                                                <input type="file" name="usaha_file4" id="usaha_file4" data-show-upload="false" ccept="image/*" capture namafile="<?php echo $foto_usaha4; ?>" multiple>
+                                                <input type="file" name="usaha_file4" id="usaha_file4" data-show-upload="false" accept="image/*" capture namafile="<?php echo $foto_usaha4; ?>" multiple>
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
                                                 <label for="handphone">* Upload Foto Usaha 5</label>
-                                                <input type="file" name="usaha_file5" id="usaha_file5" data-show-upload="false" ccept="image/*" capture namafile="<?php echo $foto_usaha5; ?>" multiple>
+                                                <input type="file" name="usaha_file5" id="usaha_file5" data-show-upload="false" accept="image/*" capture namafile="<?php echo $foto_usaha5; ?>" multiple>
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                             </div>
                                             <div class="form-group">
@@ -467,9 +467,38 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                                 </div>
                                                 <div class="form-group">
                                                     <label for="handphone">* Upload Foto Pegang IDCard/eKTP</label>
-                                                    <input type="file" name="pegang_ktp_file" id="pegang_ktp_file" data-show-upload="false" accept="image/*" capture namafile="<?php echo  $foto_pegang_ktp;?>" >
+                                                    <input type="file" name="pegang_ktp_file" id="pegang_ktp_file" data-show-upload="false" accept="image/*"  capture onchange="loadImageFile();" namafile="<?php echo  $foto_pegang_ktp;?>" >
                                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
+                                                    <input type="hidden" name="pegang_ktp_file_hidden" id="pegang_ktp_file_hidden"/>
+<!--                                                     <script>
+                                                        document.getElementById('pegang_ktp_file').onchange = function(evt) {
+                                                            ImageTools.resize(this.files[0], {
+                                                                width: 320, // maximum width
+                                                                height: 240 // maximum height
+                                                            }, function(blob, didItResize) {
+                                                                // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+                                                                document.getElementById('upload-Preview').src = window.URL.createObjectURL(blob);
+                                                                // you can also now upload this blob using an XHR.
+                                                            });
+                                                        };
+                                                        </script> -->
+
+<!-- 
+                                                    <script>
+                                                        document.getElementById("pegang_ktp_file").addEventListener("change", function (event) {
+                                                        compress(event);
+                                                    });
+                                                    </script> -->
                                                 </div>
+                                                 <tr>
+                                                    <td>Origal Img - <img id="original-Img"/></td>
+                                                 </tr>
+                                                 <tr>
+                                                    <td>Compress Img - <img id="upload-Preview"/></td>
+                                                 </tr>
+                                                 <tr>
+                                                    <td>Img canvas - <div id="canvas-img"/></td>
+                                                 </tr>
 
                                             <?php } ?>
                                             <!-- End Agri -->
@@ -547,3 +576,154 @@ if ($memberdata['foto_pegang_ktp'] != '')
 
     </div>
 </div>
+<!-- <?php
+function resizeImage($resourceType,$image_width,$image_height,$resizeWidth,$resizeHeight) {
+    // $resizeWidth = 100;
+    // $resizeHeight = 100;
+    $imageLayer = imagecreatetruecolor($resizeWidth,$resizeHeight);
+    imagecopyresampled($imageLayer,$resourceType,0,0,0,0,$resizeWidth,$resizeHeight, $image_width,$image_height);
+    return $imageLayer;
+}
+?> -->
+
+
+<!-- <script>
+compress(event) {
+    const width = 500;
+    const height = 500;
+    const fileName = e.target.files[0].name;
+    const reader = new FileReader();
+    reader.readAsDataURL(e.target.files[0]);
+    reader.onload = event => {
+        const img = new Image();
+        img.src = event.target.result;
+        img.onload = () => {
+                const elem = document.createElement('canvas');
+                elem.width = width;
+                elem.height = height;
+                const ctx = elem.getContext('2d');
+                // img.width and img.height will contain the original dimensions
+                ctx.drawImage(img, 0, 0, width, height);
+                ctx.canvas.toBlob((blob) => {
+                    const file = new File([blob], fileName, {
+                        type: 'image/jpeg',
+                        lastModified: Date.now()
+                    });
+                }, 'image/jpeg', 1);
+            },
+            reader.onerror = error => console.log(error);
+    };
+}
+</script> -->
+
+<script type="text/javascript">
+var fileReader = new FileReader();
+var filterType = /^(?:image\/bmp|image\/cis\-cod|image\/gif|image\/ief|image\/jpeg|image\/jpeg|image\/jpg|image\/pipeg|image\/png|image\/svg\+xml|image\/tiff|image\/x\-cmu\-raster|image\/x\-cmx|image\/x\-icon|image\/x\-portable\-anymap|image\/x\-portable\-bitmap|image\/x\-portable\-graymap|image\/x\-portable\-pixmap|image\/x\-rgb|image\/x\-xbitmap|image\/x\-xpixmap|image\/x\-xwindowdump)$/i;
+
+fileReader.onload = function (event) {
+  var image = new Image();
+  
+  image.onload=function(){
+      document.getElementById("original-Img").src=image.src;
+      var canvas=document.createElement("canvas");
+      var context=canvas.getContext("2d");
+      canvas.width=image.width/3;
+      canvas.height=image.height/3;
+      context.drawImage(image,
+          0,
+          0,
+          image.width,
+          image.height,
+          0,
+          0,
+          canvas.width,
+          canvas.height
+      );
+      
+      document.getElementById("upload-Preview").src = canvas.toDataURL();
+
+     
+
+      var aftercompress =  canvas.toDataURL();
+        
+      var resizedImage = dataURLToBlob(aftercompress);
+      document.getElementById("pegang_ktp_file_hidden").value = resizedImage;
+
+        $.event.trigger({
+            type: "imageResized",
+            blob: resizedImage,
+            url: aftercompress
+        });
+
+                        
+  }
+  image.src=event.target.result;
+};
+
+var loadImageFile = function () {
+  var uploadImage = document.getElementById("pegang_ktp_file");
+  
+  //check and retuns the length of uploded file.
+  if (uploadImage.files.length === 0) { 
+    return; 
+  }
+  
+  //Is Used for validate a valid file.
+  var uploadFile = document.getElementById("pegang_ktp_file").files[0];
+  if (!filterType.test(uploadFile.type)) {
+    alert("Please select a valid image."); 
+    return;
+  }
+  
+  fileReader.readAsDataURL(uploadFile);
+}
+
+/* Utility function to convert a canvas to a BLOB */
+var dataURLToBlob = function(dataURL) {
+    var BASE64_MARKER = ';base64,';
+    if (dataURL.indexOf(BASE64_MARKER) == -1) {
+        var parts = dataURL.split(',');
+        var contentType = parts[0].split(':')[1];
+        var raw = parts[1];
+
+        return new Blob([raw], {type: contentType});
+    }
+
+    var parts = dataURL.split(BASE64_MARKER);
+    var contentType = parts[0].split(':')[1];
+    var raw = window.atob(parts[1]);
+    var rawLength = raw.length;
+
+    var uInt8Array = new Uint8Array(rawLength);
+
+    for (var i = 0; i < rawLength; ++i) {
+        uInt8Array[i] = raw.charCodeAt(i);
+    }
+
+    return new Blob([uInt8Array], {type: contentType});
+}
+/* End Utility function to convert a canvas to a BLOB      */
+
+/* Handle image resized events */
+$(document).on("imageResized", function (event) {
+    //var data = new FormData($("form[id*='uploadImageForm']")[0]);
+    console.log(event);
+    if (event.blob && event.url) {
+        $("#pegang_ktp_file_hidden").val(event.url);
+        // data.append('image_data', event.blob);
+
+        // $.ajax({
+        //     url: event.url,
+        //     data: data,
+        //     cache: false,
+        //     contentType: false,
+        //     processData: false,
+        //     type: 'POST',
+        //     success: function(data){
+        //        //handle errors...
+        //     }
+        // });
+    }
+});
+
+</script>

@@ -67,6 +67,7 @@ function create_thumb_relative($fullpath, $setwidth, $setheight)
     $config['height'] = $setheight;
     $CI->image_lib->initialize($config);
     
+    
     if (!$CI->image_lib->resize()) {
         echo $CI->image_lib->display_errors();
     }
