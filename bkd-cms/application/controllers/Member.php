@@ -10,6 +10,7 @@ class Member extends CI_Controller {
 		$this->load->model('Member_model');
 		$this->load->model('Grade_model');
 		$this->load->model('Wallet_model');
+		$this->load->library('session');
 		
 		 //error_reporting(0);
 		 //ini_set('display_errors', '1');
@@ -50,6 +51,8 @@ class Member extends CI_Controller {
 
 		$output['data'] = $this->Member_model->get_usermember_by($id);
 		$this->load->view('member/vdetail', $output);
+
+		$this->session->set_flashdata('id', $id);
 	}
 
 
@@ -257,6 +260,8 @@ class Member extends CI_Controller {
 
 		redirect('member/group');
 	}
+
+	
 
 
 	// -------------- batas tambahan terbaru -------------

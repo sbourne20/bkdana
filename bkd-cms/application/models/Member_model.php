@@ -558,5 +558,22 @@ class Member_model extends CI_Model
 		}
 	}
 
+	function get_file_name($id)
+	{
+		$this->db->select("CONCAT(images_foto_name, '|',
+			images_ktp_name, '|',
+			images_usaha_name, '|',
+			images_usaha_name2, '|',
+			images_usaha_name3, '|',
+			images_usaha_name4, '|',
+			images_usaha_name5) as userfile", FALSE);
+		$this->db->from($this->user_ojk_detail);
+		$this->db->where('Id_pengguna', $id);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->result_array();
+		return $ret;
+	}
+
 
 }
