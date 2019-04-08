@@ -9,6 +9,24 @@ class Member extends CI_Controller {
 		$this->load->model('Member_model');
 		//error_reporting(E_ALL);
 	}
+
+	function base64_to_jpeg($base64_string, $output_file) {
+	    // open the output file for writing
+	    $ifp = fopen( $output_file, 'wb' ); 
+
+	    // split the string on commas
+	    // $data[ 0 ] == "data:image/png;base64"
+	    // $data[ 1 ] == <actual base64 string>
+	    $data = explode( ',', $base64_string );
+
+	    // we could add validation here with ensuring count( $data ) > 1
+	    fwrite( $ifp, base64_decode( $data[ 1 ] ) );
+
+	    // clean up the file resource
+	    fclose( $ifp ); 
+
+	    return $output_file; 
+	}
 	
 	public function ubah_profil()
 	{
@@ -93,6 +111,7 @@ class Member extends CI_Controller {
 					//&& trim($post['kodepos']) != ''
 					&& trim($post['kota']) != ''
 					&& trim($post['provinsi']) != ''
+
 				) {
 					$memberdata = $this->Member_model->get_member_byid($uid);
 
@@ -305,6 +324,8 @@ class Member extends CI_Controller {
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
 								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
 								$fileExt           = $img_info['extension'];
+								//$fileWidth		   = 500;
+								//$fileHeight		   = 500;
 								$file_pegang_ktp_name  = $fileName.'.'.$fileExt;
 								$u_detail['foto_pegang_ktp']  = $file_pegang_ktp_name;
 								// ----- END Process Image Name -----
@@ -342,14 +363,56 @@ class Member extends CI_Controller {
 								// ----- END Process Image Name -----
 							}
 
+							//$imageProcess = 0;
 							if($_FILES['pegang_ktp_file']['name'] == ''){
 								$file_pegang_ktp_name   = '';
 							}else{
 								//$pegang_ktp_file  = file_get_contents($_FILES['pegang_ktp_file']['tmp_name']);
 								// ----- Process Image Name -----
+
+								//resize image
+								//$new_width = 500;
+						        //$new_height = 500;
+
+
+
+								//batas tambahan resize
 								$img_info          = pathinfo($_FILES['pegang_ktp_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
 								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								//tambahan baru resize image
+								/*$sourceProperties = getimagesize($fileName);
+						        $resizeFileName = time();
+        						$uploadPath = "./uploads/"
+        						$uploadImageType = $sourceProperties[2];
+						        $sourceImageWidth = $sourceProperties[0];
+						        $sourceImageHeight = $sourceProperties[1];
+						        switch ($uploadImageType) {
+						            case IMAGETYPE_JPEG:
+						                $resourceType = imagecreatefromjpeg($fileName); 
+						                $imageLayer = resizeImage($resourceType,$sourceImageWidth,$sourceImageHeight,$new_width,$new_height);
+						                imagejpeg($imageLayer,$uploadPath."thump_".$resizeFileName.'.'. $fileExt);
+						                break;
+
+						            case IMAGETYPE_GIF:
+						                $resourceType = imagecreatefromgif($fileName); 
+						                $imageLayer = resizeImage($resourceType,$sourceImageWidth,$sourceImageHeight,$new_width,$new_height);
+						                imagegif($imageLayer,$uploadPath."thump_".$resizeFileName.'.'. $fileExt);
+						                break;
+
+						            case IMAGETYPE_PNG:
+						                $resourceType = imagecreatefrompng($fileName); 
+						                $imageLayer = resizeImage($resourceType,$sourceImageWidth,$sourceImageHeight,$new_width,$new_height);
+						                imagepng($imageLayer,$uploadPath."thump_".$resizeFileName.'.'. $fileExt);
+						                break;
+
+						            default:
+						                $imageProcess = 0;
+						                break;
+						        }*/
+
+								//batas tambahan baru
+
 								$fileExt           = $img_info['extension'];
 								$file_pegang_ktp_name  = $fileName.'.'.$fileExt;
 								$u_detail['foto_pegang_ktp']  = $file_pegang_ktp_name;
@@ -636,10 +699,27 @@ class Member extends CI_Controller {
 								mkdir_r($destination_pegang_ktp);
 							}
 							if($post['old_pegang_ktp']!=''){
-							unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
+								unlink($destination_pegang_ktp.$post['old_pegang_ktp']);
 							}
+							//tambahan baru resize image
+							//move_uploaded_file($fileName, $uploadPath. $resizeFileName. ".". $fileExt);
+					        //$imageProcess = 1;
+							//batas tambahan baru resize
 							move_uploaded_file($_FILES['pegang_ktp_file']['tmp_name'], $destination_pegang_ktp.$file_pegang_ktp_name);
+							
+							if($post['pegang_ktp_file_hidden']!=''){
+								//$output_file = $this->base64_to_jpeg($post['pegang_ktp_file_hidden'],'hidden.jpeg');	
+								file_put_contents($destination_pegang_ktp, base64_decode($post['pegang_ktp_file_hidden']));
+							}
+							// else{
+							// 	echo('no hidden');
+							// 	exit();
+							// }
+
+							
 						}
+
+
 					}
 						
 						// -----batas tambahan baru -----

@@ -1098,15 +1098,15 @@ class Content_model extends CI_Model
 			images_ktp_name,
 			foto_pegang_ktp,
 			Pendidikan,
-			Agama,
+			g.Agama,
 			ud.bidang_pekerjaan,
 			status_nikah,
 			How_many_people_do_you_financially_support,
 			status_tempat_tinggal,
-			Alamat,
-			Kota,
-			Provinsi,
-			Kodepos				
+			g.Alamat,
+			g.Kota,
+			g.Provinsi,
+			g.Kodepos				
 			');
 		/*$this->db->select('
 			u.Id_pengguna as Id_pengguna_user,
