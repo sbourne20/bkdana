@@ -106,6 +106,11 @@ class Product extends CI_Controller {
 			$data['PPH']                   = trim($post['pajak']);
 			$data['charge']                = trim($post['charge']);
 			$data['charge_type']           = trim($post['charge_type']);
+			//agri
+			$data['Min_loan']			= trim($post['min_loan']);
+			$data['Min_tenor']			= trim($post['min_tenor']);
+			$data['Max_tenor']			= trim($post['max_tenor']);
+			//agri
 			//$data['type_of_interest_rate_name'] = trim($post['type_interest_rate']);
 			
 			//if(isset($_POST['submit'])){
@@ -206,6 +211,11 @@ class Product extends CI_Controller {
 			$updata['PPH']                   = trim($post['pajak']);
 			$updata['charge']                = trim($post['charge']);
 			$updata['charge_type']           = trim($post['charge_type']);
+			//agri
+			$updata['Min_loan']				= trim($post['min_loan']);
+			$updata['Min_tenor']			= trim($post['min_tenor']);
+			$updata['Max_tenor']			= trim($post['max_tenor']);
+			//agri
 			
 			$radioVal = trim($post["type_interest_rate"]);
 			switch($radioVal){
