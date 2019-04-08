@@ -33,13 +33,14 @@
                                 <input type="text" class="form-control numeric" name="jumlah_pinjam" id="jumlah_pinjam" data-validation-engine="validate[required]" data-errormessage-value-missing="Isi jumlah pinjaman Anda!">
                             </div>
                             <div class="form-group">
-                                <label for="product">* Tenor</label>
-                                <select class="form-control" name="product" id="product" data-validation-engine="validate[required]" data-errormessage-value-missing="Pilih Tenor Pinjaman!">
+                                <label for="product">* Tenor (hari)</label>
+								<input type="text" class="form-control numeric" name="product" id="product" data-validation-engine="validate[required]" data-errormessage-value-missing="Isi tenor Anda!">
+                                <!-- <select class="form-control" name="product" id="product" data-validation-engine="validate[required]" data-errormessage-value-missing="Pilih Tenor Pinjaman!">
                                     <option value=""> -- Pilih --</option>
                                     <?php foreach ($products as $prod) { ?>
                                     <option value="<?php echo $prod['Product_id']; ?>"> <?php echo $prod['Loan_term']; ?> Bulan</option>
                                     <?php } ?>
-                                </select>
+                                </select> -->
                             </div> 
                             <div class="form-group">
                                 <label for="handphone">* Upload CF</label>
@@ -51,7 +52,7 @@
                                 <input type="file" name="progress_report_file" id="progress_report_file" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
                             </div>
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label for="handphone">* Upload hasil Panen 1</label>
                                 <input type="file" name="hasil_panen_file1" id="hasil_panen_file1" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
@@ -65,7 +66,7 @@
                                 <label for="handphone">* Upload hasil Panen 3</label>
                                 <input type="file" name="hasil_panen_file3" id="hasil_panen_file3" accept="image/*" capture>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
-                            </div>
+                            </div> -->
                             <div class="form-group">
                                 <label for="password">* Password Anda Saat ini</label>
                                 <input type="password" class="form-control" id="password" name="password" data-validation-engine="validate[required]" data-errormessage-value-missing="Isi dengan Password Anda!">

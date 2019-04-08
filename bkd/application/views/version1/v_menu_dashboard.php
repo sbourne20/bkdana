@@ -8,7 +8,7 @@
 
                         if ($memberdata['images_foto_name'] != '')
                         {
-                            $foto_profil = $this->config->item('images_uri') . '/member/'.$memberdata['id_mod_user_member']. '/foto/'. $memberdata['images_foto_name'];
+                            $foto_profil = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/foto/'. $memberdata['images_foto_name'];
                         }
                         
                         ?>

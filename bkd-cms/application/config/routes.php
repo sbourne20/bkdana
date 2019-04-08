@@ -79,3 +79,5 @@ $route['transaksi-pinjaman-agri-draft/edit/(.*)']    = 'transaksi_pinjaman_agri_
 $route['transaksi-pinjaman-agri-draft/approve/(.*)'] = 'transaksi_pinjaman_agri_draft/approve/$1';
 $route['transaksi-pinjaman-agri-draft/submit_edit']  = 'transaksi_pinjaman_agri_draft/submit_edit';
 $route['transaksi-pinjaman-agri-draft/detail_transaksi/(.*)'] = 'transaksi_pinjaman_agri_draft/detail_transaksi/$1';
+
+$route['fileload'] = 'file_loader/file';
