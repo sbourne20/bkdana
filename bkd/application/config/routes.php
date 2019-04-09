@@ -72,25 +72,25 @@ $route['submit-login'] = 'login/submit_login';
 $route['logoff']       = 'login/logoff';
 $route['otp-login']    = 'login/login_otp';
 
-$route['register-pinjaman-kilat']        = 'pinjaman/daftar_kilat';
+//$route['register-pinjaman-kilat']        = 'pinjaman/daftar_kilat';
 $route['register-pinjaman-mikro']        = 'pinjaman/daftar_mikro';
 //register agri
 $route['register-pinjaman-agri']         = 'pinjaman/daftar_agri';
 //batas register agri
-$route['submit-register-pinjaman-kilat'] = 'pinjaman/submit_reg_kilat';
+//$route['submit-register-pinjaman-kilat'] = 'pinjaman/submit_reg_kilat';
 $route['submit-register-pinjaman-mikro'] = 'pinjaman/submit_reg_mikro';
 //register agri
 $route['submit-register-pinjaman-agri'] = 'pinjaman/submit_reg_agri';
 //batas register agri
 $route['submit-register'] = 'register/submit_';
 
-$route['formulir-pinjaman-kilat'] = 'pinjaman/kilat';
+//$route['formulir-pinjaman-kilat'] = 'pinjaman/kilat';
 $route['formulir-pinjaman-mikro'] = 'pinjaman/mikro';
 $route['formulir-pinjaman-usaha'] = 'pinjaman/usaha';
 $route['formulir-pinjaman-agri']  = 'pinjaman/agri';
 
 
-$route['submit-pinjaman-kilat']   = 'pinjaman/submit_p_kilat';
+//$route['submit-pinjaman-kilat']   = 'pinjaman/submit_p_kilat';
 $route['submit-pinjaman-mikro']   = 'pinjaman/submit_p_mikro';
 $route['submit-pinjaman-agri']    = 'pinjaman/submit_p_agri';
 $route['submit-pinjaman-usaha']   = 'pinjaman/submit_p_usaha';
@@ -105,14 +105,14 @@ $route['transaksi/page']             = 'transaksi/index';
 $route['transaksi/page/(.*)']        = 'transaksi/index/$1';
 $route['transaksi/detail-pendana']   = 'transaksi_pendana/detail';
 $route['transaksi-pendana']          = 'transaksi/pendanaan_index';
-$route['submit-bayar-cicilan-kilat'] = 'transaksi/submit_cicilan_kilat';
+//$route['submit-bayar-cicilan-kilat'] = 'transaksi/submit_cicilan_kilat';
 $route['submit-bayar-cicilan-mikro'] = 'transaksi/submit_cicilan_mikro';
 $route['submit-bayar-cicilan-agri'] = 'transaksi/submit_cicilan_agri';
 //$route['rekening-koran/detail-rekening-koran']   = 'rekening_koran/detail';
 
 //rekening koran
-$route['detail-rekening-koran-kredit-kilat']  = 'rekening_koran/detail_kredit_kilat';
-$route['detail-rekening-koran-debet-kilat'] = 'rekening_koran/detail_debet_kilat';
+//$route['detail-rekening-koran-kredit-kilat']  = 'rekening_koran/detail_kredit_kilat';
+//$route['detail-rekening-koran-debet-kilat'] = 'rekening_koran/detail_debet_kilat';
 
 $route['detail-rekening-koran-kredit-mikro'] = 'rekening_koran/detail_kredit_mikro';
 $route['detail-rekening-koran-debet-mikro'] = 'rekening_koran/detail_debet_mikro';
