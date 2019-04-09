@@ -208,8 +208,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             <label>* Upload Foto Diri / Selfie </label>        
                                                 <input type="file" id="foto_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_profil; ?>" >
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
-                                                <input type="hidden" class="input_file_hidden" id="foto_file_hidden" name="foto_file_hidden"/>
-                                               >                                            
+                                                <input type="hidden" class="input_file_hidden" id="foto_file_hidden" name="foto_file_hidden"/>                   
                                         </div>
                                         <div class="form-group">
                                             <label for="handphone">* Nomor KTP</label>
