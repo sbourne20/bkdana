@@ -76,6 +76,9 @@ class Member_model extends CI_Model
 	{
 		$this->db->select("CONCAT(images_foto_name, '|',
 			images_ktp_name, '|',
+			foto_pegang_ktp, '|',
+			foto_slip_gaji, '|',
+			foto_surat_keterangan_bekerja, '|',
 			images_usaha_name, '|',
 			images_usaha_name2, '|',
 			images_usaha_name3, '|',
