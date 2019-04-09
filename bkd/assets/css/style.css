@@ -1905,3 +1905,8 @@ footer .socmed > li > a {
     	opacity: 1;
   	}
 }
+
+
+.file-preview-frame, .file-preview-image, .file-preview-other{
+	height: auto !important;
+}

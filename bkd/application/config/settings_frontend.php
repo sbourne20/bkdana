@@ -19,7 +19,7 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	//foto start
 	$config['showphoto']    = 'http://'.$_SERVER['HTTP_HOST']. '/bkdana/data-bkd/';
 	//foto end
-	$config['data_dir']    = FCPATH . "../../../tes/data-bkd/";
+	$config['data_dir']    = FCPATH . "../../../data-bkd/";
 	// $config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/bkdana/data-bkd/';
 	$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/bkdana/data-file-bkd/';
 
