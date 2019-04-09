@@ -81,6 +81,162 @@ if ($memberdata['mum_type'] == '1'){
                                     </div>
                                 </div>
                             </div>
+
+                            <?php if ($memberdata['mum_type_peminjam']=='3') { ?>
+                                <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <div class="sub-title">Persetujuan Pinjaman</div>
+                                    <div class="table-responsive">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th>No.</th>
+                                                    <th>Jenis</th>
+                                                    <th>Nama Transaksi</th>
+                                                    <th>Jumlah</th>
+                                                    <th>Total</th>
+                                                    <th>&nbsp;</th>
+                                                    <th>&nbsp;</th>
+                                                </tr>
+                                            </thead> 
+                                            <tbody>
+                                                <?php 
+                                                if (count($analyst_approved)) {
+                                                
+                                                foreach ($analyst_approved as $tra) { 
+                                                    
+                                                    if ($tra['id_mod_type_business'] == 1) {
+                                                       
+                                                        if ($tra['type_of_interest_rate'] == 1) {
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Hari';
+                                                        }if ($tra['type_of_interest_rate'] == 2) {
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Bulan';
+                                                        }if ($tra['type_of_interest_rate'] == 3){
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Minggu';
+                                                        }
+
+                                                         //$jenis      = 'Pinjaman';
+                                                        //$label_tenor = 'Hari';
+                                                    }else if ($tra['id_mod_type_business'] == 3) {
+                                                        
+                                                        if ($tra['type_of_interest_rate'] == 1) {
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Hari';
+                                                        }if ($tra['type_of_interest_rate'] == 2) {
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Bulan';
+                                                        }if ($tra['type_of_interest_rate'] == 3){
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Minggu';
+                                                        }
+                                                        
+                                                        //$jenis       = 'Pinjaman';
+                                                        //$label_tenor = 'Bulan';
+                                                    }else if ($tra['id_mod_type_business'] == 5) {
+                                                        
+                                                        if ($tra['type_of_interest_rate'] == 1) {
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Hari';
+                                                        }if ($tra['type_of_interest_rate'] == 2) {
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Bulan';
+                                                        }if ($tra['type_of_interest_rate'] == 3){
+                                                            $jenis       = 'Pinjaman';
+                                                            $label_tenor = 'Minggu';
+                                                        }
+
+                                                    }else{
+                                                        $jenis       = 'Pendanaan';
+                                                        $label_tenor = 'Bulan';
+                                                    } 
+                                                    
+                                                    // hitung jatuh tempo
+                                                    if ($tra['tgl_approve'] != '0000-00-00 00:00:00')
+                                                    {
+                                                        $total_tenor = (int)$tra['Loan_term'];
+                                                        //$jmlhari = 28*$total_tenor;
+                                                        
+                                                        
+
+                                                        if ($tra['id_mod_type_business'] == 1) {
+                                                            $jatuhtempo = date('d/m/Y', strtotime("+".$total_tenor." days", strtotime($tra['tgl_approve'])));
+                                                        }else{
+                                                            $jatuhtempo = date('d/m/Y', strtotime("+".$total_tenor." months", strtotime($tra['tgl_approve'])));
+                                                        }
+                                                    }else{
+                                                        $jatuhtempo = '';
+                                                    }
+
+                                                    $link_detail_approve = site_url('transaksi/approve/?tid='.$tra['transaksi_id']);
+
+                                                    switch ($tra['transaksi_status']) {
+                                                        case 'pending':
+                                                            $stat_title = 'Pending';
+                                                            $btn_class = 'btn btn-warning';
+                                                            break;
+                                                        case 'approve':
+                                                            $stat_title = 'Menunggu Pendanaan';
+                                                            $btn_class = 'btn btn-warning';
+                                                            break;
+                                                        case 'lunas':
+                                                            $stat_title = 'Lunas';
+                                                            $btn_class = 'btn btn-success';
+                                                            break;
+                                                        case 'expired':
+                                                            $stat_title = 'Expired';
+                                                            $btn_class = 'btn btn-default';
+                                                            break;
+                                                        case 'user':
+                                                        $stat_title = 'Considering';
+                                                        $btn_class = 'btn btn-default';
+                                                        break;
+                                                        
+                                                        default:
+                                                            $stat_title = $tra['transaksi_status'];
+                                                            $btn_class = 'btn btn-default';
+                                                            break;
+                                                    }
+                                                ?>
+                                                <tr>
+                                                    <td><?php echo $tra['transaksi_id']; ?></td>
+                                                    <td><span class="text-danger"><?php echo $jenis; ?></span></td>
+                                                    <td>
+                                                        <?php echo $tra['type_business_name']; ?> <br> 
+                                                        <div class="sub-description">Tenor : <?php echo $tra['Loan_term'].' '.$label_tenor; ?></div>
+                                                        <div class="sub-description">Jatuh Tempo : <?php echo $jatuhtempo; ?></div>
+                                                    </td>
+                                                    <td><?php echo number_format($tra['Amount']); ?></td>
+                                                    <td><?php echo number_format($tra['total_approve']); ?></td>
+                                                    <td>
+                                                        <a href="<?php echo $link_detail_approve; ?>" class="btn btn-action" title="Detil Transaksi">
+                                                            <i class="far fa-clipboard"></i>
+                                                        </a>
+                                                    </td>
+
+                                                    <?php if ($tra['transaksi_status'] == 'user' ) { ?>
+                                                    <td><a href="<?php echo $link_detail_approve; ?>" class="btn btn-green" title="Bayar">Approve</a></td>
+                                                    
+                                                    <?php }else{ ?>
+                                                    <td><div class="<?php echo $btn_class; ?>"> <?php echo $stat_title; ?> </div></td>
+                                                    
+                                                    <?php } ?>
+
+                                                </tr>
+                                                <?php }
+                                                }else{ ?>
+                                                <tr><td colspan="5" class="text-center"> <em>Tidak ada transaksi</em></td></tr>
+                                            <?php } ?>
+                                               
+                                            </tbody> 
+                                        </table> 
+                                    </div>
+                                </div>
+                            </div>
+                            <?php } ?>
+
                             <div class="panel panel-default">
                                 <div class="panel-body">
                                     <div class="sub-title">Transaksi Repayment</div>
@@ -174,6 +330,8 @@ if ($memberdata['mum_type'] == '1'){
                                                         $link_detail = site_url('transaksi/detail-pendana/?tid='.$tra['transaksi_id']);
                                                     }
 
+
+
                                                     switch ($tra['transaksi_status']) {
                                                         case 'pending':
                                                             $stat_title = 'Pending';
@@ -233,6 +391,7 @@ if ($memberdata['mum_type'] == '1'){
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
 
                                 <?php if ($logintype == '2') { ?>
@@ -266,6 +425,7 @@ if ($memberdata['mum_type'] == '1'){
                 </div>
             </div>
         </div>
+
     </div>
 </div>
 
@@ -295,7 +455,7 @@ if ($memberdata['mum_type'] == '1'){
                         </div>
                     </div>
                     <div class="row">
-                        <!-- <div class="col-sm-4">
+                        <div class="col-sm-4">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-kilat'); ?>" title="Daftar Pinjaman Kilat">
                                     <img src="assets/images/icon-register-1.png" class="img-responsive" alt="Daftar Pinjaman Kilat" title="Daftar Pinjaman Kilat" />
@@ -303,8 +463,8 @@ if ($memberdata['mum_type'] == '1'){
                             </div>
                             <a href="<?php echo site_url('register-pinjaman-kilat'); ?>">Daftar BKDana Kilat</a>
                             <p>Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!</p>
-                        </div> -->
-                        <div class="col-sm-6">
+                        </div>
+                        <div class="col-sm-4">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-mikro'); ?>" title="Daftar Pinjaman Mikro">
                                     <img src="assets/images/icon-register-2.png" class="img-responsive" alt="Daftar Pinjaman Mikro" title="Daftar Pinjaman Mikro" />
@@ -313,7 +473,7 @@ if ($memberdata['mum_type'] == '1'){
                             <a href="<?php echo site_url('register-pinjaman-mikro'); ?>">Daftar BKDana Mikro</a>
                             <p>Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!</p>
                         </div>
-                        <div class="col-sm-6">
+                        <div class="col-sm-4">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-agri'); ?>" title="Daftar Pinjaman Agri">
                                     <img src="<?php echo base_url(); ?>assets/images/icon-register-3.png" class="img-responsive" alt="Daftar Pinjaman Agri" title="Daftar Pinjaman Agri" />

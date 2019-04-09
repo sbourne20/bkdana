@@ -40,6 +40,8 @@ class Dashboard extends CI_Controller {
 
 		if ($logintype == '1') {
 			$data['list_transaksi']  = $this->Content_model->get_my_transactions_pinjam_approve($uid, 5, 0);
+			$data['analyst_approved']  = $this->Content_model->get_my_transactions_analyst_approved($uid, 5, 0);
+
 			$data['pinjaman_active'] = $this->Content_model->check_active_pinjaman($uid);
 			$data['pages']           = 'v_dashboard';
 		}else{
