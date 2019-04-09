@@ -310,7 +310,7 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 
 				if ($tipe_produk == '3' OR $tipe_produk == '4' OR $tipe_produk == '5') {
 					// pinjaman mikro
-					$affected = $this->Pinjaman_model->approval_pinjaman($id, $jml_pinjaman_disetujui, $date_fundraise, $total_angsuran_rp, $produk['Fundraising_period']);
+					$affected = $this->Pinjaman_model->approval_pinjaman_agri($id, $jml_pinjaman_disetujui, $date_fundraise, $total_angsuran_rp, $produk['Fundraising_period']);
 				}
 
 				if($affected){

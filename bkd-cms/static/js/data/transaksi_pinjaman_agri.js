@@ -38,7 +38,7 @@
                       var ret='<span class="label label-info">'+loan_status.ucfirst()+'</span>'; 
                     }else if (loan_status=='user') {
                       var ret='<span class="label label-info">User Approval</span>';
-                    else if (loan_status=='complete') {
+                    }else if (loan_status=='complete') {
                       var ret='<span class="label label-info">Telah didanai</span>';
                     }else{
                       var ret='<span class="label label-default">'+loan_status.ucfirst()+'</span>'; 

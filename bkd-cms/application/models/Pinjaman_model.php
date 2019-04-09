@@ -627,6 +627,23 @@ class Pinjaman_model extends CI_Model
 
 		$data = array(
 			'Jml_permohonan_pinjaman_disetujui' => $money,
+			'Master_loan_status'                => 'approve',
+			'date_fundraise'					=> $date_fundraise,
+			'fundraising_period'                => $period,
+			'Total_loan_outstanding'            => $pinjaman,
+			'tgl_pinjaman_disetujui'            => date('Y-m-d H:i:s')
+		);
+		$this->db->where('Master_loan_id', $ID);
+		$this->db->update($this->tabel_pinjaman, $data);
+		return $this->db->affected_rows();
+	}
+
+	function approval_pinjaman_agri($ID, $money, $date_fundraise, $pinjaman, $period)
+	{
+		$ID = $this->db->escape_str($ID);
+
+		$data = array(
+			'Jml_permohonan_pinjaman_disetujui' => $money,
 			'Master_loan_status'                => 'user',
 			'date_fundraise'					=> $date_fundraise,
 			'fundraising_period'                => $period,

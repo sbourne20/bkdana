@@ -32,7 +32,7 @@ class Cf_loan_model extends CI_Model
 		$sql = " SELECT SUM(Amount) as sum_amount, SUM(ltp_lender_fee) as sum_lender, SUM(ltp_admin_fee) as sum_admin, SUM(ltp_LO_fee) as sum_lo, SUM(ltp_frozen) as sum_frozen, x.sum_penalty
 					FROM profil_permohonan_pinjaman pp
 					JOIN mod_log_transaksi_pinjaman mltpin ON (mltpin.ltp_Master_loan_id=pp.Master_loan_id)
-					JOIN (SELECT Master_loan_id, SUM(denda) sum_penalty
+					JOIN (SELECT Master_loan_id, SUM(jml_denda) sum_penalty
 					FROM record_repayment
 					GROUP BY Master_loan_id
 					)x
