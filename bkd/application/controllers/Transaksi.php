@@ -367,6 +367,32 @@ class Transaksi extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 
+	function approve_agri()
+	{
+
+		if($_SERVER["REQUEST_METHOD"] == "POST")
+		{
+			$post = $this->input->post(NULL, TRUE);
+
+			$uid = htmlentities($_SESSION['_bkduser_']);
+
+			$transaksi_id   = trim($post['transaksi_id']);
+			$Master_status  = trim($post['Master_loan_status']);
+
+			$this->Content_model->update_approval_agri($Master_status, $transaksi_id);
+
+			$this->session->set_userdata('message','Sukses melakukan perubahan status.');
+			$this->session->set_userdata('message_type','success');
+
+
+			}else{
+				$this->session->set_userdata('message','error.');
+				$this->session->set_userdata('message_type','error');
+			}
+			redirect('dashboard');
+		}
+	
+
 	function submit_cicilan_kilat()
 	{
 		// ========= Bayar cicilan Kilat pakai Saldo ============= //

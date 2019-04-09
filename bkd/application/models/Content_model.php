@@ -871,6 +871,7 @@ class Content_model extends CI_Model
 
 		$this->db->set('Master_loan_status', 'complete');
 		$this->db->set('tgl_pinjaman_disetujui', $datetime);
+		$this->db->set('tgl_disburse', $datetime);
 		$this->db->where('Master_loan_id', $code);
 		$this->db->update($this->profil_permohonan_pinjaman);
 		return $this->db->affected_rows();
@@ -1645,6 +1646,14 @@ class Content_model extends CI_Model
 		$this->db->where('tgl_jatuh_tempo', $tempo);
 		$this->db->update($this->record_repayment);
 		return $this->db->affected_rows();
+	}
+
+	function update_approval_agri($status,$id)
+	{
+		$this->db->set('Master_loan_status', $status);
+		$this->db->where('Master_loan_id', $id);
+		$this->db->update($this->tabel_pinjaman);
+		return $this->db->affected_rows();	
 	}
 
 		function get_record_repayment_log($ordercode)

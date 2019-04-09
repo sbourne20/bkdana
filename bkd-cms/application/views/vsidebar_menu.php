@@ -96,6 +96,17 @@ $sub_menu    = $this->uri->segment(2);
                         <i class="fa fa-list-alt"></i> <span>Reporting</span>
                     </a>
                 </li>
+                <li>
+                    <a <?php echo ( ($active_menu=='loan_reporting')? 'class="active"' : ''); ?> href="<?= base_url('loan_reporting') ?>">
+                        <i class="fa fa-list-alt"></i> <span>Loan Reporting</span>
+                    </a>
+                </li>
+                <li>
+                    <a <?php echo ( ($active_menu=='cf_loan')? 'class="active"' : ''); ?> href="<?= base_url('cf_loan') ?>">
+                        <i class="fa fa-list-alt"></i> <span>CF Loan</span>
+                    </a>
+                </li>
+
               
                 <li>
                     <a <?php echo ( ($active_menu=='agent')? 'class="active"' : ''); ?> href="<?= base_url('agent') ?>">
