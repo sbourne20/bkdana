@@ -73,7 +73,7 @@ if ($login_status == 1)
     <div class="section-info">
         <div class="container">
             <div class="row">
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="description">
                         <h2>Perhatian</h2>
                             <ol>
@@ -119,7 +119,7 @@ if ($login_status == 1)
                             </ol>
                     </div>
                 </div>
-                <div class="col-sm-6">
+                <div class="col-sm-12">
                     <div class="description">
                             <br><br>
                             <p>PT Berkah Kelola Dana (“BKDana”) adalah perusahaan pendanaan yang terdaftar dan diawasi oleh OJK 
@@ -314,7 +314,7 @@ if (isset($_SESSION['message_type'])) {
 <script type="text/javascript" src="<?php echo base_url(); ?>assets/js/vendor.js"></script>
 
 <!--Start of Tawk.to Script-->
-<script type="text/javascript">
+<!-- <script type="text/javascript">
 	var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 	(function(){
 	var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
@@ -324,7 +324,7 @@ if (isset($_SESSION['message_type'])) {
 	s1.setAttribute('crossorigin','*');
 	s0.parentNode.insertBefore(s1,s0);
 	})();
-</script>
+</script> -->
 <!--End of Tawk.to Script-->
 </body>
 </html>
