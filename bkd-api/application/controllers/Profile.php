@@ -178,8 +178,8 @@ class Profile extends REST_Controller {
 						$indata_user['Jenis_kelamin']  = $gender;
 						$indata_user['Tanggal_lahir']  = $tgl_lahir;
 						$indata_user['Id_ktp']         = $nik;
-						//$indata_user['Pendidikan']     = $pendidikan;
-						//$indata_user['Pekerjaan']      = $pekerjaan;
+						$indata_user['Pendidikan']     = $pendidikan;
+						$indata_user['Pekerjaan']      = $pekerjaan;
 						$this->Content_model->update_user($uid, $indata_user);
 
 						$u_detail['Mobileno'] = $telp;

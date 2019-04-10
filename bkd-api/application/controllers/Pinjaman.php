@@ -432,6 +432,8 @@ class Pinjaman extends REST_Controller {
 				$uid = (int)antiInjection($token->id);
 				$logintype = (int)antiInjection($token->logtype);
 
+				$upload_limit = $this->config->item('file_upload_limit');
+
 				if (!empty($uid) && trim($uid) !='') {
 
 						$memberdata = $this->Member_model->get_member_byid_less($uid);
@@ -450,6 +452,19 @@ class Pinjaman extends REST_Controller {
 							$nowdatetime = date('Y-m-d H:i:s');
 
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
+
+								if ($_FILES['foto_file']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'File foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -463,6 +478,18 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
+
+								if ($_FILES['nik_file']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -476,6 +503,19 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['foto_surat_ket_kerja']['name']) && $_FILES['foto_surat_ket_kerja']['name'] != ''){
+								
+								if ($_FILES['foto_surat_ket_kerja']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'Foto Surat Keterangan Kerja maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_surat_ket_kerja']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -489,6 +529,18 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['foto_slip_gaji']['name']) && $_FILES['foto_slip_gaji']['name'] != ''){
+								if ($_FILES['foto_slip_gaji']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'Foto Slip Gaji maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_slip_gaji']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -502,6 +554,18 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['foto_pegang_idcard']['name']) && $_FILES['foto_pegang_idcard']['name'] != ''){
+								if ($_FILES['foto_pegang_idcard']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'Foto Pegang ID Card maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_pegang_idcard']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -877,6 +941,19 @@ class Pinjaman extends REST_Controller {
 						$this->Content_model->update_user($uid, $indata_user);
 
 						if( isset($_FILES['info_usaha_file']['name']) && $_FILES['info_usaha_file']['name'] != ''){
+							
+							if ($_FILES['info_usaha_file']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'Foto Usaha maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
+
 							// ----- Process Image Name -----
 							$img_info          = pathinfo($_FILES['info_usaha_file']['name']);
 							$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -993,12 +1070,24 @@ class Pinjaman extends REST_Controller {
 								$response['response'] = 'failed';
 			                    $response['status']   = REST_Controller::HTTP_BAD_REQUEST;
 			                    $response['content']  = '';
-			                    $response['message']  = 'Jumlah Pinjaman Maksimal Rp 5000,000';
+			                    $response['message']  = 'Jumlah Pinjaman Maksimal Rp '.number_format($produk['Max_loan']);
 			                    $this->set_response($response, REST_Controller::HTTP_BAD_REQUEST);
 			                    return;
 							}
 
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
+								if ($_FILES['foto_file']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'Foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1012,6 +1101,18 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
+								
+								if ($_FILES['nik_file']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1025,6 +1126,18 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['foto_usaha_file']['name']) && $_FILES['foto_usaha_file']['name'] != ''){
+								if ($_FILES['foto_usaha_file']['size'] > $upload_limit) {
+									$response = [
+					            		'response' => 'fail',
+						                'status'   => 400,
+						                'content'  => '',
+						                'message'  => 'Foto Usaha maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						            ];
+						    		$http_status = REST_Controller::HTTP_OK;
+						    		$this->set_response($response, REST_Controller::HTTP_OK);
+					                return;
+								}
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_usaha_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
