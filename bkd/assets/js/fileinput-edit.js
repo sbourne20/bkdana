@@ -15,8 +15,8 @@ $("#foto_file").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
-    showUpload: false
+    //maxFileSize: 1000,
+    FshowUpload: false
 });
 
 $("#ktp_file").fileinput({
@@ -25,7 +25,7 @@ $("#ktp_file").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 
@@ -35,7 +35,7 @@ $("#usaha_file").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 $("#usaha_file2").fileinput({
@@ -44,7 +44,7 @@ $("#usaha_file2").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 $("#usaha_file3").fileinput({
@@ -53,7 +53,7 @@ $("#usaha_file3").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 $("#usaha_file4").fileinput({
@@ -62,7 +62,7 @@ $("#usaha_file4").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 $("#usaha_file5").fileinput({
@@ -71,7 +71,7 @@ $("#usaha_file5").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 
@@ -81,7 +81,7 @@ $("#surat_keterangan_bekerja_file").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 
@@ -91,7 +91,7 @@ $("#slip_gaji_file").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 
@@ -101,7 +101,7 @@ $("#pegang_ktp_file").fileinput({
     removeClass: "btn btn-danger",
     //removeLabel: "Remove",
     //removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-    maxFileSize: 1000,
+    //maxFileSize: 1000,
     showUpload: false
 });
 

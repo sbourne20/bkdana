@@ -172,8 +172,10 @@ class Member extends CI_Controller {
 						$destination_pegang_ktp = $this->config->item('member_images_dir'). $userID."/pegang_ktp/";
 
 							if($post['foto_file_hidden']!=''){	
-								if (!is_file($destination_foto.$post['foto_file_hidden'])) {
+								if (!is_file($destination_foto)) {
 									mkdir_r($destination_foto);
+									//echo('no dir');
+									//exit();
 								}
 								if($post['old_foto']!=''){
 									if (is_file($destination_foto.$post['old_foto'])){
