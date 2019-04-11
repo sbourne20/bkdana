@@ -21,7 +21,8 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	//foto end
 	$config['data_dir']    = FCPATH . "../../../data-bkd/";
 	// $config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/bkdana/data-bkd/';
-	$config['attach_dir']  = FCPATH . '../../../data-file-bkd/';
+	// $config['attach_dir']  = FCPATH . '../../../data-file-bkd/';
+	$config['attach_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/bkdana/data-file-bkd/';
 
 }else{	// LIVE
 	$config['doc_root'] = "https://".$_SERVER['HTTP_HOST'];

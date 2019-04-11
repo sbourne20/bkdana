@@ -177,6 +177,10 @@ if ($memberdata['mum_type'] == '1'){
                                                             $stat_title = 'Pending';
                                                             $btn_class = 'btn btn-warning';
                                                             break;
+                                                         case 'akad':
+                                                            $stat_title = 'Proses Akad';
+                                                            $btn_class = 'btn btn-warning';
+                                                            break;
                                                         case 'approve':
                                                             $stat_title = 'Menunggu Pendanaan';
                                                             $btn_class = 'btn btn-warning';
@@ -337,6 +341,10 @@ if ($memberdata['mum_type'] == '1'){
                                                             $stat_title = 'Pending';
                                                             $btn_class = 'btn btn-warning';
                                                             break;
+                                                        case 'akad':
+                                                        $stat_title = 'Proses Akad';
+                                                        $btn_class = 'btn btn-warning';
+                                                        break;
                                                         case 'approve':
                                                             $stat_title = 'Menunggu Pendanaan';
                                                             $btn_class = 'btn btn-warning';
@@ -371,10 +379,13 @@ if ($memberdata['mum_type'] == '1'){
                                                             <i class="far fa-clipboard"></i>
                                                         </a>
                                                     </td>
-
+                                                    <?php
+                                                    $link_detail_akad = site_url('transaksi/akad/?tid='.$tra['transaksi_id']);
+                                                    ?>
                                                     <?php if ($tra['transaksi_status'] == 'complete' ) { ?>
                                                     <td><a href="<?php echo $link_detail; ?>" class="btn btn-green" title="Bayar">Bayar</a></td>
-                                                    
+                                                    <?php }else if($tra['transaksi_status'] == 'akad' ) { ?>
+                                                    <td><a href="<?php echo $link_detail_akad; ?>" class="btn btn-green" title="Bayar">Proses Akad</a></td>    
                                                     <?php }else{ ?>
                                                     <td><div class="<?php echo $btn_class; ?>"> <?php echo $stat_title; ?> </div></td>
                                                     

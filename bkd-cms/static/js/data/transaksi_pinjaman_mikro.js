@@ -38,6 +38,8 @@
                       var ret='<span class="label label-info">'+loan_status.ucfirst()+'</span>'; 
                     }else if (loan_status=='complete') {
                       var ret='<span class="label label-info">Telah didanai</span>';
+                    }else if (loan_status=='akad') {
+                      var ret='<span class="label label-info">Persetujuan Akad</span>';  
                     }else{
                       var ret='<span class="label label-default">'+loan_status.ucfirst()+'</span>'; 
                     }

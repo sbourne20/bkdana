@@ -25,7 +25,9 @@
                     }else if (loan_status=='review') {
                       var ret='<span class="label label-warning">'+loan_status.ucfirst()+'</span>';
                     }else if (loan_status=='complete') {
-                      var ret='<span class="label label-info">Telah didanai</span>'; 
+                      var ret='<span class="label label-info">Telah didanai</span>';
+                    }else if (loan_status=='akad') {
+                      var ret='<span class="label label-warning">'+loan_status.ucfirst()+'</span>'; 
                     }else{
                       var ret='<span class="label label-default">'+loan_status.ucfirst()+'</span>'; 
                     }

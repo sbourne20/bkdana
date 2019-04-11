@@ -395,74 +395,74 @@ class Daftar_peminjam extends CI_Controller {
 					{
 						$check_wallet_peminjam = $this->Wallet_model->get_wallet_bymember($mid_peminjam);
 
-						if ( is_array($check_wallet_peminjam) && count($check_wallet_peminjam)>0 )
-						{
-							// update saldo peminjam
-							$this->Wallet_model->update_master_wallet_saldo($ID_peminjam, $jmlpinjaman_disetujui);
-							$id_masterwallet_peminjam = $check_wallet_peminjam['Id'];
-						}else{
-							// insert saldo peminjam
-							$inmwallet['Date_create']      = $nowdate;
-							$inmwallet['User_id']          = $ID_peminjam;
-							$inmwallet['Amount']           = $jmlpinjaman_disetujui;
-							$inmwallet['wallet_member_id'] = $mid_peminjam;
+						// if ( is_array($check_wallet_peminjam) && count($check_wallet_peminjam)>0 )
+						// {
+						// 	// update saldo peminjam
+						// 	$this->Wallet_model->update_master_wallet_saldo($ID_peminjam, $jmlpinjaman_disetujui);
+						// 	$id_masterwallet_peminjam = $check_wallet_peminjam['Id'];
+						// }else{
+						// 	// insert saldo peminjam
+						// 	$inmwallet['Date_create']      = $nowdate;
+						// 	$inmwallet['User_id']          = $ID_peminjam;
+						// 	$inmwallet['Amount']           = $jmlpinjaman_disetujui;
+						// 	$inmwallet['wallet_member_id'] = $mid_peminjam;
 
-							$id_masterwallet_peminjam = $this->Wallet_model->insert_master_wallet($inmwallet);
-						}
+						// 	$id_masterwallet_peminjam = $this->Wallet_model->insert_master_wallet($inmwallet);
+						// }
 						//tambahan uang administrasi
 
 						// Insert Detail wallet peminjam
-						$dwp['Id']               = $id_masterwallet_peminjam;
-						$dwp['Date_transaction'] = $nowdatetime;
-						$dwp['Amount']           = $jmlpinjaman_disetujui;
-						$dwp['Notes']            = 'Pemberian dana pinjaman No.'.$tbl_penawaran['Master_loan_id'];
-						$dwp['tipe_dana']        = 1;
-						$dwp['User_id']          = $ID_peminjam;
-						$dwp['kode_transaksi']   = $tbl_penawaran['Master_loan_id'];
-						$dwp['balance']          = $check_wallet_peminjam['Amount'] + $dwp['Amount'];
-						$this->Wallet_model->insert_detail_wallet($dwp);
+						// $dwp['Id']               = $id_masterwallet_peminjam;
+						// $dwp['Date_transaction'] = $nowdatetime;
+						// $dwp['Amount']           = $jmlpinjaman_disetujui;
+						// $dwp['Notes']            = 'Pemberian dana pinjaman No.'.$tbl_penawaran['Master_loan_id'];
+						// $dwp['tipe_dana']        = 1;
+						// $dwp['User_id']          = $ID_peminjam;
+						// $dwp['kode_transaksi']   = $tbl_penawaran['Master_loan_id'];
+						// $dwp['balance']          = $check_wallet_peminjam['Amount'] + $dwp['Amount'];
+						// $this->Wallet_model->insert_detail_wallet($dwp);
 
-						$dwp2['Id']               = $id_masterwallet_peminjam;
-						$dwp2['Date_transaction'] = $nowdatetime;
-						$dwp2['Amount']           = $log_tran_pinjam['ltp_admin_fee'];
-						$dwp2['Notes']            = 'Pembayaran dana administrasi transaksi No.'.$tbl_penawaran['Master_loan_id'];
-						$dwp2['tipe_dana']        = 2;
-						$dwp2['User_id']          = $ID_peminjam;
-						$dwp2['kode_transaksi']   = $tbl_penawaran['Master_loan_id'];
-						$dwp2['balance']          = $check_wallet_peminjam['Amount'] + $dwp['Amount'];
-						$this->Wallet_model->insert_detail_wallet($dwp2);
+						// $dwp2['Id']               = $id_masterwallet_peminjam;
+						// $dwp2['Date_transaction'] = $nowdatetime;
+						// $dwp2['Amount']           = $log_tran_pinjam['ltp_admin_fee'];
+						// $dwp2['Notes']            = 'Pembayaran dana administrasi transaksi No.'.$tbl_penawaran['Master_loan_id'];
+						// $dwp2['tipe_dana']        = 2;
+						// $dwp2['User_id']          = $ID_peminjam;
+						// $dwp2['kode_transaksi']   = $tbl_penawaran['Master_loan_id'];
+						// $dwp2['balance']          = $check_wallet_peminjam['Amount'] + $dwp['Amount'];
+						// $this->Wallet_model->insert_detail_wallet($dwp2);
 
-						$check_wallet_bkd = $this->Wallet_model->get_wallet_bymember(269);
+						// $check_wallet_bkd = $this->Wallet_model->get_wallet_bymember(269);
 
-						$dwbkd['Id']               = 69;
-						$dwbkd['Date_transaction'] = $nowdatetime;
-						$dwbkd['Amount']           = $log_tran_pinjam['ltp_admin_fee'];
-						$dwbkd['Notes']            = 'Penerimaan dana administrasi transaksi No.'.$tbl_penawaran['Master_loan_id'];
-						$dwbkd['tipe_dana']        = 1;
-						$dwbkd['User_id']          = 269;
-						$dwbkd['kode_transaksi']   = $tbl_penawaran['Master_loan_id'];
-						$dwbkd['balance']          = $check_wallet_bkd['Amount'] + $log_tran_pinjam['ltp_admin_fee'];
-						$this->Wallet_model->insert_detail_wallet($dwbkd);
+						// $dwbkd['Id']               = 69;
+						// $dwbkd['Date_transaction'] = $nowdatetime;
+						// $dwbkd['Amount']           = $log_tran_pinjam['ltp_admin_fee'];
+						// $dwbkd['Notes']            = 'Penerimaan dana administrasi transaksi No.'.$tbl_penawaran['Master_loan_id'];
+						// $dwbkd['tipe_dana']        = 1;
+						// $dwbkd['User_id']          = 269;
+						// $dwbkd['kode_transaksi']   = $tbl_penawaran['Master_loan_id'];
+						// $dwbkd['balance']          = $check_wallet_bkd['Amount'] + $log_tran_pinjam['ltp_admin_fee'];
+						// $this->Wallet_model->insert_detail_wallet($dwbkd);
 
-						//tambahan 23 Januari 2019
-						$check_wallet_koperasi = $this->Wallet_model->get_wallet_bymember(5);
-						if($log_tran_pinjam['ltp_type_of_business_id'] == '3'){
-						$dwpkop['Id']               = 4;
-						$dwpkop['Date_transaction'] = $nowdatetime;
-						$dwpkop['Amount']           = $log_tran_pinjam['ltp_frozen'];
-						$dwpkop['Notes']            = 'Penerimaan dana frozen transaksi No.'.$tbl_penawaran['Master_loan_id'];
-						$dwpkop['tipe_dana']        = 1;
-						$dwpkop['User_id']          = 5;
-						$dwpkop['kode_transaksi']   = $tbl_penawaran['Master_loan_id'];
-						$dwpkop['balance']          = $check_wallet_koperasi['Amount'] + $log_tran_pinjam['ltp_frozen'];
-						$this->Wallet_model->insert_detail_wallet($dwpkop);
+						// //tambahan 23 Januari 2019
+						// $check_wallet_koperasi = $this->Wallet_model->get_wallet_bymember(5);
+						// if($log_tran_pinjam['ltp_type_of_business_id'] == '3'){
+						// $dwpkop['Id']               = 4;
+						// $dwpkop['Date_transaction'] = $nowdatetime;
+						// $dwpkop['Amount']           = $log_tran_pinjam['ltp_frozen'];
+						// $dwpkop['Notes']            = 'Penerimaan dana frozen transaksi No.'.$tbl_penawaran['Master_loan_id'];
+						// $dwpkop['tipe_dana']        = 1;
+						// $dwpkop['User_id']          = 5;
+						// $dwpkop['kode_transaksi']   = $tbl_penawaran['Master_loan_id'];
+						// $dwpkop['balance']          = $check_wallet_koperasi['Amount'] + $log_tran_pinjam['ltp_frozen'];
+						// $this->Wallet_model->insert_detail_wallet($dwpkop);
 
-						//update 24 Januari 2019
-						//$walletkop = $this->Wallet_model->get_wallet_bkd(5);
+						// //update 24 Januari 2019
+						// //$walletkop = $this->Wallet_model->get_wallet_bkd(5);
 
-						$upwalkop = $log_tran_pinjam['ltp_frozen'];
-						$this->Wallet_model->update_master_wallet_saldo(5,$upwalkop);	
-						}
+						// $upwalkop = $log_tran_pinjam['ltp_frozen'];
+						// $this->Wallet_model->update_master_wallet_saldo(5,$upwalkop);	
+						// }
 						//end of tambahan 23 Januari 2019
 						
 

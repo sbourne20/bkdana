@@ -10,6 +10,7 @@ class Transaksi extends CI_Controller {
 
 		$this->load->model('Member_model');
 		$this->load->model('Wallet_model');
+		$this->load->model('Content_model');
 
 		$this->load->library('pagination');
 
@@ -367,6 +368,158 @@ class Transaksi extends CI_Controller {
 		$this->load->view('template', $data);
 	}
 
+	function akad()
+	{
+		$data['top_css']   = '';
+		$data['top_js']    = '';
+		$data['bottom_js'] = '';
+
+		$data['top_css'] .= add_css('js/validationengine/validationEngine.jquery.css');
+		$data['top_css'] .= add_css('js/alertify/css/alertify.min.css');
+		$data['top_css'] .= add_css('js/alertify/css/themes/default.min.css');
+
+		$data['bottom_js'] .= add_js('js/jquery-loading-overlay/dist/loadingoverlay.min.js');
+		$data['bottom_js'] .= add_js('js/validationengine/languages/jquery.validationEngine-en.js');
+		$data['bottom_js'] .= add_js('js/validationengine/jquery.validationEngine.js');
+		$data['bottom_js'] .= add_js('js/alertify/alertify.min.js');
+		$data['bottom_js'] .= add_js('js/autoNumeric/autoNumeric.min.js');
+		$data['bottom_js'] .= add_js('js/autoNumeric-init.js');
+		$data['bottom_js'] .= add_js('js/dsn.js');
+		$data['bottom_js'] .= add_js('js/transaction.js');
+
+		$data['title'] = $this->M_settings->title;
+		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('bkdana.com', 'website bkdana.com');
+
+		$uid = htmlentities($_SESSION['_bkduser_']);
+		$logintype = htmlentities($_SESSION['_bkdtype_']); // 1.peminjam, 2.pendana
+		$data['logintype'] = $logintype;
+		$data['memberid']  = $uid;
+		$data['memberdata']     = $this->Member_model->get_member_byid($uid);
+		$data['total_saldo']    = $this->Content_model->get_total_saldo($uid);
+
+		$ID = antiInjection($this->input->get('tid', TRUE)); // transaksi id
+
+		$log_transaksi_pinjam     = $this->Content_model->get_log_transaksi_pinjam($ID);
+		$transaksi                = $this->Content_model->get_transaksi_pinjam_byid($ID); // pinjaman
+
+		$produk					  = $this->Content_model->get_my_denda($ID);
+	
+		$pinjaman				  = $this->Content_model->get_jml_kredit($ID);
+		//batas tambahan baru
+		//tambahan baru repayment
+		$repayment1			      = $this->Content_model->get_record_repayment1($ID);
+		//$data['repayment1']			   = $this->Content_model->get_record_repayment1($ID);
+		//batas tambahan baru repayment
+		
+		$data['detail_transaksi'] = $this->Content_model->get_detail_pinjam_byid($ID); // cicilan
+		$data['transaksi']        = $transaksi;
+		$data['log_pinjaman']     = $log_transaksi_pinjam;
+
+		$total_bayar = $transaksi['Jml_permohonan_pinjaman_disetujui'];
+		$data['total_bayar'] = $total_bayar;
+		$data['jatuh_tempo'] = '-';
+		//$data['jatuh_tempo1'] = date('d/m/Y', strtotime($log_transaksi_pinjam['ltp_tgl_jatuh_tempo']));
+		$data['jatuh_tempo1'] = $log_transaksi_pinjam['ltp_tgl_jatuh_tempo'];
+		//$data['jatuh_tempo3'] = $log_transaksi_pinjam['ltp_tgl_jatuh_tempo'];
+		$tgl = $repayment1['tgl_jatuh_tempo'];
+
+		if ($transaksi['type_of_business_id'] == '1')
+		{
+			//echo ' Pinjaman Kilat';
+			
+			$data['jml_cicilan'] = $log_transaksi_pinjam['ltp_jml_angsuran'];
+			
+/*			//tambahan baru denda keterlambatan
+			if($produk['charge_type']=='1'){
+
+			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
+			}else if($produk['charge_type']=='2'){
+			$data['denda']= ($produk['charge']);
+			}
+			//batas tambahan baru*/
+
+			$data['pages']    = 'v_detail_transaksi_akad';
+
+			if ( $transaksi['Master_loan_status'] == 'complete' || $transaksi['Master_loan_status'] == 'lunas') {
+				$data['jatuh_tempo'] = date('d/m/Y', strtotime($log_transaksi_pinjam['ltp_tgl_jatuh_tempo']));
+			}
+
+		}else if ($transaksi['type_of_business_id'] == '5'){
+
+			//echo 'Pinjaman Agri';
+			
+			$data['jml_cicilan']   = $log_transaksi_pinjam['ltp_jml_angsuran'];
+			$data['lama_angsuran'] = $log_transaksi_pinjam['ltp_lama_angsuran']; // berapa minggu
+			//tambahan baru repayment
+			$data['jumlah_cicilan']   = $repayment1['jumlah_cicilan'];
+			$data['jumlah_denda']     = $repayment1['jml_denda'];
+			//batas tambahan baru repayment
+
+
+			//tambahan baru repayment
+			$data['repayment']			   = $this->Content_model->get_record_repayment($ID);
+			$data['record_repayment_log']  = $this->Content_model->get_record_repayment_log($ID);
+			$data['repaymentdenda']		   = $this->Content_model->get_record_repaymentdenda($ID);
+			//$data['repayment1']			   = $this->Content_model->get_record_repayment1($ID);
+			//batas tambahan baru repayment
+
+			/*//tambahan baru denda keterlambatan
+			if($produk['charge_type']=='1'){
+
+			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
+			}else if($produk['charge_type']=='2'){
+			$data['denda']= ($produk['charge']);
+			}
+			//batas tambahan baru*/
+
+			$data['pages']         = 'v_detail_transaksi_akad';
+
+			if ($transaksi['Master_loan_status'] == 'complete' || $transaksi['Master_loan_status'] == 'lunas') {
+				//$data['jatuh_tempo'] = date('d/m/Y', strtotime("+3 months", strtotime($transaksi['tgl_pinjaman_disetujui'])));
+				$total_tenor = (int)$transaksi['Loan_term'];
+				$data['jatuh_tempo'] = date('d/m/Y', strtotime("+".$total_tenor." months", strtotime($transaksi['tgl_pinjaman_disetujui'])));
+			}
+
+
+		}else{
+			//echo 'Pinjaman Mikro';
+			
+			$data['jml_cicilan']   = $log_transaksi_pinjam['ltp_jml_angsuran'];
+			$data['lama_angsuran'] = $log_transaksi_pinjam['ltp_lama_angsuran']; // berapa minggu
+			//tambahan baru repayment
+			$data['jumlah_cicilan']   = $repayment1['jumlah_cicilan'];
+			$data['jumlah_denda']     = $repayment1['jml_denda'];
+			//batas tambahan baru repayment
+
+
+			//tambahan baru repayment
+			$data['repayment']			   = $this->Content_model->get_record_repayment($ID);
+			$data['record_repayment_log']  = $this->Content_model->get_record_repayment_log($ID);
+			$data['repaymentdenda']		   = $this->Content_model->get_record_repaymentdenda($ID);
+			//$data['repayment1']			   = $this->Content_model->get_record_repayment1($ID);
+			//batas tambahan baru repayment
+
+			/*//tambahan baru denda keterlambatan
+			if($produk['charge_type']=='1'){
+
+			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
+			}else if($produk['charge_type']=='2'){
+			$data['denda']= ($produk['charge']);
+			}
+			//batas tambahan baru*/
+
+			$data['pages']         = 'v_detail_transaksi_akad';
+
+			if ($transaksi['Master_loan_status'] == 'complete' || $transaksi['Master_loan_status'] == 'lunas') {
+				//$data['jatuh_tempo'] = date('d/m/Y', strtotime("+3 months", strtotime($transaksi['tgl_pinjaman_disetujui'])));
+				$total_tenor = (int)$transaksi['Loan_term'];
+				$data['jatuh_tempo'] = date('d/m/Y', strtotime("+".$total_tenor." months", strtotime($transaksi['tgl_pinjaman_disetujui'])));
+			}
+		}
+
+		$this->load->view('template', $data);
+	}
+
 	function approve_agri()
 	{
 
@@ -391,6 +544,106 @@ class Transaksi extends CI_Controller {
 			}
 			redirect('dashboard');
 		}
+
+		function approve_akad()
+	{
+
+		if($_SERVER["REQUEST_METHOD"] == "POST")
+		{
+			$post = $this->input->post(NULL, TRUE);
+
+			$uid = htmlentities($_SESSION['_bkduser_']);
+
+			$transaksi_id   = trim($post['transaksi_id']);
+			$id_peminjam 	= trim($post['id_peminjam']);
+			$Master_status  = trim($post['Master_loan_status']);
+			$jmlpinjaman_disetujui = trim($post['jmlpinjaman_disetujui']);
+			$nowdatetime = date('Y-m-d H:i:s');
+			$log_tran_pinjam = $this->Content_model->get_log_transaksi_pinjam($transaksi_id);
+			$updating = $this->Content_model->update_approval_agri($Master_status, $transaksi_id);
+
+
+
+			if($updating){
+				$check_wallet_peminjam = $this->Wallet_model->get_wallet_bymember($id_peminjam);
+
+						if ( is_array($check_wallet_peminjam) && count($check_wallet_peminjam)>0 )
+						{
+							// update saldo peminjam
+							$this->Wallet_model->update_master_wallet_saldo($id_peminjam, $jmlpinjaman_disetujui);
+							$id_masterwallet_peminjam = $check_wallet_peminjam['Id'];
+						}else{
+							// insert saldo peminjam
+							$inmwallet['Date_create']      = $nowdate;
+							$inmwallet['User_id']          = $id_peminjam;
+							$inmwallet['Amount']           = $jmlpinjaman_disetujui;
+							$inmwallet['wallet_member_id'] = $id_peminjam;
+
+							$id_masterwallet_peminjam = $this->Wallet_model->insert_master_wallet($inmwallet);
+						}
+						
+						$dwp['Id']               = $id_masterwallet_peminjam;
+						$dwp['Date_transaction'] = $nowdatetime;
+						$dwp['Amount']           = $jmlpinjaman_disetujui;
+						$dwp['Notes']            = 'Pemberian dana pinjaman No.'.$transaksi_id;
+						$dwp['tipe_dana']        = 1;
+						$dwp['User_id']          = $id_peminjam;
+						$dwp['kode_transaksi']   = $transaksi_id;
+						$dwp['balance']          = $check_wallet_peminjam['Amount'] + $dwp['Amount'];
+						$this->Wallet_model->insert_detail_wallet($dwp);
+
+						$dwp2['Id']               = $id_masterwallet_peminjam;
+						$dwp2['Date_transaction'] = $nowdatetime;
+						$dwp2['Amount']           = $log_tran_pinjam['ltp_admin_fee'];
+						$dwp2['Notes']            = 'Pembayaran dana administrasi transaksi No.'.$ttransaksi_id;
+						$dwp2['tipe_dana']        = 2;
+						$dwp2['User_id']          = $id_peminjam;
+						$dwp2['kode_transaksi']   = $transaksi_id;
+						$dwp2['balance']          = $check_wallet_peminjam['Amount'] + $dwp['Amount'];
+						$this->Wallet_model->insert_detail_wallet($dwp2);
+
+						$check_wallet_bkd = $this->Wallet_model->get_wallet_bymember(269);
+
+						$dwbkd['Id']               = 69;
+						$dwbkd['Date_transaction'] = $nowdatetime;
+						$dwbkd['Amount']           = $log_tran_pinjam['ltp_admin_fee'];
+						$dwbkd['Notes']            = 'Penerimaan dana administrasi transaksi No.'.$transaksi_id;
+						$dwbkd['tipe_dana']        = 1;
+						$dwbkd['User_id']          = 269;
+						$dwbkd['kode_transaksi']   = $transaksi_id;
+						$dwbkd['balance']          = $check_wallet_bkd['Amount'] + $log_tran_pinjam['ltp_admin_fee'];
+						$this->Wallet_model->insert_detail_wallet($dwbkd);
+
+						//tambahan 23 Januari 2019
+						$check_wallet_koperasi = $this->Wallet_model->get_wallet_bymember(5);
+						if($log_tran_pinjam['ltp_type_of_business_id'] == '3'){
+						$dwpkop['Id']               = 4;
+						$dwpkop['Date_transaction'] = $nowdatetime;
+						$dwpkop['Amount']           = $log_tran_pinjam['ltp_frozen'];
+						$dwpkop['Notes']            = 'Penerimaan dana frozen transaksi No.'.$transaksi_id;
+						$dwpkop['tipe_dana']        = 1;
+						$dwpkop['User_id']          = 5;
+						$dwpkop['kode_transaksi']   = $transaksi_id;
+						$dwpkop['balance']          = $check_wallet_koperasi['Amount'] + $log_tran_pinjam['ltp_frozen'];
+						$this->Wallet_model->insert_detail_wallet($dwpkop);
+
+						$upwalkop = $log_tran_pinjam['ltp_frozen'];
+						$this->Wallet_model->update_master_wallet_saldo(5,$upwalkop);	
+						}
+
+						$memberpinjam = $this->Content_model->get_pinjaman_member($transaksi_id);
+
+						$upwalbkd = $log_tran_pinjam['ltp_admin_fee'];
+						$this->Wallet_model->update_master_wallet_saldo(269, $upwalbkd);
+
+
+			}else{
+				$this->session->set_userdata('message','error.');
+				$this->session->set_userdata('message_type','error');
+			}
+			redirect('dashboard');
+		}
+	}
 	
 
 	function submit_cicilan_kilat()
