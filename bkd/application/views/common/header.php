@@ -24,7 +24,6 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,500,600%7CRaleway:400,600%7CWork+Sans:400,500%7CVarela+Round">
 
     <!-- Stylesheet -->
-    <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
     <link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/responsive.css">
 
     <?php /*
@@ -34,7 +33,10 @@
     */?>
     
     <?php echo $top_css; ?>
-    <?php echo $top_js; ?>
+	<?php echo $top_js; ?>
+	
+	<!-- Stylesheet -->
+	<link rel="stylesheet" href="<?php echo base_url(); ?>assets/css/style.css">
 
     <script type="text/javascript">
     var BASEURL = "<?php echo base_url(); ?>";

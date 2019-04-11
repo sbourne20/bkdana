@@ -217,8 +217,8 @@ if ($login_status == 1)
                                     <img src="<?php echo base_url(); ?>assets/images/icon-register-2.png" class="img-responsive" alt="Daftar Pinjaman Mikro" title="Daftar Pinjaman Mikro" />
                                 </a>
                             </div>
-                            <a href="<?php echo site_url('register-pinjaman-mikro'); ?>">Daftar BKDana Mikro</a>
-                            <p>Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!</p>
+                            <a href="<?php echo site_url('register-pinjaman-mikro'); ?>">Daftar BKDana Mikro*</a>
+                            <p>Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Pinjaman sampai dengan 50 juta!</p>
                         </div>
                         <div class="col-sm-6">
                             <div class="img-wrapp">
@@ -226,10 +226,13 @@ if ($login_status == 1)
                                     <img src="<?php echo base_url(); ?>assets/images/icon-register-3.png" class="img-responsive" alt="Daftar Pinjaman Agri" title="Daftar Pinjaman Agri" />
                                 </a>
                             </div>
-                            <a href="<?php echo site_url('register-pinjaman-agri'); ?>">Daftar BKDana Agri</a>
-                            <p>Pinjaman Agri merupakan solusi bagi Petani. Platform maksimal sampai dengan 100 juta!</p>
+                            <a href="<?php echo site_url('register-pinjaman-agri'); ?>">Daftar BKDana Agri*</a>
+                            <p>Pinjaman Agri merupakan solusi bagi Petani. Pinjaman sampai dengan 100 juta!</p>
                         </div>
                     </div>
+					<div class="row">
+						<small>* Untuk sementara ini kami hanya dapat melayani peminjam yang berafiliasi langsung dengan partner kami.</small>
+					</div>
                 </div>
             </div>
         </div>

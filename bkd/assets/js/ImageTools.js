@@ -122,8 +122,6 @@ function resample_single(canvas, width, height, resize_canvas) {
     ctx.putImageData(img2, 0, 0);
 }
 
-
-
 var ImageTools = (function () {
     function ImageTools() {
         _classCallCheck(this, ImageTools);
@@ -175,27 +173,72 @@ var ImageTools = (function () {
                     isTooLarge = true;
                 }
 
-                if (!isTooLarge) {
-                    // early exit; no need to resize
-                    callback(file, false);
-                    return;
-                }
-
                 var canvas = document.createElement('canvas');
-                canvas.width = width;
+				canvas.width = width;
                 canvas.height = height;
 
-                var ctx = canvas.getContext('2d');
-                ctx.drawImage(image, 0, 0, width, height);
+				var ctx = canvas.getContext('2d');
 
-                if (hasToBlobSupport) {
-                    canvas.toBlob(function (blob) {
-                        callback(blob, true);
-                    }, file.type);
-                } else {
-                    var blob = ImageTools._toBlob(canvas, file.type);
-                    callback(blob, true);
-                }
+				// START EXIF fix
+				var exifOrientation = '';
+
+				// Use EXIF library to handle the loaded image exif orientation
+				EXIF.getData(image, function() {
+					// Check orientation in EXIF metadatas
+					EXIF.getData(image, function() {
+						var allMetaData = EXIF.getAllTags(this);
+						exifOrientation = allMetaData.Orientation;
+						console.log('Exif orientation: ' + exifOrientation);
+					});
+			
+					// set proper canvas dimensions before transform & export
+					if (jQuery.inArray(exifOrientation, [5, 6, 7, 8]) > -1) {
+						canvas.width = height;
+						canvas.height = width;
+					} else {
+						canvas.width = width;
+						canvas.height = height;
+					}
+			
+					// transform context before drawing image
+					switch (exifOrientation) {
+						case 2:
+							ctx.transform(-1, 0, 0, 1, width, 0);
+							break;
+						case 3:
+							ctx.transform(-1, 0, 0, -1, width, height);
+							break;
+						case 4:
+							ctx.transform(1, 0, 0, -1, 0, height);
+							break;
+						case 5:
+							ctx.transform(0, 1, 1, 0, 0, 0);
+							break;
+						case 6:
+							ctx.transform(0, 1, -1, 0, height, 0);
+							break;
+						case 7:
+							ctx.transform(0, -1, -1, 0, height, width);
+							break;
+						case 8:
+							ctx.transform(0, -1, 1, 0, 0, width);
+							break;
+						default:
+							ctx.transform(1, 0, 0, 1, 0, 0);
+					}
+
+					ctx.drawImage(image, 0, 0, width, height);
+
+					if (hasToBlobSupport) {
+						canvas.toBlob(function (blob) {
+							callback(blob, true);
+						}, file.type);
+					} else {
+						var blob = ImageTools._toBlob(canvas, file.type);
+						callback(blob, true);
+					}
+				});
+
             };
             ImageTools._loadImage(image, file);
 

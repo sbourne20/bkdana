@@ -56,14 +56,15 @@ class Member extends CI_Controller {
 		$data['bottom_js'] .= add_js('js/jqueryvalidation/dist/jquery.validate.min.js');
 		$data['bottom_js'] .= add_js('js/autoNumeric/autoNumeric.min.js');
 		$data['bottom_js'] .= add_js('js/alertify/alertify.min.js');
+		$data['bottom_js'] .= add_js("js/fileinput/plugins/piexif.min.js");
 		$data['bottom_js'] .= add_js("js/fileinput/fileinput.min.js");
 		$data['bottom_js'] .= add_js('js/validation-init.js');
 		$data['bottom_js'] .= add_js('js/autoNumeric-init.js');
 		$data['bottom_js'] .= add_js('js/date-init.js');
 		$data['bottom_js'] .= add_js('js/fileinput-edit.js');
 		$data['bottom_js'] .= add_js('js/dsn.js');
+		$data['bottom_js'] .= add_js('js/exif-js-master/exif.js');
 		$data['bottom_js'] .= add_js('js/ImageTools.js');
-
 
 		$data['title'] = $this->M_settings->title;
 		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('bkdana.com', 'website bkdana.com');
