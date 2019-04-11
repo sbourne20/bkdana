@@ -202,8 +202,10 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
             </div>
         </div>
 <?php 
+
 $approval_update = site_url('approval-akad');
 $nowdate = date('d-m-Y');
+$day=date('Y-m-d');
 ?>
 
 <!-- Modal bayar -->
@@ -223,7 +225,7 @@ $nowdate = date('d-m-Y');
                     
                     <div class="row">
                         <div class="col-sm-12">
-                            <p align="justify">Perjanjian ini dibuat pada hari [---] tanggal [---] antara: </br>
+                            <p align="justify">Perjanjian ini dibuat pada hari <?php echo hari_ini()?> tanggal <?php echo tgl_indo($day); ?> antara: </br>
 
 PT Berkah Kelola Dana, suatu perseroan terbatas yang didirikan berdasarkan akta nomor 11 pada tanggal 12 Oktober 2017 beralamat di Jalan Guntur No. 45 RT.13/RW.5, Kel. Pasar Manggis, Kec. Setia Budi, Jakarta Selatan sebagai Penyelenggara, bertindak atas nama Pemberi Pinjaman. Dalam hal ini diwakilkan oleh Eindrata Tanukusuma selaku Head of Marketing PT. Berkah Kelola Dana berdasarkan surat kuasa direksi nomor [---]. </br>
 
@@ -354,3 +356,66 @@ Adanya pembayaran tersebut tidak mengurangi hak BK Dana untuk melakukan tindakan
         </div>
     </div>
 </div>
+
+<?php 
+function tgl_indo($tanggal){
+    $bulan = array (
+        1 =>'Januari',
+        'Februari',
+        'Maret',
+        'April',
+        'Mei',
+        'Juni',
+        'Juli',
+        'Agustus',
+        'September',
+        'Oktober',
+        'November',
+        'Desember'
+    );
+    $pecahkan = explode('-', $tanggal);
+ 
+    return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+}
+
+function hari_ini(){
+    $hari = date ("D");
+ 
+    switch($hari){
+        case 'Sun':
+            $hari_ini = "Minggu";
+        break;
+ 
+        case 'Mon':         
+            $hari_ini = "Senin";
+        break;
+ 
+        case 'Tue':
+            $hari_ini = "Selasa";
+        break;
+ 
+        case 'Wed':
+            $hari_ini = "Rabu";
+        break;
+ 
+        case 'Thu':
+            $hari_ini = "Kamis";
+        break;
+ 
+        case 'Fri':
+            $hari_ini = "Jumat";
+        break;
+ 
+        case 'Sat':
+            $hari_ini = "Sabtu";
+        break;
+        
+        default:
+            $hari_ini = "Tidak di ketahui";     
+        break;
+    }
+ 
+    return  $hari_ini;
+ 
+}
+?>

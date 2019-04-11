@@ -564,7 +564,7 @@ class Transaksi extends CI_Controller {
 
 
 
-			if($updating){
+			if ($updating){
 				$check_wallet_peminjam = $this->Wallet_model->get_wallet_bymember($id_peminjam);
 
 						if ( is_array($check_wallet_peminjam) && count($check_wallet_peminjam)>0 )
@@ -574,7 +574,7 @@ class Transaksi extends CI_Controller {
 							$id_masterwallet_peminjam = $check_wallet_peminjam['Id'];
 						}else{
 							// insert saldo peminjam
-							$inmwallet['Date_create']      = $nowdate;
+							$inmwallet['Date_create']      = $nowdatetime;
 							$inmwallet['User_id']          = $id_peminjam;
 							$inmwallet['Amount']           = $jmlpinjaman_disetujui;
 							$inmwallet['wallet_member_id'] = $id_peminjam;
