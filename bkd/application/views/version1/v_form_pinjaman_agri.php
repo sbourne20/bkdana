@@ -27,7 +27,7 @@
                         <div class="alert alert-danger"><img src="<?php echo base_url(); ?>assets/images/error_icon.png" style="width:25px;top: -1px;position: relative;margin-right: 5px;"> <?php echo $message_show; ?></div>
                         <?php } ?>
 
-                        <form id="form-pinj-agri"  class="form-validation" enctype="multipart/form-data" method="POST">
+                        <form id="form-pinj-agri" name="form_name1" class="form-validation" enctype="multipart/form-data" method="POST">
                             <div class="form-group">
                                 <label for="handphone">* Jumlah Pinjaman (Rp)</label>
                                 <input type="text" class="form-control numeric" name="jumlah_pinjam" id="jumlah_pinjam" data-validation-engine="validate[required]" data-errormessage-value-missing="Isi jumlah pinjaman Anda!">
@@ -44,13 +44,15 @@
                             </div> 
                             <div class="form-group">
                                 <label for="handphone">* Upload CF</label>
-                                <input type="file" name="cf_file" id="cf_file" accept="image/*" capture>
+                                <input type="file" id="cf_file" accept="image/*" capture onchange='onFileUpload()'>
+                                <input type="hidden" class="input_file_hidden" name="cf_file_hidden" id="cf_file_hidden"/>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
                             </div>
                             <div class="form-group">
                                 <label for="handphone">* Upload Progress Report</label>
-                                <input type="file" name="progress_report_file" id="progress_report_file" accept="image/*" capture>
+                                <input type="file" id="progress_report_file" accept="image/*" capture onchange='onFileUpload()'>
                                 <p class="help-block">* maksimum size 5 MB dengan jpg, png, gif</p>
+                                <input type="hidden" class="input_file_hidden" name="progress_report_file_hidden" id="progress_report_file_hidden"/>
                             </div>
                             <!-- <div class="form-group">
                                 <label for="handphone">* Upload hasil Panen 1</label>
@@ -87,3 +89,31 @@
 
     </div>
 </div>
+
+<script type="text/javascript">
+
+window.onFileUpload = function() {
+    var file = event.target.files[0];
+    var el = event.target;
+    var parent = el.parentNode.parentNode.parentNode.parentNode.parentNode;
+    var hiddenInput = parent.getElementsByClassName('input_file_hidden')[0];
+    console.log(parent);
+    ImageTools.resize(file, {
+        width: 1024, // maximum width
+        height: 800 // maximum height
+    }, function(blob, didItResize) {
+        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+         
+        var reader = new FileReader();
+        reader.readAsDataURL(blob); 
+        reader.onloadend = function() {
+            base64data = reader.result;
+            hiddenInput.value = base64data;                
+            console.log(base64data);
+        }
+        // you can also now upload this blob using an XHR.
+    });
+};
+
+</script>
+

@@ -370,6 +370,8 @@ class Pinjaman_model extends CI_Model
 		$sql_where 		= '';
 		$cols 			= array( "pinjam_primary_id", "Master_loan_id", "Tgl_permohonan_pinjaman", "Nama_pengguna", "product_title", "Jml_permohonan_pinjaman", "Jml_permohonan_pinjaman_disetujui", "Master_loan_status", "");
 		$sort 			= "desc";
+
+
 		
 		// get search value (if any)
 		if (isset($_GET['sSearch']) && $_GET['sSearch'] != "" ) {
@@ -624,6 +626,8 @@ class Pinjaman_model extends CI_Model
 	function approval_pinjaman($ID, $money, $date_fundraise, $pinjaman, $period)
 	{
 		$ID = $this->db->escape_str($ID);
+	/*	echo $id;
+		exit();*/
 
 		$data = array(
 			'Jml_permohonan_pinjaman_disetujui' => $money,

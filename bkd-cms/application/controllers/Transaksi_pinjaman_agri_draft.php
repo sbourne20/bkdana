@@ -20,22 +20,22 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 	{
 		$this->User_model->has_login();
 
-		$output['PAGE_TITLE'] = 'Pinjaman Mikro';
+		$output['PAGE_TITLE'] = 'Pinjaman Agri';
 
 		$mainData['top_css']   = '';
 		$mainData['top_js']    = '';
 		$mainData['bottom_js'] = '';
-		$mainData['bottom_js'] .= add_js('js/data/transaksi_pinjaman_mikro_draft.js');
+		$mainData['bottom_js'] .= add_js('js/data/transaksi_pinjaman_agri_draft.js');
 		$mainData['bottom_js'] .= add_js('js/global.js');
 
-		$mainData['mainContent']  = $this->load->view('loan/vmikro_list', $output, true);
+		$mainData['mainContent']  = $this->load->view('loan/vagri_list', $output, true);
 
 		$this->load->view('vbase',$mainData);
 	}
 
 	function json()
 	{			
-		$data = $this->Pinjaman_model->get_all_mikro_draft();
+		$data = $this->Pinjaman_model->get_all_agri_draft();
 		print_r($data);
 	}
 
@@ -47,7 +47,7 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 		$output['data'] = $this->Pinjaman_model->get_loan_byid($id);
 
 		header('Content-type: image/jpeg');
-		$this->load->view('loan/vdetail_mikro', $output);		
+		$this->load->view('loan/vdetail_agri', $output);		
 		}
 	}
 
@@ -79,7 +79,7 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 
 			//_d($output['EDIT']);
 			
-			$mainData['mainContent'] = $this->load->view('loan/vpinjaman_mikro_form', $output, TRUE);
+			$mainData['mainContent'] = $this->load->view('loan/vpinjaman_agri_form', $output, TRUE);
 			$this->load->view('vbase',$mainData);
 		}
 	}
@@ -211,7 +211,7 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 				$date_fundraise = date('Y-m-d', strtotime('+ '.$fundraise.' days'));
 				// -------- End of hitung total fundraise date (tgl maximum pendanaan) ------
 
-				if ($tipe_produk == '3' OR $tipe_produk == '4') {
+				if ($tipe_produk == '3' OR $tipe_produk == '4' OR $tipe_produk == '5') {
 					// pinjaman mikro
 					$affected = $this->Pinjaman_model->draft_pinjaman($id, $jml_pinjaman_disetujui, $date_fundraise, $total_angsuran_rp, $produk['Fundraising_period']);
 				}
@@ -257,7 +257,7 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 			}
 		}
 		
-		redirect('transaksi-pinjaman-mikro-draft');
+		redirect('transaksi-pinjaman-agri-draft');
 	}
 
 	function detail_transaksi()
@@ -273,14 +273,14 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 			$mainData['top_css']   = '';
 			$mainData['top_js']    = '';
 			$mainData['bottom_js'] = '';
-			$mainData['bottom_js'] .= add_js('js/data/transaksi_pinjaman_mikro.js');
+			$mainData['bottom_js'] .= add_js('js/data/transaksi_pinjaman_agri.js');
 			$mainData['bottom_js'] .= add_js('js/global.js');
 
 			$output['EDIT'] = $this->Log_transaksi_model->get_log_transaksi_pinjam($id);
 
 			//_d($output['EDIT']);
 
-			$mainData['mainContent']  = $this->load->view('loan/vpinjaman_detail_mikro', $output, true);
+			$mainData['mainContent']  = $this->load->view('loan/vpinjaman_detail_agri', $output, true);
 
 			$this->load->view('vbase',$mainData);
 		}
@@ -371,6 +371,6 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 				$this->session->set_userdata('message_type','warning');
 			}
 		}		
-		redirect('transaksi_pinjaman_mikro');
+		redirect('transaksi_pinjaman_agri');
 	}
 }

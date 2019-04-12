@@ -174,8 +174,6 @@ class Member extends CI_Controller {
 							if($post['foto_file_hidden']!=''){	
 								if (!is_file($destination_foto)) {
 									mkdir_r($destination_foto);
-									//echo('no dir');
-									//exit();
 								}
 								if($post['old_foto']!=''){
 									if (is_file($destination_foto.$post['old_foto'])){
@@ -221,7 +219,7 @@ class Member extends CI_Controller {
 						}*/
 
 						if($post['ktp_file_hidden']!=''){
-								if (!is_file($destination_ktp.$post['ktp_file_hidden'])) {
+								if (!is_file($destination_ktp)) {
 									mkdir_r($destination_ktp);
 								}	
 								if($post['old_ktp']!=''){
@@ -269,7 +267,7 @@ class Member extends CI_Controller {
 						if ($memberdata['mum_type_peminjam']=='2'){//tambahan baru pengkondisian
 
 							if($post['usaha_file_hidden']!=''){	
-								if (!is_file($destination_usaha.$post['usaha_file_hidden'])) {
+								if (!is_file($destination_usaha)) {
 									mkdir_r($destination_usaha);
 								}	
 								if($post['old_usaha']!=''){
@@ -317,7 +315,7 @@ class Member extends CI_Controller {
 
 
 							if($post['usaha_file2_hidden']!=''){
-								if (!is_file($destination_usaha2.$post['usaha_file2_hidden'])) {
+								if (!is_file($destination_usaha2)) {
 									mkdir_r($destination_usaha2);
 								}	
 								if($post['old_usaha2']!=''){
@@ -365,7 +363,7 @@ class Member extends CI_Controller {
 							}*/
 
 							if($post['usaha_file3_hidden']!=''){	
-								if (!is_file($destination_usaha3.$post['usaha_file3_hidden'])) {
+								if (!is_file($destination_usaha3)) {
 									mkdir_r($destination_usaha3);
 								}
 								if($post['old_usaha3']!=''){
@@ -412,7 +410,7 @@ class Member extends CI_Controller {
 							}*/
 
 							if($post['usaha_file4_hidden']!=''){
-								if (!is_file($destination_usah4a.$post['usaha_file4_hidden'])) {
+								if (!is_file($destination_usah4a)) {
 									mkdir_r($destination_usaha4);
 								}	
 								if($post['old_usaha4']!=''){
@@ -459,7 +457,7 @@ class Member extends CI_Controller {
 							}*/
 
 							if($post['usaha_file5_hidden']!=''){	
-								if (!is_file($destination_usaha5.$post['usaha_file5_hidden'])) {
+								if (!is_file($destination_usaha5)) {
 									mkdir_r($destination_usaha5);
 								}
 								if($post['old_usaha5']!=''){
@@ -510,7 +508,7 @@ class Member extends CI_Controller {
 						if ($memberdata['mum_type_peminjam']=='1'){
 
 							if($post['surat_keterangan_bekerja_file_hidden']!=''){
-								if (!is_file($destination_surat_keterangan_bekerja.$post['surat_keterangan_bekerja_file_hidden'])) {
+								if (!is_file($destination_surat_keterangan_bekerja)) {
 									mkdir_r($destination_surat_keterangan_bekerja);
 								}	
 								if($post['old_surat_keterangan_bekerja']!=''){
@@ -556,7 +554,7 @@ class Member extends CI_Controller {
 
 
 							if($post['slip_gaji_file_hidden']!=''){	
-								if (!is_file($destination_slip_gaji.$post['slip_gaji_file_hidden'])) {
+								if (!is_file($destination_slip_gaji)) {
 									mkdir_r($destination_slip_gaji);
 								}
 								if($post['old_slip_gaji']!=''){
@@ -602,7 +600,7 @@ class Member extends CI_Controller {
 
 
 							if($post['pegang_ktp_file_hidden']!=''){
-								if (!is_file($destination_pegang_ktp.$post['pegang_ktp_file_hidden'])) {
+								if (!is_file($destination_pegang_ktp)) {
 									mkdir_r($destination_pegang_ktp);
 								}	
 								if($post['old_pegang_ktp']!=''){
@@ -668,7 +666,7 @@ class Member extends CI_Controller {
 							// }
 
 							if($post['pegang_ktp_file_hidden']!=''){
-								if (!is_file($destination_pegang_ktp.$post['pegang_ktp_file_hidden'])) {
+								if (!is_file($destination_pegang_ktp)) {
 									mkdir_r($destination_pegang_ktp);
 								}	
 								if($post['old_pegang_ktp']!=''){
@@ -925,6 +923,10 @@ class Member extends CI_Controller {
 						$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
 						$u_geo['Kota']        = antiInjection(trim($post['kota']));
 						$u_geo['Provinsi']    = antiInjection(trim($post['provinsi']));
+						$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamatdomisili']));
+						$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodeposdomisili']));
+						$u_geo['Kota_Domisili']        = antiInjection(trim($post['kotadomisili']));
+						$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsidomisili']));
 
 						$this->Content_model->update_profil_geografi($userID, $u_geo);
 
