@@ -12,8 +12,8 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	$config['images_member_uri'] = $config['doc_root'] ."images-data/member/";
 
 }else{	// LIVE
-	$config['data_dir']    = FCPATH . "../../../data-bkd/";
-	$config['attach_dir']  = FCPATH . "../../../data-file-bkd/";
+	$config['data_dir']    = FCPATH . "../../data-bkd/";
+	$config['attach_dir']  = FCPATH . "../../data-file-bkd/";
 	$config['img_baseurl'] = $ishttp ."://".$_SERVER['HTTP_HOST'] .'/';
 	$config['images_member_uri']    = "https://bkdana.id/images-data/member/";
 }

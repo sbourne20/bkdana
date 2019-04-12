@@ -119,7 +119,7 @@ class Input_otp extends CI_Controller {
 
 				// no telp terverifikasi sama dengan yang sudah didaftarkan
 				if(strcmp($member['mum_telp'],$phone) == 0){
-					$this->Member_model->activate_by_member_id($member['id_mod_user_member'],99); // update status ke 99 apabila nomor telepon sudah terverifikasi
+					$this->Member_model->activate_member_byid($member['id_mod_user_member'],99); // update status ke 99 apabila nomor telepon sudah terverifikasi
 					redirect('otp-login');
 				}
 				// kalu no telp terverifikasi tidak sama

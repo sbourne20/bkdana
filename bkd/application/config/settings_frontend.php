@@ -33,8 +33,8 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	
 	//foto end
 
-	$config['data_dir']    = FCPATH . "../../../data-bkd/";
-	$config['attach_dir']  = FCPATH . '../../../data-file-bkd/';
+	$config['data_dir']    = FCPATH . "../../data-bkd/";
+	$config['attach_dir']  = FCPATH . '../../data-file-bkd/';
 }
 
 // upload path
