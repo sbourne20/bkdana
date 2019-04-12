@@ -141,16 +141,17 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                                 <option value="wanita" <?php echo ($memberdata['Jenis_kelamin']=='wanita')? 'selected="selected"' : ''; ?>>Wanita</option>
                                             </select>
                                         </div>
+                                        <!-- <div class="fata-geografi" style="background-color:grey; opacity: 10;" > -->
                                         <div class="form-group">
-                                            <label for="handphone">* Alamat</label>
+                                            <label for="handphone">* Alamat sesuai dengan KTP</label>
                                             <input type="text" class="form-control" name="alamat" id="alamat" value="<?php echo $memberdata['Alamat']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Alamat harus diisi!" >
                                         </div>
                                         <div class="form-group">
-                                            <label for="handphone">* Kota</label>
+                                            <label for="handphone">* Kota sesuai dengan KTP</label>
                                             <input type="text" class="form-control" name="kota" id="kota" value="<?php echo $memberdata['Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
                                         </div>  
                                         <div class="form-group">
-                                            <label for="handphone">* Provinsi</label>
+                                            <label for="handphone">* Provinsi sesuai dengan KTP</label>
                                             <select class="form-control" name="provinsi" id="provinsi" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
                                                 <option value=""> -- Pilih -- </option>
                                                 <option value="Aceh" <?php echo ($memberdata['Provinsi']=='Aceh')? 'selected="selected"' : ''; ?>>Aceh</option>
@@ -190,9 +191,83 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             </select>
                                         </div>  
                                         <div class="form-group">
-                                            <label for="handphone">* Kode Pos</label>
+                                            <label for="handphone">* Kode Pos </label>
                                             <input type="text" class="form-control" name="kodepos" id="kodepos" value="<?php echo $memberdata['Kodepos']; ?>" >
                                         </div>
+                                   <!--  </div> -->
+
+                                         <?php if ($memberdata['mum_type_peminjam']=='3') { ?>
+                                                <!--  ALAMAT DOMISILI -->
+
+                                        <div class="form-group">
+                                              <label><input type="checkbox" id="checkdomisili" onclick='myFunction()'> Alamat Domisili sesuai dengan KTP</label>
+                                        </div>
+                                        <div class="form-group">
+                                            <div id="hiddendomisili">
+                                                <label for="handphone">* Alamat Domisili</label>
+                                                <input type="text" class="form-control" name="alamatdomisili" id="alamatdomisili" value="<?php echo $memberdata['Alamat_Domisili'];  ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Alamat Domisili harus diisi!" >
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div id="hiddendomisili2">
+                                                <label for="handphone">* Kota Domisili</label>
+                                                <input type="text" class="form-control" name="kotadomisili" id="kotadomisili" value="<?php echo $memberdata['Kota_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
+                                            </div>
+                                        </div>  
+                                        <div class="form-group">
+                                            <div id="hiddendomisili3">
+                                                <label for="handphone">* Provinsi Domisili</label>
+                                                <select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
+                                                    <option value=""> -- Pilih -- </option>
+                                                    <option value="Aceh" <?php echo ($memberdata['Provinsi_Domisili']=='Aceh')? 'selected="selected"' : ''; ?>>Aceh</option>
+                                                    <option value="Bali" <?php echo ($memberdata['Provinsi_Domisili']=='Bali')? 'selected="selected"' : ''; ?>>Bali</option>
+                                                    <option value="Banten" <?php echo ($memberdata['Provinsi_Domisili']=='Banten')? 'selected="selected"' : ''; ?>>Banten</option>
+                                                    <option value="Bengkulu" <?php echo ($memberdata['Provinsi_Domisili']=='Bengkulu')? 'selected="selected"' : ''; ?>>Bengkulu</option>
+                                                    <option value="DI Yogyakarta" <?php echo ($memberdata['Provinsi_Domisili']=='DI Yogyakarta')? 'selected="selected"' : ''; ?>>DI Yogyakarta</option>
+                                                    <option value="DKI Jakarta" <?php echo ($memberdata['Provinsi_Domisili']=='DKI Jakarta')? 'selected="selected"' : ''; ?>>DKI Jakarta</option>
+                                                    <option value="Gorontalo" <?php echo ($memberdata['Provinsi_Domisili']=='Gorontalo')? 'selected="selected"' : ''; ?>>Gorontalo</option>
+                                                    <option value="Jambi" <?php echo ($memberdata['Provinsi_Domisili']=='Jambi')? 'selected="selected"' : ''; ?>>Jambi</option>
+                                                    <option value="Jawa Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Barat')? 'selected="selected"' : ''; ?>>Jawa Barat</option>
+                                                    <option value="Jawa Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Tengah')? 'selected="selected"' : ''; ?>>Jawa Tengah</option>
+                                                    <option value="Jawa Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Timur')? 'selected="selected"' : ''; ?>>Jawa Timur</option>
+                                                    <option value="Kalimantan Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Barat')? 'selected="selected"' : ''; ?>>Kalimantan Barat</option>
+                                                    <option value="Kalimantan Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Selatan')? 'selected="selected"' : ''; ?>>Kalimantan Selatan</option>
+                                                    <option value="Kalimantan Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Tengah')? 'selected="selected"' : ''; ?>>Kalimantan Tengah</option>
+                                                    <option value="Kalimantan Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Timur')? 'selected="selected"' : ''; ?>>Kalimantan Timur</option>
+                                                    <option value="Kalimantan Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Utara')? 'selected="selected"' : ''; ?>>Kalimantan Utara</option>
+                                                    <option value="Kepulauan Bangka Belitung" <?php echo ($memberdata['Provinsi_Domisili']=='Kepulauan Bangka Belitung')? 'selected="selected"' : ''; ?>>Kepulauan Bangka Belitung</option>
+                                                    <option value="Kepulauan Riau" <?php echo ($memberdata['Provinsi_Domisili']=='Kepulauan Riau')? 'selected="selected"' : ''; ?>>Kepulauan Riau</option>
+                                                    <option value="Lampung" <?php echo ($memberdata['Provinsi_Domisili']=='Lampung')? 'selected="selected"' : ''; ?>>Lampung</option>
+                                                    <option value="Maluku" <?php echo ($memberdata['Provinsi_Domisili']=='Maluku')? 'selected="selected"' : ''; ?>>Maluku</option>
+                                                    <option value="Maluku Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Maluku Utara')? 'selected="selected"' : ''; ?>>Maluku Utara</option>
+                                                    <option value="Nusa Tenggara Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Nusa Tenggara Barat')? 'selected="selected"' : ''; ?>>Nusa Tenggara Barat</option>
+                                                    <option value="Nusa Tenggara Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Nusa Tenggara Timur')? 'selected="selected"' : ''; ?>>Nusa Tenggara Timur</option>
+                                                    <option value="Papua" <?php echo ($memberdata['Provinsi_Domisili']=='Papua')? 'selected="selected"' : ''; ?>>Papua</option>
+                                                    <option value="Papua Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Papua Barat')? 'selected="selected"' : ''; ?>>Papua Barat</option>
+                                                    <option value="Riau" <?php echo ($memberdata['Provinsi_Domisili']=='Riau')? 'selected="selected"' : ''; ?>>Riau</option>
+                                                    <option value="Sulawesi Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Barat')? 'selected="selected"' : ''; ?>>Sulawesi Barat</option>
+                                                    <option value="Sulawesi Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Selatan')? 'selected="selected"' : ''; ?>>Sulawesi Selatan</option>
+                                                    <option value="Sulawesi Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Tengah')? 'selected="selected"' : ''; ?>>Sulawesi Tengah</option>
+                                                    <option value="Sulawesi Tenggara" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Tenggara')? 'selected="selected"' : ''; ?>>Sulawesi Tenggara</option>
+                                                    <option value="Sulawesi Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Utara')? 'selected="selected"' : ''; ?>>Sulawesi Utara</option>
+                                                    <option value="Sumatera Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Barat')? 'selected="selected"' : ''; ?>>Sumatera Barat</option>
+                                                    <option value="Sumatera Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Selatan')? 'selected="selected"' : ''; ?>>Sumatera Selatan</option>
+                                                    <option value="Sumatera Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Utara')? 'selected="selected"' : ''; ?>>Sumatera Utara</option>
+                                                </select>
+                                            </div>
+                                        </div>  
+                                        <div class="form-group">
+                                            <div id="hiddendomisili4" >
+                                                <label for="handphone">* Kode Pos Domisili</label>
+                                                <input type="text" class="form-control" name="kodeposdomisili" id="kodeposdomisili" value="<?php echo $memberdata['Kodepos_Domisili']; ?>" >
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                                <!-- BATAS ALAMAT DOMISILI -->
+                                        <?php } ?>
+
+
                                         <div class="form-group">
                                             <label for="handphone">* Pekerjaan</label>
                                             <select class="form-control" name="pekerjaan" id="pekerjaan" data-validation-engine="validate[required]" data-errormessage-value-missing="Pekerjaan harus diisi!" >
@@ -208,7 +283,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             <label>* Upload Foto Diri / Selfie </label>        
                                                 <input type="file" id="foto_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_profil; ?>" >
                                                 <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
-                                                <input type="hidden" class="input_file_hidden" id="foto_file_hidden" name="foto_file_hidden"/>      
+                                                <input type="hidden" class="input_file_hidden" id="foto_file_hidden" name="foto_file_hidden"/>                   
                                         </div>
                                         <div class="form-group">
                                             <label for="handphone">* Nomor KTP</label>
@@ -559,23 +634,56 @@ if ($memberdata['foto_pegang_ktp'] != '')
     </div>
 </div>
 <script type="text/javascript">
-	window.onFileUpload = function() {
-		var file = event.target.files[0];
-		var el = event.target;
-		var parent = el.parentNode.parentNode.parentNode.parentNode.parentNode;
-		var hiddenInput = parent.getElementsByClassName('input_file_hidden')[0];
-		ImageTools.resize(file, {
-			width: 1024, // maximum width
-			height: 800 // maximum height
-		}, function(blob, didItResize) {
-			// didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
-			var reader = new FileReader();
-			reader.readAsDataURL(blob); 
-			reader.onloadend = function() {
-				base64data = reader.result;
-				hiddenInput.value = base64data;
-			}
-			// you can also now upload this blob using an XHR.
-		});
-	};
+
+window.onFileUpload = function() {
+    var file = event.target.files[0];
+    var el = event.target;
+    var parent = el.parentNode.parentNode.parentNode.parentNode.parentNode;
+    var hiddenInput = parent.getElementsByClassName('input_file_hidden')[0];
+    console.log(parent);
+    ImageTools.resize(file, {
+        width: 1024, // maximum width
+        height: 800 // maximum height
+    }, function(blob, didItResize) {
+        // didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+         
+        var reader = new FileReader();
+        reader.readAsDataURL(blob); 
+        reader.onloadend = function() {
+            base64data = reader.result;
+            hiddenInput.value = base64data;                
+            console.log(base64data);
+        }
+        // you can also now upload this blob using an XHR.
+    });
+};
+
+
+
+</script>
+<script>
+
+function myFunction() {
+  // Get the checkbox
+  var checkBox = document.getElementById("checkdomisili");
+  // Get the output text
+  var text  = document.getElementById("hiddendomisili");
+  var text2 = document.getElementById("hiddendomisili2");
+  var text3 = document.getElementById("hiddendomisili3");
+  var text4 = document.getElementById("hiddendomisili4");
+
+  // If the checkbox is checked, display the output text
+  if (checkBox.checked == true){
+    text.style.display  = "block";
+    text2.style.display = "block";
+    text3.style.display = "block";
+    text4.style.display = "block";
+  } else {
+    text.style.display  = "none";
+    text2.style.display = "none";
+    text3.style.display = "none";
+    text4.style.display = "none";
+  }
+}
+
 </script>

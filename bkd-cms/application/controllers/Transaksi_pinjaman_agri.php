@@ -308,10 +308,19 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$date_fundraise = date('Y-m-d', strtotime('+ '.$fundraise.' days'));
 				// -------- End of hitung total fundraise date (tgl maximum pendanaan) ------
 
+				/*echo $id.' | ';
+				echo $jml_pinjaman_disetujui.' | ';
+				echo $date_fundraise.' | '; 
+				echo $total_angsuran_rp.' | ';  
+				echo $produk['Fundraising_period'];
+				exit();*/
+
 				if ($tipe_produk == '3' OR $tipe_produk == '4' OR $tipe_produk == '5') {
 					// pinjaman mikro
-					$affected = $this->Pinjaman_model->approval_pinjaman_agri($id, $jml_pinjaman_disetujui, $date_fundraise, $total_angsuran_rp, $produk['Fundraising_period']);
+					$affected = $this->Pinjaman_model->approval_pinjaman($id, $jml_pinjaman_disetujui, $date_fundraise, '0', $produk['Fundraising_period']);
 				}
+				//print_r($affected);
+					//exit();
 
 				if($affected){
 
@@ -556,7 +565,7 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$this->session->set_userdata('message_type','warning');
 			}
 		}		
-		redirect('transaksi_pinjaman_mikro');
+		redirect('transaksi_pinjaman_agri');
 	}
 
 	function send_mail_reject($loan_data)
