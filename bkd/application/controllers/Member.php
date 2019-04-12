@@ -923,10 +923,18 @@ class Member extends CI_Controller {
 						$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
 						$u_geo['Kota']        = antiInjection(trim($post['kota']));
 						$u_geo['Provinsi']    = antiInjection(trim($post['provinsi']));
-						$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamatdomisili']));
-						$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodeposdomisili']));
-						$u_geo['Kota_Domisili']        = antiInjection(trim($post['kotadomisili']));
-						$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsidomisili']));
+						$u_geo['Check_Domisili']	   = antiInjection(trim($post['checkdomisili']));
+						if (antiInjection(trim($post['checkdomisili']))=='1'){
+							$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamat']));
+							$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodepos']));
+							$u_geo['Kota_Domisili']        = antiInjection(trim($post['kota']));
+							$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsi']));
+						}else{
+							$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamatdomisili']));
+							$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodeposdomisili']));
+							$u_geo['Kota_Domisili']        = antiInjection(trim($post['kotadomisili']));
+							$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsidomisili']));
+						}		
 
 						$this->Content_model->update_profil_geografi($userID, $u_geo);
 

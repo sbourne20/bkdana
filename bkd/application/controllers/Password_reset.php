@@ -263,6 +263,31 @@ class Password_reset extends CI_Controller {
 				redirect('page-reset-password/?link='.$encrypted_data);
 				exit();
 			}
+			else if(preg_match("/^.*(?=.{6,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$/", $newpassword) === 0) {
+					$this->session->set_userdata('message_reset','Password harus terdiri dari huruf dan angka, serta minimal 1 huruf besar');
+					redirect('page-reset-password/?link='.$encrypted_data);
+					exit();
+				}
+
+			//echo $newpassword;
+			//echo $confirmpassword;
+			//exit();
+			// $a = preg_match("/^.*(?=.{6,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$/", $newpassword);
+
+			// echo $a;
+			// exit();
+
+
+			//  if ($a === 0){
+			// echo $a.'|';
+			//  echo 'sukses';
+			//  exit();
+
+			//  }else{
+			//  	echo 'failed';
+			//  	exit();
+
+			//  }
 
 			if (antiInjection($newpassword) == antiInjection($confirmpassword) && strlen($newpassword) >= 6 && $encrypted_data !='' ) {
 				
