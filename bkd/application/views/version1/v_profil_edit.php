@@ -644,21 +644,20 @@ if ($memberdata['foto_pegang_ktp'] != '')
 window.onFileUpload = function() {
 	var file = event.target.files[0];
 	var el = event.target;
-	var parent = el.parentNode.parentNode.parentNode.parentNode.parentNode;
+	var parent = el.parentNode.parentNode.parentNode;
 	var hiddenInput = parent.getElementsByClassName('input_file_hidden')[0];
 	console.log(parent);
+
 	ImageTools.resize(file, {
 		width: 1024, // maximum width
 		height: 800 // maximum height
 	}, function(blob, didItResize) {
 		// didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
-		 
 		var reader = new FileReader();
 		reader.readAsDataURL(blob); 
 		reader.onloadend = function() {
 			base64data = reader.result;
 			hiddenInput.value = base64data;                
-			console.log(base64data);
 		}
 		// you can also now upload this blob using an XHR.
 	});
