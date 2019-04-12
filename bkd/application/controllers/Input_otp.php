@@ -29,7 +29,6 @@ class Input_otp extends CI_Controller {
 			{
 				$member = $this->Member_model->get_member_by($email);
 				
-
 				if ($member['mum_status'] !='0')
 				{
 					redirect('login'); exit();
@@ -38,7 +37,6 @@ class Input_otp extends CI_Controller {
 				$data['top_css']   = '';
 				$data['top_js']    = '';
 				$data['bottom_js'] = '';
-
 
 				$data['top_css'] .= add_css('js/validationengine/validationEngine.jquery.css');
 				
@@ -69,5 +67,69 @@ class Input_otp extends CI_Controller {
 				$this->session->set_userdata('message_type','error');
 				redirect('home');
 			}
+	}
+
+	// Method to send Get request to url
+	private function doCurl($url) {
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$data = json_decode(curl_exec($ch), true);
+		curl_close($ch);
+		return $data;
+	}
+
+	function otp_login_success(){
+		$email = (isset($_SESSION['_bkd_otp_']))? antiInjection($_SESSION['_bkd_otp_']) : '';
+
+		if (trim($email) != '')
+		{
+			$member = $this->Member_model->get_member_by($email);
+
+			if ($member['mum_status'] !='0')
+			{
+				redirect('login'); exit();
+			}
+
+			if(isset($_POST['code']))
+			{
+				// Initialize variables
+				$app_id = $this->config->item('fb_app_id');
+				$secret = $this->config->item('fb_kit_secret');
+				$version = 'v1.1';
+
+				// Exchange authorization code for access token
+				$token_exchange_url = 'https://graph.accountkit.com/'.$version.'/access_token?'.
+					'grant_type=authorization_code'.
+					'&code='.$_POST['code'].
+					"&access_token=AA|$app_id|$secret";
+				$data = $this->doCurl($token_exchange_url);
+				$user_id = $data['id'];
+				$user_access_token = $data['access_token'];
+				$refresh_interval = $data['token_refresh_interval_sec'];
+
+				$appsecret_proof = hash_hmac('sha256', $user_access_token, $secret); 
+				
+				// Get Account Kit information
+				$me_endpoint_url = 'https://graph.accountkit.com/'.$version.'/me?'.
+					'access_token='.$user_access_token.'&appsecret_proof='.$appsecret_proof;
+				$data = $this->doCurl($me_endpoint_url);
+				$phone = isset($data['phone']) ? $data['phone']['number'] : '';
+				$email = isset($data['email']) ? $data['email']['address'] : '';
+
+				// no telp terverifikasi sama dengan yang sudah didaftarkan
+				if(strcmp($member['mum_telp'],$phone) == 0){
+					$this->Member_model->activate_by_member_id($member['id_mod_user_member'],99); // update status ke 99 apabila nomor telepon sudah terverifikasi
+					redirect('otp-login');
+				}
+				// kalu no telp terverifikasi tidak sama
+				else{
+					$this->session->set_userdata('message_login','Nomor handphone yang terverifikasi tidak sama');
+					redirect('input-otp');
+					exit();
+				}
+			}
+		}
+			
 	}
 }
