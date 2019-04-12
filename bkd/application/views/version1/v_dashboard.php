@@ -177,6 +177,10 @@ if ($memberdata['mum_type'] == '1'){
                                                             $stat_title = 'Pending';
                                                             $btn_class = 'btn btn-warning';
                                                             break;
+                                                         case 'akad':
+                                                            $stat_title = 'Proses Akad';
+                                                            $btn_class = 'btn btn-warning';
+                                                            break;
                                                         case 'approve':
                                                             $stat_title = 'Menunggu Pendanaan';
                                                             $btn_class = 'btn btn-warning';
@@ -337,6 +341,10 @@ if ($memberdata['mum_type'] == '1'){
                                                             $stat_title = 'Pending';
                                                             $btn_class = 'btn btn-warning';
                                                             break;
+                                                        case 'akad':
+                                                        $stat_title = 'Proses Akad';
+                                                        $btn_class = 'btn btn-warning';
+                                                        break;
                                                         case 'approve':
                                                             $stat_title = 'Menunggu Pendanaan';
                                                             $btn_class = 'btn btn-warning';
@@ -371,10 +379,13 @@ if ($memberdata['mum_type'] == '1'){
                                                             <i class="far fa-clipboard"></i>
                                                         </a>
                                                     </td>
-
+                                                    <?php
+                                                    $link_detail_akad = site_url('transaksi/akad/?tid='.$tra['transaksi_id']);
+                                                    ?>
                                                     <?php if ($tra['transaksi_status'] == 'complete' ) { ?>
                                                     <td><a href="<?php echo $link_detail; ?>" class="btn btn-green" title="Bayar">Bayar</a></td>
-                                                    
+                                                    <?php }else if($tra['transaksi_status'] == 'akad' ) { ?>
+                                                    <td><a href="<?php echo $link_detail_akad; ?>" class="btn btn-green" title="Bayar">Proses Akad</a></td>    
                                                     <?php }else{ ?>
                                                     <td><div class="<?php echo $btn_class; ?>"> <?php echo $stat_title; ?> </div></td>
                                                     
@@ -446,8 +457,7 @@ if ($memberdata['mum_type'] == '1'){
                         </div>
                     </div>
                 
-                <?php }else{ 
-                    ?>
+                <?php }else{ ?>
 
                 <div class="section-register">    
                     <div class="row">
@@ -465,8 +475,7 @@ if ($memberdata['mum_type'] == '1'){
                             <a href="<?php echo site_url('register-pinjaman-kilat'); ?>">Daftar BKDana Kilat</a>
                             <p>Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!</p>
                         </div> -->
-                        <?php if($memberdata['mum_type_peminjam'] == '2'){?>
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-mikro'); ?>" title="Daftar Pinjaman Mikro">
                                     <img src="assets/images/icon-register-2.png" class="img-responsive" alt="Daftar Pinjaman Mikro" title="Daftar Pinjaman Mikro" />
@@ -475,10 +484,7 @@ if ($memberdata['mum_type'] == '1'){
                             <a href="<?php echo site_url('register-pinjaman-mikro'); ?>">Daftar BKDana Mikro</a>
                             <p>Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!</p>
                         </div>
-                        <?php
-                        }else if($memberdata['mum_type_peminjam'] == '3'){
-                        ?>
-                        <div class="col-sm-12">
+                        <div class="col-sm-6">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-agri'); ?>" title="Daftar Pinjaman Agri">
                                     <img src="<?php echo base_url(); ?>assets/images/icon-register-3.png" class="img-responsive" alt="Daftar Pinjaman Agri" title="Daftar Pinjaman Agri" />
@@ -487,7 +493,6 @@ if ($memberdata['mum_type'] == '1'){
                             <a href="<?php echo site_url('register-pinjaman-agri'); ?>">Daftar BKDana Agri</a>
                             <p>Pinjaman Agri merupakan solusi bagi Petani. Platform maksimal sampai dengan 100 juta!</p>
                         </div>
-                        <?php } ?>
                     </div>
                 </div>
                 <?php } ?>

@@ -325,7 +325,6 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				if($affected){
 
 					// Log Transaksi Pinjaman
-					
 					$inlog['ltp_total_pinjaman_disetujui'] = $jml_pinjaman_disetujui;
 					$inlog['ltp_admin_fee']                = $admin_fee;
 					$inlog['ltp_bunga_pinjaman']           = $bunga;

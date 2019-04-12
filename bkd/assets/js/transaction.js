@@ -42,6 +42,20 @@ $(document).ready(function(){
 		 return false;
 	});
 
+	$('#approve_akad').click(function(e) {
+		 e.preventDefault();
+		 alertify.confirm('Konfirmasi', 'Anda akan menyetujui persetujuan Akad . Lanjutkan?  ', 
+		 	function(){ 
+		 		$.LoadingOverlay("show");
+		 		$('#approve_akad').prop('disabled', true).addClass('btn btn-default');
+			 	$( "#form_akad" ).submit(); 
+			 }, 
+			 function(){ 
+			 	$('#modalAkad').modal('hide');
+			 });
+		 return false;
+	});
+
 
 	$('#submit_topup').click(function(e) {
 		 e.preventDefault();

@@ -151,3 +151,4 @@ $route['detail-profil-peminjam'] = 'rekening_koran/detail_profil_peminjam';
 $route['fileload'] = 'file_loader/file';
 
 $route['approval-agri'] = 'transaksi/approve_agri';
+$route['approval-akad'] = 'transaksi/approve_akad';

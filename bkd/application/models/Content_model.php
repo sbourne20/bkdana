@@ -470,7 +470,7 @@ class Content_model extends CI_Model
 			LEFT JOIN {$this->mod_type_business} tb ON(tb.id_mod_type_business=prod.type_of_business_id)
 			WHERE (tb.id_mod_type_business='1' OR tb.id_mod_type_business='3' OR tb.id_mod_type_business='5')
 			AND p.pinjam_member_id='{$uid}'
-			AND (p.Master_loan_status = 'approve' OR p.Master_loan_status = 'complete')
+			AND (p.Master_loan_status = 'approve' OR p.Master_loan_status = 'complete' OR p.Master_loan_status = 'akad')
 			ORDER BY tgl_permohonan_pinjaman DESC
 			LIMIT {$start}, {$limit}
 		";
@@ -726,6 +726,7 @@ class Content_model extends CI_Model
 			What_is_the_name_of_your_business, 
 			How_many_years_have_you_been_in_business, 
 			Kota, 
+			Id_ktp,
 			p.Master_loan_id, 
 			p.Master_loan_id as transaksi_id, 
 			Jml_permohonan_pinjaman, 
@@ -869,7 +870,7 @@ class Content_model extends CI_Model
 	{
 		$datetime = date('Y-m-d H:i:s');
 
-		$this->db->set('Master_loan_status', 'complete');
+		$this->db->set('Master_loan_status', 'akad');
 		$this->db->set('tgl_pinjaman_disetujui', $datetime);
 		$this->db->set('tgl_disburse', $datetime);
 		$this->db->where('Master_loan_id', $code);
