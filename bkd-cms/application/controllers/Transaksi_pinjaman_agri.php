@@ -555,7 +555,7 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$this->session->set_userdata('message_type','warning');
 			}
 		}		
-		redirect('transaksi_pinjaman_mikro');
+		redirect('transaksi_pinjaman_agri');
 	}
 
 	function send_mail_reject($loan_data)

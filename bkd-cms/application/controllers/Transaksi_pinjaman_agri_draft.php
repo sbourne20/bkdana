@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Transaksi_pinjaman_mikro_draft extends CI_Controller {
+class Transaksi_pinjaman_agri_draft extends CI_Controller {
 
 	function __construct()
 	{
@@ -116,7 +116,7 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 				$this->session->set_userdata('message_type','error');
 			}
 
-			redirect('transaksi-pinjaman-mikro-draft');
+			redirect('transaksi-pinjaman-agri-draft');
 		}
 	}
 
@@ -137,7 +137,7 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 				$this->session->set_userdata('message_type','warning');
 			}
 		}
-		redirect('transaksi_pinjaman_mikro');
+		redirect('transaksi_pinjaman_agri');
 	}
 
 	function approve()
@@ -268,7 +268,7 @@ class Transaksi_pinjaman_mikro_draft extends CI_Controller {
 
 			$this->User_model->has_login();
 
-			$output['PAGE_TITLE'] = 'Pinjaman Mikro';
+			$output['PAGE_TITLE'] = 'Pinjaman Agri';
 
 			$mainData['top_css']   = '';
 			$mainData['top_js']    = '';
