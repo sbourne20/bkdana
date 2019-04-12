@@ -3,7 +3,7 @@ $("#foto_file").fileinput({
 	removeClass: "btn btn-danger",
 	removeLabel: "Remove",
 	removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-	maxFileSize: 5000,
+	//maxFileSize: 5000,
 	showUpload: false
 });
 $("#ktp_file").fileinput({
@@ -11,7 +11,7 @@ $("#ktp_file").fileinput({
 	removeClass: "btn btn-danger",
 	removeLabel: "Remove",
 	removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-	maxFileSize: 5000,
+	//maxFileSize: 5000,
 	showUpload: false
 });
 $("#usaha_file").fileinput({
@@ -19,7 +19,7 @@ $("#usaha_file").fileinput({
 	removeClass: "btn btn-danger",
 	removeLabel: "Remove",
 	removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-	maxFileSize: 5000,
+	//maxFileSize: 5000,
 	showUpload: false
 });
 $("#cf_file").fileinput({
@@ -27,7 +27,7 @@ $("#cf_file").fileinput({
 	removeClass: "btn btn-danger",
 	removeLabel: "Remove",
 	removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-	maxFileSize: 5000,
+	//maxFileSize: 5000,
 	showUpload: false
 });
 $("#progress_report_file").fileinput({
@@ -35,7 +35,7 @@ $("#progress_report_file").fileinput({
 	removeClass: "btn btn-danger",
 	removeLabel: "Remove",
 	removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-	maxFileSize: 5000,
+	//maxFileSize: 5000,
 	showUpload: false
 });
 $("#hasil_panen_file1").fileinput({
@@ -43,7 +43,7 @@ $("#hasil_panen_file1").fileinput({
 	removeClass: "btn btn-danger",
 	removeLabel: "Remove",
 	removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-	maxFileSize: 5000,
+	//maxFileSize: 5000,
 	showUpload: false
 });
 $("#hasil_panen_file2").fileinput({
@@ -51,7 +51,7 @@ $("#hasil_panen_file2").fileinput({
 	removeClass: "btn btn-danger",
 	removeLabel: "Remove",
 	removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-	maxFileSize: 5000,
+	//maxFileSize: 5000,
 	showUpload: false
 });
 $("#hasil_panen_file3").fileinput({
@@ -59,7 +59,7 @@ $("#hasil_panen_file3").fileinput({
 	removeClass: "btn btn-danger",
 	removeLabel: "Remove",
 	removeIcon: '<i class="fa fa-fw fa-trash-o"></i>',
-	maxFileSize: 5000,
+	//maxFileSize: 5000,
 	showUpload: false
 });
 
