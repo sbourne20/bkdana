@@ -750,6 +750,8 @@ class Content_model extends CI_Model
 			LENGTH(foto_usaha) as size_foto_usaha,
 			Profile_photo,
 			foto_usaha,
+			nama_bank,
+			Mobileno,
 			images_foto_name,
 			images_usaha_name,
 			images_usaha_name2,

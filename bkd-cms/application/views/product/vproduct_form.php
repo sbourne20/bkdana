@@ -196,6 +196,20 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Additional Charge</label>
+                                <div class="col-sm-2">
+                                    <div class="input-group">
+                                        <input type="text" name="additional_charge" class="form-control" value="<?php echo isset($EDIT['additional_charge'])? $EDIT['additional_charge'] : ''; ?>">
+                                        <span>
+                                            <select class="form-control" name="charge_type" style="border:1px; background-color:#eeeeee; width:44%; margin-top: -34px; margin-left: 90px;">
+                                                <option  value="1" <?php echo ($mode==2 && $EDIT['additional_charge_type']==1)? 'selected="selected"' : ''; ?>>%</option>
+                                                <option value="2" <?php echo ($mode==2 && $EDIT['additional_charge_type']==2)? 'selected="selected"' : ''; ?>>IDR</option>
+                                            </select>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
                             <!-- <div class="form-group">
                                 <label class="col-sm-2 control-label">Charge Type</label>
                                 <label class="checkbox-inline">
