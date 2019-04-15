@@ -68,6 +68,7 @@ $route['daftar-pinjaman-usaha']      = 'daftar_peminjam/index';
 $route['submit-daftar-pinjam-usaha'] = 'daftar_peminjam/submit_daftar';*/
 
 $route['input-otp']    = 'input_otp/index';
+$route['otp-login-success']    = 'input_otp/otp_login_success';
 $route['submit-login'] = 'login/submit_login';
 $route['logoff']       = 'login/logoff';
 $route['otp-login']    = 'login/login_otp';

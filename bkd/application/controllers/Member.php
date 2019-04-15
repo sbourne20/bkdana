@@ -66,6 +66,7 @@ class Member extends CI_Controller {
 		$data['bottom_js'] .= add_js('js/exif-js-master/exif.js');
 		$data['bottom_js'] .= add_js('js/ImageTools.js');
 
+
 		$data['title'] = $this->M_settings->title;
 		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('bkdana.com', 'website bkdana.com');
 
@@ -81,7 +82,7 @@ class Member extends CI_Controller {
 		$data['total_invest']   = $this->Content_model->get_jml_invest($uid);
 		$data['total_saldo']    = $this->Content_model->get_total_saldo($uid);
 
-	//_d($data['memberdata']);
+		//_d($data['memberdata']);
 		$data['pages']    = 'v_profil_edit';
 		$this->load->view('template', $data);
 	}
@@ -118,10 +119,6 @@ class Member extends CI_Controller {
 
 				) {
 					$memberdata = $this->Member_model->get_member_byid($uid);
-
-				//_d($_FILES);exit();
-
-				//_d($memberdata);exit();
 
 					if (is_array($memberdata) && count($memberdata)>0 && isset($memberdata['Id_pengguna'])) {
 
@@ -172,38 +169,36 @@ class Member extends CI_Controller {
 						$destination_slip_gaji = $this->config->item('member_images_dir'). $userID."/slip_gaji/";
 						$destination_pegang_ktp = $this->config->item('member_images_dir'). $userID."/pegang_ktp/";
 
-							if($post['foto_file_hidden']!=''){	
-								if (!is_file($destination_foto)) {
-									mkdir_r($destination_foto);
-									//echo('no dir');
-									//exit();
-								}
-								if($post['old_foto']!=''){
-									if (is_file($destination_foto.$post['old_foto'])){
-										unlink($destination_foto.$post['old_foto']);
-									}
-								}
-								$data = $_POST['foto_file_hidden'];
-								$splited = explode(',', substr( $data , 5 ) , 2);
-								$mime=$splited[0];
-							    $data=$splited[1];
-
-							    $mime_split_without_base64=explode(';', $mime,2);
-							    $mime_split=explode('/', $mime_split_without_base64[0],2);
-							    if(count($mime_split)==2)
-							    {
-							        $extension=$mime_split[1];
-							        if($extension=='jpeg')$extension='jpg';
-							        //if($extension=='javascript')$extension='js';
-							        //if($extension=='text')$extension='txt';
-							        $output_file_with_extension=rand().'.'.$extension;
-							    }
-
-								$data = base64_decode($data);
-								$file = $destination_foto.$output_file_with_extension;
-								$success = file_put_contents($file, $data);
-								$u_detail['images_foto_name']  = $output_file_with_extension;
+						if($post['foto_file_hidden']!=''){	
+							if (!is_file($destination_foto)) {
+								mkdir_r($destination_foto);
 							}
+							if($post['old_foto']!=''){
+								if (is_file($destination_foto.$post['old_foto'])){
+									unlink($destination_foto.$post['old_foto']);
+								}
+							}
+							$data = $_POST['foto_file_hidden'];
+							$splited = explode(',', substr( $data , 5 ) , 2);
+							$mime=$splited[0];
+							$data=$splited[1];
+
+							$mime_split_without_base64=explode(';', $mime,2);
+							$mime_split=explode('/', $mime_split_without_base64[0],2);
+							if(count($mime_split)==2)
+							{
+								$extension=$mime_split[1];
+								if($extension=='jpeg')$extension='jpg';
+								//if($extension=='javascript')$extension='js';
+								//if($extension=='text')$extension='txt';
+								$output_file_with_extension=rand().'.'.$extension;
+							}
+
+							$data = base64_decode($data);
+							$file = $destination_foto.$output_file_with_extension;
+							$success = file_put_contents($file, $data);
+							$u_detail['images_foto_name']  = $output_file_with_extension;
+						}
 						
 						/*if($_FILES['foto_file']['name'] == ''){
 							$file_foto_name   = '';
@@ -222,55 +217,41 @@ class Member extends CI_Controller {
 						}*/
 
 						if($post['ktp_file_hidden']!=''){
-								if (!is_file($destination_ktp.$post['ktp_file_hidden'])) {
-									mkdir_r($destination_ktp);
-								}	
-								if($post['old_ktp']!=''){
-									if (is_file($destination_ktp.$post['old_ktp'])){
-										unlink($destination_ktp.$post['old_ktp']);
-									}
+							if (!is_file($destination_ktp)) {
+								mkdir_r($destination_ktp);
+							}	
+							if($post['old_ktp']!=''){
+								if (is_file($destination_ktp.$post['old_ktp'])){
+									unlink($destination_ktp.$post['old_ktp']);
 								}
-								$data = $_POST['ktp_file_hidden'];
-								$splited = explode(',', substr( $data , 5 ) , 2);
-								$mime=$splited[0];
-							    $data=$splited[1];
+							}
+							$data = $_POST['ktp_file_hidden'];
+							$splited = explode(',', substr( $data , 5 ) , 2);
+							$mime=$splited[0];
+							$data=$splited[1];
 
-							    $mime_split_without_base64=explode(';', $mime,2);
-							    $mime_split=explode('/', $mime_split_without_base64[0],2);
-							    if(count($mime_split)==2)
-							    {
-							        $extension=$mime_split[1];
-							        if($extension=='jpeg')$extension='jpg';
-							        //if($extension=='javascript')$extension='js';
-							        //if($extension=='text')$extension='txt';
-							        $output_file_with_extension=rand().'.'.$extension;
-							    }
-
-								$data = base64_decode($data);
-								$file = $destination_ktp.$output_file_with_extension;
-								$success = file_put_contents($file, $data);
-								$u_detail['images_ktp_name']  = $output_file_with_extension;
+							$mime_split_without_base64=explode(';', $mime,2);
+							$mime_split=explode('/', $mime_split_without_base64[0],2);
+							if(count($mime_split)==2)
+							{
+								$extension=$mime_split[1];
+								if($extension=='jpeg')$extension='jpg';
+								//if($extension=='javascript')$extension='js';
+								//if($extension=='text')$extension='txt';
+								$output_file_with_extension=rand().'.'.$extension;
 							}
 
-/*						if($_FILES['ktp_file']['name'] == ''){
-							$file_ktp_name   = '';
-						}else{
-							//$upload_ktp  = file_get_contents($_FILES['ktp_file']['tmp_name']);
-							// ----- Process Image Name -----
-							$img_info          = pathinfo($_FILES['ktp_file']['name']);
-							$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-							$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-							$fileExt           = $img_info['extension'];
-							$file_ktp_name   = $fileName.'.'.$fileExt;
-							// ----- END Process Image Name -----
-							//$u_detail['Photo_id']         = $upload_ktp;
-							$u_detail['images_ktp_name']  = $file_ktp_name;
-						}*/
+							$data = base64_decode($data);
+							$file = $destination_ktp.$output_file_with_extension;
+							$success = file_put_contents($file, $data);
+							$u_detail['images_ktp_name']  = $output_file_with_extension;
+						}
+
 
 						if ($memberdata['mum_type_peminjam']=='2'){//tambahan baru pengkondisian
 
 							if($post['usaha_file_hidden']!=''){	
-								if (!is_file($destination_usaha.$post['usaha_file_hidden'])) {
+								if (!is_file($destination_usaha)) {
 									mkdir_r($destination_usaha);
 								}	
 								if($post['old_usaha']!=''){
@@ -318,7 +299,7 @@ class Member extends CI_Controller {
 
 
 							if($post['usaha_file2_hidden']!=''){
-								if (!is_file($destination_usaha2.$post['usaha_file2_hidden'])) {
+								if (!is_file($destination_usaha2)) {
 									mkdir_r($destination_usaha2);
 								}	
 								if($post['old_usaha2']!=''){
@@ -366,7 +347,7 @@ class Member extends CI_Controller {
 							}*/
 
 							if($post['usaha_file3_hidden']!=''){	
-								if (!is_file($destination_usaha3.$post['usaha_file3_hidden'])) {
+								if (!is_file($destination_usaha3)) {
 									mkdir_r($destination_usaha3);
 								}
 								if($post['old_usaha3']!=''){
@@ -395,25 +376,10 @@ class Member extends CI_Controller {
 								$success = file_put_contents($file, $data);
 								$u_detail['images_usaha_name3']  = $output_file_with_extension;
 							}
-/*
-								if( isset($_FILES['usaha_file3']['name']) && $_FILES['usaha_file3']['name'] == ''){
-								$file_usaha_name3  = '';
-							}else{
-								//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['usaha_file3']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_usaha_name3   = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
-								//$u_detail['Photo_business_location'] = $upload_usaha;
-								//$u_detail['foto_usaha']              = $upload_usaha;
-								$u_detail['images_usaha_name3']       = $file_usaha_name3;
-							}*/
+
 
 							if($post['usaha_file4_hidden']!=''){
-								if (!is_file($destination_usah4a.$post['usaha_file4_hidden'])) {
+								if (!is_file($destination_usah4a)) {
 									mkdir_r($destination_usaha4);
 								}	
 								if($post['old_usaha4']!=''){
@@ -443,24 +409,10 @@ class Member extends CI_Controller {
 								$u_detail['images_usaha_name4']  = $output_file_with_extension;
 							}
 
-							/*	if( isset($_FILES['usaha_file4']['name']) && $_FILES['usaha_file4']['name'] == ''){
-								$file_usaha_name4   = '';
-							}else{
-								//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['usaha_file4']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_usaha_name4   = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
-								//$u_detail['Photo_business_location'] = $upload_usaha;
-								//$u_detail['foto_usaha']              = $upload_usaha;
-								$u_detail['images_usaha_name4']       = $file_usaha_name4;
-							}*/
+						
 
 							if($post['usaha_file5_hidden']!=''){	
-								if (!is_file($destination_usaha5.$post['usaha_file5_hidden'])) {
+								if (!is_file($destination_usaha5)) {
 									mkdir_r($destination_usaha5);
 								}
 								if($post['old_usaha5']!=''){
@@ -490,28 +442,14 @@ class Member extends CI_Controller {
 								$u_detail['images_usaha_name5']  = $output_file_with_extension;
 							}
 
-								/*if( isset($_FILES['usaha_file5']['name']) && $_FILES['usaha_file5']['name'] == ''){
-								$file_usaha_name5   = '';
-							}else{
-								//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['usaha_file5']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_usaha_name5  = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
-								//$u_detail['Photo_business_location'] = $upload_usaha;
-								//$u_detail['foto_usaha']              = $upload_usaha;
-								$u_detail['images_usaha_name5']       = $file_usaha_name5;
-							}*/
+					
 						}
 
 						// -----Tambahan Baru-----
 						if ($memberdata['mum_type_peminjam']=='1'){
 
 							if($post['surat_keterangan_bekerja_file_hidden']!=''){
-								if (!is_file($destination_surat_keterangan_bekerja.$post['surat_keterangan_bekerja_file_hidden'])) {
+								if (!is_file($destination_surat_keterangan_bekerja)) {
 									mkdir_r($destination_surat_keterangan_bekerja);
 								}	
 								if($post['old_surat_keterangan_bekerja']!=''){
@@ -541,23 +479,10 @@ class Member extends CI_Controller {
 								$u_detail['foto_surat_keterangan_bekerja']  = $output_file_with_extension;
 							}
 
-							/*if($_FILES['surat_keterangan_bekerja_file']['name'] == ''){
-								$file_surat_keterangan_bekerja_name   = '';
-							}else{
-								//$upload_surat_keterangan_bekerja_file  = file_get_contents($_FILES['surat_keterangan_bekerja_file']['tmp_name']);
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['surat_keterangan_bekerja_file']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_surat_keterangan_bekerja_name  = $fileName.'.'.$fileExt;
-								$u_detail['	foto_surat_keterangan_bekerja']  = $file_surat_keterangan_bekerja_name;
-								// ----- END Process Image Name -----
-							}*/
 
 
 							if($post['slip_gaji_file_hidden']!=''){	
-								if (!is_file($destination_slip_gaji.$post['slip_gaji_file_hidden'])) {
+								if (!is_file($destination_slip_gaji)) {
 									mkdir_r($destination_slip_gaji);
 								}
 								if($post['old_slip_gaji']!=''){
@@ -587,23 +512,11 @@ class Member extends CI_Controller {
 								$u_detail['foto_slip_gaji']  = $output_file_with_extension;
 							}
 
-							/*if($_FILES['slip_gaji_file']['name'] == ''){
-								$file_slip_gaji_name   = '';
-							}else{
-								//$upload_slip_gaji  = file_get_contents($_FILES['slip_gaji_file']['tmp_name']);
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['slip_gaji_file']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_slip_gaji_name   = $fileName.'.'.$fileExt;
-								$u_detail['foto_slip_gaji']  = $file_slip_gaji_name;
-								// ----- END Process Image Name -----
-							}*/
+						
 
 
 							if($post['pegang_ktp_file_hidden']!=''){
-								if (!is_file($destination_pegang_ktp.$post['pegang_ktp_file_hidden'])) {
+								if (!is_file($destination_pegang_ktp)) {
 									mkdir_r($destination_pegang_ktp);
 								}	
 								if($post['old_pegang_ktp']!=''){
@@ -669,7 +582,7 @@ class Member extends CI_Controller {
 							// }
 
 							if($post['pegang_ktp_file_hidden']!=''){
-								if (!is_file($destination_pegang_ktp.$post['pegang_ktp_file_hidden'])) {
+								if (!is_file($destination_pegang_ktp)) {
 									mkdir_r($destination_pegang_ktp);
 								}	
 								if($post['old_pegang_ktp']!=''){
@@ -926,6 +839,18 @@ class Member extends CI_Controller {
 						$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
 						$u_geo['Kota']        = antiInjection(trim($post['kota']));
 						$u_geo['Provinsi']    = antiInjection(trim($post['provinsi']));
+						$u_geo['Check_Domisili']	   = antiInjection(trim($post['checkdomisili']));
+						if (antiInjection(trim($post['checkdomisili']))=='1'){
+							$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamat']));
+							$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodepos']));
+							$u_geo['Kota_Domisili']        = antiInjection(trim($post['kota']));
+							$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsi']));
+						}else{
+							$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamatdomisili']));
+							$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodeposdomisili']));
+							$u_geo['Kota_Domisili']        = antiInjection(trim($post['kotadomisili']));
+							$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsidomisili']));
+						}		
 
 						$this->Content_model->update_profil_geografi($userID, $u_geo);
 

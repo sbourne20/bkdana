@@ -327,10 +327,17 @@ class Pinjaman extends CI_Controller {
 		
 		if (isset($_SESSION['_bkdlog_']) && isset($_SESSION['_bkduser_'])) {
 			// Jika sudah login maka redirect ke form only
-			
+			$uid = htmlentities(strip_tags($_SESSION['_bkduser_']));	
+			$getmember = $this->Content_model->get_memberdata($uid);
+
 			if ($logintype=='1') {
-				redirect('formulir-pinjaman-mikro');
-				exit();	
+				if($getmember['mum_type_peminjam']=='2'){
+					redirect('formulir-pinjaman-mikro');
+					exit();	
+				}else{
+					redirect('dashboard');
+					exit();
+				}
 			}else{
 				redirect('message/restrict_pendana');
 				exit();
@@ -353,6 +360,7 @@ class Pinjaman extends CI_Controller {
 		$data['bottom_js'] .= add_js('js/jqueryvalidation/dist/jquery.validate.min.js');
 		$data['bottom_js'] .= add_js('js/autoNumeric/autoNumeric.min.js');
 		$data['bottom_js'] .= add_js('js/alertify/alertify.min.js');
+		$data['bottom_js'] .= add_js("js/fileinput/plugins/piexif.min.js");
 		$data['bottom_js'] .= add_js("js/fileinput/fileinput.min.js");
 		$data['bottom_js'] .= add_js('js/fileinput-init.js');
 		$data['bottom_js'] .= add_js('js/validation-init.js');
@@ -360,7 +368,9 @@ class Pinjaman extends CI_Controller {
 		$data['bottom_js'] .= add_js('js/date-init.js');
 		$data['bottom_js'] .= add_js('js/dsn.js');
 		$data['bottom_js'] .= add_js('js/form-wizard.js');
+		$data['bottom_js'] .= add_js('js/exif-js-master/exif.js');
 		$data['bottom_js'] .= add_js('js/pinjaman-mikro.js');
+
 
 		$data['title'] = $this->M_settings->title;
 		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('daftar, pinjaman mikro', 'daftar pinjaman mikro');
@@ -568,10 +578,17 @@ class Pinjaman extends CI_Controller {
 		
 		if (isset($_SESSION['_bkdlog_']) && isset($_SESSION['_bkduser_'])) {
 			// Jika sudah login maka redirect ke form only
-			
+			$uid = htmlentities(strip_tags($_SESSION['_bkduser_']));	
+			$getmember = $this->Content_model->get_memberdata($uid);
+
 			if ($logintype=='1') {
-				redirect('formulir-pinjaman-agri');
-				exit();	
+				if($getmember['mum_type_peminjam']=='3'){
+					redirect('formulir-pinjaman-agri');
+					exit();	
+				}else{
+					redirect('dashboard');
+					exit();	
+				}
 			}else{
 				redirect('message/restrict_pendana');
 				exit();
@@ -606,7 +623,7 @@ class Pinjaman extends CI_Controller {
 		$data['title'] = $this->M_settings->title;
 		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('daftar, pinjaman agri', 'daftar pinjaman agri');
 
-		$data['products'] = $this->Content_model->get_pinjaman(3); // type_off_business_id
+		$data['products'] = $this->Content_model->get_pinjaman(5); // type_off_business_id
 
 		$data['pages']    = 'v_register_pinjaman_agri';
 		$this->load->view('template', $data);
@@ -1004,7 +1021,15 @@ class Pinjaman extends CI_Controller {
 		$memberID = (int)$_SESSION['_bkduser_'];
 		$logintype = isset($_SESSION['_bkdtype_'])? htmlentities($_SESSION['_bkdtype_']) : 0; // 1.peminjam, 2.pendana
 
-		if ($logintype=='2') {	
+		$uid = htmlentities(strip_tags($_SESSION['_bkduser_']));	
+		$getmember = $this->Content_model->get_memberdata($uid);
+
+		if ($logintype=='1') {
+			if($getmember['mum_type_peminjam'] !='2'){
+				redirect('dashboard');
+				exit();	
+			}
+		} else if ($logintype=='2') {	
 			redirect('message/restrict_pendana');
 			exit();
 		}
@@ -1027,6 +1052,7 @@ class Pinjaman extends CI_Controller {
 		$data['top_css'] .= add_css('js/alertify/css/themes/default.min.css');
 		$data['top_css'] .= add_css("js/fileinput/fileinput.min.css");
 
+		$data['bottom_js'] .= add_js("js/fileinput/plugins/piexif.min.js");
 		$data['bottom_js'] .= add_js("js/fileinput/fileinput.min.js");
 		$data['bottom_js'] .= add_js('js/validationengine/languages/jquery.validationEngine-en.js');
 		$data['bottom_js'] .= add_js('js/validationengine/jquery.validationEngine.js');
@@ -1039,7 +1065,9 @@ class Pinjaman extends CI_Controller {
 		$data['bottom_js'] .= add_js('js/dsn.js');
 		$data['bottom_js'] .= add_js('js/date-init.js');
 		$data['bottom_js'] .= add_js('js/pinjaman-mikro2.js');
+		$data['bottom_js'] .= add_js('js/exif-js-master/exif.js');
 		$data['bottom_js'] .= add_js('js/fileinput-init.js');
+		$data['bottom_js'] .= add_js('js/ImageTools.js');
 
 		$data['title'] = $this->M_settings->title;
 		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('daftar, pinjaman mikro', 'daftar pinjaman mikro');
@@ -1124,19 +1152,53 @@ class Pinjaman extends CI_Controller {
 
 							//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
 
-							if( isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] != ''){
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['usaha_file']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_usaha_name   = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
+							// if( isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] != ''){
+							// 	// ----- Process Image Name -----
+							// 	$img_info          = pathinfo($_FILES['usaha_file']['name']);
+							// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+							// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+							// 	$fileExt           = $img_info['extension'];
+							// 	$file_usaha_name   = $fileName.'.'.$fileExt;
+							// 	// ----- END Process Image Name -----
 								
-								$u_detail['images_usaha_name'] = $file_usaha_name;
-							}else{
-								$file_usaha_name   = '';
+							// 	$u_detail['images_usaha_name'] = $file_usaha_name;
+							// }else{
+							// 	$file_usaha_name   = '';
+							// }
+
+							$destination_usaha = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/usaha/";
+
+							if($post['usaha_file_hidden']!=''){
+								if (!is_file($destination_usaha)) {
+									mkdir_r($destination_usaha);
+								}	
+								if($post['old_usaha']!=''){
+									if (is_file($destination_usaha.$post['old_usaha'])){
+										unlink($destination_usaha.$post['old_usaha']);
+									}
+								}
+								$data = $_POST['usaha_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        //if($extension=='javascript')$extension='js';
+							        //if($extension=='text')$extension='txt';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+
+								$data = base64_decode($data);
+								$file = $destination_usaha.$output_file_with_extension;
+								$success = file_put_contents($file, $data);
+								$u_detail['images_usaha_name']  = $output_file_with_extension;
 							}
+
 
 							$u_detail['What_is_the_name_of_your_business']        = trim($post['usaha']);
 							$u_detail['How_many_years_have_you_been_in_business'] = trim($post['lama_usaha']);
@@ -1146,14 +1208,14 @@ class Pinjaman extends CI_Controller {
 						}
 
 						// Upload Image
-						$destination_usaha = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/usaha/";
+						// $destination_usaha = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/usaha/";
 
-						if(isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] != ''){
-							if (!is_file($destination_usaha.$file_usaha_name)) {
-								mkdir_r($destination_usaha);
-							}
-							move_uploaded_file($_FILES['usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
-						}
+						// if(isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] != ''){
+						// 	if (!is_file($destination_usaha.$file_usaha_name)) {
+						// 		mkdir_r($destination_usaha);
+						// 	}
+						// 	move_uploaded_file($_FILES['usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
+						// }
 					}
 
 						$prefixID    = 'PM-';
@@ -1263,7 +1325,15 @@ class Pinjaman extends CI_Controller {
 		$memberID = (int)$_SESSION['_bkduser_'];
 		$logintype = isset($_SESSION['_bkdtype_'])? htmlentities($_SESSION['_bkdtype_']) : 0; // 1.peminjam, 2.pendana
 
-		if ($logintype=='2') {	
+		$uid = htmlentities(strip_tags($_SESSION['_bkduser_']));	
+		$getmember = $this->Content_model->get_memberdata($uid);
+
+		if ($logintype=='1') {
+			if($getmember['mum_type_peminjam'] !='3'){
+				redirect('dashboard');
+				exit();	
+			}
+		} else if ($logintype=='2') {	
 			redirect('message/restrict_pendana');
 			exit();
 		}
@@ -1297,8 +1367,12 @@ class Pinjaman extends CI_Controller {
 		$data['bottom_js'] .= add_js('js/validation-init.js');
 		$data['bottom_js'] .= add_js('js/dsn.js');
 		$data['bottom_js'] .= add_js('js/date-init.js');
+		$data['bottom_js'] .= add_js("js/fileinput/plugins/piexif.min.js");
+		$data['bottom_js'] .= add_js("js/fileinput/fileinput.min.js");
 		$data['bottom_js'] .= add_js('js/pinjaman-agri2.js');
 		$data['bottom_js'] .= add_js('js/fileinput-init.js');
+		$data['bottom_js'] .= add_js('js/exif-js-master/exif.js');
+		$data['bottom_js'] .= add_js('js/ImageTools.js');
 
 		$data['title'] = $this->M_settings->title;
 		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('daftar, pinjaman agri', 'daftar pinjaman agri');
@@ -1334,7 +1408,9 @@ class Pinjaman extends CI_Controller {
 				$filter = explode('.', trim($post['jumlah_pinjam']));
 				$total_pinjam = str_replace(',', '', $filter[0]);
 
-				$productID = trim($post['product']);
+				$productID    = '5';
+				$tenor = trim($post['product']);
+
 
 				$member_data     = $this->Member_model->get_member_byid($uid);
 				$stored_password = $member_data['mum_password'];
@@ -1360,7 +1436,7 @@ class Pinjaman extends CI_Controller {
 					$this->session->set_userdata('message_type','error');
 
 				}else if ( trim($post['jumlah_pinjam']) !=''
-							&& $productID != ''
+							&& $tenor != ''
 							&& $password != ''
 							&& strlen($password) >= 6 
 							&& password_verify(base64_encode(hash('sha256', $password, true)), $stored_password) ) 
@@ -1368,14 +1444,46 @@ class Pinjaman extends CI_Controller {
 
 					if ($post['kelengkapan'] == '0'){
 						// jika kelengkapan Agri belum lengkap
-						if ($_FILES['cf_file']['tmp_name']  == '' OR $_FILES['progress_report_file']['tmp_name']  == '' ) {
+					/*	if ($_FILES['cf_file']['tmp_name']  == '' OR $_FILES['progress_report_file']['tmp_name']  == '' ) {
 							$ret = array('error'=> '1', 'message'=>'Anda harus Upload Contract Farming, Progress Report!');
 							echo json_encode($ret);
 							exit();
-						}else{
+						}else{*/
 
-							//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
-							if( isset($_FILES['cf_file']['name']) && $_FILES['cf_file']['name'] != ''){
+							$destination_cf = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/cf/";
+
+							if($post['cf_file_hidden']!=''){
+								if (!is_file($destination_cf)) {
+									mkdir_r($destination_cf);
+								}	
+								if($post['old_cf']!=''){
+									if (is_file($destination_cf.$post['old_cf'])){
+										unlink($destination_cf.$post['old_cf']);
+									}
+								}
+								$data = $_POST['cf_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        //if($extension=='javascript')$extension='js';
+							        //if($extension=='text')$extension='txt';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+
+								$data = base64_decode($data);
+								$file = $destination_cf.$output_file_with_extension;
+								$success = file_put_contents($file, $data);
+								$u_detail['images_cf_name']  = $output_file_with_extension;
+							}
+
+							/*if( isset($_FILES['cf_file']['name']) && $_FILES['cf_file']['name'] != ''){
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['cf_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1387,9 +1495,42 @@ class Pinjaman extends CI_Controller {
 								$u_detail['images_cf_name'] = $file_cf_name;
 							}else{
 								$file_cf_name   = '';
+							}*/
+
+							$destination_progress_report = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/progress_report/";
+
+							if($post['progress_report_file_hidden']!=''){
+								if (!is_file($destination_progress_report)) {
+									mkdir_r($destination_progress_report);
+								}	
+								if($post['old_progress_report']!=''){
+									if (is_file($destination_progress_report.$post['old_progress_report'])){
+										unlink($destination_progress_report.$post['old_progress_report']);
+									}
+								}
+								$data = $_POST['progress_report_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        //if($extension=='javascript')$extension='js';
+							        //if($extension=='text')$extension='txt';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+
+								$data = base64_decode($data);
+								$file = $destination_progress-report.$output_file_with_extension;
+								$success = file_put_contents($file, $data);
+								$u_detail['images_progress_report_name']  = $output_file_with_extension;
 							}
 							
-							if( isset($_FILES['progress_report_file']['name']) && $_FILES['progress_report_file']['name'] != ''){
+							/*if( isset($_FILES['progress_report_file']['name']) && $_FILES['progress_report_file']['name'] != ''){
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['progress_report_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1401,104 +1542,131 @@ class Pinjaman extends CI_Controller {
 								$u_detail['images_progress_report_name'] = $file_progress_report_name;
 							}else{
 								$file_progress_report_name   = '';
-							}
+							}*/
 
-							if( isset($_FILES['hasil_panen_file1']['name']) && $_FILES['hasil_panen_file1']['name'] != ''){
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['hasil_panen_file1']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_hasil_panen_name1   = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
+							// if( isset($_FILES['hasil_panen_file1']['name']) && $_FILES['hasil_panen_file1']['name'] != ''){
+							// 	// ----- Process Image Name -----
+							// 	$img_info          = pathinfo($_FILES['hasil_panen_file1']['name']);
+							// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+							// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+							// 	$fileExt           = $img_info['extension'];
+							// 	$file_hasil_panen_name1   = $fileName.'.'.$fileExt;
+							// 	// ----- END Process Image Name -----
 								
-								$u_detail['images_hasil_panen_name1'] = $file_hasil_panen_name1;
-							}else{
-								$file_hasil_panen_name1   = '';
-							}
+							// 	$u_detail['images_hasil_panen_name1'] = $file_hasil_panen_name1;
+							// }else{
+							// 	$file_hasil_panen_name1   = '';
+							// }
 
-							if( isset($_FILES['hasil_panen_file2']['name']) && $_FILES['hasil_panen_file2']['name'] != ''){
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['hasil_panen_file2']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_hasil_panen_name2   = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
+							// if( isset($_FILES['hasil_panen_file2']['name']) && $_FILES['hasil_panen_file2']['name'] != ''){
+							// 	// ----- Process Image Name -----
+							// 	$img_info          = pathinfo($_FILES['hasil_panen_file2']['name']);
+							// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+							// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+							// 	$fileExt           = $img_info['extension'];
+							// 	$file_hasil_panen_name2   = $fileName.'.'.$fileExt;
+							// 	// ----- END Process Image Name -----
 								
-								$u_detail['images_hasil_panen_name2'] = $file_hasil_panen_name2;
-							}else{
-								$file_hasil_panen_name2   = '';
-							}
+							// 	$u_detail['images_hasil_panen_name2'] = $file_hasil_panen_name2;
+							// }else{
+							// 	$file_hasil_panen_name2   = '';
+							// }
 
-							if( isset($_FILES['hasil_panen_file3']['name']) && $_FILES['hasil_panen_file3']['name'] != ''){
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['hasil_panen_file3']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_hasil_panen_name3   = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
+							// if( isset($_FILES['hasil_panen_file3']['name']) && $_FILES['hasil_panen_file3']['name'] != ''){
+							// 	// ----- Process Image Name -----
+							// 	$img_info          = pathinfo($_FILES['hasil_panen_file3']['name']);
+							// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+							// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+							// 	$fileExt           = $img_info['extension'];
+							// 	$file_hasil_panen_name3   = $fileName.'.'.$fileExt;
+							// 	// ----- END Process Image Name -----
 								
-								$u_detail['images_hasil_panen_name3'] = $file_hasil_panen_name3;
-							}else{
-								$file_hasil_panen_name3   = '';
-							}
+							// 	$u_detail['images_hasil_panen_name3'] = $file_hasil_panen_name3;
+							// }else{
+							// 	$file_hasil_panen_name3   = '';
+							// }
 
-
-							//$u_detail['What_is_the_name_of_your_business']        = trim($post['usaha']);
-							//$u_detail['How_many_years_have_you_been_in_business'] = trim($post['lama_usaha']);
-							//$u_detail['Photo_business_location']                  = $upload_usaha;
-							//$u_detail['foto_usaha']                               = $upload_usaha;
 							$this->Content_model->update_userdetail($member_data['Id_pengguna'], $u_detail);
 						}
 
 						// Upload Image
-						$destination_cf = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/cf/";
+						//$destination_cf = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/cf/";
+						/*
+						if($post['cf_file_hidden']!=''){
+								if (!is_file($destination_cf.$post['cf_file_hidden'])) {
+									mkdir_r($destination_cf);
+								}	
+								if($post['old_cf']!=''){
+									if (is_file($destination_cf.$post['old_cf'])){
+										unlink($destination_cf.$post['old_cf']);
+									}
+								}
+								$data = $_POST['cf_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
 
-						if(isset($_FILES['cf_file']['name']) && $_FILES['cf_file']['name'] != ''){
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        //if($extension=='javascript')$extension='js';
+							        //if($extension=='text')$extension='txt';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+
+								$data = base64_decode($data);
+								$file = $destination_cf.$output_file_with_extension;
+								$success = file_put_contents($file, $data);
+								$u_detail['images_cf_name']  = $output_file_with_extension;
+							}*/
+
+
+						/*if(isset($_FILES['cf_file']['name']) && $_FILES['cf_file']['name'] != ''){
 							if (!is_file($destination_cf.$file_cf_name)) {
 								mkdir_r($destination_cf);
 							}
 							move_uploaded_file($_FILES['cf_file']['tmp_name'], $destination_cf.$file_cf_name);
-						}
+						}*/
 
-						$destination_progress_report = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/progress_report/";
+						/*$destination_progress_report = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/progress_report/";
 
 						if(isset($_FILES['progress_report_file']['name']) && $_FILES['progress_report_file']['name'] != ''){
 							if (!is_file($destination_progress_report.$file_progress_report_name)) {
 								mkdir_r($destination_progress_report);
 							}
 							move_uploaded_file($_FILES['progress_report_file']['tmp_name'], $destination_progress_report.$file_progress_report_name);
-						}
+						}*/
 
-						$destination_hasil_panen1 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen1/";
+						// $destination_hasil_panen1 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen1/";
 
-						if(isset($_FILES['hasil_panen_file1']['name']) && $_FILES['hasil_panen_file1']['name'] != ''){
-							if (!is_file($destination_hasil_panen1.$file_hasil_panen_name1)) {
-								mkdir_r($destination_hasil_panen1);
-							}
-							move_uploaded_file($_FILES['hasil_panen_file1']['tmp_name'], $destination_hasil_panen1.$file_hasil_panen_name1);
-						}
+						// if(isset($_FILES['hasil_panen_file1']['name']) && $_FILES['hasil_panen_file1']['name'] != ''){
+						// 	if (!is_file($destination_hasil_panen1.$file_hasil_panen_name1)) {
+						// 		mkdir_r($destination_hasil_panen1);
+						// 	}
+						// 	move_uploaded_file($_FILES['hasil_panen_file1']['tmp_name'], $destination_hasil_panen1.$file_hasil_panen_name1);
+						// }
 
-						$destination_hasil_panen2 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen2/";
+						// $destination_hasil_panen2 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen2/";
 
-						if(isset($_FILES['hasil_panen_file2']['name']) && $_FILES['hasil_panen_file2']['name'] != ''){
-							if (!is_file($destination_hasil_panen2.$file_hasil_panen_name2)) {
-								mkdir_r($destination_hasil_panen2);
-							}
-							move_uploaded_file($_FILES['hasil_panen_file2']['tmp_name'], $destination_hasil_panen2.$file_hasil_panen_name2);
-						}
+						// if(isset($_FILES['hasil_panen_file2']['name']) && $_FILES['hasil_panen_file2']['name'] != ''){
+						// 	if (!is_file($destination_hasil_panen2.$file_hasil_panen_name2)) {
+						// 		mkdir_r($destination_hasil_panen2);
+						// 	}
+						// 	move_uploaded_file($_FILES['hasil_panen_file2']['tmp_name'], $destination_hasil_panen2.$file_hasil_panen_name2);
+						// }
 
-						$destination_hasil_panen3 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen3/";
+						// $destination_hasil_panen3 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen3/";
 
-						if(isset($_FILES['hasil_panen_file3']['name']) && $_FILES['hasil_panen_file3']['name'] != ''){
-							if (!is_file($destination_hasil_panen3.$file_hasil_panen_name3)) {
-								mkdir_r($destination_hasil_panen3);
-							}
-							move_uploaded_file($_FILES['hasil_panen_file3']['tmp_name'], $destination_hasil_panen3.$file_hasil_panen_name3);
-						}
-					}
+						// if(isset($_FILES['hasil_panen_file3']['name']) && $_FILES['hasil_panen_file3']['name'] != ''){
+						// 	if (!is_file($destination_hasil_panen3.$file_hasil_panen_name3)) {
+						// 		mkdir_r($destination_hasil_panen3);
+						// 	}
+						// 	move_uploaded_file($_FILES['hasil_panen_file3']['tmp_name'], $destination_hasil_panen3.$file_hasil_panen_name3);
+						// }
+						//}
 
 						$prefixID    = 'PA-';
 						$orderID     = $prefixID.$uid.strtoupper(substr(uniqid(sha1(time().$uid)),0,12));

@@ -466,7 +466,7 @@ if ($memberdata['mum_type'] == '1'){
                         </div>
                     </div>
                     <div class="row">
-                      <!--   <div class="col-sm-4">
+                      	<!--<div class="col-sm-4">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-kilat'); ?>" title="Daftar Pinjaman Kilat">
                                     <img src="assets/images/icon-register-1.png" class="img-responsive" alt="Daftar Pinjaman Kilat" title="Daftar Pinjaman Kilat" />
@@ -475,7 +475,8 @@ if ($memberdata['mum_type'] == '1'){
                             <a href="<?php echo site_url('register-pinjaman-kilat'); ?>">Daftar BKDana Kilat</a>
                             <p>Butuh dana Kilat 1 - 2 juta? Seperti biaya Rumah Sakit, Sekolah, Kontrakan, dll. Proses persetujuan hanya 15 menit!</p>
                         </div> -->
-                        <div class="col-sm-6">
+						<?php if($memberdata['mum_type_peminjam'] == '2' || $memberdata['mum_type_peminjam'] == '1') { ?>
+                        <div class="col-sm-12">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-mikro'); ?>" title="Daftar Pinjaman Mikro">
                                     <img src="assets/images/icon-register-2.png" class="img-responsive" alt="Daftar Pinjaman Mikro" title="Daftar Pinjaman Mikro" />
@@ -484,7 +485,8 @@ if ($memberdata['mum_type'] == '1'){
                             <a href="<?php echo site_url('register-pinjaman-mikro'); ?>">Daftar BKDana Mikro</a>
                             <p>Pinjaman Mikro (Usaha Kecil) untuk solusi Bisnis anda. Platform maksimal sampai dengan 50 juta!</p>
                         </div>
-                        <div class="col-sm-6">
+						<?php }else if($memberdata['mum_type_peminjam'] == '3') { ?>
+                        <div class="col-sm-12">
                             <div class="img-wrapp">
                                 <a href="<?php echo site_url('register-pinjaman-agri'); ?>" title="Daftar Pinjaman Agri">
                                     <img src="<?php echo base_url(); ?>assets/images/icon-register-3.png" class="img-responsive" alt="Daftar Pinjaman Agri" title="Daftar Pinjaman Agri" />
@@ -493,6 +495,7 @@ if ($memberdata['mum_type'] == '1'){
                             <a href="<?php echo site_url('register-pinjaman-agri'); ?>">Daftar BKDana Agri</a>
                             <p>Pinjaman Agri merupakan solusi bagi Petani. Platform maksimal sampai dengan 100 juta!</p>
                         </div>
+						<?php } ?>
                     </div>
                 </div>
                 <?php } ?>

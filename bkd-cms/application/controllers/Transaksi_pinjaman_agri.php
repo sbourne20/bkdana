@@ -231,10 +231,10 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 
 					$affected = $this->Pinjaman_model->approval_pinjaman_agri($id, $jml_pinjaman_disetujui, $date_fundraise, $total_angsuran_rp, $produk['Fundraising_period']);
 
+
 				if($affected){
 
 					// Log Transaksi Pinjaman
-					
 					$inlog['ltp_total_pinjaman_disetujui'] = $jml_pinjaman_disetujui;
 					$inlog['ltp_admin_fee']                = $admin_fee;
 					$inlog['ltp_bunga_pinjaman']           = $bunga;
@@ -445,7 +445,7 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$this->session->set_userdata('message_type','warning');
 			}
 		}		
-		redirect('transaksi_pinjaman_mikro');
+		redirect('transaksi_pinjaman_agri');
 	}
 
 	function send_mail_reject($loan_data)

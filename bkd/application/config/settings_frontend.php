@@ -33,8 +33,8 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	
 	//foto end
 
-	$config['data_dir']    = FCPATH . "../../../data-bkd/";
-	$config['attach_dir']  = FCPATH . '../../../data-file-bkd/';
+	$config['data_dir']    = FCPATH . "../../data-bkd/";
+	$config['attach_dir']  = FCPATH . '../../data-file-bkd/';
 }
 
 // upload path
@@ -55,9 +55,16 @@ $config['template_uri']      = $config['doc_root'] . 'assets/';
 $config['mail_username']      = 'bkdanafinansial@gmail.com';
 $config['mail_password']      = 'master177';
 
-$config['fb_app_id']          = '1733360370088297';
-$config['fb_kit_secret']      = 'd827d9e9c9802d140f27a96751fb9811';
-$config['fb_kit_token']       = '0fa9339955b3ac6efbb5f3bb7738dd02';
+
+// akun BATAVIA 
+// $config['fb_app_id']          = '1733360370088297';
+// $config['fb_kit_secret']      = 'd827d9e9c9802d140f27a96751fb9811';
+// $config['fb_kit_token']       = '0fa9339955b3ac6efbb5f3bb7738dd02';
+
+// akun fb developer
+$config['fb_app_id']          = '315069215875926';
+$config['fb_kit_secret']      = '3fef03e1ab59e1a6f91629a670f14d28';
+$config['fb_kit_token']       = '8a063b7e438dfc2aa76fe573d86e9aca';
 
 $config['minimum_topup']      = '100000';
 $config['minimum_grade']      = '95';
