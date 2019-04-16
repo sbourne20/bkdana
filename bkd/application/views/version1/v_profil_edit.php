@@ -28,46 +28,46 @@ $foto_pegang_ktp = '';
 
 if ($memberdata['images_foto_name'] != '')
 {
-	$foto_profil = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/foto/'. $memberdata['images_foto_name'];
+	$foto_profil = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/foto/'. $memberdata['images_foto_name']);
 }
 if ($memberdata['images_ktp_name'] != '')
 {
-	$foto_ktp = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/ktp/'. $memberdata['images_ktp_name'];
+	$foto_ktp = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/ktp/'. $memberdata['images_ktp_name']);
 }
 if ($memberdata['images_usaha_name'] != '')
 {
-	$foto_usaha = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha/'. $memberdata['images_usaha_name'];
+	$foto_usaha = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha/'. $memberdata['images_usaha_name']);
 }
 if ($memberdata['images_usaha_name2'] != '')
 {
-	$foto_usaha2 = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha2/'. $memberdata['images_usaha_name2'];
+	$foto_usaha2 = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha2/'. $memberdata['images_usaha_name2']);
 }
 if ($memberdata['images_usaha_name3'] != '')
 {
-	$foto_usaha3 = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha3/'. $memberdata['images_usaha_name3'];
+	$foto_usaha3 = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha3/'. $memberdata['images_usaha_name3']);
 }
 if ($memberdata['images_usaha_name4'] != '')
 {
-	$foto_usaha4 = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha4/'. $memberdata['images_usaha_name4'];
+	$foto_usaha4 = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha4/'. $memberdata['images_usaha_name4']);
 }
 if ($memberdata['images_usaha_name5'] != '')
 {
-	$foto_usaha5 = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha5/'. $memberdata['images_usaha_name5'];
+	$foto_usaha5 = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha5/'. $memberdata['images_usaha_name5']);
 }
 
 // -----tambahan baru-----
 
 if ($memberdata['foto_surat_keterangan_bekerja'] != '')
 {
-	$foto_surat_keterangan_bekerja = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/surat_keterangan_bekerja/'. $memberdata['foto_surat_keterangan_bekerja'];
+	$foto_surat_keterangan_bekerja = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/surat_keterangan_bekerja/'. $memberdata['foto_surat_keterangan_bekerja']);
 }
 if ($memberdata['foto_slip_gaji'] != '')
 {
-	$foto_slip_gaji= site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/slip_gaji/'. $memberdata['foto_slip_gaji'];
+	$foto_slip_gaji= site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/slip_gaji/'. $memberdata['foto_slip_gaji']);
 }
 if ($memberdata['foto_pegang_ktp'] != '')
 {
-	$foto_pegang_ktp = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/pegang_ktp/'. $memberdata['foto_pegang_ktp'];
+	$foto_pegang_ktp = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/pegang_ktp/'. $memberdata['foto_pegang_ktp']);
 }
 
 // -----batas tambahan-----

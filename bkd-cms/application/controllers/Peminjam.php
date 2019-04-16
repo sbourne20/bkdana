@@ -117,12 +117,9 @@ class Peminjam extends CI_Controller {
 
 	public function getgroupcount()
 	{
-		//echo $_POST['memberid'];
-		//$secondP1 = antiInjection($this->uri->segment(3));
 		if(isset($_POST['memberid']))
 		{
-    		$usr = $_POST['memberid'];
-
+    		$usr = antiInjection($_POST['memberid']);
     		// Do whatever you want with the $uid
 		}
 		else{
