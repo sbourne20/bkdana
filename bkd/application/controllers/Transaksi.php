@@ -197,7 +197,7 @@ class Transaksi extends CI_Controller {
 
 			//echo 'Pinjaman Agri';
 			
-			$data['jml_cicilan']   = $log_transaksi_pinjam['ltp_jml_angsuran'];
+			$data['jml_cicilan']   = $log_transaksi_pinjam['Total_loan_outstanding'];
 			$data['lama_angsuran'] = $log_transaksi_pinjam['ltp_lama_angsuran']; // berapa minggu
 			//tambahan baru repayment
 			$data['jumlah_cicilan']   = $repayment1['jumlah_cicilan'];
@@ -207,6 +207,7 @@ class Transaksi extends CI_Controller {
 
 			//tambahan baru repayment
 			$data['repayment']			   = $this->Content_model->get_record_repayment($ID);
+			$data['cicilan']			   = $this->Content_model->get_jml_kredit($ID);
 			$data['record_repayment_log']  = $this->Content_model->get_record_repayment_log($ID);
 			$data['repaymentdenda']		   = $this->Content_model->get_record_repaymentdenda($ID);
 			//$data['repayment1']			   = $this->Content_model->get_record_repayment1($ID);
@@ -595,7 +596,7 @@ class Transaksi extends CI_Controller {
 						$dwp2['Id']               = $id_masterwallet_peminjam;
 						$dwp2['Date_transaction'] = $nowdatetime;
 						$dwp2['Amount']           = $log_tran_pinjam['ltp_admin_fee'];
-						$dwp2['Notes']            = 'Pembayaran dana administrasi transaksi No.'.$ttransaksi_id;
+						$dwp2['Notes']            = 'Pembayaran dana administrasi transaksi No.'.$transaksi_id;
 						$dwp2['tipe_dana']        = 2;
 						$dwp2['User_id']          = $id_peminjam;
 						$dwp2['kode_transaksi']   = $transaksi_id;
@@ -752,6 +753,123 @@ class Transaksi extends CI_Controller {
 				}
 
 			}else{
+				$this->session->set_userdata('message','Jumlah pembayaran cicilan tidak sesuai.');
+				$this->session->set_userdata('message_type','error');
+			}
+			redirect('transaksi/detail/?tid=' . $transaksi_id);
+		}
+	}
+
+function submit_cicilan_agri()
+	{
+		// ========= Bayar cicilan Kilat pakai Saldo ============= //
+
+		if($_SERVER["REQUEST_METHOD"] == "POST")
+		{
+			$post = $this->input->post(NULL, TRUE);
+
+			$uid = htmlentities($_SESSION['_bkduser_']);
+
+			$transaksi_id       = trim($post['transaksi_id']);
+			$jml_cicilan_hidden = (trim($post['jml_cicilan'])+trim($post['bayar_denda']));	// jml cicilan asli
+			$jml_cicilan        = trim($post['jml_bayar']);		// jml dari input user
+
+			$filter = explode('.', $jml_cicilan);
+			$jml_bayar = str_replace(',', '', $filter[0]);
+
+			// if (!empty($uid) && $transaksi_id != '' AND $jml_cicilan != '' AND strlen($jml_cicilan) > 4 && $jml_cicilan_hidden == $jml_bayar)
+			// {
+				$nowdate     = date('Y-m-d');
+				$nowdatetime = date('Y-m-d H:i:s');
+				$get_master_wallet = $this->Wallet_model->get_wallet_bymember($uid);
+
+				// if (count($get_master_wallet)>0 && isset($get_master_wallet['Id']) && $get_master_wallet['Amount'] >= $jml_bayar)
+				// {
+
+					$indetail['Master_loan_id']   = antiInjection($transaksi_id);
+					$indetail['Date_repaid']      = $nowdate;
+					$indetail['Amount_repayment'] = antiInjection($jml_bayar);
+					$indetail['Nomor_angsuran']   = 1;
+
+					$detail_id = $this->Content_model->insert_cicilan($indetail);
+
+					if ($detail_id)
+					{
+						// update profil pinjaman tambah total_loan_repayment, kurangi total_loan_outstanding
+						$this->Content_model->update_total_loan_repayment($indetail['Master_loan_id'], $uid, $indetail['Amount_repayment']);
+
+						// master wallet -> kurangi saldo peminjam
+						$this->Wallet_model->kurangi_saldo_wallet($uid, $jml_bayar);
+
+						// detail transaksi wallet 
+						$detail_w['Id']               = $get_master_wallet['Id'];
+						$detail_w['Date_transaction'] = $nowdate;
+						$detail_w['Amount']           = $jml_bayar;
+						$detail_w['Notes']            = 'Pembayaran pinjaman No.'. $indetail['Master_loan_id'];
+						$detail_w['tipe_dana']        = 2;
+						$detail_w['User_id']          = $get_master_wallet['User_id'];
+						$detail_w['kode_transaksi']   = $indetail['Master_loan_id'];
+						$detail_w['balance']          =  $get_master_wallet['Amount'] - $detail_w['Amount'];
+						$this->Wallet_model->insert_detail_wallet($detail_w);
+
+						//tambahan data repayment
+						/*$repayment['tgl_pembayaran'] = $nowdatetime;
+						$repayment['status_cicilan'] = 'lunas';
+						$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $indetail['Master_loan_id']);*/
+						if($jml_bayar == $jml_cicilan_hidden ){
+						$repayment['tgl_pembayaran'] = $nowdatetime;
+						$repayment['status_cicilan'] = 'lunas';
+						$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $repayment['status_cicilan'], $indetail['Master_loan_id'] );	
+						}else{
+							$repayment['tgl_pembayaran'] = $nowdatetime;
+						$repayment['status_cicilan'] = 'belum-lunas';
+						$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $repayment['status_cicilan'], $indetail['Master_loan_id'] );
+						}
+						
+						//batas tambahan repayment
+
+						$get_data_pinjam = $this->Content_model->get_transaksi_pinjam_byid($transaksi_id); // get total yg sdh diangsur
+
+						if ($get_data_pinjam['Total_loan_repayment'] >= $get_data_pinjam['Jml_permohonan_pinjaman_disetujui'])
+						{
+							// ------ status lunas, date close -------
+							$this->Content_model->close_pinjaman($indetail['Master_loan_id']);
+							$this->Content_model->update_status_pendana($indetail['Master_loan_id'], 'received');
+						}
+
+						// ----- pengembalian Saldo ke Pendana ------
+						$list_pendana = $this->Content_model->get_pendanaan_byloan($transaksi_id);						
+
+						foreach ($list_pendana as $dp) {
+							$get_wallet_pendana = $this->Wallet_model->get_wallet_byuser($dp['User_id']);
+
+							$tambah_saldo = $dp['jml_angsuran_ke_pendana'];
+
+							// tambah saldo pendana
+							$this->Wallet_model->update_master_wallet_saldo($dp['User_id'], $tambah_saldo);
+
+							// wallet detail
+							$upw_pendana['Id']               = $get_wallet_pendana['Id'];
+							$upw_pendana['Date_transaction'] = $nowdate;
+							$upw_pendana['Amount']           = $tambah_saldo;
+							$upw_pendana['Notes']            = 'Pengembalian dana '.$dp['Id'].' oleh pinjaman No.'. $transaksi_id;
+							$upw_pendana['tipe_dana']        = 1;
+							$upw_pendana['User_id']          = $dp['User_id'];
+							$upw_pendana['kode_transaksi']   = $indetail['Master_loan_id'];
+							$upw_pendana['balance']          = $get_wallet_pendana['Amount'] + $upw_pendana['Amount'];
+							$this->Wallet_model->insert_detail_wallet($upw_pendana);
+						}
+						// ----- End of pengembalian Saldo ke Pendana ------
+
+						// update table mod_tempo. isi is_paid =1
+						$uptempo['is_paid']     = 1;
+						$uptempo['date_paid']   = $nowdatetime;
+						$this->Content_model->update_table_tempo($indetail['Master_loan_id'], 1, $uptempo);
+						
+						$this->session->set_userdata('message','Sukses melakukan pembayaran.');
+						$this->session->set_userdata('message_type','success');
+					}else{
+				// }
 				$this->session->set_userdata('message','Jumlah pembayaran cicilan tidak sesuai.');
 				$this->session->set_userdata('message_type','error');
 			}

@@ -1325,6 +1325,7 @@ class Content_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from($this->mod_log_transaksi_pinjaman. ' mltj');
 		$this->db->join($this->mod_log_transaksi_pendana. ' mltp','mltp.Master_loan_id=mltj.ltp_Master_loan_id', 'LEFT');
+		$this->db->join($this->tabel_pinjaman. ' tp', 'tp.Master_loan_id=mltj.ltp_Master_loan_id', 'LEFT');
 		$this->db->where('ltp_Master_loan_id', $ordercode);
 		$sql = $this->db->get();
 		$ret = $sql->row_array();

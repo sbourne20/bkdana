@@ -174,40 +174,40 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 
 				// ---------- hitung total pinjaman disetujui ------------			
 				$revenue                = ($pinjaman_rp * $produk['Fee_revenue_share'])/100;
-				$jml_pinjaman_disetujui = $pinjaman_rp - ($revenue + $revenue);
 				$admin_fee              = ($pinjaman_rp * $produk['Secured_loan_fee'])/100;
+				$jml_pinjaman_disetujui = $pinjaman_rp - $admin_fee;
 				// ----------- End hitung total pinjaman disetujui -------------------
 
 				//tambahan baru
 				$type_interest_rate = $produk['type_of_interest_rate'];
 				if($type_interest_rate == 1){//harian
-					$totalweeks   = $produk['Loan_term'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 );
-					$pokok_cicilan = $pinjaman_rp / $totalweeks;
-					$jml_repayment     = round($jml_angsuran);
-					$total_angsuran_rp = $jml_repayment*$totalweeks;
-					$bunga             = $total_angsuran_rp - $pinjaman_rp;
-					$loan_term = $produk['Loan_term'];
-					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
-				}
-				if($type_interest_rate == 2){//bulanan
-					$totalweeks   = 4 * $produk['Loan_term'];
+					$totalweeks   = $loan_data['loan_term_permohonan'];
 					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $totalweeks))/100 );
 					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
 					$total_angsuran_rp = $jml_repayment*$totalweeks;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
-					$loan_term = $produk['Loan_term'];
-					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
+					$loan_term = $loan_data['loan_term_permohonan'];
+					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
 				}
-				if($type_of_interest_rate == 3){//mingguan
-					$totalweeks   = $produk['Loan_term'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 );
+				if($type_interest_rate == 2){//bulanan
+					$totalweeks   = 4 * $loan_data['loan_term_permohonan'];
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $totalweeks))/100 );
 					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
 					$total_angsuran_rp = $jml_repayment*$totalweeks;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
-					$loan_term = $produk['Loan_term'];
+					$loan_term = $loan_data['loan_term_permohonan'];
+					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
+				}
+				if($type_of_interest_rate == 3){//mingguan
+					$totalweeks   = $loan_data['loan_term_permohonan'];
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $totalweeks))/100 );
+					$pokok_cicilan = $pinjaman_rp / $totalweeks;
+					$jml_repayment     = round($jml_angsuran);
+					$total_angsuran_rp = $jml_repayment*$totalweeks;
+					$bunga             = $total_angsuran_rp - $pinjaman_rp;
+					$loan_term = $loan_data['loan_term_permohonan'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." weeks"));
 				}
 				//batas tambahan baru
@@ -229,7 +229,7 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$date_fundraise = date('Y-m-d', strtotime('+ '.$fundraise.' days'));
 				// -------- End of hitung total fundraise date (tgl maximum pendanaan) ------
 
-					$affected = $this->Pinjaman_model->approval_pinjaman_agri($id, $jml_pinjaman_disetujui, $date_fundraise, $total_angsuran_rp, $produk['Fundraising_period']);
+					$affected = $this->Pinjaman_model->approval_pinjaman_agri($id, $jml_pinjaman_disetujui, $date_fundraise, $jml_angsuran, $produk['Fundraising_period']);
 
 
 				if($affected){

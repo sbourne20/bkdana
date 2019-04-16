@@ -1483,19 +1483,6 @@ class Pinjaman extends CI_Controller {
 								$u_detail['images_cf_name']  = $output_file_with_extension;
 							}
 
-							/*if( isset($_FILES['cf_file']['name']) && $_FILES['cf_file']['name'] != ''){
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['cf_file']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_cf_name  	   = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
-								
-								$u_detail['images_cf_name'] = $file_cf_name;
-							}else{
-								$file_cf_name   = '';
-							}*/
 
 							$destination_progress_report = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/progress_report/";
 
@@ -1519,8 +1506,7 @@ class Pinjaman extends CI_Controller {
 							    {
 							        $extension=$mime_split[1];
 							        if($extension=='jpeg')$extension='jpg';
-							        //if($extension=='javascript')$extension='js';
-							        //if($extension=='text')$extension='txt';
+							   
 							        $output_file_with_extension=rand().'.'.$extension;
 							    }
 
@@ -1530,143 +1516,8 @@ class Pinjaman extends CI_Controller {
 								$u_detail['images_progress_report_name']  = $output_file_with_extension;
 							}
 							
-							/*if( isset($_FILES['progress_report_file']['name']) && $_FILES['progress_report_file']['name'] != ''){
-								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['progress_report_file']['name']);
-								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-								$fileExt           = $img_info['extension'];
-								$file_progress_report_name   = $fileName.'.'.$fileExt;
-								// ----- END Process Image Name -----
-								
-								$u_detail['images_progress_report_name'] = $file_progress_report_name;
-							}else{
-								$file_progress_report_name   = '';
-							}*/
-
-							// if( isset($_FILES['hasil_panen_file1']['name']) && $_FILES['hasil_panen_file1']['name'] != ''){
-							// 	// ----- Process Image Name -----
-							// 	$img_info          = pathinfo($_FILES['hasil_panen_file1']['name']);
-							// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-							// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-							// 	$fileExt           = $img_info['extension'];
-							// 	$file_hasil_panen_name1   = $fileName.'.'.$fileExt;
-							// 	// ----- END Process Image Name -----
-								
-							// 	$u_detail['images_hasil_panen_name1'] = $file_hasil_panen_name1;
-							// }else{
-							// 	$file_hasil_panen_name1   = '';
-							// }
-
-							// if( isset($_FILES['hasil_panen_file2']['name']) && $_FILES['hasil_panen_file2']['name'] != ''){
-							// 	// ----- Process Image Name -----
-							// 	$img_info          = pathinfo($_FILES['hasil_panen_file2']['name']);
-							// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-							// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-							// 	$fileExt           = $img_info['extension'];
-							// 	$file_hasil_panen_name2   = $fileName.'.'.$fileExt;
-							// 	// ----- END Process Image Name -----
-								
-							// 	$u_detail['images_hasil_panen_name2'] = $file_hasil_panen_name2;
-							// }else{
-							// 	$file_hasil_panen_name2   = '';
-							// }
-
-							// if( isset($_FILES['hasil_panen_file3']['name']) && $_FILES['hasil_panen_file3']['name'] != ''){
-							// 	// ----- Process Image Name -----
-							// 	$img_info          = pathinfo($_FILES['hasil_panen_file3']['name']);
-							// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-							// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-							// 	$fileExt           = $img_info['extension'];
-							// 	$file_hasil_panen_name3   = $fileName.'.'.$fileExt;
-							// 	// ----- END Process Image Name -----
-								
-							// 	$u_detail['images_hasil_panen_name3'] = $file_hasil_panen_name3;
-							// }else{
-							// 	$file_hasil_panen_name3   = '';
-							// }
-
 							$this->Content_model->update_userdetail($member_data['Id_pengguna'], $u_detail);
 						}
-
-						// Upload Image
-						//$destination_cf = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/cf/";
-						/*
-						if($post['cf_file_hidden']!=''){
-								if (!is_file($destination_cf.$post['cf_file_hidden'])) {
-									mkdir_r($destination_cf);
-								}	
-								if($post['old_cf']!=''){
-									if (is_file($destination_cf.$post['old_cf'])){
-										unlink($destination_cf.$post['old_cf']);
-									}
-								}
-								$data = $_POST['cf_file_hidden'];
-								$splited = explode(',', substr( $data , 5 ) , 2);
-								$mime=$splited[0];
-							    $data=$splited[1];
-
-							    $mime_split_without_base64=explode(';', $mime,2);
-							    $mime_split=explode('/', $mime_split_without_base64[0],2);
-							    if(count($mime_split)==2)
-							    {
-							        $extension=$mime_split[1];
-							        if($extension=='jpeg')$extension='jpg';
-							        //if($extension=='javascript')$extension='js';
-							        //if($extension=='text')$extension='txt';
-							        $output_file_with_extension=rand().'.'.$extension;
-							    }
-
-								$data = base64_decode($data);
-								$file = $destination_cf.$output_file_with_extension;
-								$success = file_put_contents($file, $data);
-								$u_detail['images_cf_name']  = $output_file_with_extension;
-							}*/
-
-
-						/*if(isset($_FILES['cf_file']['name']) && $_FILES['cf_file']['name'] != ''){
-							if (!is_file($destination_cf.$file_cf_name)) {
-								mkdir_r($destination_cf);
-							}
-							move_uploaded_file($_FILES['cf_file']['tmp_name'], $destination_cf.$file_cf_name);
-						}*/
-
-						/*$destination_progress_report = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/progress_report/";
-
-						if(isset($_FILES['progress_report_file']['name']) && $_FILES['progress_report_file']['name'] != ''){
-							if (!is_file($destination_progress_report.$file_progress_report_name)) {
-								mkdir_r($destination_progress_report);
-							}
-							move_uploaded_file($_FILES['progress_report_file']['tmp_name'], $destination_progress_report.$file_progress_report_name);
-						}*/
-
-						// $destination_hasil_panen1 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen1/";
-
-						// if(isset($_FILES['hasil_panen_file1']['name']) && $_FILES['hasil_panen_file1']['name'] != ''){
-						// 	if (!is_file($destination_hasil_panen1.$file_hasil_panen_name1)) {
-						// 		mkdir_r($destination_hasil_panen1);
-						// 	}
-						// 	move_uploaded_file($_FILES['hasil_panen_file1']['tmp_name'], $destination_hasil_panen1.$file_hasil_panen_name1);
-						// }
-
-						// $destination_hasil_panen2 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen2/";
-
-						// if(isset($_FILES['hasil_panen_file2']['name']) && $_FILES['hasil_panen_file2']['name'] != ''){
-						// 	if (!is_file($destination_hasil_panen2.$file_hasil_panen_name2)) {
-						// 		mkdir_r($destination_hasil_panen2);
-						// 	}
-						// 	move_uploaded_file($_FILES['hasil_panen_file2']['tmp_name'], $destination_hasil_panen2.$file_hasil_panen_name2);
-						// }
-
-						// $destination_hasil_panen3 = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/hasil_panen3/";
-
-						// if(isset($_FILES['hasil_panen_file3']['name']) && $_FILES['hasil_panen_file3']['name'] != ''){
-						// 	if (!is_file($destination_hasil_panen3.$file_hasil_panen_name3)) {
-						// 		mkdir_r($destination_hasil_panen3);
-						// 	}
-						// 	move_uploaded_file($_FILES['hasil_panen_file3']['tmp_name'], $destination_hasil_panen3.$file_hasil_panen_name3);
-						// }
-						//}
 
 						$prefixID    = 'PA-';
 						$orderID     = $prefixID.$uid.strtoupper(substr(uniqid(sha1(time().$uid)),0,12));
@@ -1692,7 +1543,7 @@ class Pinjaman extends CI_Controller {
 						$p_pinjam['pinjam_member_id']        = $uid;
 						$p_pinjam['jml_permohonan_pinjaman_awal'] = $p_pinjam['Jml_permohonan_pinjaman'];
 						$p_pinjam['nama_peminjam']           = $member_data['Nama_pengguna'];
-
+						$p_pinjam['loan_term_permohonan']	 = $tenor;
 						$pinjamID =$this->Content_model->insert_profil_pinjaman($p_pinjam);
 
 												//tambahan baru
