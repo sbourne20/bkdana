@@ -12,117 +12,132 @@ class File_loader extends CI_Controller {
         $this->load->library('session');
     }
 
-function get_mime_type($filename) {
-    $idx = explode( '.', $filename );
-    $count_explode = count($idx);
-    $idx = strtolower($idx[$count_explode-1]);
+    function get_mime_type($filename) {
+        $idx = explode( '.', $filename );
+        $count_explode = count($idx);
+        $idx = strtolower($idx[$count_explode-1]);
 
-    $mimet = array( 
-        'txt' => 'text/plain',
-        'htm' => 'text/html',
-        'html' => 'text/html',
-        'php' => 'text/html',
-        'css' => 'text/css',
-        'js' => 'application/javascript',
-        'json' => 'application/json',
-        'xml' => 'application/xml',
-        'swf' => 'application/x-shockwave-flash',
-        'flv' => 'video/x-flv',
+        $mimet = array( 
+            'txt' => 'text/plain',
+            'htm' => 'text/html',
+            'html' => 'text/html',
+            'php' => 'text/html',
+            'css' => 'text/css',
+            'js' => 'application/javascript',
+            'json' => 'application/json',
+            'xml' => 'application/xml',
+            'swf' => 'application/x-shockwave-flash',
+            'flv' => 'video/x-flv',
 
-        // images
-        'png' => 'image/png',
-        'jpe' => 'image/jpeg',
-        'jpeg' => 'image/jpeg',
-        'jpg' => 'image/jpeg',
-        'gif' => 'image/gif',
-        'bmp' => 'image/bmp',
-        'ico' => 'image/vnd.microsoft.icon',
-        'tiff' => 'image/tiff',
-        'tif' => 'image/tiff',
-        'svg' => 'image/svg+xml',
-        'svgz' => 'image/svg+xml',
+            // images
+            'png' => 'image/png',
+            'jpe' => 'image/jpeg',
+            'jpeg' => 'image/jpeg',
+            'jpg' => 'image/jpeg',
+            'gif' => 'image/gif',
+            'bmp' => 'image/bmp',
+            'ico' => 'image/vnd.microsoft.icon',
+            'tiff' => 'image/tiff',
+            'tif' => 'image/tiff',
+            'svg' => 'image/svg+xml',
+            'svgz' => 'image/svg+xml',
 
-        // archives
-        'zip' => 'application/zip',
-        'rar' => 'application/x-rar-compressed',
-        'exe' => 'application/x-msdownload',
-        'msi' => 'application/x-msdownload',
-        'cab' => 'application/vnd.ms-cab-compressed',
+            // archives
+            'zip' => 'application/zip',
+            'rar' => 'application/x-rar-compressed',
+            'exe' => 'application/x-msdownload',
+            'msi' => 'application/x-msdownload',
+            'cab' => 'application/vnd.ms-cab-compressed',
 
-        // audio/video
-        'mp3' => 'audio/mpeg',
-        'qt' => 'video/quicktime',
-        'mov' => 'video/quicktime',
+            // audio/video
+            'mp3' => 'audio/mpeg',
+            'qt' => 'video/quicktime',
+            'mov' => 'video/quicktime',
 
-        // adobe
-        'pdf' => 'application/pdf',
-        'psd' => 'image/vnd.adobe.photoshop',
-        'ai' => 'application/postscript',
-        'eps' => 'application/postscript',
-        'ps' => 'application/postscript',
+            // adobe
+            'pdf' => 'application/pdf',
+            'psd' => 'image/vnd.adobe.photoshop',
+            'ai' => 'application/postscript',
+            'eps' => 'application/postscript',
+            'ps' => 'application/postscript',
 
-        // ms office
-        'doc' => 'application/msword',
-        'rtf' => 'application/rtf',
-        'xls' => 'application/vnd.ms-excel',
-        'ppt' => 'application/vnd.ms-powerpoint',
-        'docx' => 'application/msword',
-        'xlsx' => 'application/vnd.ms-excel',
-        'pptx' => 'application/vnd.ms-powerpoint',
+            // ms office
+            'doc' => 'application/msword',
+            'rtf' => 'application/rtf',
+            'xls' => 'application/vnd.ms-excel',
+            'ppt' => 'application/vnd.ms-powerpoint',
+            'docx' => 'application/msword',
+            'xlsx' => 'application/vnd.ms-excel',
+            'pptx' => 'application/vnd.ms-powerpoint',
 
 
-        // open office
-        'odt' => 'application/vnd.oasis.opendocument.text',
-        'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
-    );
+            // open office
+            'odt' => 'application/vnd.oasis.opendocument.text',
+            'ods' => 'application/vnd.oasis.opendocument.spreadsheet',
+        );
 
-    if (isset( $mimet[$idx] )) {
-     return $mimet[$idx];
-    } else {
-     return 'application/octet-stream';
+        if (isset( $mimet[$idx] )) {
+        return $mimet[$idx];
+        } else {
+        return 'application/octet-stream';
+        }
     }
- }
 
     public function file()
     {
         $this->User_model->has_login();
 
-        // $id = $this->session->flashdata('id');
-
-        $param = urldecode($_GET['p']);
-        $filename = substr($param, strrpos($param,'/')+1);
-        $param_array = explode('/', $param);
-        $paramuid = $param_array[1]; 
-
+        $param = antiInjection($_GET['p']);
         $mime_type_or_return = $this->get_mime_type($param);
-        $filepath = $this->config->item('data_dir') . $param;
+        $filepath = $this->config->item('data_dir') . '?p=' . $param;
 
-        $userfile = $this->Member_model->get_file_name($paramuid);
-        $user_file_name = (strtolower($userfile['userfile']));
-        $user_file_name_array = explode('|',$user_file_name);
+        $url = $filepath;
+        $username = "admin.bkd";
+        $password = "@B3rk4hK3l0l4D4n42018!!";
+        $post_data = array(
+                'p' => $param,
+        );
 
+        $options = array(
+                CURLOPT_URL            => $url,
+                CURLOPT_HEADER         => false,    
+                CURLOPT_VERBOSE        => true,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_SSL_VERIFYPEER => false,    // for https
+                CURLOPT_USERPWD        => $username . ":" . $password,
+                CURLOPT_HTTPAUTH       => CURLAUTH_DIGEST,
+                CURLOPT_POST           => true,
+                CURLOPT_POSTFIELDS     => http_build_query($post_data) 
+        );
 
-        $this->load->helper('file');
+        $ch = curl_init();
 
-        $image_content = read_file($filepath);
+        curl_setopt_array( $ch, $options );
 
-        // Image was not found
-        if($image_content === FALSE)
-        {
-            show_error('Image "'.$filepath.'" could not be found.');
-            return FALSE;
+        try {
+            $raw_response  = curl_exec( $ch );
+
+            // validate CURL status
+            if(curl_errno($ch))
+                throw new Exception(curl_error($ch), 500);
+
+            // validate HTTP status code (user/password credential issues)
+            $status_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+            if ($status_code != 200)
+                throw new Exception("Response with Status Code [" . $status_code . "].", 500);
+        } catch(Exception $ex) {
+            if ($ch != null) curl_close($ch);
+            throw new Exception($ex);
         }
 
-        // Return the image or output it?
-        if($mime_type_or_return === TRUE)
-        {
-            return $image_content;
-        }
+        if ($ch != null) curl_close($ch);
 
-        header('Content-Length: '.strlen($image_content)); // sends filesize header
+       // echo "raw response: " . $raw_response; 
+        header('Content-Length: '.strlen($raw_response)); // sends filesize header
         header('Content-Type: '.$mime_type_or_return); // send mime-type header
         header('Content-Disposition: inline; filename="'.basename($filepath).'";'); // sends filename header
-        exit($image_content); // reads and outputs the file onto the output buffer
-        
+        exit($raw_response); // reads and outputs the file onto the output buffer
+
     }
 }
