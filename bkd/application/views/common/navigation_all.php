@@ -15,7 +15,6 @@
                     <li><a href="<?php echo site_url('pendanaan'); ?>" title="Pendanaan">Pendanaan</a></li>
                     <li><a href="<?php echo site_url('pinjaman'); ?>" title="Pinjaman">Pinjaman</a></li>
                     <li><a href="<?php echo site_url('tentang-kami'); ?>" title="Tentang Kami">Tentang Kami</a></li>
-
                     <?php
                         $login_status = isset($_SESSION['_bkdlog_'])? htmlentities(strip_tags($_SESSION['_bkdlog_'])) : '0';
                         $username = isset($_SESSION['_bkduser_'])? htmlentities(strip_tags($_SESSION['_bkduser_'])) : '0';
@@ -28,7 +27,13 @@
                             <li><a data-toggle="modal" data-target="#modalRegister" href="#">Daftar Peminjam</a></li>
                             <li><a href="<?php echo site_url('register-pendana'); ?>">Daftar Pendana</a></li>
                         </ul>
-                    </li>
+					</li>
+					<li class="tkb90-info">
+						<button type="button" class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Tingkat keberhasilan dalam memfasilitasi penyelesaian kewajiban pinjam meminjam antara Penerima Pinjaman kepada Pemberi Pinjaman dalam jangka waktu sampai dengan 90 hari terhitung sejak jatuh tempo.">
+							TKB90 = 100%
+							<i class="fa fa-question-circle"></i>
+						</button>
+					</li>
 
                     <?php }else{ ?>
 
@@ -46,5 +51,6 @@
                     <?php } ?>
                 </ul>
             </div>
+			
         </div>
         
