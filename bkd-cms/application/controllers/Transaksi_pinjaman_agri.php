@@ -150,39 +150,6 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 		redirect('transaksi_pinjaman_agri');
 	}
 
-	/*function approve()
-	{
-		$this->User_model->has_login();
-
-		$affected = FALSE;
-		$id = antiInjection(trim($this->uri->segment(3)));
-
-		if ( !empty($id) )
-		{
-			// get data pinjaman
-			$loan_data = $this->Pinjaman_model->get_pinjaman_byid($id);
-			$log_pinjaman = $this->Log_transaksi_model->get_log_transaksi_pinjam($id);
-			$jml_pinjaman_disetujui = $log_pinjaman['ltp_total_pinjaman_disetujui'];
-			$jml_angsuran           = $log_pinjaman['ltp_jml_angsuran'];
-
-			if ( count($loan_data) > 0) {
-				$affected = $this->Pinjaman_model->set_approve_pinjaman($id);
-
-				if($affected){
-
-					$this->send_mail($loan_data, $jml_pinjaman_disetujui, $jml_angsuran);
-
-					$this->session->set_userdata('message','Data has been Approved.');
-					$this->session->set_userdata('message_type','success');
-				}
-			}else{
-				$this->session->set_userdata('message','No Data selected.');
-				$this->session->set_userdata('message_type','warning');	
-			}
-		}
-		
-		redirect('transaksi_pinjaman_mikro');
-	}*/
 
 	function approve()
 	{
@@ -207,120 +174,63 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 
 				// ---------- hitung total pinjaman disetujui ------------			
 				$revenue                = ($pinjaman_rp * $produk['Fee_revenue_share'])/100;
-				$jml_pinjaman_disetujui = $pinjaman_rp - ($revenue + $revenue);
 				$admin_fee              = ($pinjaman_rp * $produk['Secured_loan_fee'])/100;
+				$jml_pinjaman_disetujui = $pinjaman_rp - $admin_fee;
 				// ----------- End hitung total pinjaman disetujui -------------------
 
 				//tambahan baru
 				$type_interest_rate = $produk['type_of_interest_rate'];
 				if($type_interest_rate == 1){//harian
-					$totalweeks   = $produk['Loan_term'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 );
-					// $jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
-					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
-					// $pokok_cicilan = $pinjaman_rp / $totalweeks;
-					$pokok_cicilan = $pinjaman_rp;
+					$totalweeks   = $loan_data['loan_term_permohonan'];
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $totalweeks))/100 );
+					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
-					// $total_angsuran_rp = $jml_repayment*$totalweeks;
-					$total_angsuran_rp = 0;
+					$total_angsuran_rp = $jml_repayment*$totalweeks;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
-					$loan_term = $produk['Loan_term'];
+					$loan_term = $loan_data['loan_term_permohonan'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
 				}
 				if($type_interest_rate == 2){//bulanan
-					$totalweeks   = 4 * $produk['Loan_term'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 );
-					// $jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
-					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
-					// $pokok_cicilan = $pinjaman_rp / $totalweeks;
-					$pokok_cicilan = $pinjaman_rp;
+					$totalweeks   = 4 * $loan_data['loan_term_permohonan'];
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $totalweeks))/100 );
+					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
-					// $total_angsuran_rp = $jml_repayment*$totalweeks;
-					$total_angsuran_rp = 0;
+					$total_angsuran_rp = $jml_repayment*$totalweeks;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
-					$loan_term = $produk['Loan_term'];
+					$loan_term = $loan_data['loan_term_permohonan'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
 				}
 				if($type_of_interest_rate == 3){//mingguan
-					$totalweeks   = $produk['Loan_term'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 );
-					// $jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
-					//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
-					// $pokok_cicilan = $pinjaman_rp / $totalweeks;
-					$pokok_cicilan = $pinjaman_rp;
+					$totalweeks   = $loan_data['loan_term_permohonan'];
+					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $totalweeks))/100 );
+					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
-					// $total_angsuran_rp = $jml_repayment*$totalweeks;
-					$total_angsuran_rp = 0;
+					$total_angsuran_rp = $jml_repayment*$totalweeks;
 					$bunga             = $total_angsuran_rp - $pinjaman_rp;
-					$loan_term = $produk['Loan_term'];
+					$loan_term = $loan_data['loan_term_permohonan'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." weeks"));
 				}
 				//batas tambahan baru
 
-				// ------- Hitung jumlah angsuran per minggu --------
-				/*$totalweeks   = 4 * $produk['Loan_term'];
-				$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
-				//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
-				$jml_repayment     = round($jml_angsuran);
-				$total_angsuran_rp = $jml_repayment*$totalweeks;
-				$bunga             = $total_angsuran_rp - $pinjaman_rp;*/
-				// ------- End of Hitung jumlah angsuran per minggu --------
 
-				//$loan_term = $produk['Loan_term'];
-				//$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
 
-				// Frozen FEE
-				$frozen_fee = ($pinjaman_rp * $produk['Fee_revenue_share'])/100;
-
-				// Platform  fee = P*D*C/Jumlah Minggu
-				// $angsuran_platform_fee = ($pinjaman_rp * ($produk['Platform_rate'] * $produk['Loan_term'])/100) / $totalweeks;
 				$angsuran_platform_fee = ($pinjaman_rp * ($produk['Platform_rate'] * $produk['Loan_term'])/100);
 
-				// LO = (P*E*C)/Jumlah Minggu
-				// $angsuran_LO = ($pinjaman_rp * ($produk['Loan_organizer'] * $produk['Loan_term'])/100) / $totalweeks;
+
 				$angsuran_LO = ($pinjaman_rp * ($produk['Loan_organizer'] * $produk['Loan_term'])/100);
 
-				// $lender_fee  = (($pinjaman_rp*$produk['Investor_return'] * $loan_term)/100)/$totalweeks;
-				$lender_fee  = (($pinjaman_rp*$produk['Investor_return'] * $loan_term)/100);
+				$lender_fee  = (($pinjaman_rp*$produk['Investor_return'] * $loan_term)/100)/$totalweeks;
+				// $lender_fee  = (($pinjaman_rp*$produk['Investor_return'] * $loan_term)/100);
 
 				$bunga_cicilan = ($angsuran_platform_fee + $angsuran_LO + $lender_fee );
-				/*echo 'platform fee: '.$angsuran_platform_fee;
-				echo '<br>';
-				echo 'LO: '.$angsuran_LO;
-				echo '<br>';
-				echo $admin_fee;
-				echo '<br>';
-				echo $jml_pinjaman_disetujui;
-				echo '<br>';
-				echo $bunga;
-				echo '<br>';
-				echo 'jml minggu:'. $totalweeks;
-				echo '<br>';
-				echo 'jml angsuran:'. ($jml_repayment);
-				echo '<br>';
-				echo $total_angsuran_rp;
-				echo '<br>';
-				echo $tgl_jatuh_tempo;
-				exit();*/
 
 				// -------- hitung total fundraise date (tgl maximum pendanaan) --------
 				$fundraise = $produk['Fundraising_period'];
 				$date_fundraise = date('Y-m-d', strtotime('+ '.$fundraise.' days'));
 				// -------- End of hitung total fundraise date (tgl maximum pendanaan) ------
 
-				/*echo $id.' | ';
-				echo $jml_pinjaman_disetujui.' | ';
-				echo $date_fundraise.' | '; 
-				echo $total_angsuran_rp.' | ';  
-				echo $produk['Fundraising_period'];
-				exit();*/
+					$affected = $this->Pinjaman_model->approval_pinjaman_agri($id, $jml_pinjaman_disetujui, $date_fundraise, $jml_angsuran, $produk['Fundraising_period']);
 
-				if ($tipe_produk == '3' OR $tipe_produk == '4' OR $tipe_produk == '5') {
-					// pinjaman mikro
-					$affected = $this->Pinjaman_model->approval_pinjaman($id, $jml_pinjaman_disetujui, $date_fundraise, '0', $produk['Fundraising_period']);
-				}
-				//print_r($affected);
-					//exit();
 
 				if($affected){
 
@@ -340,49 +250,20 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 
 					$this->Pinjaman_model->update_log_pinjaman($inlog, $loan_data['Master_loan_id']);
 
-					//tambahan baru insert repayment
-					$k = 1;
-					for ($i=0; $i < $totalweeks; $i++) {  
-
-                    $jmlhari = 7 * $k;
-
-                    //$tempo_denda=date('d/m/Y', time('+1 days', $jatuh_tempo));
-                    //$tempo_denda=date('d/m/Y', time($jatuh_tempo. '+1 days'));
-                    //$tempo_denda1 =date('d-m-Y', strtotime('+1 days', strtotime("$jatuh_tempo1")));
-                    //$cicilan_duedate = date(strtotime("+".$jmlhari." day", $loan_data1['tgl_pinjaman_disetujui']));
-                     $cicilan_duedate1 = date('Y-m-d H:i:s',strtotime($loan_data1['tgl_pinjaman_disetujui']. "+".$jmlhari." day"));
+					$cicilan_duedate1 = date('Y-m-d H:i:s',strtotime($loan_data1['tgl_pinjaman_disetujui']. "+".$jmlhari." day"));
 
 					$nowdatetime = date('Y-m-d H:i:s');
 
 					$repayment['Master_loan_id']		   = $loan_data['Master_loan_id'];
 					$repayment['User_id']				   = $loan_data['User_id'];
 					$repayment['jumlah_cicilan']		   = $jml_repayment;
-					$repayment['notes_cicilan']			   = $k;
+					$repayment['notes_cicilan']			   = 1;
 					$repayment['status_cicilan']		   = 'belum-bayar';
 					$repayment['tgl_jatuh_tempo']		   = $cicilan_duedate1;
 					//$repayment['tgl_pembayaran']		   = $nowdatetime;
 					$repayment['tgl_record_repayment']	   = $nowdatetime;
 					$this->Pinjaman_model->insert_record_repayment($repayment);
-                    
 
-					$k=$k+1; 
-                    }
-					//$this->Pinjaman_model->insert_record_repayment($repayment);
-                    
-					//batas tambahan baru
-
-					// --------- Generate pdf for email attachment ---------
-					/*$memberdata = $this->Member_model->get_usermember_less($loan_data['pinjam_member_id']);
-
-					$output['member']   = $memberdata;
-					$output['tgl']      = parseDateTimeIndex(date('Y-m-d'));
-					$output['ordercode'] = $id;
-					$output['tgl_order'] = date('d/m/Y', strtotime($loan_data['Tgl_permohonan_pinjaman']));
-					$html                = $this->load->view('email/vpinjaman-mikro', $output, TRUE);
-					$attach_file         = $this->create_pdf($html, $id, $loan_data);
-					// -------- End generate pdf for email attachment ------
-
-					$this->send_mail($loan_data, $jml_pinjaman_disetujui, $jml_angsuran, $attach_file);*/
 
 					$this->session->set_userdata('message','Data has been Approved.');
 					$this->session->set_userdata('message_type','success');
