@@ -30,7 +30,7 @@ if ($_SERVER['SERVER_ADDR']=='149.129.213.30' OR $_SERVER['SERVER_ADDR']=='172.3
 	/* dev */
 	$config['base_url'] = $docroot.'://'.$_SERVER['HTTP_HOST'];
 }else{
-	$config['base_url'] = $docroot.'://'.$_SERVER['HTTP_HOST'] . '/bkd-api';
+	$config['base_url'] = $docroot.'://'.$_SERVER['HTTP_HOST'] . '/bkdana/bkd-api';
 }
 /*
 |--------------------------------------------------------------------------

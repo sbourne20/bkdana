@@ -7,10 +7,9 @@ if($_SERVER['HTTP_HOST']=='localhost' or $_SERVER['HTTP_HOST']=='192.168.1.86')
     $config['doc_root'] .= "://".$_SERVER['HTTP_HOST'];
     $config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
-    $config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
-    $config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
-    $config['img_baseurl'] = "http://192.168.1.86/";
-    $config['images_uri']   = $config['img_baseurl'] . "data-bkd/images/";
+    $config['data_dir']    = "http://localhost/bkdana/bkd/fileload-external";
+    $config['img_baseurl'] = $config['doc_root'];
+    $config['images_member_uri'] = $config['doc_root'] ."images-data/member/";
 
 }else if($_SERVER['HTTP_HOST']=='149.129.213.30')
 {
@@ -26,14 +25,14 @@ if($_SERVER['HTTP_HOST']=='localhost' or $_SERVER['HTTP_HOST']=='192.168.1.86')
     $config['doc_root'] = "https://".$_SERVER['HTTP_HOST'];
     $config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
-    $config['data_dir']    = '/var/www/html/data-bkd/';
-    $config['attach_dir']  = '/var/www/html/data-file-bkd/';
-    $config['img_baseurl'] = 'https://bkdana.id/';
-    $config['images_uri']   = $config['img_baseurl'] . "images-data/";
+   $config['data_dir']    = "https://bkdana.id/fileload-external";
+    $config['attach_dir']  = FCPATH . "../../data-file-bkd/";
+    $config['img_baseurl'] = $ishttp ."://".$_SERVER['HTTP_HOST'] .'/';
+    $config['images_member_uri']    = "https://bkdana.id/fileload-external";
 }
 
 // upload path
-$config['images_dir']         = $config['data_dir'] . 'images/';
+$config['images_dir']         = $config['data_dir'];
 $config['kilat_images_dir']   = $config['images_dir'] . 'pinjaman/kilat/';
 $config['mikro_images_dir']   = $config['images_dir'] . 'pinjaman/mikro/';
 $config['pendana_images_dir'] = $config['images_dir'] . 'pendana/';

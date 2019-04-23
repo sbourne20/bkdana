@@ -453,17 +453,17 @@ class Pinjaman extends REST_Controller {
 
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
 
-								if ($_FILES['foto_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'File foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+								// if ($_FILES['foto_file']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'File foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
@@ -474,21 +474,21 @@ class Pinjaman extends REST_Controller {
 								// ----- END Process Image Name -----
 								$u_detail['images_foto_name'] = $file_foto_name;
 							}else{
-								$file_foto_name   = '';
+								$file_foto_name   = 'foto.jpg';
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
-								if ($_FILES['nik_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+								// if ($_FILES['nik_file']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
@@ -504,17 +504,17 @@ class Pinjaman extends REST_Controller {
 
 							if( isset($_FILES['foto_surat_ket_kerja']['name']) && $_FILES['foto_surat_ket_kerja']['name'] != ''){
 
-								if ($_FILES['foto_surat_ket_kerja']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Surat Keterangan Kerja maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+								// if ($_FILES['foto_surat_ket_kerja']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto Surat Keterangan Kerja maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_surat_ket_kerja']['name']);
@@ -530,17 +530,17 @@ class Pinjaman extends REST_Controller {
 
 							if( isset($_FILES['foto_slip_gaji']['name']) && $_FILES['foto_slip_gaji']['name'] != ''){
 
-								if ($_FILES['foto_slip_gaji']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Slip Gaji maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+								// if ($_FILES['foto_slip_gaji']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto Slip Gaji maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_slip_gaji']['name']);
@@ -556,17 +556,17 @@ class Pinjaman extends REST_Controller {
 
 							if( isset($_FILES['foto_pegang_idcard']['name']) && $_FILES['foto_pegang_idcard']['name'] != ''){
 
-								if ($_FILES['foto_pegang_idcard']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Pegang ID Card maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+								// if ($_FILES['foto_pegang_idcard']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto Pegang ID Card maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_pegang_idcard']['name']);
@@ -666,7 +666,7 @@ class Pinjaman extends REST_Controller {
 
 									unlink($destination_foto.$memberdata['images_foto_name']);
 
-									$this->resize_image($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);
+									// $this->resize_image($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);
 									
 									move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);
 	
