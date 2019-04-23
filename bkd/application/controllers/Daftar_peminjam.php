@@ -465,7 +465,6 @@ class Daftar_peminjam extends CI_Controller {
 						// }
 						//end of tambahan 23 Januari 2019
 						
-
 						$memberpinjam = $this->Content_model->get_pinjaman_member($tbl_penawaran['Master_loan_id']);
 
 						//udpate 24 januari 2019
