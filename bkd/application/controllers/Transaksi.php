@@ -889,7 +889,7 @@ class Transaksi extends CI_Controller {
 					foreach ($list_pendana as $dp) {
 						$get_wallet_pendana = $this->Wallet_model->get_wallet_byuser($dp['User_id']);
 
-						$tambah_saldo = $dp['jml_angsuran_ke_pendana'];
+						$tambah_saldo = $dp['jml_angsuran_ke_pendana'] + $dp['jml_pendanaan'];
 
 						// tambah saldo pendana
 						$this->Wallet_model->update_master_wallet_saldo($dp['User_id'], $tambah_saldo);

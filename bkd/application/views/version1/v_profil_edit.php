@@ -145,18 +145,6 @@ if ($memberdata['foto_pegang_ktp'] != '')
 										<div class="form-group">
 											<label for="handphone">* Alamat sesuai dengan KTP</label>
 											<input type="text" class="form-control" name="alamat" id="alamat" value="<?php echo $memberdata['Alamat']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Alamat harus diisi!" >
-										</div>
-										<div class="form-group">
-											<label for="handphone">* Kota sesuai dengan KTP</label>
-											<select class="form-control" name="kota" id="kota" value="<?php echo $memberdata['Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
-											<option value=""> -- Pilih Kota--</option>
-											<?php foreach ($kota as $key) {
-											?>
-											<option value="<?php echo $key['Option_id'] ?>" data-member="<?php echo $key['Option_id']; ?>"> <?php echo $key['Option_label']; ?> </option>
-											<?php
-											}
-											?>
-											</select>
 										</div>  
 										
 										<div class="form-group">
@@ -164,6 +152,19 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											<select class="form-control" name="provinsi" id="provinsi" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
 											<option value=""> -- Pilih Provinsi--</option>
 											<?php foreach ($provinsi as $key) {
+											?>
+											<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Provinsi']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> </option>
+											<?php
+											}
+											?>
+											</select>
+										</div>
+
+										<div class="form-group">
+											<label for="handphone">* Kota sesuai dengan KTP</label>
+											<select class="form-control" name="kota" id="kota" data-value="<?php echo $memberdata['Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
+											<option value=""> -- Pilih Kota--</option>
+											<?php foreach ($kota as $key) {
 											?>
 											<option value="<?php echo $key['Option_id'] ?>" data-member="<?php echo $key['Option_id']; ?>"> <?php echo $key['Option_label']; ?> </option>
 											<?php
