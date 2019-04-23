@@ -125,7 +125,7 @@ function edit_(id) {
     window.location.href = base_uri  + '/edit/' + id;
 }
 function detail_(id) {
-    window.location.href = base_uri  + '/detail_transaksi/' + id;
+    window.location.href = base_uri  + '/detail_transaksi/' + id; 
 }
 function approve_(id) {
   var c= confirm("Approve this Transaction?");

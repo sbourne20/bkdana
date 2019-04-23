@@ -269,11 +269,19 @@ class User_model extends CI_Model
 
 		$CU_role_id = $this->session->userdata('role');
 
+		// echo 'role ID '.$CU_role_id;
+		// exit();
+
 		if ($CU_role_id != 1) {	// 1. Super Admin
 			$acc        = $this->get_user_access($CU_role_id);
 			$acc        = array_merge($default_access,$acc);
 
+		//{echo 'acc '.$acc;
+		//exit()};
 			//_d($acc);exit();
+
+			// {echo 'link'.$default_access;
+			// exit()};
 
 			if( ! isset($acc[$controller.'/'.$action]) ){
 				$this->session->set_userdata('message',' to access / take action on the page that you are headed.');
@@ -295,6 +303,9 @@ class User_model extends CI_Model
 		if(count($res)>0){
 			foreach($res as $row){
 				$acc[$row->access] = $row->access;
+			
+				//{echo 'access'.$acc[$row->access];
+				//exit()};
 			}
 		}
 		return $acc;
