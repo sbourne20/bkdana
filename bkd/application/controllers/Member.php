@@ -29,6 +29,148 @@ class Member extends CI_Controller {
 	    return base64_decode( $output_file ); 
 	}
 	
+		public function ubah_password()
+	{
+		//error_reporting(1);
+		$this->Content_model->has_login();
+
+		if ($this->uri->segment(1) == 'ubah-password') {
+			$data['page_title'] = 'Ubah Password';
+		}else{
+			$data['page_title'] = 'Halaman Ubah Password';			
+		}
+
+		$data['top_css']   = '';
+		$data['top_js']    = '';
+		$data['bottom_js'] = '';
+
+		$data['top_css'] .= add_css('js/validationengine/validationEngine.jquery.css');
+		$data['top_css'] .= add_css('js/bootstrap-datepicker/css/bootstrap-datepicker.css');
+		$data['top_css'] .= add_css('js/alertify/css/alertify.min.css');
+		$data['top_css'] .= add_css('js/alertify/css/themes/default.min.css');
+		$data['top_css'] .= add_css("js/fileinput/fileinput.min.css");
+
+		$data['bottom_js'] .= add_js('js/validationengine/languages/jquery.validationEngine-en.js');
+		$data['bottom_js'] .= add_js('js/validationengine/jquery.validationEngine.js');
+		$data['bottom_js'] .= add_js('js/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
+		$data['bottom_js'] .= add_js('js/jqueryvalidation/dist/jquery.validate.min.js');
+		$data['bottom_js'] .= add_js('js/autoNumeric/autoNumeric.min.js');
+		$data['bottom_js'] .= add_js('js/alertify/alertify.min.js');
+		$data['bottom_js'] .= add_js("js/fileinput/plugins/piexif.min.js");
+		$data['bottom_js'] .= add_js("js/fileinput/fileinput.min.js");
+		$data['bottom_js'] .= add_js('js/validation-init.js');
+		$data['bottom_js'] .= add_js('js/autoNumeric-init.js');
+		$data['bottom_js'] .= add_js('js/date-init.js');
+		$data['bottom_js'] .= add_js('js/fileinput-edit.js');
+		$data['bottom_js'] .= add_js('js/dsn.js');
+		$data['bottom_js'] .= add_js('js/exif-js-master/exif.js');
+		$data['bottom_js'] .= add_js('js/validation-init.js');
+		//$data['bottom_js'] .= add_js('js/ImageTools.js');
+
+
+		$data['title'] = $this->M_settings->title;
+		$data['meta_tag'] = $this->M_settings->meta_tag_noindex('bkdana.com', 'website bkdana.com');
+
+		$data['nama'] = htmlentities($_SESSION['_bkdname_']);
+		$logintype    = htmlentities($_SESSION['_bkdtype_']); // 1.peminjam, 2.pendana
+		$data['logintype'] = $logintype;
+		
+		$uid = htmlentities($_SESSION['_bkduser_']);
+		$data['memberid']  = $uid;
+
+		$data['memberdata'] 	= $this->Member_model->user_alldata($uid);
+		$data['total_pinjaman'] = $this->Content_model->get_jml_pinjam($uid);
+		$data['total_invest']   = $this->Content_model->get_jml_invest($uid);
+		$data['total_saldo']    = $this->Content_model->get_total_saldo($uid);
+
+		//_d($data['memberdata']);
+		$data['pages']    = 'v_ganti_password';
+		$this->load->view('template', $data);
+	}
+
+		function submit_ubah_password()
+	{
+
+		if($_SERVER["REQUEST_METHOD"] == "POST")
+		{	
+			$this->load->library('encryption');
+
+			$post = $this->input->post(NULL, TRUE);
+
+			$uid        		= antiInjection(htmlentities(trim($_SESSION['_bkduser_'])));
+			$logintype  		= htmlentities($_SESSION['_bkdtype_']); 
+			$oldpassword        = trim($post['oldpassword']);
+			$newpassword        = trim($post['newpassword']);
+			$confirmpassword    = trim($post['confirmpassword']);
+			
+
+
+			$getoldpassword 	= $this->Member_model->user_alldata($uid);
+
+			$verify = password_verify(base64_encode(hash('sha256', $oldpassword, true)), $getoldpassword['mum_password']);
+
+			if($verify==1){
+				if (antiInjection($newpassword) == antiInjection($confirmpassword) && strlen($newpassword) >= 6 ) 
+				{
+			
+					$userID    = antiInjection(htmlentities(trim($_SESSION['_bkduser_'])));
+
+					if (!empty($userID))
+					{
+
+							$newpass = password_hash(base64_encode(hash('sha256', ($newpassword), true)), PASSWORD_DEFAULT);
+				            $updated = $this->Member_model->update_password_member($newpass, $userID);
+
+				            if ($updated) {
+				            	$this->session->set_userdata('message','Sukses ubah password');
+								$this->session->set_userdata('message_type','success');
+				            	redirect('dashboard');
+					            exit();
+				            }else{
+				            	$this->session->set_userdata('message','Gagal ubah password');
+								$this->session->set_userdata('message_type','error');
+				            	redirect('ubah-password');
+					            exit();
+				            }
+		       		//}
+
+					}else{
+						
+						$this->session->set_userdata('message','Gagal ubah password');
+						$this->session->set_userdata('message_type','error');
+						redirect('ubah-password');
+			            exit();
+					}
+				}
+			}else{
+
+				$this->session->set_userdata('message','Pasword lama tidak cocok.');
+			 	$this->session->set_userdata('message_type','error');
+			 	redirect('ubah-password');
+				exit();
+			}
+
+			if ($newpassword == '' OR $confirmpassword == '' OR $newpassword != $confirmpassword)
+			{
+				$this->session->set_userdata('message','New Password dan Re-type New Password tidak sama.');
+				$this->session->set_userdata('message_type','error');
+				redirect('ubah-password');
+				exit();
+
+			}else if (strlen($newpassword) < 6)
+			{
+				$this->session->set_userdata('message', 'isi Password minimal 6 karakter.');
+				redirect('ubah-password');
+				exit();
+			}
+			else if(preg_match("/^.*(?=.{6,})(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).*$/", $newpassword) === 0) 
+			{
+				$this->session->set_userdata('message','Password harus terdiri dari huruf dan angka, serta minimal 1 huruf besar');
+				redirect('ubah-password');
+			}		
+		}	
+	}
+
 	public function ubah_profil()
 	{
 		//error_reporting(1);
@@ -81,6 +223,8 @@ class Member extends CI_Controller {
 		$data['total_pinjaman'] = $this->Content_model->get_jml_pinjam($uid);
 		$data['total_invest']   = $this->Content_model->get_jml_invest($uid);
 		$data['total_saldo']    = $this->Content_model->get_total_saldo($uid);
+		$data['provinsi'] = $this->Content_model->get_all_province();
+		$data['kota'] = $this->Content_model->get_all_cities();
 
 		//_d($data['memberdata']);
 		$data['pages']    = 'v_profil_edit';
@@ -834,23 +978,43 @@ class Member extends CI_Controller {
 						$this->Content_model->update_userdetail($userID, $u_detail);
 						
 						// profile_geografi
-						$u_geo['Agama']       = antiInjection(trim($post['agama']));
-						$u_geo['Alamat']      = antiInjection(trim($post['alamat']));
-						$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
-						$u_geo['Kota']        = antiInjection(trim($post['kota']));
-						$u_geo['Provinsi']    = antiInjection(trim($post['provinsi']));
-						$u_geo['Check_Domisili']	   = antiInjection(trim($post['checkdomisili']));
-						if (antiInjection(trim($post['checkdomisili']))=='1'){
-							$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamat']));
-							$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodepos']));
-							$u_geo['Kota_Domisili']        = antiInjection(trim($post['kota']));
-							$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsi']));
+						if($logintype=='2'){
+
+							$u_geo['Alamat']      = antiInjection(trim($post['alamat']));
+							$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
+							$u_geo['Kota']        = antiInjection(trim($post['kota']));
+							$u_geo['Provinsi']    = antiInjection(trim($post['provinsi']));
 						}else{
-							$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamatdomisili']));
-							$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodeposdomisili']));
-							$u_geo['Kota_Domisili']        = antiInjection(trim($post['kotadomisili']));
-							$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsidomisili']));
-						}		
+
+							if ($memberdata['mum_type_peminjam']=='3'){
+
+							$u_geo['Alamat']      = antiInjection(trim($post['alamat']));
+							$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
+							$u_geo['Kota']        = antiInjection(trim($post['kota']));
+							$u_geo['Provinsi']    = antiInjection(trim($post['provinsi']));
+							$u_geo['Agama']       = antiInjection(trim($post['agama']));
+							$u_geo['Check_Domisili']	   = antiInjection(trim($post['checkdomisili']));
+							}else{
+
+							$u_geo['Alamat']      = antiInjection(trim($post['alamat']));
+							$u_geo['Kodepos']     = antiInjection(trim($post['kodepos']));
+							$u_geo['Kota']        = antiInjection(trim($post['kota']));
+							$u_geo['Provinsi']    = antiInjection(trim($post['provinsi']));
+							}
+						}
+							if ($memberdata['mum_type_peminjam']=='3'){
+							if (antiInjection(trim($post['checkdomisili']))=='1'){
+								$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamat']));
+								$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodepos']));
+								$u_geo['Kota_Domisili']        = antiInjection(trim($post['kota']));
+								$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsi']));
+							}else{
+								$u_geo['Alamat_Domisili']      = antiInjection(trim($post['alamatdomisili']));
+								$u_geo['Kodepos_Domisili']     = antiInjection(trim($post['kodeposdomisili']));
+								$u_geo['Kota_Domisili']        = antiInjection(trim($post['kotadomisili']));
+								$u_geo['Provinsi_Domisili']    = antiInjection(trim($post['provinsidomisili']));
+							}
+							}			
 
 						$this->Content_model->update_profil_geografi($userID, $u_geo);
 

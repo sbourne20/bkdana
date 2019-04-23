@@ -34,6 +34,7 @@
                                 <ul class="menu-profile">
                                     <li <?php echo ($currentpage == 'dashboard')? 'class="active"' : ''; ?>><a href="<?php echo site_url('dashboard'); ?>" title="Dashboard">Dashboard</a></li>
                                     <li <?php echo ($currentpage == 'ubah-profil')? 'class="active"' : ''; ?>><a href="<?php echo site_url('ubah-profil'); ?>" title="Ubah Profil">Ubah Profil</a></li>
+                                     <li <?php echo ($currentpage == 'ubah-password')? 'class="active"' : ''; ?>><a href="<?php echo site_url('ubah-password'); ?>" title="Ubah Password">Ubah Password</a></li>
                                     <li <?php echo ($currentpage == 'transaksi')? 'class="active"' : ''; ?>><a href="<?php echo site_url('transaksi'); ?>" title="Transaksi">Transaksi</a></li>
 
                                     <?php if ($logintype == '2') { ?>

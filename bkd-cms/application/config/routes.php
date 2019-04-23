@@ -64,12 +64,22 @@ $route['transaksi-pinjaman-kilat-draft/approve/(.*)'] = 'transaksi_pinjaman_kila
 $route['transaksi-pinjaman-kilat-draft/submit_edit']  = 'transaksi_pinjaman_kilat_draft/submit_edit';
 $route['transaksi-pinjaman-kilat-draft/detail_transaksi/(.*)'] = 'transaksi_pinjaman_kilat_draft/detail_transaksi/$1';
 
-$route['transaksi-pinjaman-mikro-draft']              = 'transaksi_pinjaman_mikro_draft/index';
 $route['transaksi-pinjaman-mikro-draft/json']         = 'transaksi_pinjaman_mikro_draft/json';
 $route['transaksi-pinjaman-mikro-draft/edit/(.*)']    = 'transaksi_pinjaman_mikro_draft/edit/$1';
 $route['transaksi-pinjaman-mikro-draft/approve/(.*)'] = 'transaksi_pinjaman_mikro_draft/approve/$1';
 $route['transaksi-pinjaman-mikro-draft/submit_edit']  = 'transaksi_pinjaman_mikro_draft/submit_edit';
 $route['transaksi-pinjaman-mikro-draft/detail_transaksi/(.*)'] = 'transaksi_pinjaman_mikro_draft/detail_transaksi/$1';
+
+
+// $route['transaksi-pinjaman-mikro']              = 'transaksi_pinjaman_mikro/index';
+// $route['transaksi-pinjaman-mikro/json']         = 'transaksi_pinjaman_mikro/json';
+// $route['transaksi-pinjaman-mikro/edit/(.*)']    = 'transaksi_pinjaman_mikro/edit/$1';
+// $route['transaksi-pinjaman-mikro/approve/(.*)'] = 'transaksi_pinjaman_mikro/approve/$1';
+// $route['transaksi-pinjaman-mikro/submit_edit']  = 'transaksi_pinjaman_mikro_draft/submit_edit';
+// $route['transaksi-pinjaman-mikro/detail_transaksi/(.*)'] = 'transaksi_pinjaman_mikro/detail_transaksi/$1';
+
+
+
 //$route['cronjob/find_expired_pinjaman_kilat/(.*)'] = 'cronjob/find_expired_pinjaman_kilat';
 
 //agri

@@ -126,6 +126,10 @@ $route['ubah-profil']        = 'member/ubah_profil';
 $route['lengkapi-profil']    = 'member/ubah_profil';
 $route['submit-ubah-profil'] = 'member/submit_ubah_profil';
 
+//ubah password
+$route['ubah-password']        = 'member/ubah_password';
+$route['submit-ubah-password']   = 'member/submit_ubah_password';
+
 $route['top-up']             = 'top_up/index';
 
 $route['daftar-peminjam']            = 'daftar_peminjam/index';

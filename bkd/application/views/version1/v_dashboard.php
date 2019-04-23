@@ -95,7 +95,7 @@ if ($memberdata['mum_type'] == '1'){
                                                     <th>Nama Transaksi</th>
                                                     <th>Jumlah</th>
                                                     <th>Total</th>
-                                                    <th>&nbsp;</th>
+                                                    <!-- <th>&nbsp;</th> -->
                                                     <th>&nbsp;</th>
                                                 </tr>
                                             </thead> 
@@ -214,14 +214,14 @@ if ($memberdata['mum_type'] == '1'){
                                                     </td>
                                                     <td><?php echo number_format($tra['Amount']); ?></td>
                                                     <td><?php echo number_format($tra['total_approve']); ?></td>
-                                                    <td>
+                                                    <!-- <td>
                                                         <a href="<?php echo $link_detail_approve; ?>" class="btn btn-action" title="Detil Transaksi">
                                                             <i class="far fa-clipboard"></i>
                                                         </a>
-                                                    </td>
+                                                    </td> -->
 
                                                     <?php if ($tra['transaksi_status'] == 'user' ) { ?>
-                                                    <td><a href="<?php echo $link_detail_approve; ?>" class="btn btn-green" title="Bayar">Approve</a></td>
+                                                    <td><a href="<?php echo $link_detail_approve; ?>" class="btn btn-green" title="Approve">Approve</a></td>
                                                     
                                                     <?php }else{ ?>
                                                     <td><div class="<?php echo $btn_class; ?>"> <?php echo $stat_title; ?> </div></td>
