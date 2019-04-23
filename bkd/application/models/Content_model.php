@@ -1320,6 +1320,29 @@ class Content_model extends CI_Model
 		return $this->db->insert_id();
 	}
 
+	 function get_product_by($id)
+	{
+		$this->db->select('*');
+		$this->db->from('product');
+		$this->db->where('Product_id', $id);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+
+		$sql->free_result();
+		return $ret;
+	}
+
+	function get_tabel_pinjaman($ordercode)
+	{
+		$this->db->select('*');
+		$this->db->from($this->tabel_pinjaman);
+		$this->db->where('Master_loan_id', $ordercode);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->free_result();
+		return $ret;
+	}
+
 	function get_log_transaksi_pinjam($ordercode)
 	{
 		$this->db->select('*');
@@ -1677,5 +1700,25 @@ class Content_model extends CI_Model
 		$ret = $sql->row_array();
 		$sql->free_result();
 		return $ret;*/
+	}
+
+	function get_all_province()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 2);
+		$this->db->order_by('Option_label', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_cities()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 1);
+		$this->db->order_by('Option_label', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
 	}
 }

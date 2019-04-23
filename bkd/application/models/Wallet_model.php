@@ -282,7 +282,23 @@ class Wallet_model extends CI_Model
 		$kueri = $this->db->query($sql);
 		return $this->db->affected_rows();
 	}
+	function insert_record_repayment($data)
+	{
+		$this->db->insert('record_repayment', $data);
+		//$this->db->insert($this->record_pinjaman, $data);
+		return $this->db->insert_id();
+	}
 
+	function update_repayment_agri($data, $id)
+	{
+		//$id   = $this->db->escape_str($id);
+		//$data = $this->db->escape_str($data);
+
+		$sql = "UPDATE profil_permohonan_pinjaman SET Total_loan_outstanding = '".$data."' WHERE Master_loan_id= '".$id."' ";
+
+		$kueri = $this->db->query($sql);
+		return $this->db->affected_rows();
+	}
 	/*public function update_record_repayment1($data, $data1, $id)
 	{
 		$this->db->where('Master_loan_id', $id);
