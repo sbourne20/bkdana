@@ -223,6 +223,8 @@ class Member extends CI_Controller {
 		$data['total_pinjaman'] = $this->Content_model->get_jml_pinjam($uid);
 		$data['total_invest']   = $this->Content_model->get_jml_invest($uid);
 		$data['total_saldo']    = $this->Content_model->get_total_saldo($uid);
+		$data['provinsi'] = $this->Content_model->get_all_province();
+		$data['kota'] = $this->Content_model->get_all_cities();
 
 		//_d($data['memberdata']);
 		$data['pages']    = 'v_profil_edit';
