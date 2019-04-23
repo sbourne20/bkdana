@@ -24,7 +24,7 @@ class Member_model extends CI_Model
 		$iFilteredTotal = 0;
 		$_sql_where 	= array("mum_type={$type}", "(mum_status='1' OR mum_status='2')");
 		$sql_where 		= '';
-		$cols 			= array( "m.id_mod_user_member", "Nama_pengguna", "mum_email", "Mobileno", "p.user_group_name", "Tgl_record", "peringkat_pengguna", "mum_status", "");
+		$cols 			= array( "m.id_mod_user_member", "Nama_pengguna", "mum_email", "Mobileno", "m.mum_type_peminjam", "p.user_group_name", "Tgl_record", "peringkat_pengguna", "mum_status", "");
 		$sort 			= "desc";
 		
 		// get search value (if any)
@@ -47,6 +47,7 @@ class Member_model extends CI_Model
 					OR UCASE(Mobileno) LIKE '%".strtoupper($this->db->escape_str($search))."%'
 					OR UCASE(mum_email) LIKE '%".strtoupper($this->db->escape_str($search))."%'
 					OR UCASE(user_group_name) LIKE '%".strtoupper($this->db->escape_str($search))."%'
+					
 				)
 			";
 		}
@@ -67,8 +68,10 @@ class Member_model extends CI_Model
 
 		$q->free_result();
 
-		$sql = " 	SELECT m.id_mod_user_member, mum_email, mum_type, mum_status, mum_telp, mum_nomor_rekening, mum_usaha,
-					Tgl_record, Id_penyelenggara, u.Id_pengguna, p.id_user_group, Nama_pengguna, peringkat_pengguna, skoring,
+
+		$sql = " 	SELECT m.id_mod_user_member, mum_email, mum_type, mum_status, mum_telp, mum_nomor_rekening, m.mum_type_peminjam,
+					Tgl_record, u.Id_pengguna, p.id_user_group, Nama_pengguna, peringkat_pengguna, skoring,
+
 					Mobileno, p.user_group_name
 					FROM mod_user_member m 
 					LEFT JOIN {$this->user_ojk} u ON(u.id_mod_user_member=m.id_mod_user_member)
@@ -114,7 +117,7 @@ class Member_model extends CI_Model
 		$iFilteredTotal = 0;
 		$_sql_where 	= array();
 		$sql_where 		= '';
-		$cols 			= array( "m.id_mod_user_member", "Nama_pengguna", "mum_email", "Mobileno", "p.user_group_name", "Tgl_record", "peringkat_pengguna", "mum_status", "");
+		$cols 			= array( "m.id_mod_user_member", "Nama_pengguna", "mum_email", "Mobileno", "m.mum_type_peminjam","p.user_group_name", "Tgl_record", "peringkat_pengguna", "mum_status", "");
 		$sort 			= "desc";
 		
 		// get search value (if any)
@@ -156,7 +159,7 @@ class Member_model extends CI_Model
 
 		$q->free_result();
 
-		$sql = " 	SELECT m.id_mod_user_member, mum_email, mum_type, mum_status, mum_telp, mum_status, mum_nomor_rekening, mum_usaha,
+		$sql = " 	SELECT m.id_mod_user_member, mum_email, mum_type, mum_status, mum_telp, mum_status, mum_nomor_rekening, m.mum_type_peminjam,
 					Tgl_record, Id_penyelenggara, u.Id_pengguna, p.id_user_group, Nama_pengguna, peringkat_pengguna, skoring,
 					Mobileno, p.user_group_name, mum_create_date
 					FROM mod_user_member m 
@@ -522,5 +525,55 @@ class Member_model extends CI_Model
 	}
 
 	// batas tambahan baru
+
+	function get_usergroup()
+	{
+		$this->db->select('*');
+		$this->db->from($this->user_ojk);
+		$this->db->order_by('Id_pengguna', 'asc');
+		//$this->db->where('Id_pengguna', $id);
+		//$this->db->limit(1);
+		//$query 	= $this->db->get();
+		//$data 	= $query->row_array();
+		//return $data;
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_count_group($idgroup)
+	{
+		if($idgroup == 0){
+			return array('itotal' => '----');
+		}
+		else{
+			$this->db->select('count(*) as itotal');
+			$this->db->from($this->user_ojk);
+			$this->db->where('id_user_group', $idgroup);
+			
+
+			$sql = $this->db->get();
+			$ret = $sql->row_array();
+			$sql->free_result();
+			return $ret;
+		}
+	}
+
+	function get_file_name($id)
+	{
+		$this->db->select("CONCAT(images_foto_name, '|',
+			images_ktp_name, '|',
+			images_usaha_name, '|',
+			images_usaha_name2, '|',
+			images_usaha_name3, '|',
+			images_usaha_name4, '|',
+			images_usaha_name5) as userfile", FALSE);
+		$this->db->from($this->user_ojk_detail);
+		$this->db->where('Id_pengguna', $id);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->result_array();
+		return $ret;
+	}
+
 
 }

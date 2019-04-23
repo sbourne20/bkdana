@@ -76,7 +76,7 @@ $query_builder = TRUE;
 if($_SERVER['HTTP_HOST']=='localhost') {
 	$db_host = 'localhost';
 	$db_user = 'root';
-	$db_pass = 'aksesdb';
+	$db_pass = '';
 }else{
 	/* LIVE*/
 	$db_host = 'rm-d9jxms81910c50lvi.mysql.ap-southeast-5.rds.aliyuncs.com';

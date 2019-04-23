@@ -6,25 +6,27 @@ $config['doc_root']   .= str_replace('index.php', '', isset($_SERVER['DOCUMENT_U
 
 if($_SERVER['HTTP_HOST']=='localhost')
 {
-	$config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
-	$config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
+	//$config['data_dir']    = FCPATH . "../../../data-bkd/";
+	$config['data_dir']    = "http://localhost/bkdana/bkd/fileload-external";
+	$config['data_dir']    = "http://localhost/bkdana/bkd/fileload-external";
 	$config['img_baseurl'] = $config['doc_root'];
 	$config['images_member_uri'] = $config['doc_root'] ."images-data/member/";
-
 }else{	// LIVE
-	$config['data_dir']    = '/var/www/html/data-bkd/';
-	$config['attach_dir']  = '/var/www/html/data-file-bkd/';
+	$config['data_dir']    = "https://bkdana.id/fileload-external/";
+	$config['attach_dir']  = FCPATH . "../../data-file-bkd/";
 	$config['img_baseurl'] = $ishttp ."://".$_SERVER['HTTP_HOST'] .'/';
-	$config['images_member_uri']    = "https://bkdana.id/images-data/member/";
+	$config['images_member_uri']    = "https://bkdana.id/fileload-external";
 }
 
 // ----- Upload Images dir -----
-$config['images_dir']           = $config['data_dir'] . 'images/';
+$config['images_dir']           = $config['data_dir'];
 $config['product_images_dir']   = $config['images_dir'] . 'product/';
 $config['category_images_dir']  = $config['images_dir'] . 'category/';
 $config['pages_images_dir']     = $config['images_dir'] . 'pages/';
 $config['logo_dir']             = $config['images_dir'] . 'logo/';
-$config['pendana_images_dir']   = $config['images_dir'] . 'pendana/';
+$config['pendan
+
+a_images_dir']   = $config['images_dir'] . 'pendana/';
 
 
 // echo $config['pages_images_dir'];

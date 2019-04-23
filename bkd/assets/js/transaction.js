@@ -28,6 +28,35 @@ $(document).ready(function(){
 		 return false;
 	});
 
+	$('#approve_agri').click(function(e) {
+		 e.preventDefault();
+		 alertify.confirm('Konfirmasi', 'Anda akan menyetujui hasil Analisis terhadap pinjaman anda . Lanjutkan?  ', 
+		 	function(){ 
+		 		$.LoadingOverlay("show");
+		 		$('#approve_agri').prop('disabled', true).addClass('btn btn-default');
+			 	$( "#form_approval" ).submit(); 
+			 }, 
+			 function(){ 
+			 	$('#modalApprove').modal('hide');
+			 });
+		 return false;
+	});
+
+	$('#approve_akad').click(function(e) {
+		 e.preventDefault();
+		 alertify.confirm('Konfirmasi', 'Anda akan menyetujui persetujuan Akad . Lanjutkan?  ', 
+		 	function(){ 
+		 		$.LoadingOverlay("show");
+		 		$('#approve_akad').prop('disabled', true).addClass('btn btn-default');
+			 	$( "#form_akad" ).submit(); 
+			 }, 
+			 function(){ 
+			 	$('#modalAkad').modal('hide');
+			 });
+		 return false;
+	});
+
+
 	$('#submit_topup').click(function(e) {
 		 e.preventDefault();
 		 var valid = $("#form_topup").validationEngine('validate');
@@ -59,4 +88,6 @@ $(document).ready(function(){
 			 return false;
 		}
 	});
+
+
 });

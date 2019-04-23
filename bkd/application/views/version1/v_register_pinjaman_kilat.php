@@ -76,7 +76,7 @@
                                                     </div>
                                                     <div class="form-group">
                                                         <label for="handphone">* Email</label>
-                                                        <input type="text" class="form-control" name="email" id="email" value="" required>
+                                                        <input type="text" class="form-control" name="email" id="email" value="" >
                                                     </div>  
                                                     <div class="form-group">
                                                         <label for="handphone">* Nomor Telepon</label>
@@ -217,7 +217,7 @@
                             <p class="form-control-static" id="m_telp"></p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="col-sm-5 control-label">Password</label>
                         <div class="col-sm-6">
                             <p class="form-control-static" id="m_password"></p>
@@ -228,7 +228,7 @@
                         <div class="col-sm-6">
                             <p class="form-control-static" id="m_confirm_password"></p>
                         </div>
-                    </div>
+                    </div> -->
                     <?php /*
                     <div class="form-group">
                         <label class="col-sm-5 control-label">Nomor Rekening</label>

@@ -33,12 +33,12 @@
                             <div class="form-group">
                                 <label class="control-label col-sm-3" style="margin-right:-26px;">Kode Negara</label>
                                   <div class="col-md-2" style="margin-right:-20px;">
-                                        <input type="text" class="form-control" id="country_code" value="<?php echo $kode_negara; ?>" maxlength="3">
+                                        <input type="text" class="form-control" id="country_code" value="<?php echo $kode_negara; ?>" maxlength="3" disabled>
                                   </div>
 
                                   <label class="control-label col-sm-2" style="margin-right:-26px;">No.HP</label>
                                   <div class="col-md-4">
-                                        <input type="text" class="form-control" id="phone_num" value="<?php echo $notelp; ?>" maxlength="12">
+                                        <input type="text" class="form-control" id="phone_num" value="<?php echo $notelp; ?>" maxlength="12" disabled>
                                   </div>
                             </div>
                             <br>
@@ -47,6 +47,11 @@
                                 <button type="button" class="btn btn-blue" onclick="phone_btn_onclick();">Kirim SMS</button>
                             </div>
                         </form>
+
+												<form id="otp_login_success" method="post" action="<?=site_url('otp-login-success')?>">
+													<input id="csrf" type="hidden" name="csrf" />
+													<input id="code" type="hidden" name="code" />
+												</form>
                     </div>
                 </div>
             </div>
@@ -74,10 +79,10 @@
   function loginCallback(response) {
     console.log(response);
     if (response.status === "PARTIALLY_AUTHENTICATED") {
-      window.location.replace(BASEURL +'otp-login');
-      /*document.getElementById("code").value = response.code;
-      document.getElementById("csrf_nonce").value = response.state;
-      document.getElementById("my_form").submit();*/
+      //window.location.replace(BASEURL +'otp-login');
+      document.getElementById("code").value = response.code;
+      document.getElementById("csrf").value = response.state;
+      document.getElementById("otp_login_success").submit();
     }
     else if (response.status === "NOT_AUTHENTICATED") {
       // handle authentication failure

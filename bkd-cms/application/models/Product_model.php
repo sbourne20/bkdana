@@ -149,4 +149,16 @@ class Product_model extends CI_Model
 		$sql->free_result();
 		return $ret;
 	}
+
+	public function get_record_repayment($id)
+	{
+		$this->db->select('*');
+		$this->db->from('record_repayment');
+		$this->db->where('Master_loan_id', $id);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+
+		$sql->free_result();
+		return $ret;
+	}
 }

@@ -36,18 +36,20 @@ class Cronjob extends CI_Controller
 
 		//_d($data);exit();
 		
-		$nowdate = date('Y-m-d');
+		$nowdate = date('Y-m-d H:i:s');
 		$totaldata = count($data);
+
+
 
 		if ( $totaldata > 0) {
 			 echo $totaldata.' Found transaction.';
 
 			foreach ($data as $key ) {
-
 				$iduser_peminjam          = $key['User_id'];
 				$idmember_peminjam        = $key['pinjam_member_id'];
 				$total_kredit             = $key['jml_kredit'];
 				$total_pinjaman_disetujui = $key['Jml_permohonan_pinjaman_disetujui'];
+				
 
 				if (!empty($total_kredit)) 
 				{
@@ -60,18 +62,94 @@ class Cronjob extends CI_Controller
 					if ($kredit_percentage >= 80)
 					{
 						echo ' ---------------- sudah mencapai 80% ----------------';
+						$loan_data = $this->Cronjob_model->get_pinjaman_byid($key['Master_loan_id']);
+						$produk = $this->Cronjob_model->get_product_by($loan_data['Product_id']);
+						$revenue                = ($total_kredit * $produk['Fee_revenue_share'])/100;
+						$cash_disburse			= $total_kredit - ($revenue + $revenue);
+
+					$type_interest_rate = $produk['type_of_interest_rate'];
+					if($type_interest_rate=='1'){//harian
+						$totalweeks   = $produk['Loan_term'];
+						$jml_angsuran = ($total_kredit + ( $total_kredit * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+						//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+						$jml_repayment     = round($jml_angsuran);
+						$total_angsuran_rp = $jml_repayment*$totalweeks;
+						$bunga             = $total_angsuran_rp - $pinjaman_rp;
+						$loan_term = $produk['Loan_term'];
+						$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
+						$bunga2 = $bunga / $loan_term;
+						$pokok_cicil = $total_kredit/$totalweeks;
+					}
+					if($type_interest_rate=='2'){//bulanan
+						$totalweeks   = 4 * $produk['Loan_term'];
+						$jml_angsuran = ($total_kredit + ( $total_kredit * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+						//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+						$jml_repayment     = round($jml_angsuran);
+						$total_angsuran_rp = $jml_repayment*$totalweeks;
+						$bunga             = $total_angsuran_rp - $pinjaman_rp;
+						$loan_term = $produk['Loan_term'];
+						$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
+						$bunga2 = $bunga / $loan_term;
+						$pokok_cicil = $total_kredit/$totalweeks;
+					}
+					if($type_of_interest_rate=='3'){//mingguan
+						$totalweeks   = $produk['Loan_term'];
+						$jml_angsuran = ($total_kredit + ( $total_kredit * ($produk['Interest_rate'] * $produk['Loan_term']))/100 )/$totalweeks;
+						//$jml_angsuran = ceil($jml_angsuran*100)/100; // 908333.33333 => 908333.34
+						$jml_repayment     = round($jml_angsuran);
+						$total_angsuran_rp = $jml_repayment*$totalweeks;
+						$bunga             = $total_angsuran_rp - $pinjaman_rp;
+						$loan_term = $produk['Loan_term'];
+						$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." weeks"));
+						$bunga2 = $bunga / $loan_term;
+						$pokok_cicil = $total_kredit/$totalweeks;
+					}
+
+
+					// Frozen FEE
+					$frozen_fee = ($total_kredit * $produk['Fee_revenue_share'])/100;
+
+					// Platform  fee = P*D*C/Jumlah Minggu
+					$angsuran_platform_fee = ($total_kredit * ($produk['Platform_rate'] * $produk['Loan_term'])/100) / $totalweeks;
+
+					// LO = (P*E*C)/Jumlah Minggu
+					$angsuran_LO = ($total_kredit * ($produk['Loan_organizer'] * $produk['Loan_term'])/100) / $totalweeks;
+
+					$lender_fee  = (($total_kredit*$produk['Investor_return'] * $loan_term)/100)/$totalweeks;
+
+					$inlog['ltp_total_pinjaman_disetujui'] = $jml_pinjaman_disetujui;
+					$inlog['ltp_admin_fee']                = $admin_fee;
+					$inlog['ltp_bunga_pinjaman']           = $bunga;
+					$inlog['ltp_jml_angsuran']             = $jml_repayment;
+					$inlog['ltp_lama_angsuran']            = $totalweeks;
+					$inlog['ltp_tgl_jatuh_tempo']          = $tgl_jatuh_tempo;
+					$inlog['ltp_frozen']                   = $frozen_fee;
+					$inlog['ltp_platform_fee']             = $angsuran_platform_fee;
+					$inlog['ltp_LO_fee']                   = $angsuran_LO;
+					$inlog['ltp_lender_fee']               = $lender_fee;
+					$inlog['ltp_bunga_cicilan']			   = $bunga2;
+					$inlog['ltp_pokok_cicilan']			   = $pokok_cicil;
+
 
 						// Approve pinjaman dan pendana
-						$approved = $this->Cronjob_model->approve_pinjaman($key['Master_loan_id']);
+						$approved = $this->Cronjob_model->approve_pinjaman($key['Master_loan_id'], $total_kredit, $cash_disburse, $total_angsuran_rp);
+						$approved =$this->Cronjob_model->update_log_pinjaman($inlog, $loan_data['Master_loan_id']);
 						if ($approved) {						
 
 							$this->Cronjob_model->approve_pendanaan($key['Master_loan_id']);
 
+							//23 Januari 2019
 							if ($total_kredit >= $total_pinjaman_disetujui) {
-								$saldo_masuk_kepeminjam = $total_pinjaman_disetujui;
+								$saldo_masuk_kepeminjam = $cash_disburse;
+							}else{
+								$saldo_masuk_kepeminjam = $cash_disburse;
+							}
+							//23 Januari 2019
+							/*if ($total_kredit >= $total_pinjaman_disetujui) {
+								$saldo_masuk_kepeminjam = $total_kredit;
 							}else{
 								$saldo_masuk_kepeminjam = $total_kredit;
-							}
+							}*/
 
 							$check_wallet = $this->Wallet_model->get_wallet_user($iduser_peminjam);
 							
@@ -102,6 +180,57 @@ class Cronjob extends CI_Controller
 							$detail_wal['balance']          = (isset($check_wallet['Amount']))? $check_wallet['Amount'] + $detail_wal['Amount'] : $detail_wal['Amount'];
 
 							$this->Wallet_model->insert_detail_wallet($detail_wal);
+
+							//24 Januari 2019
+							$log_tran_pinjaman     = $this->Wallet_model->get_log_transaksi_pinjam($key['Master_loan_id']);
+
+							$dwp2['Id']               = $master_wallet_id;
+							$dwp2['Date_transaction'] = $nowdate;
+							$dwp2['Amount']           = $log_tran_pinjaman['ltp_admin_fee'];
+							$dwp2['Notes']            = 'Pembayaran dana administrasi transaksi No.'.$key['Master_loan_id'];
+							$dwp2['tipe_dana']        = 2;
+							$dwp2['User_id']          = $iduser_peminjam;
+							$dwp2['kode_transaksi']   = $key['Master_loan_id'];
+							$dwp2['balance']          = $check_wallet['Amount'] + $detail_wal['Amount'];
+							$this->Wallet_model->insert_detail_wallet($dwp2);
+							
+							$check_wallet_bkd = $this->Wallet_model->get_wallet_bymember(269);
+
+							$dwbkd['Id']               = 69;
+							$dwbkd['Date_transaction'] = $nowdate;
+							$dwbkd['Amount']           = $log_tran_pinjaman['ltp_admin_fee'];
+							$dwbkd['Notes']            = 'Penerimaan dana administrasi transaksi No.'.$key['Master_loan_id'];
+							$dwbkd['tipe_dana']        = 1;
+							$dwbkd['User_id']          = 269;
+							$dwbkd['kode_transaksi']   = $key['Master_loan_id'];
+							$dwbkd['balance']          = $check_wallet_bkd['Amount'] + $log_tran_pinjaman['ltp_admin_fee'];
+							$this->Wallet_model->insert_detail_wallet($dwbkd);
+
+							$walletbkd = $this->Wallet_model->get_wallet_bkd(269);
+
+							$upwalbkd = $log_tran_pinjaman['ltp_admin_fee'];
+							$this->Wallet_model->update_master_wallet_saldo(269, $upwalbkd);
+							// end of 24 Januari 2019
+
+							//25 Januari 2019 penambahan dana frozen + dana ke dompet koperasi
+							$check_wallet_koperasi = $this->Wallet_model->get_wallet_bymember(5);
+							
+							$dwpkop['Id']               = 4;
+							$dwpkop['Date_transaction'] = $nowdate;
+							$dwpkop['Amount']           = $log_tran_pinjaman['ltp_frozen'];
+							$dwpkop['Notes']            = 'Penerimaan dana frozen transaksi No.'.$key['Master_loan_id'];
+							$dwpkop['tipe_dana']        = 1;
+							$dwpkop['User_id']          = 5;
+							$dwpkop['kode_transaksi']   = $key['Master_loan_id'];
+							$dwpkop['balance']          = $check_wallet_koperasi['Amount'] + $log_tran_pinjaman['ltp_frozen'];
+							$this->Wallet_model->insert_detail_wallet($dwpkop);
+
+							$walletkop = $this->Wallet_model->get_wallet_bkd(5);
+
+							$upwalkop = $log_tran_pinjaman['ltp_frozen'];
+							$this->Wallet_model->update_master_wallet_saldo(5,$upwalkop);
+
+							//end of 25 Januari 2019
 
 							// ---------- Create Tgl Jatuh Tempo -----------
 							for ($i=1; $i <= $key['ltp_lama_angsuran']; $i++) 
@@ -211,7 +340,7 @@ class Cronjob extends CI_Controller
 		/*_d($data);
 		exit();*/
 		
-		$nowdate     = date('Y-m-d');
+		$nowdate     = date('Y-m-d H:i:s');
 		$nowdatetime = date('Y-m-d H:i:s');
 		$totaldata   = count($data);
 
@@ -223,7 +352,8 @@ class Cronjob extends CI_Controller
 				$iduser_peminjam          = $key['User_id'];
 				$idmember_peminjam        = $key['pinjam_member_id'];
 				$total_kredit             = $key['jml_kredit'];
-				$total_pinjaman           = $key['Jml_permohonan_pinjaman'];
+				//$total_pinjaman           = $key['Jml_permohonan_pinjaman'];
+				$total_pinjaman           = ($key['Amount']- $key['jml_kredit']);
 				$total_pinjaman_disetujui = $key['Jml_permohonan_pinjaman_disetujui'];
 
 				if (!empty($total_kredit)) 
@@ -234,7 +364,7 @@ class Cronjob extends CI_Controller
 					/*echo '<br>'.$kredit_percentage .'<br>';
 					exit();*/
 
-					if ($kredit_percentage >= 80)
+					if ($kredit_percentage == 100)
 					{
 						echo ' ---------------- sudah mencapai 80% ----------------';
 
@@ -242,15 +372,58 @@ class Cronjob extends CI_Controller
 						$approved = $this->Cronjob_model->approve_pinjaman($key['Master_loan_id']);
 
 						if ($approved) {
+
+							//tambahan baru
+								//$key['Amount']= '5000';
+								//note disamain nama variabelnya, atau gk sebelah kirinya itu nama tabelnya
+								//$this->Cronjob_model->update_ltp($key['Master_loan_id']);
+
+								//echo 'tesss';
+							//batas tambahan baru
+
+							if($kredit_percentage < 100){
+							$do_pendana_intern = $this->execute_pendanaan_internal($key, $total_pinjaman, $total_pinjaman_disetujui);
+
+							if ($do_pendana_intern) {
+						// --------- Send Email ke Peminjam -----------
+							$output['list_pendana'] = $this->Member_model->get_list_pendana($key['Master_loan_id']);
+							$memberdata          = $this->Member_model->get_usermember_less($idmember_peminjam);
+							$output['member']    = $memberdata;
+							$output['ordercode'] = $key['Master_loan_id'];
+							$output['tgl']       = parseDateTimeIndex(date('Y-m-d'));
+							$output['tgl_order'] = date('d/m/Y', strtotime($key['Tgl_permohonan_pinjaman']));
+							$output['jml_uang'] = $total_pinjaman_disetujui;
+							$output['jml_hari'] = $key['ltp_product_loan_term'];
+
+							$html = $this->load->view('email/vpinjaman-kilat', $output, TRUE);
+
+							$filename = 'perjanjian-pinjaman-'.$output['ordercode'].'.pdf';
+							$title    = 'Perjanjian pinjaman '.$output['ordercode'];
+							$attach_file = $this->create_pdf($html, $output['ordercode'], $filename, $title);
+
+							$this->send_mail_peminjam($key, $total_pinjaman_disetujui, 'Pinjaman Kilat', $attach_file);
+							unlink($pdf_folder.$filename);
+						// --------- End Send Email ke Peminjam -----------
+						}
+						}
+
+
 							// Approve pendana
 							$this->Cronjob_model->approve_pendanaan($key['Master_loan_id']);
+
 
 							$check_wallet = $this->Wallet_model->get_wallet_user($iduser_peminjam);
 							
 							if ($total_kredit >= $total_pinjaman_disetujui) {
 								$saldo_masuk_kepeminjam = $total_pinjaman_disetujui;
 							}else{
+
+								//$a = 99999;
+								/*$saldo_masuk_kepeminjam = $this->execute_pendanaan_internal($key, $total_pinjaman, $total_pinjaman_disetujui);*/
+
 								$saldo_masuk_kepeminjam = $total_kredit;
+								//$saldo_masuk_kepeminjam = $this->execute_pendanaan_internal($key, $total_pinjaman, $total_pinjaman_disetujui);
+								
 							}
 
 							// saldo masuk ke peminjam
@@ -340,16 +513,16 @@ class Cronjob extends CI_Controller
 
 						if (count($investdata) > 0)
 						{
-							//echo 'ada';
+							
 							foreach ($investdata as $inv) {
 
 								$check_wallet = $this->Wallet_model->get_wallet_user($inv['User_id']);
 
 								// kembalikan saldo pendana
-								$this->Cronjob_model->kembalikan_saldo($inv['User_id'], $inv['Jml_penawaran_pemberian_pinjaman_disetujui']);
+								//$this->Cronjob_model->kembalikan_saldo($inv['User_id'], $inv['Jml_penawaran_pemberian_pinjaman_disetujui']);
 							
 								// detail wallet
-								$detail_w['Id']               = $check_wallet['Id'];
+								/*$detail_w['Id']               = $check_wallet['Id'];
 								$detail_w['Date_transaction'] = $nowdate;
 								$detail_w['Amount']           = $inv['Jml_penawaran_pemberian_pinjaman_disetujui'];
 								$detail_w['Notes']            = 'Pengembalian Saldo Pendana dari transaksi Pinjaman No. ' . $inv['Master_loan_id'].'. Kuota pendana tidak mencapai lebih dari 80%.';
@@ -357,13 +530,13 @@ class Cronjob extends CI_Controller
 								$detail_w['User_id']          = $inv['User_id'];
 								$detail_w['kode_transaksi']   = $inv['Id'];
 								$detail_w['balance']          = $check_wallet['Amount'] + $detail_w['Amount'];
-								$this->Wallet_model->insert_detail_wallet($detail_w);
+								$this->Wallet_model->insert_detail_wallet($detail_w);*/
 
 								// set status pendanaan mjd expired
-								$this->Cronjob_model->set_pendanaan_expired($inv['Id']);
-
+								/*$this->Cronjob_model->set_pendanaan_expired($inv['Id']);
+*/
 								// kurangi kredit peminjam sesuai pembiayaan dari pendana
-								$this->Cronjob_model->kurangi_kredit_peminjam($key['Master_loan_id'], $inv['Jml_penawaran_pemberian_pinjaman_disetujui']);
+								/*$this->Cronjob_model->kurangi_kredit_peminjam($key['Master_loan_id'], $inv['Jml_penawaran_pemberian_pinjaman_disetujui']);*/
 							}
 						}
 
@@ -430,7 +603,7 @@ class Cronjob extends CI_Controller
 	{
 		echo '------------- Pendanaan Internal -------------<br>';
 
-		$nowdate     = date('Y-m-d');
+		$nowdate     = date('Y-m-d H:i:s');
 		$nowdatetime = date('Y-m-d H:i:s');
 		$hitung_tax = 0;
 
@@ -443,17 +616,26 @@ class Cronjob extends CI_Controller
 
 		// KILAT ONLY -> hitung laba dan angsuran ke pendana
 		$laba                     = (($total_pinjaman * $log_tran_pinjam['ltp_product_investor_return'])/100) * $log_tran_pinjam['ltp_product_loan_term'];
-		$angsuran_ke_pendana      = ($total_pinjaman + $laba)/$log_tran_pinjam['ltp_lama_angsuran'];
+		//$angsuran_ke_pendana      = ($total_pinjaman + $laba)/$log_tran_pinjam['ltp_lama_angsuran'];
+		$angsuran_ke_pendana      = ($total_kredit + $laba)/$log_tran_pinjam['ltp_lama_angsuran'];
 		$lender_fee               = $laba;
+		//tambahan baru
+		$lender_fee_after_tax 	  = $lender_fee;
+		//batas tambahan baru
 		$cicilan_pokok            = $total_pinjaman;
 		$total_pendapatan_pendana = $angsuran_ke_pendana;
 
 		if ($log_tran_pinjam['ltp_product_pph'] != '0')
 		{
 			$hitung_tax = ($total_pendapatan_pendana * $log_tran_pinjam['ltp_product_pph'])/100;
-			$angsuran_ke_pendana      = $angsuran_ke_pendana - $hitung_tax;
-			$total_pendapatan_pendana = $angsuran_ke_pendana;
+			//$angsuran_ke_pendana      = $angsuran_ke_pendana - $hitung_tax;
+			//tambahan
+			$angsuran_ke_pendana      = $angsuran_ke_pendana - $hitung_tax + $total_pinjaman;
+			//$total_pendapatan_pendana = $angsuran_ke_pendana;
+			//tambahan
+			$pendapatan_bersih		  = $angsuran_ke_pendana;
 		}
+			$total_pendapatan_bersih		  = $pendapatan_bersih;
 
 		//echo $laba; exit();
 
@@ -556,8 +738,52 @@ class Cronjob extends CI_Controller
 
 			insert_detail_wallet($id_masterwallet_peminjam, $nowdate, $amount, $notes, $tipedana, $id_pengguna, $kode_transaksi, $balance);
 
+						// //contoh
+			// 	$detail_wal['Id']               = $master_wallet_id;
+			// 	$detail_wal['Date_transaction'] = $nowdate;
+			// 	$detail_wal['Amount']           = $saldo_masuk_kepeminjam;
+			// 	$detail_wal['Notes']            = 'Pemberian dana pinjaman No.' . $key['Master_loan_id'];
+			// 	$detail_wal['tipe_dana']        = 1;
+			// 	$detail_wal['User_id']          = $iduser_peminjam;
+			// 	$detail_wal['kode_transaksi']   = $key['Master_loan_id'];
+			// 	$detail_wal['balance']          = (isset($check_wallet['Amount']))? $check_wallet['Amount'] + $detail_wal['Amount'] : $detail_wal['Amount'];
+
+			// 	$this->Wallet_model->insert_detail_wallet($detail_wal);
+				//31 Januari 2019
+
+				$check_wallet = $this->Wallet_model->get_wallet_user($iduser_peminjam);			
+				$log_tran_pinjaman     = $this->Wallet_model->get_log_transaksi_pinjam($key['Master_loan_id']);
+
+				$dwp2['Id']               = $master_wallet_id;
+				$dwp2['Date_transaction'] = $nowdate;
+				$dwp2['Amount']           = $log_tran_pinjaman['ltp_admin_fee'];
+				$dwp2['Notes']            = 'Pembayaran dana administrasi transaksi No.'.$key['Master_loan_id'];
+				$dwp2['tipe_dana']        = 2;
+				$dwp2['User_id']          = $iduser_peminjam;
+				$dwp2['kode_transaksi']   = $key['Master_loan_id'];
+				$dwp2['balance']          = $check_wallet['Amount'] + $amount;  //0;//$check_wallet['Amount'] + $detail_wal['Amount'];
+				$this->Wallet_model->insert_detail_wallet($dwp2);
+				
+				$check_wallet_bkd = $this->Wallet_model->get_wallet_bymember(269);
+
+				$dwbkd['Id']               = 69;
+				$dwbkd['Date_transaction'] = $nowdate;
+				$dwbkd['Amount']           = $log_tran_pinjaman['ltp_admin_fee'];
+				$dwbkd['Notes']            = 'Penerimaan dana administrasi transaksi No.'.$key['Master_loan_id'];
+				$dwbkd['tipe_dana']        = 1;
+				$dwbkd['User_id']          = 269;
+				$dwbkd['kode_transaksi']   = $key['Master_loan_id'];
+				$dwbkd['balance']          = 0;//$check_wallet_bkd['Amount'] + $log_tran_pinjaman['ltp_admin_fee'];
+				$this->Wallet_model->insert_detail_wallet($dwbkd);
+
+				$walletbkd = $this->Wallet_model->get_wallet_bkd(269);
+
+				$upwalbkd = $log_tran_pinjaman['ltp_admin_fee'];
+				$this->Wallet_model->update_master_wallet_saldo(269, $upwalbkd);
+			//end of contoh
+
 			// update status pinjaman approve
-			$this->Cronjob_model->approve_pinjaman($key['Master_loan_id']);
+			$this->Cronjob_model->approve_pinjaman_kilat($key['Master_loan_id']);
 
 			// ---------- Create Tgl Jatuh Tempo -----------
 			$loan_term       = $key['ltp_product_loan_term'];

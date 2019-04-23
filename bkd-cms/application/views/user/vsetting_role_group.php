@@ -202,6 +202,30 @@
 
                             <tr class="gradeX">
                                 <td>
+                                    Transaksi DRAFT - Pinjaman Agri
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi-pinjaman-agri-draft/index]" value="transaksi-pinjaman-agri-draft/index" <?php echo (check_role_access($EDIT, 'transaksi-pinjaman-agri-draft/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi-pinjaman-agri-draft/detail]" value="transaksi-pinjaman-agri-draft/detail" <?php echo (check_role_access($EDIT, 'transaksi-pinjaman-agri-draft/detail')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Detail
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi-pinjaman-agri-draft/approve]" value="transaksi-pinjaman-agri-draft/approve" <?php echo (check_role_access($EDIT, 'transaksi-pinjaman-agri-draft/approve')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Approve
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi-pinjaman-mikro-draft/edit]" value="transaksi-pinjaman-mikro-draft/edit" <?php echo (check_role_access($EDIT, 'transaksi-pinjaman-mikro-draft/edit')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Edit
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi-pinjaman-agri-draft/reject]" value="transaksi-pinjaman-agri-draft/reject" <?php echo (check_role_access($EDIT, 'transaksi-pinjaman-agri-draft/reject')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Reject
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi-pinjaman-agri-draft/delete]" value="transaksi-pinjaman-agri-draft/delete" <?php echo (check_role_access($EDIT, 'transaksi-pinjaman-agri-draft/delete')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Delete
+                                </td>
+                            </tr>
+
+                            <tr class="gradeX">
+                                <td>
                                     Transaksi Pinjaman Kilat
                                 </td>
                                 <td>
@@ -240,6 +264,28 @@
                                     <input type="checkbox" name="access[transaksi_pinjaman_mikro/delete]" value="transaksi_pinjaman_mikro/delete" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_mikro/delete')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Delete
                                 </td>
                             </tr>
+
+                            <tr class="gradeX">
+                                <td>
+                                    Transaksi Pinjaman Agri
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi_pinjaman_agri/index]" value="transaksi_pinjaman_agri/index" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi_pinjaman_agri/detail]" value="transaksi_pinjaman_agri/detail" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/detail')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Detail
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi_pinjaman_agri/approve]" value="transaksi_pinjaman_agri/approve" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/approve')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Approve
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi_pinjaman_agri/reject]" value="transaksi_pinjaman_agri/reject" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/reject')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Reject
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[transaksi_pinjaman_agri/delete]" value="transaksi_pinjaman_agri/delete" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/delete')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Delete
+                                </td>
+                            </tr>
+
                             <tr class="gradeX">
                                 <td>
                                     Transaksi Pendanaan
@@ -318,6 +364,43 @@
                                 </td>
                                 <td>
                                     <input type="checkbox" name="access[pages/edit]" value="pages/edit" <?php echo (check_role_access($EDIT, 'pages/edit')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Reject
+                                </td>
+                            </tr>
+                            <tr class="gradeX">
+                                <td>
+                                    Rekening Koran
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[pages/index]" value="pages/index" <?php echo (check_role_access($EDIT, 'pages/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[pages/add]" value="pages/add" <?php echo (check_role_access($EDIT, 'pages/add')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Approve
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[pages/edit]" value="pages/edit" <?php echo (check_role_access($EDIT, 'pages/edit')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Reject
+                                </td>
+                            </tr>
+                            <tr class="gradeX">
+                                <td>
+                                    Member Group
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[member/group]" value="member/group" <?php echo (check_role_access($EDIT, 'member/group')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[member/add_group]" value="member/add_group" <?php echo (check_role_access($EDIT, 'member/add_group')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Add
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[member/delete_group]" value="member/delete_group" <?php echo (check_role_access($EDIT, 'member/delete_group')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Delete
+                                </td>
+                            </tr>
+
+                             <tr class="gradeX">
+                                <td>
+                                    BKD Wallet
+                                </td>
+                                <td>
+                                    <input type="checkbox" name="access[bkdwallet/index]" value="bkdwallet/index" <?php echo (check_role_access($EDIT, 'bkdwallet/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
                                 </td>
                             </tr>
                             

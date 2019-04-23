@@ -11,6 +11,22 @@
           { "data": "Nama_pengguna" },
           { "data": "mum_email", "sClass": "hidden-xs"  },
           { "data": "Mobileno", "sClass": "hidden-xs" },
+          { "data": function ( data, type, full, meta ) {
+                    var mum_type_peminjam = data.mum_type_peminjam;
+                    if (mum_type_peminjam=='1') {
+                      var ret="Kilat"; 
+                    }else if (mum_type_peminjam=='2') {
+                      var ret="Mikro";
+                    }else if (mum_type_peminjam=='3') {
+                      var ret="Agri";  
+                    }else{
+                      var ret=""; 
+                    }
+                      return ret; 
+                    } 
+
+             // return data.mum_type_peminjam ;
+            },
           //{ "data": "user_group_name", "sClass": "hidden-xs" },
             { "data": function ( data, type, full, meta ) {
               return data.user_group_name ;

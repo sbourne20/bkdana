@@ -34,7 +34,7 @@ if ( $_SERVER['SERVER_ADDR'] =='172.31.33.98' OR $_SERVER['SERVER_ADDR'] == '149
 	//$config['base_url'] = $docroot .'://'.$_SERVER['HTTP_HOST'];	
 	$config['base_url'] = 'https://'.$_SERVER['HTTP_HOST'];	
 }else{
-	$config['base_url'] = $docroot .'://'.$_SERVER['HTTP_HOST'] .'/bkd/';
+	$config['base_url'] = $docroot .'://'.$_SERVER['HTTP_HOST'] .'/bkdana/bkd/';
 }
 
 /*

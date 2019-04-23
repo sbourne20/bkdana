@@ -193,7 +193,7 @@
                             <p class="form-control-static" id="m_telp"></p>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <!-- <div class="form-group">
                         <label class="col-sm-5 control-label">Password</label>
                         <div class="col-sm-6">
                             <p class="form-control-static" id="m_password"></p>
@@ -204,7 +204,7 @@
                         <div class="col-sm-6">
                             <p class="form-control-static" id="m_confirm_password"></p>
                         </div>
-                    </div>
+                    </div> -->
 
                     <?php /*
 

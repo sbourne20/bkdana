@@ -115,6 +115,30 @@ class Peminjam extends CI_Controller {
 		redirect('peminjam');
 	}
 
+	public function getgroupcount()
+	{
+		if(isset($_POST['memberid']))
+		{
+    		$usr = antiInjection($_POST['memberid']);
+    		// Do whatever you want with the $uid
+		}
+		else{
+			echo "tidak ada data";
+		}
+
+		//$output['id_grup'] = $usr;
+		//batas
+		//$idusergroup = antiInjection(trim($usergroup1['id_user_group']));
+		//$usergroup2 = $usergroup1['id_user_group'];
+		//$usergroup1 = $usergroup['id_user_group'];
+		//$updata2['id_user_group'] = antiInjection(trim($post['membergroup']));
+		//$updata1['id_user_group'] = antiInjection(trim($post['membergroup']));
+		$countgroup = $this->Member_model->get_count_group($usr);
+		//print_r($countgroup);
+		//$output['countgroup1'] = $countgroup['itotal'];
+		echo $countgroup['itotal'];
+	}
+
 	public function edit()
 	{
 		$this->User_model->has_login();
@@ -123,7 +147,13 @@ class Peminjam extends CI_Controller {
 		$output['mode'] = 2; // sbg tanda edit
 		$output['EDIT'] = $this->Member_model->get_usermember_by($id);
 		$output['membergroup'] = $this->Member_model->get_allgroup();
-		//$output['EDIT'] = $this->Member_model->get_allgroup($id);
+		$output['usergroup'] = $this->Member_model->get_usergroup();
+		$usergroup = $this->Member_model->get_usermember_by($id);
+		
+		
+		$countgroup = $this->Member_model->get_count_group($usergroup['id_user_group']);
+		$output['countgroup'] = $countgroup['itotal']; 
+		
 
 		$this->validation();
 		if ($this->form_validation->run() == FALSE)
@@ -160,20 +190,52 @@ class Peminjam extends CI_Controller {
 		}else{
 			$post = $this->input->post(NULL, TRUE);
 
-			if (trim($post['grade']) != '' && !empty($id) )
-			{
-				$updata1['peringkat_pengguna'] = antiInjection(trim($post['grade']));
-				$updata1['id_user_group'] = antiInjection(trim($post['membergroup']));
-				$affected = $this->Member_model->update_user_ojk($updata1, $id);
-				if($affected){
+			$countgroup = $this->Member_model->get_count_group(antiInjection(trim($post['membergroup'])));
+			//if(trim($post['count']<='1'){
+				//echo 'id'.$countgroup['itotal'];
+				//return false;
+
+				if (trim($post['grade']) != '' && !empty($id) )
+				{
+					$updata1['peringkat_pengguna'] = antiInjection(trim($post['grade']));
+					$updata1['id_user_group'] = antiInjection(trim($post['membergroup']));
+					$updata2['id_user_group'] = antiInjection(trim($post['membergroup']));
+
+					if(trim($countgroup['itotal'])>=10){
+						//echo 'id'.$countgroup;
+						//alert('Jumlah Member telah penuh');
+						//echo 'id'.$countgroup['itotal'];
+					
+						$this->session->set_userdata('message','Max Member.');
+						$this->session->set_userdata('message_type','warning');
+						redirect('peminjam/edit/'.$id);
+					}else{
+						//echo('id else'.$countgroup['itotal']);
+						
+
+					$affected = $this->Member_model->update_user_ojk($updata1, $id);
+					$affected = $this->Member_model->update_mod_ltpinjaman($updata2, $id);
 
 					$this->session->set_userdata('message','Data has been updated.');
 					$this->session->set_userdata('message_type','success');
-				}else{
-					$this->session->set_userdata('message','No Update.');
-					$this->session->set_userdata('message_type','warning');
+					redirect('peminjam');
+					}
+					
+					
+					/*if($affected){
+
+						$this->session->set_userdata('message','Data has been updated.');
+						$this->session->set_userdata('message_type','success');
+					}else{
+						$this->session->set_userdata('message','No Update.');
+						$this->session->set_userdata('message_type','warning');
+					}*/
 				}
-			}
+
+			//}else{
+			//	alert('Jumlah Member telah penuh');
+			//}
+			
 
 			// else {
 
@@ -209,7 +271,8 @@ class Peminjam extends CI_Controller {
 				}
 			}*/
 			
-			redirect('peminjam');
+			
+			
 		}
 	}
 

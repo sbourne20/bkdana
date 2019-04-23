@@ -90,7 +90,17 @@
                                                             $label_tenor = 'Minggu';
                                                         }
                                                         //$label_tenor = 'Hari';
-                                                    }else{
+                                                    }else if ($tra['id_mod_type_business'] == 3){
+                                                         if ($tra['type_of_interest_rate'] == 1) {
+                                                            $label_tenor = 'Hari';
+                                                        }if ($tra['type_of_interest_rate'] == 2) {
+                                                            $label_tenor = 'Bulan';
+                                                        }if ($tra['type_of_interest_rate'] == 3){
+                                                            $label_tenor = 'Minggu';
+                                                        }
+                                                        //$label_tenor = 'Bulan';
+                                                    }
+                                                    else if ($tra['id_mod_type_business'] == 5){
                                                          if ($tra['type_of_interest_rate'] == 1) {
                                                             $label_tenor = 'Hari';
                                                         }if ($tra['type_of_interest_rate'] == 2) {

@@ -61,7 +61,7 @@ class Login extends CI_Controller {
 					$stored_password = $getdata['mum_password'];
 
 					if (password_verify(base64_encode(hash('sha256', $password, true)), $stored_password)) {
-
+						
 						// check sudah aktif atau belum
 						if ($getdata['mum_status'] == 0)
 						{
@@ -180,8 +180,14 @@ class Login extends CI_Controller {
 
 			if (is_array($getdata) && count($getdata) > 0 && $getdata['id_mod_user_member'] && $getdata['mum_fullname']) 
 			{
-				// activate member
+				//apabila nomor hp belum terverifikasi (status != 99)
+				if ($getdata['mum_status'] != 99){
+					$this->session->set_userdata('message_login','Harap melakukan verifikasi nomor handphone terlebih dahulu');
+					redirect('input-otp');
+					exit();
+				}
 
+				// activate member
 				if ($getdata['mum_type'] == 1){
 					$active_status = 1; // peminjam
 				}else{
@@ -198,16 +204,16 @@ class Login extends CI_Controller {
 				$this->session->set_userdata($data);
 
 				// update session cookies utk single sign on in one device only
-					setcookie ("_bkdsesi_", "", 1);
-					setcookie ("_bkdsesi_", false);
-					unset($_COOKIE['_bkdsesi_']);
-					
-					$cookie_value = md5($_SERVER['HTTP_USER_AGENT']);
-					setcookie("_bkdsesi_", $cookie_value, time()+3600*24*365); // 1 year
+				setcookie ("_bkdsesi_", "", 1);
+				setcookie ("_bkdsesi_", false);
+				unset($_COOKIE['_bkdsesi_']);
+				
+				$cookie_value = md5($_SERVER['HTTP_USER_AGENT']);
+				setcookie("_bkdsesi_", $cookie_value, time()+3600*24*365); // 1 year
 
-					$upsession['mum_session']    = $cookie_value;
-					$upsession['mum_last_login'] = date('Y-m-d H:i:s');
-					$this->Member_model->update_member_byid($getdata['id_mod_user_member'], $upsession);
+				$upsession['mum_session']    = $cookie_value;
+				$upsession['mum_last_login'] = date('Y-m-d H:i:s');
+				$this->Member_model->update_member_byid($getdata['id_mod_user_member'], $upsession);
 				// End session cookies
 
 				unset($_SESSION["_bkd_otp_"]);

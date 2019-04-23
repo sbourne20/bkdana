@@ -57,15 +57,39 @@ class Member_model extends CI_Model
 	function do_login_byemail($u)
 	{
 		$u = $this->db->escape_str($u);
-
+		$u2 = $u;
+		if(substr($u2, 0, 1)=='0'){
+			$u2 = '+62'.substr($u2, 1);
+		}
 		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_type');
 		$this->db->from($this->mod_user_member);
 		$this->db->where('mum_email' , $u);
 		$this->db->or_where('mum_telp' , $u);
+		$this->db->or_where('mum_telp' , $u2);
 		//$this->db->where('mum_status', '1');
 		$this->db->limit('1');
 		$sql = $this->db->get();
 		return $sql->row_array();
+	}
+
+	function get_file_name($id)
+	{
+		$this->db->select("CONCAT(images_foto_name, '|',
+			images_ktp_name, '|',
+			foto_pegang_ktp, '|',
+			foto_slip_gaji, '|',
+			foto_surat_keterangan_bekerja, '|',
+			images_usaha_name, '|',
+			images_usaha_name2, '|',
+			images_usaha_name3, '|',
+			images_usaha_name4, '|',
+			images_usaha_name5) as userfile", FALSE);
+		$this->db->from($this->user_detail);
+		$this->db->where('Id_pengguna', $id);
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->result_array();
+		return $ret;
 	}
 
 /*	function get_member_phone($id)
@@ -94,7 +118,7 @@ class Member_model extends CI_Model
 
 	function get_member_byid($id)
 	{
-		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
+		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_nomor_rekening,
 			u.Id_pengguna, Nama_pengguna, Id_ktp, Profile_photo, Nomor_rekening, nama_bank, npwp, deskripsi_usaha, omzet_usaha, modal_usaha, margin_usaha, biaya_operasional, laba_usaha, peringkat_pengguna, peringkat_pengguna_persentase, images_foto_name, Mobileno, Alamat, Kota, Provinsi, Kodepos');
 		$this->db->from($this->mod_user_member.' m');
 		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
@@ -110,7 +134,7 @@ class Member_model extends CI_Model
 	function get_member_byid_less($id)
 	{
 		// tanpa foto//
-		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
+		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_nomor_rekening,
 			u.Id_pengguna, Nama_pengguna, Id_ktp, Nomor_rekening, peringkat_pengguna, peringkat_pengguna_persentase');
 		$this->db->from($this->mod_user_member.' m');
 		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
@@ -126,7 +150,8 @@ class Member_model extends CI_Model
 	{
 		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_status, mum_type');
 		$this->db->from($this->mod_user_member);
-		$this->db->where('mum_email', $email);		
+		$this->db->where('mum_email', $email);
+		$this->db->or_where('mum_telp', '+'.$email);		
 		$this->db->limit('1');
 		$sql = $this->db->get();
 		return $sql->row_array();
@@ -224,5 +249,32 @@ class Member_model extends CI_Model
 		$this->db->update($this->mod_member_resetcode);
 		return $this->db->affected_rows();
 	}
+
+	//3desember
+	function get_user_alldata($id, $id2) 
+	{
+		$this->db->select('*');
+		// $this->db->from($this->detail_wallet. ' d');
+		// $this->db->join($this->mod_log_transaksi_pendana. ' ltp','ltp.Id_pendanaan=d.kode_transaksi', 'left');
+		// $this->db->join($this->tabel_pinjaman. ' tp','tp.Master_loan_id=ltp.Master_loan_id', 'left');
+		$this->db->from($this->user. ' u');
+		$this->db->join($this->user_detail. ' ud','ud.Id_pengguna=u.Id_pengguna', 'left');
+		$this->db->join($this->mod_user_member. ' mum','mum.id_mod_user_member=u.Id_pengguna','left');
+		$this->db->join($this->profile_geografi. ' pg','pg.User_id=u.Id_pengguna', 'left');
+		// // $this->db->join($this->master_wallet. ' m', 'd.Id=m.Id', 'left');
+		$this->db->where('u.Nama_pengguna', $id);
+		$this->db->where('u.Id_pengguna', $id2);
+		$this->db->limit('1');
+		// $this->db->where('tipe_dana', 2);
+		// $this->db->where('Date_transaction',$uid);
+		// $this->db->order_by('Detail_wallet_id', 'desc');
+		// $sql = $this->db->get();
+		// return $sql->result_array();
+		$sql = $this->db->get();
+		$ret = $sql->row_array();
+		$sql->result_array();
+		return $ret;
+	}
+//3desember
 
 }

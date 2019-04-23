@@ -104,6 +104,15 @@ class Product extends CI_Controller {
 			$data['type_of_business_id']   = $type_business_id;
 			$data['type_of_interest_rate'] = trim($post['type_interest_rate']);
 			$data['PPH']                   = trim($post['pajak']);
+			$data['charge']                = trim($post['charge']);
+			$data['additional_charge']	   = trim($post['additional_charge']);
+			$data['charge_type']           = trim($post['charge_type']);
+			$data['additional_charge_type']           = trim($post['additional_charge_type']);
+			//agri
+			$data['Min_loan']			= trim($post['min_loan']);
+			$data['Min_tenor']			= trim($post['min_tenor']);
+			$data['Max_tenor']			= trim($post['max_tenor']);
+			//agri
 			//$data['type_of_interest_rate_name'] = trim($post['type_interest_rate']);
 			
 			//if(isset($_POST['submit'])){
@@ -202,6 +211,15 @@ class Product extends CI_Controller {
 			$updata['type_of_business_id']   = $type_business_id;
 			$updata['type_of_interest_rate'] = trim($post['type_interest_rate']);
 			$updata['PPH']                   = trim($post['pajak']);
+			$updata['charge']                = trim($post['charge']);
+			$updata['additional_charge']	   = trim($post['additional_charge']);
+			$updata['charge_type']           = trim($post['charge_type']);
+			$updata['additional_charge_type']= trim($post['additional_charge_type']);
+			//agri
+			$updata['Min_loan']				= trim($post['min_loan']);
+			$updata['Min_tenor']			= trim($post['min_tenor']);
+			$updata['Max_tenor']			= trim($post['max_tenor']);
+			//agri
 			
 			$radioVal = trim($post["type_interest_rate"]);
 			switch($radioVal){
