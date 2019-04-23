@@ -18,7 +18,7 @@ class Dashboard extends CI_Controller
 	function index()
 	{
 		//$this->load->model('order_model');
-		$output = '';
+		$output = array();
 		$output['checkout'] = '';
 
 		$mainData['top_css']   = '';

@@ -75,7 +75,7 @@
               <a href="<?php echo site_url('redeem'); ?>">
                 <span class="mini-stat-icon secondary"><i class="fa fa-cloud-download"></i></span>
                 <div class="mini-stat-info">
-                    <span>0</span>
+                    <span><?php echo $total_redeem['itotal']; ?></span>
                     Redeem <br> <em>Status Pending</em>
                 </div>
               </a>

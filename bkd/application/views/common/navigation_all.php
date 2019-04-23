@@ -36,6 +36,7 @@
                         <ul class="dropdown-menu">
                             <li><a href="<?php echo site_url('dashboard'); ?>">Dashboard</a></li>
                             <li><a href="<?php echo site_url('ubah-profil'); ?>" title="Ubah Profil">Ubah Profil</a></li>
+                            <li><a href="<?php echo site_url('ubah-password'); ?>" title="Ubah Password">Ubah Password</a></li>
                             <li><a href="<?php echo site_url('transaksi'); ?>" title="Transaksi">Transaksi</a></li>
                             <li><a href="<?php echo site_url('top-up'); ?>" title="Top Up">Top Up</a></li>
                             <li><a href="<?php echo site_url('redeem'); ?>" title="Tarik Tunai">Tarik Tunai</a></li>

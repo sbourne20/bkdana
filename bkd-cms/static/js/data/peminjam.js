@@ -63,7 +63,8 @@
                           '<li><a href="#myModal" onclick="view('+data.id_mod_user_member+')" data-toggle="modal"><i class="fa fa-eye"></i> Detail </a></li>'+
                           /*'<li><a href="#myModal" onclick="view('+data.id_mod_user_member+')" data-toggle="modal"><i class="fa fa-money"></i> Wallet </a></li>'+*/
                           btn_activate+
-                          '<li><a href="javascript:;" onclick="edit_('+data.id_mod_user_member+')"><i class="fa fa-pencil"></i> Edit</a></li>'+
+                          '<li><a href="javascript:;" onclick="edit_('+data.id_mod_user_member+')"><i class="fa fa-pencil"></i> Edit Grade / Group</a></li>'+
+                          '<li><a href="javascript:;" onclick="editprofil_('+data.id_mod_user_member+')"><i class="fa fa-pencil"></i> Edit Profil</a></li>'+
                           '<li class="divider"></li>'+
                           '<li><a href="javascript:;" onclick="delete_('+data.id_mod_user_member+')"><i class="fa fa-trash-o"></i> Delete</a></li>'+
                       '</ul>'+
@@ -133,4 +134,7 @@ function deactivate_(id) {
 }
 function edit_(id) {
     window.location.href = base_uri  + '/edit/' + id;  
+}
+function editprofil_(id) {
+    window.location.href = base_uri  + '/editprofil/' + id;  
 }
