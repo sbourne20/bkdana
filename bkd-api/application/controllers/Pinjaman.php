@@ -133,7 +133,7 @@ class Pinjaman extends REST_Controller {
 				        return;
 					}
 
-					$pinjaman_active = $this->Content_model->check_active_pinjaman_bymember($memberID);
+					$pinjaman_active = $this->Content_model->check_active_pinjaman_bymember($memberID);	
 
 					$data['pinjaman_list'] = $pinjaman_active;
 
@@ -372,15 +372,15 @@ class Pinjaman extends REST_Controller {
 
 						// update table user detail
 						$indata_udetail['company']                                  = trim($post['nama_perusahaan']);
-						$indata_udetail['What_is_the_name_of_your_business']        = trim($post['nama_perusahaan']);
+						// $indata_udetail['What_is_the_name_of_your_business']        = trim($post['usaha']);
 						$indata_udetail['How_many_years_have_you_been_in_business'] = trim($post['lama_bekerja']);
 						$indata_udetail['Business_phone_no']                        = trim($post['telp_perusahaan']);
 						$indata_udetail['status_karyawan']                          = trim($post['status_karyawan']);
-						$indata_udetail['nama_atasan']                              = trim($post['nama_atasan']);
-						$indata_udetail['referensi_orang_1']                        = trim($post['referensi_1']);
-						$indata_udetail['referensi_orang_2']                        = trim($post['referensi_2']);
-						$indata_udetail['referensi_nama_1']                         = trim($post['referensi_nama_1']);
-						$indata_udetail['referensi_nama_2']                         = trim($post['referensi_nama_2']);
+						$indata_udetail['nama_atasan_langsung']                              = trim($post['nama_atasan']);
+						$indata_udetail['telp_referensi_teman_1']                        = trim($post['referensi_1']);
+						$indata_udetail['telp_referensi_teman_2']                        = trim($post['referensi_2']);
+						$indata_udetail['referensi_teman_1']                         = trim($post['referensi_nama_1']);
+						$indata_udetail['referensi_teman_2']                         = trim($post['referensi_nama_2']);
 						$this->Content_model->update_userdetail($id_pengguna, $indata_udetail);
 						
 						$response['response'] = 'success';
@@ -432,8 +432,6 @@ class Pinjaman extends REST_Controller {
 				$uid = (int)antiInjection($token->id);
 				$logintype = (int)antiInjection($token->logtype);
 
-				$upload_limit = $this->config->item('file_upload_limit');
-
 				if (!empty($uid) && trim($uid) !='') {
 
 						$memberdata = $this->Member_model->get_member_byid_less($uid);
@@ -452,19 +450,6 @@ class Pinjaman extends REST_Controller {
 							$nowdatetime = date('Y-m-d H:i:s');
 
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
-
-								if ($_FILES['foto_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'File foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
-
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -478,18 +463,6 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
-
-								if ($_FILES['nik_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -503,19 +476,6 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['foto_surat_ket_kerja']['name']) && $_FILES['foto_surat_ket_kerja']['name'] != ''){
-								
-								if ($_FILES['foto_surat_ket_kerja']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Surat Keterangan Kerja maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
-
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_surat_ket_kerja']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -523,24 +483,12 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_surat_kerja_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_surat_keterangan_kerja_name']  = $file_surat_kerja_name;
+								$u_detail['foto_surat_keterangan_bekerja']  = $file_surat_kerja_name;
 							}else{
 								$file_surat_kerja_name   = '';
 							}
 
 							if( isset($_FILES['foto_slip_gaji']['name']) && $_FILES['foto_slip_gaji']['name'] != ''){
-								if ($_FILES['foto_slip_gaji']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Slip Gaji maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
-
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_slip_gaji']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -548,24 +496,12 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_slip_gaji_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_slip_gaji_name']  = $file_slip_gaji_name;
+								$u_detail['foto_slip_gaji']  = $file_slip_gaji_name;
 							}else{
 								$file_slip_gaji_name   = '';
 							}
 
 							if( isset($_FILES['foto_pegang_idcard']['name']) && $_FILES['foto_pegang_idcard']['name'] != ''){
-								if ($_FILES['foto_pegang_idcard']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Pegang ID Card maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
-
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_pegang_idcard']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -573,7 +509,7 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_foto_pegang_idcard_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_with_idcard_name']  = $file_foto_pegang_idcard_name;
+								$u_detail['foto_pegang_ktp']  = $file_foto_pegang_idcard_name;
 							}else{
 								$file_foto_pegang_idcard_name   = '';
 							}
@@ -598,6 +534,7 @@ class Pinjaman extends REST_Controller {
 							$p_pinjam['Jml_permohonan_pinjaman']      = $total_pinjam;
 							$p_pinjam['User_id']                      = $id_pengguna;
 							$p_pinjam['Product_id']                   = $productID;
+							$p_pinjam['Amount']						  = $total_pinjam;
 							$p_pinjam['Master_loan_status']           = 'review';
 							$p_pinjam['pinjam_member_id']             = $uid;
 							$p_pinjam['jml_permohonan_pinjaman_awal'] = $p_pinjam['Jml_permohonan_pinjaman'];
@@ -662,7 +599,11 @@ class Pinjaman extends REST_Controller {
 									}
 
 									unlink($destination_foto.$memberdata['images_foto_name']);
-									move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);		
+
+									$this->resize_image($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);
+									
+									move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);
+	
 								}
 
 								if(isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
@@ -670,31 +611,51 @@ class Pinjaman extends REST_Controller {
 										mkdir_r($destination_ktp);
 									}
 									unlink($destination_ktp.$memberdata['images_ktp_name']);
+
+									// $this->resize_image($_FILES['nik_file']['tmp_name'], $destination_ktp.$file_ktp_name);
+							
 									move_uploaded_file($_FILES['nik_file']['tmp_name'], $destination_ktp.$file_ktp_name);		
+
+									
+									
 								}
 
 								if(isset($_FILES['foto_surat_ket_kerja']['name']) && $_FILES['foto_surat_ket_kerja']['name'] != ''){
 									if (!is_file($destination_surat_kerja.$file_surat_kerja_name)) {
 										mkdir_r($destination_surat_kerja);
 									}
-									unlink($destination_surat_kerja.$memberdata['images_surat_keterangan_kerja_name']);
+									unlink($destination_surat_kerja.$memberdata['foto_surat_keterangan_bekerja']);
+									
+									// $this->resize_image($_FILES['foto_surat_ket_kerja']['tmp_name'], $destination_surat_kerja.$file_surat_kerja_name);								
 									move_uploaded_file($_FILES['foto_surat_ket_kerja']['tmp_name'], $destination_surat_kerja.$file_surat_kerja_name);
+
 								}
 
 								if(isset($_FILES['foto_slip_gaji']['name']) && $_FILES['foto_slip_gaji']['name'] != ''){
 									if (!is_file($destination_slip_gaji.$file_slip_gaji_name)) {
 										mkdir_r($destination_slip_gaji);
 									}
-									unlink($destination_slip_gaji.$memberdata['images_slip_gaji_name']);
+									unlink($destination_slip_gaji.$memberdata['foto_slip_gaji']);
+
+									// $this->resize_image($_FILES['foto_slip_gaji']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
+
 									move_uploaded_file($_FILES['foto_slip_gaji']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
+
+									
+
 								}
 
 								if(isset($_FILES['foto_pegang_idcard']['name']) && $_FILES['foto_pegang_idcard']['name'] != ''){
 									if (!is_file($destination_hold_idcard.$file_foto_pegang_idcard_name)) {
 										mkdir_r($destination_hold_idcard);
 									}
-									unlink($destination_hold_idcard.$memberdata['images_with_idcard_name']);
+									unlink($destination_hold_idcard.$memberdata['foto_pegang_ktp']);
+
+									// $this->resize_image($_FILES['foto_pegang_idcard']['tmp_name'], $destination_hold_idcard.$file_foto_pegang_idcard_name);
+
 									move_uploaded_file($_FILES['foto_pegang_idcard']['tmp_name'], $destination_hold_idcard.$file_foto_pegang_idcard_name);
+
+									
 								}
 							}
 
@@ -750,6 +711,24 @@ class Pinjaman extends REST_Controller {
 
 		$this->set_response($response, $http_status);
         return;
+	}
+
+	// ---------- RESIZE IMAGE ----------- //
+
+	function resize_image($source)
+	{
+		$this->load->library('image_lib');
+
+		$config['image_library'] = 'gd2';
+		$config['source_image'] = $source;
+		$config['maintain_ratio'] = TRUE;
+		$config['width'] = 500;
+		$config['height'] = 500;
+
+		$this->image_lib->initialize($config);
+
+		$this->image_lib->resize();
+		$this->image_lib->clear();
 	}
 
 	// ---------- PINJAMAN MIKRO ----------- //
@@ -941,19 +920,6 @@ class Pinjaman extends REST_Controller {
 						$this->Content_model->update_user($uid, $indata_user);
 
 						if( isset($_FILES['info_usaha_file']['name']) && $_FILES['info_usaha_file']['name'] != ''){
-							
-							if ($_FILES['info_usaha_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Usaha maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
-
 							// ----- Process Image Name -----
 							$img_info          = pathinfo($_FILES['info_usaha_file']['name']);
 							$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -970,7 +936,7 @@ class Pinjaman extends REST_Controller {
 						$u_detail['deskripsi_usaha']         = trim($post['deskripsi_usaha']);
 						$u_detail['omzet_usaha']             = trim($post['omzet']);;
 						$u_detail['margin_usaha']            = trim($post['margin']);;
-						$u_detail['biaya_operasional_usaha'] = trim($post['biaya_operasional']);;
+						$u_detail['biaya_operasional'] = trim($post['biaya_operasional']);;
 						$u_detail['laba_usaha']              = trim($post['laba_usaha']);;
 						$u_detail['jml_bunga_usaha']         = trim($post['jml_bunga']);;
 						$updated_udetail = $this->Content_model->update_userdetail($id_pengguna, $u_detail);
@@ -984,6 +950,9 @@ class Pinjaman extends REST_Controller {
 									mkdir_r($destination_usaha);
 								}
 								unlink($destination_usaha.$memberdata['images_usaha_name']);
+
+								// $this->resize_image($_FILES['info_usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
+
 								move_uploaded_file($_FILES['info_usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
 							}
 						}
@@ -1070,24 +1039,12 @@ class Pinjaman extends REST_Controller {
 								$response['response'] = 'failed';
 			                    $response['status']   = REST_Controller::HTTP_BAD_REQUEST;
 			                    $response['content']  = '';
-			                    $response['message']  = 'Jumlah Pinjaman Maksimal Rp '.number_format($produk['Max_loan']);
+			                    $response['message']  = 'Jumlah Pinjaman Maksimal Rp 5000,000';
 			                    $this->set_response($response, REST_Controller::HTTP_BAD_REQUEST);
 			                    return;
 							}
 
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
-								if ($_FILES['foto_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
-
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1101,18 +1058,6 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
-								
-								if ($_FILES['nik_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1126,18 +1071,6 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['foto_usaha_file']['name']) && $_FILES['foto_usaha_file']['name'] != ''){
-								if ($_FILES['foto_usaha_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Usaha maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
-
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_usaha_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1233,6 +1166,9 @@ class Pinjaman extends REST_Controller {
 										}
 
 										unlink($destination_foto.$memberdata['images_foto_name']);
+
+										// $this->resize_image($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);
+
 										move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);		
 									}
 
@@ -1241,6 +1177,9 @@ class Pinjaman extends REST_Controller {
 											mkdir_r($destination_ktp);
 										}
 										unlink($destination_ktp.$memberdata['images_ktp_name']);
+
+										// $this->resize_image($_FILES['nik_file']['tmp_name'], $destination_ktp.$file_ktp_name);	
+
 										move_uploaded_file($_FILES['nik_file']['tmp_name'], $destination_ktp.$file_ktp_name);		
 									}
 
@@ -1249,6 +1188,9 @@ class Pinjaman extends REST_Controller {
 											mkdir_r($destination_usaha);
 										}
 										unlink($destination_usaha.$memberdata['images_usaha_name']);
+
+										// $this->resize_image($_FILES['foto_usaha_file']['tmp_name'], $destination_usaha.$foto_usaha);
+
 										move_uploaded_file($_FILES['foto_usaha_file']['tmp_name'], $destination_usaha.$foto_usaha);		
 									}
 

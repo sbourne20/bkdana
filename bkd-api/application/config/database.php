@@ -75,10 +75,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $active_group = 'default';
 $query_builder = TRUE;
 
-if($_SERVER['HTTP_HOST']=='localhost') {
+if($_SERVER['HTTP_HOST']=='localhost' OR $_SERVER['HTTP_HOST']=='192.168.1.86' ) {
 	$db_host = 'localhost';
 	$db_user = 'root';
-	$db_pass = 'aksesdb';
+	$db_pass = '';
 	
 }else if($_SERVER['HTTP_HOST']=='149.129.213.30' OR $_SERVER['HTTP_HOST']=='www.bkdana.com') {
 	// Dev

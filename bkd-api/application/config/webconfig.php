@@ -1,7 +1,7 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if($_SERVER['HTTP_HOST']=='localhost')
+if($_SERVER['HTTP_HOST']=='localhost' or $_SERVER['HTTP_HOST']=='192.168.1.86')
 {
     $config['doc_root'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
     $config['doc_root'] .= "://".$_SERVER['HTTP_HOST'];
@@ -9,7 +9,7 @@ if($_SERVER['HTTP_HOST']=='localhost')
 
     $config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
     $config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
-    $config['img_baseurl'] = "http://localhost/";
+    $config['img_baseurl'] = "http://192.168.1.86/";
     $config['images_uri']   = $config['img_baseurl'] . "data-bkd/images/";
 
 }else if($_SERVER['HTTP_HOST']=='149.129.213.30')
@@ -47,7 +47,7 @@ $config['mail_username']      = 'bkdanafinansial@gmail.com';
 $config['mail_password']      = 'master177';
 $config['bank_tujuan']        = 'Bank CIMB';
 
-$config['minimum_mikro']      = '2000000';
+$config['minimum_mikro']      = '1000000';
 $config['minimum_topup']      = '100000';
 $config['minimum_grade']      = '95';
 $config['bkd_telp']           = '+62 21 83784354';

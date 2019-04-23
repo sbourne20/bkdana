@@ -1,4 +1,4 @@
-<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+t<?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 require_once APPPATH . 'libraries/REST_Controller.php';
 require_once APPPATH . 'libraries/ExpiredException.php';

@@ -376,11 +376,11 @@ class Pinjaman extends REST_Controller {
 						$indata_udetail['How_many_years_have_you_been_in_business'] = trim($post['lama_bekerja']);
 						$indata_udetail['Business_phone_no']                        = trim($post['telp_perusahaan']);
 						$indata_udetail['status_karyawan']                          = trim($post['status_karyawan']);
-						$indata_udetail['nama_atasan']                              = trim($post['nama_atasan']);
-						$indata_udetail['referensi_orang_1']                        = trim($post['referensi_1']);
-						$indata_udetail['referensi_orang_2']                        = trim($post['referensi_2']);
-						$indata_udetail['referensi_nama_1']                         = trim($post['referensi_nama_1']);
-						$indata_udetail['referensi_nama_2']                         = trim($post['referensi_nama_2']);
+						$indata_udetail['nama_atasan_langsung']                              = trim($post['nama_atasan']);
+						$indata_udetail['telp_referensi_teman_1']                        = trim($post['referensi_1']);
+						$indata_udetail['telp_referensi_teman_2']                        = trim($post['referensi_2']);
+						$indata_udetail['referensi_teman_1']                         = trim($post['referensi_nama_1']);
+						$indata_udetail['referensi_teman_2']                         = trim($post['referensi_nama_2']);
 						$this->Content_model->update_userdetail($id_pengguna, $indata_udetail);
 						
 						$response['response'] = 'success';
@@ -483,7 +483,7 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_surat_kerja_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_surat_keterangan_kerja_name']  = $file_surat_kerja_name;
+								$u_detail['foto_surat_keterangan_bekerja']  = $file_surat_kerja_name;
 							}else{
 								$file_surat_kerja_name   = '';
 							}
@@ -496,7 +496,7 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_slip_gaji_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_slip_gaji_name']  = $file_slip_gaji_name;
+								$u_detail['foto_slip_gaji']  = $file_slip_gaji_name;
 							}else{
 								$file_slip_gaji_name   = '';
 							}
@@ -509,7 +509,7 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_foto_pegang_idcard_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_with_idcard_name']  = $file_foto_pegang_idcard_name;
+								$u_detail['foto_pegang_ktp']  = $file_foto_pegang_idcard_name;
 							}else{
 								$file_foto_pegang_idcard_name   = '';
 							}
@@ -613,7 +613,7 @@ class Pinjaman extends REST_Controller {
 									if (!is_file($destination_surat_kerja.$file_surat_kerja_name)) {
 										mkdir_r($destination_surat_kerja);
 									}
-									unlink($destination_surat_kerja.$memberdata['images_surat_keterangan_kerja_name']);
+									unlink($destination_surat_kerja.$memberdata['foto_surat_keterangan_bekerja']);
 									move_uploaded_file($_FILES['foto_surat_ket_kerja']['tmp_name'], $destination_surat_kerja.$file_surat_kerja_name);
 								}
 
@@ -621,7 +621,7 @@ class Pinjaman extends REST_Controller {
 									if (!is_file($destination_slip_gaji.$file_slip_gaji_name)) {
 										mkdir_r($destination_slip_gaji);
 									}
-									unlink($destination_slip_gaji.$memberdata['images_slip_gaji_name']);
+									unlink($destination_slip_gaji.$memberdata['foto_slip_gaji']);
 									move_uploaded_file($_FILES['foto_slip_gaji']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
 								}
 
@@ -629,7 +629,7 @@ class Pinjaman extends REST_Controller {
 									if (!is_file($destination_hold_idcard.$file_foto_pegang_idcard_name)) {
 										mkdir_r($destination_hold_idcard);
 									}
-									unlink($destination_hold_idcard.$memberdata['images_with_idcard_name']);
+									unlink($destination_hold_idcard.$memberdata['foto_pegang_ktp']);
 									move_uploaded_file($_FILES['foto_pegang_idcard']['tmp_name'], $destination_hold_idcard.$file_foto_pegang_idcard_name);
 								}
 							}
@@ -885,7 +885,7 @@ class Pinjaman extends REST_Controller {
 						$u_detail['deskripsi_usaha']         = trim($post['deskripsi_usaha']);
 						$u_detail['omzet_usaha']             = trim($post['omzet']);;
 						$u_detail['margin_usaha']            = trim($post['margin']);;
-						$u_detail['biaya_operasional_usaha'] = trim($post['biaya_operasional']);;
+						$u_detail['biaya_operasional'] = trim($post['biaya_operasional']);;
 						$u_detail['laba_usaha']              = trim($post['laba_usaha']);;
 						$u_detail['jml_bunga_usaha']         = trim($post['jml_bunga']);;
 						$updated_udetail = $this->Content_model->update_userdetail($id_pengguna, $u_detail);

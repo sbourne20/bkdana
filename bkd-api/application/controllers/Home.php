@@ -72,7 +72,9 @@ class Home extends REST_Controller {
 							}else{
 								// Pendana
 								$save_arr[$i]['title_transaksi'] = 'Pendanaan - ' . $l['product_title'];
+								$save_arr[$i]['namaPeminjam'] = 'Nama Peminjam - ' . $l['nama_peminjam'];
 							}
+
 
 							if ($l['tgl_approve'] != '0000-00-00 00:00:00') {
 								// hitung jatuh tempo

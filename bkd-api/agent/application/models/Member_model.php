@@ -110,7 +110,7 @@ class Member_model extends CI_Model
 			deskripsi_usaha,
 			omzet_usaha,
 			margin_usaha,
-			biaya_operasional_usaha,
+			biaya_operasional,
 			laba_usaha,
 			jml_bunga_usaha,
 			How_many_years_have_you_been_in_business as lama_usaha,
@@ -148,7 +148,7 @@ class Member_model extends CI_Model
 		// tanpa foto//
 		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_usaha,mum_lama_usaha, mum_nomor_rekening,
 			u.Id_pengguna, Nama_pengguna, Id_ktp, Nomor_rekening, peringkat_pengguna, peringkat_pengguna_persentase,
-			images_foto_name, images_ktp_name, images_surat_keterangan_kerja_name, images_slip_gaji_name, images_with_idcard_name,
+			images_foto_name, images_ktp_name, foto_surat_keterangan_bekerja, foto_slip_gaji, foto_pegang_ktp,
 			images_usaha_name
 			');
 		$this->db->from($this->mod_user_member.' m');
