@@ -232,7 +232,7 @@
                                     <input type="checkbox" name="access[transaksi_pinjaman_kilat/index]" value="transaksi_pinjaman_kilat/index" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_kilat/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="access[transaksi_pinjaman_kilat/detail]" value="transaksi_pinjaman_kilat/detail" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_kilat/detail')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Detail
+                                    <input type="checkbox" name="access[transaksi_pinjaman_kilat/detail]" value="transaksi_pinjaman_kilat/detail_transaksi" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_kilat/detail')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Detail
                                 </td>
                                 <td>
                                     <input type="checkbox" name="access[transaksi_pinjaman_kilat/approve]" value="transaksi_pinjaman_kilat/approve" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_kilat/approve')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Approve
@@ -252,7 +252,7 @@
                                     <input type="checkbox" name="access[transaksi_pinjaman_mikro/index]" value="transaksi_pinjaman_mikro/index" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_mikro/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="access[transaksi_pinjaman_mikro/detail]" value="transaksi_pinjaman_mikro/detail" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_mikro/detail')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Detail
+                                    <input type="checkbox" name="access[transaksi_pinjaman_mikro/detail]" value="transaksi_pinjaman_mikro/detail_transaksi" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_mikro/detail')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Detail
                                 </td>
                                 <td>
                                     <input type="checkbox" name="access[transaksi_pinjaman_mikro/approve]" value="transaksi_pinjaman_mikro/approve" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_mikro/approve')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Approve
@@ -273,7 +273,7 @@
                                     <input type="checkbox" name="access[transaksi_pinjaman_agri/index]" value="transaksi_pinjaman_agri/index" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/index')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; View
                                 </td>
                                 <td>
-                                    <input type="checkbox" name="access[transaksi_pinjaman_agri/detail]" value="transaksi_pinjaman_agri/detail" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/detail')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Detail
+                                    <input type="checkbox" name="access[transaksi_pinjaman_agri/detail]" value="transaksi_pinjaman_agri/detail_transaksi" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/detail')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Detail
                                 </td>
                                 <td>
                                     <input type="checkbox" name="access[transaksi_pinjaman_agri/approve]" value="transaksi_pinjaman_agri/approve" <?php echo (check_role_access($EDIT, 'transaksi_pinjaman_agri/approve')=='TRUE')? 'checked="checked"' : ''; ?>> &nbsp; Approve
