@@ -39,10 +39,10 @@
 			<td>Alamat</td><td><?php echo $data['Alamat']; ?></td>
 		</tr>		
 		<tr>
-			<td>Kota</td><td><?php echo $data['Kota']; ?></td>
+			<td>Kota</td><td><?php echo $data['Nama_Kota']; ?></td>
 		</tr>
 		<tr>
-			<td>Provinsi</td><td><?php echo $data['Provinsi']; ?></td>
+			<td>Provinsi</td><td><?php echo $data['Nama_Provinsi']; ?></td>
 		</tr>
 		<tr>
 			<td>Kode Pos</td><td><?php echo $data['Kodepos']; ?></td>

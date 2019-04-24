@@ -178,7 +178,7 @@ class Transaksi extends CI_Controller {
 			
 			$data['jml_cicilan'] = $log_transaksi_pinjam['ltp_jml_angsuran'];
 			
-/*			//tambahan baru denda keterlambatan
+			/*//tambahan baru denda keterlambatan
 			if($produk['charge_type']=='1'){
 
 			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
@@ -889,7 +889,7 @@ class Transaksi extends CI_Controller {
 					foreach ($list_pendana as $dp) {
 						$get_wallet_pendana = $this->Wallet_model->get_wallet_byuser($dp['User_id']);
 
-						$tambah_saldo = $dp['jml_angsuran_ke_pendana'];
+						$tambah_saldo = $dp['jml_angsuran_ke_pendana'] + $dp['jml_pendanaan'];
 
 						// tambah saldo pendana
 						$this->Wallet_model->update_master_wallet_saldo($dp['User_id'], $tambah_saldo);

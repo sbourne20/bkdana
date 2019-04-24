@@ -22,10 +22,10 @@
 			<td>Alamat</td><td><?php echo $data['Alamat']; ?></td>
 		</tr>		
 		<tr>
-			<td>Kota</td><td><?php echo $data['Kota']; ?></td>
+			<td>Kota</td><td><?php echo $data['Nama_Kota']; ?></td>
 		</tr>
 		<tr>
-			<td>Provinsi</td><td><?php echo $data['Provinsi']; ?></td>
+			<td>Provinsi</td><td><?php echo $data['Nama_Provinsi']; ?></td>
 		</tr>
 		<tr>
 			<td>Kode Pos</td><td><?php echo $data['Kodepos']; ?></td>
@@ -49,10 +49,10 @@
 			</td>
 		</tr>
 		<tr>
-			<td>No.NIK</td><td><?php echo $data['Id_ktp']; ?></td>
+			<td>No.KTP</td><td><?php echo $data['Id_ktp']; ?></td>
 		</tr>
 		<tr>
-			<td>Foto NIK</td>
+			<td>Foto KTP</td>
 			<td><img width="100%" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']); ?>" alt="" /></td>
 		</tr>
 		<tr>
