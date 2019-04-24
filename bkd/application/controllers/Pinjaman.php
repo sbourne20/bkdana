@@ -1,5 +1,11 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+if (is_file(__DIR__ . '/../libraries/aliyun-oss-php-sdk-master/autoload.php')) {
+    require_once __DIR__ . '/../libraries/aliyun-oss-php-sdk-master/autoload.php';
+}
+use OSS\OssClient;
+use OSS\Core\OssException;
+
 class Pinjaman extends CI_Controller {
 
 	public function __construct()
@@ -946,7 +952,7 @@ class Pinjaman extends CI_Controller {
 						$this->db->like('Flag', 'P', 'BOTH');
 						$hasil=$this->db->get()->num_rows();
 						// $p_pinjam2['user_id'] =$uid;
-					/*	if($hasil>0){
+						/*	if($hasil>0){
 							$hasil+=1;	
 						}else{
 							$hasil="1";
@@ -1150,33 +1156,9 @@ class Pinjaman extends CI_Controller {
 							exit();
 						}else{
 
-							//$upload_usaha = file_get_contents($_FILES['usaha_file']['tmp_name']);
-
-							// if( isset($_FILES['usaha_file']['name']) && $_FILES['usaha_file']['name'] != ''){
-							// 	// ----- Process Image Name -----
-							// 	$img_info          = pathinfo($_FILES['usaha_file']['name']);
-							// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-							// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-							// 	$fileExt           = $img_info['extension'];
-							// 	$file_usaha_name   = $fileName.'.'.$fileExt;
-							// 	// ----- END Process Image Name -----
-								
-							// 	$u_detail['images_usaha_name'] = $file_usaha_name;
-							// }else{
-							// 	$file_usaha_name   = '';
-							// }
-
 							$destination_usaha = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/usaha/";
 
 							if($post['usaha_file_hidden']!=''){
-								if (!is_file($destination_usaha)) {
-									mkdir_r($destination_usaha);
-								}	
-								if($post['old_usaha']!=''){
-									if (is_file($destination_usaha.$post['old_usaha'])){
-										unlink($destination_usaha.$post['old_usaha']);
-									}
-								}
 								$data = $_POST['usaha_file_hidden'];
 								$splited = explode(',', substr( $data , 5 ) , 2);
 								$mime=$splited[0];
@@ -1192,11 +1174,34 @@ class Pinjaman extends CI_Controller {
 							        //if($extension=='text')$extension='txt';
 							        $output_file_with_extension=rand().'.'.$extension;
 							    }
+								$u_detail['images_usaha_name']  = $output_file_with_extension;
 
 								$data = base64_decode($data);
-								$file = $destination_usaha.$output_file_with_extension;
-								$success = file_put_contents($file, $data);
-								$u_detail['images_usaha_name']  = $output_file_with_extension;
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_usaha']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha . $post['old_usaha']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
 							}
 
 
@@ -1444,7 +1449,7 @@ class Pinjaman extends CI_Controller {
 
 					if ($post['kelengkapan'] == '0'){
 						// jika kelengkapan Agri belum lengkap
-					/*	if ($_FILES['cf_file']['tmp_name']  == '' OR $_FILES['progress_report_file']['tmp_name']  == '' ) {
+						/*	if ($_FILES['cf_file']['tmp_name']  == '' OR $_FILES['progress_report_file']['tmp_name']  == '' ) {
 							$ret = array('error'=> '1', 'message'=>'Anda harus Upload Contract Farming, Progress Report!');
 							echo json_encode($ret);
 							exit();
@@ -1453,14 +1458,6 @@ class Pinjaman extends CI_Controller {
 							$destination_cf = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/cf/";
 
 							if($post['cf_file_hidden']!=''){
-								if (!is_file($destination_cf)) {
-									mkdir_r($destination_cf);
-								}	
-								if($post['old_cf']!=''){
-									if (is_file($destination_cf.$post['old_cf'])){
-										unlink($destination_cf.$post['old_cf']);
-									}
-								}
 								$data = $_POST['cf_file_hidden'];
 								$splited = explode(',', substr( $data , 5 ) , 2);
 								$mime=$splited[0];
@@ -1476,25 +1473,40 @@ class Pinjaman extends CI_Controller {
 							        //if($extension=='text')$extension='txt';
 							        $output_file_with_extension=rand().'.'.$extension;
 							    }
+								$u_detail['images_cf_name']  = $output_file_with_extension;
 
 								$data = base64_decode($data);
-								$file = $destination_cf.$output_file_with_extension;
-								$success = file_put_contents($file, $data);
-								$u_detail['images_cf_name']  = $output_file_with_extension;
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_cf. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_cf']!=''){
+										$ossClient->deleteObject($bucket,$destination_cf . $post['old_cf']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
 							}
 
 
 							$destination_progress_report = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/progress_report/";
 
 							if($post['progress_report_file_hidden']!=''){
-								if (!is_file($destination_progress_report)) {
-									mkdir_r($destination_progress_report);
-								}	
-								if($post['old_progress_report']!=''){
-									if (is_file($destination_progress_report.$post['old_progress_report'])){
-										unlink($destination_progress_report.$post['old_progress_report']);
-									}
-								}
 								$data = $_POST['progress_report_file_hidden'];
 								$splited = explode(',', substr( $data , 5 ) , 2);
 								$mime=$splited[0];
@@ -1509,11 +1521,34 @@ class Pinjaman extends CI_Controller {
 							   
 							        $output_file_with_extension=rand().'.'.$extension;
 							    }
+								$u_detail['images_progress_report_name']  = $output_file_with_extension;
 
 								$data = base64_decode($data);
-								$file = $destination_progress-report.$output_file_with_extension;
-								$success = file_put_contents($file, $data);
-								$u_detail['images_progress_report_name']  = $output_file_with_extension;
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_progress_report. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_progress_report']!=''){
+										$ossClient->deleteObject($bucket,$destination_progress_report . $post['old_progress_report']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
 							}
 							
 							$this->Content_model->update_userdetail($member_data['Id_pengguna'], $u_detail);
@@ -1553,7 +1588,7 @@ class Pinjaman extends CI_Controller {
 						$this->db->like('Flag', 'P', 'BOTH');
 						$hasil=$this->db->get()->num_rows();
 						// $p_pinjam2['user_id'] =$uid;
-					/*	if($hasil>0){
+						/*if($hasil>0){
 							$hasil+=1;	
 						}else{
 							$hasil="1";

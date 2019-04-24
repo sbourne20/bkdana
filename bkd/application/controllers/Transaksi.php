@@ -832,9 +832,9 @@ class Transaksi extends CI_Controller {
 					$this->Wallet_model->insert_detail_wallet($detail_w);
 
 					if($jml_cicilan_hidden == $jml_bayar){
-					$repayment['tgl_pembayaran'] = $nowdatetime;
-					$repayment['status_cicilan'] = 'lunas';
-					$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $repayment['status_cicilan'], $indetail['Master_loan_id'] );	
+						$repayment['tgl_pembayaran'] = $nowdatetime;
+						$repayment['status_cicilan'] = 'lunas';
+						$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $repayment['status_cicilan'], $indetail['Master_loan_id'] );	
 
 						$repayment['Master_loan_id']		   = $indetail['Master_loan_id'];
 						$repayment['User_id']				   = $get_master_wallet['User_id'];
@@ -861,19 +861,16 @@ class Transaksi extends CI_Controller {
 						$this->Wallet_model->insert_record_repayment($repayment);
 
 						if($datediff > 0){
-						$jml_angsuran = ($nilai + ( $nilai * ($bunga * $datediff))/100 );							
+							$jml_angsuran = ($nilai + ( $nilai * ($bunga * $datediff))/100 );							
 						}else if ($datediff < 0){
-						$jml_angsuran = ($nilai + ( $nilai * ($bunga * $totalweeks))/100 );
+							$jml_angsuran = ($nilai + ( $nilai * ($bunga * $totalweeks))/100 );
 						}
 
 						$this->Wallet_model->update_repayment_agri($jml_angsuran, $indetail['Master_loan_id']);
 
 					}
 
-				
-					
 					//batas tambahan repayment
-
 					$get_data_pinjam = $this->Content_model->get_transaksi_pinjam_byid($transaksi_id); // get total yg sdh diangsur
 
 					if ($get_data_pinjam['Total_loan_repayment'] >= $get_data_pinjam['Jml_permohonan_pinjaman_disetujui'])
