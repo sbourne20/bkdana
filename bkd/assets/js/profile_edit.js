@@ -1,10 +1,7 @@
 $( document ).ready(function() {
-    console.log( "ready!" );
 
     $('#provinsi').change(function() {
     var provinsi   = $(this).val();
-    // var member    = $('data-member');
-    console.log(provinsi);
     var base_uri  = window.location.href;
 
     var send_data = {'Option_key' : provinsi };
@@ -16,7 +13,7 @@ $( document ).ready(function() {
             },
             success: function(html_data)
             {
-            var kota = $('#kota'); 
+            	var kota = $('#kota'); 
                 kota.html(html_data);
                 if(kota.data("value") != ""){
                     $('#kota option[value='+kota.data("value")+']').prop('selected','selected');
