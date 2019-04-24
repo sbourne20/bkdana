@@ -1706,7 +1706,7 @@ class Content_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from($this->master_option);
-		$this->db->where('Option_key', 2);
+		$this->db->where('Option_key', 'provinsi');
 		$this->db->order_by('Option_label', 'asc');
 		$sql = $this->db->get();
 		return $sql->result_array();
@@ -1716,8 +1716,68 @@ class Content_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from($this->master_option);
-		$this->db->where('Option_key', 1);
+		$this->db->where('Option_key', 'kota');
 		$this->db->order_by('Option_label', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_pendidikan()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'pendidikan');
+		$this->db->order_by('Option_value', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_pekerjaan()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'pekerjaan');
+		$this->db->order_by('Option_value', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_bank()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'bank');
+		$this->db->order_by('Option_label', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_gender()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'gender');
+		$this->db->order_by('Option_key', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_status_tempat()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'status_tempat');
+		$this->db->order_by('Option_value', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}	
+
+	function get_all_agama()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'agama');
+		$this->db->order_by('Option_value', 'asc');
 		$sql = $this->db->get();
 		return $sql->result_array();
 	}
@@ -1726,7 +1786,7 @@ class Content_model extends CI_Model
 	{
 		$this->db->select('*');
 		$this->db->from($this->master_option);
-		$this->db->where('Option_key', 1);
+		$this->db->where('Option_key', 'kota');
 		$this->db->like('Option_value',$code, 'after');
 		$sql = $this->db->get();
 		

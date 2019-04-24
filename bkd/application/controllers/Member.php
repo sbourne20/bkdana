@@ -226,6 +226,12 @@ class Member extends CI_Controller {
 		$data['total_saldo']    = $this->Content_model->get_total_saldo($uid);
 		$data['provinsi'] = $this->Content_model->get_all_province();
 		$data['kota'] = $this->Content_model->get_all_cities();
+		$data['pendidikan'] = $this->Content_model->get_all_pendidikan();
+		$data['agama'] = $this->Content_model->get_all_agama();
+		$data['pekerjaan'] = $this->Content_model->get_all_pekerjaan();
+		$data['nama_bank'] = $this->Content_model->get_all_bank();
+		$data['status_tempat_tinggal'] = $this->Content_model->get_all_status_tempat();
+		$data['gender'] = $this->Content_model->get_all_gender();
 
 		//_d($data['memberdata']);
 		$data['pages']    = 'v_profil_edit';
