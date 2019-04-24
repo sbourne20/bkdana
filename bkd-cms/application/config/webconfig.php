@@ -53,6 +53,6 @@ $config['bkd_email']          = 'cs@bkdana.id';
 $config['oss_access_key_id'] = 'LTAIJbwb8rmv5ptU';
 $config['oss_access_key_secret'] = 'CSwic1up6VGQtlg4bp2DLQc731n5Re';
 $config['oss_endpoint'] = 'https://oss-ap-southeast-5.aliyuncs.com';
-$config['oss_bucket_bkd_user'] = 'bkd-user';
+$config['oss_bucket_bkd_user'] = _SERVER['HTTP_HOST']=='localhost' ? 'bkd-development' : 'bkd-production';
 
 ?>
