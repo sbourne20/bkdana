@@ -178,7 +178,7 @@ class Transaksi extends CI_Controller {
 			
 			$data['jml_cicilan'] = $log_transaksi_pinjam['ltp_jml_angsuran'];
 			
-/*			//tambahan baru denda keterlambatan
+			/*//tambahan baru denda keterlambatan
 			if($produk['charge_type']=='1'){
 
 			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
@@ -832,9 +832,9 @@ class Transaksi extends CI_Controller {
 					$this->Wallet_model->insert_detail_wallet($detail_w);
 
 					if($jml_cicilan_hidden == $jml_bayar){
-						$repayment['tgl_pembayaran'] = $nowdatetime;
-						$repayment['status_cicilan'] = 'lunas';
-						$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $repayment['status_cicilan'], $indetail['Master_loan_id'] );	
+					$repayment['tgl_pembayaran'] = $nowdatetime;
+					$repayment['status_cicilan'] = 'lunas';
+					$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $repayment['status_cicilan'], $indetail['Master_loan_id'] );	
 
 						$repayment['Master_loan_id']		   = $indetail['Master_loan_id'];
 						$repayment['User_id']				   = $get_master_wallet['User_id'];
@@ -861,16 +861,19 @@ class Transaksi extends CI_Controller {
 						$this->Wallet_model->insert_record_repayment($repayment);
 
 						if($datediff > 0){
-							$jml_angsuran = ($nilai + ( $nilai * ($bunga * $datediff))/100 );							
+						$jml_angsuran = ($nilai + ( $nilai * ($bunga * $datediff))/100 );							
 						}else if ($datediff < 0){
-							$jml_angsuran = ($nilai + ( $nilai * ($bunga * $totalweeks))/100 );
+						$jml_angsuran = ($nilai + ( $nilai * ($bunga * $totalweeks))/100 );
 						}
 
 						$this->Wallet_model->update_repayment_agri($jml_angsuran, $indetail['Master_loan_id']);
 
 					}
 
+				
+					
 					//batas tambahan repayment
+
 					$get_data_pinjam = $this->Content_model->get_transaksi_pinjam_byid($transaksi_id); // get total yg sdh diangsur
 
 					if ($get_data_pinjam['Total_loan_repayment'] >= $get_data_pinjam['Jml_permohonan_pinjaman_disetujui'])
@@ -886,7 +889,7 @@ class Transaksi extends CI_Controller {
 					foreach ($list_pendana as $dp) {
 						$get_wallet_pendana = $this->Wallet_model->get_wallet_byuser($dp['User_id']);
 
-						$tambah_saldo = $dp['jml_angsuran_ke_pendana'];
+						$tambah_saldo = $dp['jml_angsuran_ke_pendana'] + $dp['jml_pendanaan'];
 
 						// tambah saldo pendana
 						$this->Wallet_model->update_master_wallet_saldo($dp['User_id'], $tambah_saldo);

@@ -1721,4 +1721,15 @@ class Content_model extends CI_Model
 		$sql = $this->db->get();
 		return $sql->result_array();
 	}
+
+	function getkota($code)
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 1);
+		$this->db->like('Option_value',$code, 'after');
+		$sql = $this->db->get();
+		
+		return $sql->result_array();
+	}
 }

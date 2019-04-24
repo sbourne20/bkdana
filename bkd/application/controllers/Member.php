@@ -202,6 +202,7 @@ class Member extends CI_Controller {
 		$data['bottom_js'] .= add_js('js/dsn.js');
 		$data['bottom_js'] .= add_js('js/exif-js-master/exif.js');
 		$data['bottom_js'] .= add_js('js/ImageTools.js');
+		$data['bottom_js'] .= add_js('js/profile_edit.js');
 
 
 		$data['title'] = $this->M_settings->title;
@@ -224,6 +225,28 @@ class Member extends CI_Controller {
 		//_d($data['memberdata']);
 		$data['pages']    = 'v_profil_edit';
 		$this->load->view('template', $data);
+	}
+
+	function kota_provinsi()
+	{
+		if(isset($_POST['Option_key']))
+		{
+			$usr = $_POST['Option_key'];
+			echo $usr;
+		}else{
+			echo "no data";
+		}
+
+		$kota = $this->Content_model->getkota($usr);
+		print_r($kota);
+
+		$html = '';
+		foreach ($kota as $prod) {
+			$html .= '<option value="'.$prod['Option_value'].'">'.$prod['Option_label'].' </option>';
+
+		echo $html;
+	}
+
 	}
 
 	function submit_ubah_profil()
