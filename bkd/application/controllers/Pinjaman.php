@@ -1448,12 +1448,12 @@ class Pinjaman extends CI_Controller {
 				{
 
 					if ($post['kelengkapan'] == '0'){
-						// jika kelengkapan Agri belum lengkap
-						/*	if ($_FILES['cf_file']['tmp_name']  == '' OR $_FILES['progress_report_file']['tmp_name']  == '' ) {
-							$ret = array('error'=> '1', 'message'=>'Anda harus Upload Contract Farming, Progress Report!');
-							echo json_encode($ret);
-							exit();
-						}else{*/
+							// jika kelengkapan Agri belum lengkap
+							/*	if ($_FILES['cf_file']['tmp_name']  == '' OR $_FILES['progress_report_file']['tmp_name']  == '' ) {
+								$ret = array('error'=> '1', 'message'=>'Anda harus Upload Contract Farming, Progress Report!');
+								echo json_encode($ret);
+								exit();
+							}else{*/
 
 							$destination_cf = $this->config->item('member_images_dir'). $member_data['Id_pengguna']."/cf/";
 
