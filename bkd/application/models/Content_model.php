@@ -1783,7 +1783,7 @@ class Content_model extends CI_Model
 	}
 
 	function getkota($code)
-	{
+	{	
 		$this->db->select('*');
 		$this->db->from($this->master_option);
 		$this->db->where('Option_key', 'kota');

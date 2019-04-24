@@ -177,12 +177,12 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											<label for="handphone">* Kota sesuai dengan KTP</label>
 											<select class="form-control" name="kota" id="kota" data-value="<?php echo $memberdata['Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
 											<option value=""> -- Pilih Kota--</option>
-											<?php foreach ($kota as $key) {
+											<!-- <?php foreach ($kota as $key) {
 											?>
 											<option value="<?php echo $key['Option_id'] ?>" data-member="<?php echo $key['Option_id']; ?>"> <?php echo $key['Option_label']; ?> </option>
 											<?php
 											}
-											?>
+											?> -->
 											</select>
 										</div>
 
@@ -211,57 +211,16 @@ if ($memberdata['foto_pegang_ktp'] != '')
 												<input type="text" class="form-control" name="alamatdomisili" id="alamatdomisili" value="<?php echo $memberdata['Alamat_Domisili'];  ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Alamat Domisili harus diisi!" >
 											</div>
 										</div>
-										<div class="form-group">
+										<!-- <div class="form-group">
 											<div id="hiddendomisili2">
 												<label for="handphone">* Kota Domisili</label>
-												<input type="text" class="form-control" name="kotadomisili" id="kotadomisili" value="<?php echo $memberdata['Kota_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
+												<input type="text" class="form-control" name="kotadomisili" id="kotadomisili" value="<?php echo $memberdata['Nama_Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
 											</div>
 										</div>  
-										<div class="form-group">
-											<div id="hiddendomisili3">
-												<label for="handphone">* Provinsi Domisili</label>
-												<select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
-													<option value=""> -- Pilih -- </option>
-													<option value="Aceh" <?php echo ($memberdata['Provinsi_Domisili']=='Aceh')? 'selected="selected"' : ''; ?>>Aceh</option>
-													<option value="Bali" <?php echo ($memberdata['Provinsi_Domisili']=='Bali')? 'selected="selected"' : ''; ?>>Bali</option>
-													<option value="Banten" <?php echo ($memberdata['Provinsi_Domisili']=='Banten')? 'selected="selected"' : ''; ?>>Banten</option>
-													<option value="Bengkulu" <?php echo ($memberdata['Provinsi_Domisili']=='Bengkulu')? 'selected="selected"' : ''; ?>>Bengkulu</option>
-													<option value="DI Yogyakarta" <?php echo ($memberdata['Provinsi_Domisili']=='DI Yogyakarta')? 'selected="selected"' : ''; ?>>DI Yogyakarta</option>
-													<option value="DKI Jakarta" <?php echo ($memberdata['Provinsi_Domisili']=='DKI Jakarta')? 'selected="selected"' : ''; ?>>DKI Jakarta</option>
-													<option value="Gorontalo" <?php echo ($memberdata['Provinsi_Domisili']=='Gorontalo')? 'selected="selected"' : ''; ?>>Gorontalo</option>
-													<option value="Jambi" <?php echo ($memberdata['Provinsi_Domisili']=='Jambi')? 'selected="selected"' : ''; ?>>Jambi</option>
-													<option value="Jawa Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Barat')? 'selected="selected"' : ''; ?>>Jawa Barat</option>
-													<option value="Jawa Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Tengah')? 'selected="selected"' : ''; ?>>Jawa Tengah</option>
-													<option value="Jawa Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Timur')? 'selected="selected"' : ''; ?>>Jawa Timur</option>
-													<option value="Kalimantan Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Barat')? 'selected="selected"' : ''; ?>>Kalimantan Barat</option>
-													<option value="Kalimantan Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Selatan')? 'selected="selected"' : ''; ?>>Kalimantan Selatan</option>
-													<option value="Kalimantan Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Tengah')? 'selected="selected"' : ''; ?>>Kalimantan Tengah</option>
-													<option value="Kalimantan Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Timur')? 'selected="selected"' : ''; ?>>Kalimantan Timur</option>
-													<option value="Kalimantan Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Utara')? 'selected="selected"' : ''; ?>>Kalimantan Utara</option>
-													<option value="Kepulauan Bangka Belitung" <?php echo ($memberdata['Provinsi_Domisili']=='Kepulauan Bangka Belitung')? 'selected="selected"' : ''; ?>>Kepulauan Bangka Belitung</option>
-													<option value="Kepulauan Riau" <?php echo ($memberdata['Provinsi_Domisili']=='Kepulauan Riau')? 'selected="selected"' : ''; ?>>Kepulauan Riau</option>
-													<option value="Lampung" <?php echo ($memberdata['Provinsi_Domisili']=='Lampung')? 'selected="selected"' : ''; ?>>Lampung</option>
-													<option value="Maluku" <?php echo ($memberdata['Provinsi_Domisili']=='Maluku')? 'selected="selected"' : ''; ?>>Maluku</option>
-													<option value="Maluku Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Maluku Utara')? 'selected="selected"' : ''; ?>>Maluku Utara</option>
-													<option value="Nusa Tenggara Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Nusa Tenggara Barat')? 'selected="selected"' : ''; ?>>Nusa Tenggara Barat</option>
-													<option value="Nusa Tenggara Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Nusa Tenggara Timur')? 'selected="selected"' : ''; ?>>Nusa Tenggara Timur</option>
-													<option value="Papua" <?php echo ($memberdata['Provinsi_Domisili']=='Papua')? 'selected="selected"' : ''; ?>>Papua</option>
-													<option value="Papua Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Papua Barat')? 'selected="selected"' : ''; ?>>Papua Barat</option>
-													<option value="Riau" <?php echo ($memberdata['Provinsi_Domisili']=='Riau')? 'selected="selected"' : ''; ?>>Riau</option>
-													<option value="Sulawesi Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Barat')? 'selected="selected"' : ''; ?>>Sulawesi Barat</option>
-													<option value="Sulawesi Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Selatan')? 'selected="selected"' : ''; ?>>Sulawesi Selatan</option>
-													<option value="Sulawesi Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Tengah')? 'selected="selected"' : ''; ?>>Sulawesi Tengah</option>
-													<option value="Sulawesi Tenggara" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Tenggara')? 'selected="selected"' : ''; ?>>Sulawesi Tenggara</option>
-													<option value="Sulawesi Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Utara')? 'selected="selected"' : ''; ?>>Sulawesi Utara</option>
-													<option value="Sumatera Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Barat')? 'selected="selected"' : ''; ?>>Sumatera Barat</option>
-													<option value="Sumatera Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Selatan')? 'selected="selected"' : ''; ?>>Sumatera Selatan</option>
-													<option value="Sumatera Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Utara')? 'selected="selected"' : ''; ?>>Sumatera Utara</option>
-												</select>
-											</div>
-										</div>  
+										
 
 										<div class="form-group">
-											<label for="handphone">* Provinsi sesuai dengan KTP</label>
+											<label for="handphone">* Provinsi Domisili</label>
 											<select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
 											<option value=""> -- Pilih Provinsi--</option>
 											<?php foreach ($provinsi as $key) {
@@ -271,6 +230,36 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											}
 											?>
 											</select>
+										</div>  -->
+
+										<div class="form-group">
+											<div id="hiddendomisili2">
+												<label for="handphone">* Provinsi Domisili</label>
+												<select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
+												<option value=""> -- Pilih Provinsi--</option>
+												<?php foreach ($provinsi as $key) {
+												?>
+												<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Provinsi_Domisili']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> </option>
+												<?php
+												}
+												?>
+												</select>
+											</div>
+										</div>
+
+										<div class="form-group">
+											<div id="hiddendomisili3">
+												<label for="handphone">* Kota Domisili</label>
+												<select class="form-control" name="kotadomisili" id="kotadomisili" data-value="<?php echo $memberdata['Kota_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
+												<option value=""> -- Pilih Kota--</option>
+												<!-- <?php foreach ($kota as $key) {
+												?>
+												<option value="<?php echo $key['Option_id'] ?>" data-member="<?php echo $key['Option_id']; ?>"> <?php echo $key['Option_label']; ?> </option>
+												<?php
+												}
+												?> -->
+												</select>
+											</div>
 										</div>
 
 										<div class="form-group">
@@ -285,17 +274,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 										<?php } ?>
 
 
-										<!-- <div class="form-group">
-											<label for="handphone">* Pekerjaan</label>
-											<select class="form-control" name="pekerjaan" id="pekerjaan" data-validation-engine="validate[required]" data-errormessage-value-missing="Pekerjaan harus diisi!" >
-												<option value=""> -- Pilih --</option>
-												<option value="1" <?php echo ($memberdata['Pekerjaan']=='1')? 'selected="selected"' : ''; ?>>PNS</option>
-												<option value="2" <?php echo ($memberdata['Pekerjaan']=='2')? 'selected="selected"' : ''; ?>>BUMN</option>
-												<option value="3" <?php echo ($memberdata['Pekerjaan']=='3')? 'selected="selected"' : ''; ?>>Swasta</option>
-												<option value="4" <?php echo ($memberdata['Pekerjaan']=='4')? 'selected="selected"' : ''; ?>>Wiraswasta</option>
-												<option value="5" <?php echo ($memberdata['Pekerjaan']=='5')? 'selected="selected"' : ''; ?>>Lain-lain</option>
-											</select>
-										</div> -->
+										
 										<div class="form-group">
 												<label for="handphone">* Pekerjaan</label>
 													<select class="form-control" name="pekerjaan" id="pekerjaan" 	data-value="<?php echo $memberdata['Pekerjaan']; ?>">
@@ -567,12 +546,6 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											</div>
 												
 										</div>
-												<!-- <div class="form-group">
-													<label for="lama_usaha">* Bidang Pekerjaan</label>
-													<select class="form-control" name="bidang_pekerjaan" id="bidang_pekerjaan" data-validation-engine="validate[required]" data-errormessage-value-missing="bidang pekerjaan harus diisi!" >
-														<option value="agrikultur"> Agrikultur</option>
-													</select>
-												</div> -->
 												<div class="form-group">
 												<label for="handphone">* Bidang Pekerjaan</label>
 													<select class="form-control" name="pekerjaan" id="pekerjaan" 	data-value="<?php echo $memberdata['Pekerjaan']; ?>">
@@ -586,18 +559,6 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											?>
 											</select>
 											</div>
-												<!-- <div class="form-group">
-													<label for="handphone">* Agama</label>
-													 <select class="form-control" name="agama" id="agama">
-															<option value=""> -- Pilih --</option>
-															<option value="islam" <?php echo ($memberdata['Agama']=='islam')? 'selected="selected"' : '';  ?> > Islam</option>
-															<option value="katolik" <?php echo ($memberdata['Agama']=='katolik')? 'selected="selected"' : '';  ?> > Katolik</option>
-															<option value="protestan" <?php echo ($memberdata['Agama']=='protestan')? 'selected="selected"' : '';  ?> > Protestan</option>
-															<option value="budha" <?php echo ($memberdata['Agama']=='budha')? 'selected="selected"' : '';  ?> > Budha</option>
-															<option value="hindu" <?php echo ($memberdata['Agama']=='hindu')? 'selected="selected"' : '';  ?> > Hindu</option>
-															<option value="lain-lain" <?php echo ($memberdata['Agama']=='lain-lain')? 'selected="selected"' : '';  ?> > Lain-lain</option>
-														</select>
-												</div> -->
 
 												<div class="form-group">
 													<label for="handphone">* Agama</label>
@@ -629,15 +590,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 													<label for="handphone">* Jumlah Tanggungan (Istri dan Anak)</label>
 													<input type="text" class="form-control" name="jumlah_tanggungan" id="jumlah_tanggungan" value="<?php echo $memberdata['How_many_people_do_you_financially_support']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Jumlah Tanggungan harus diisi!">
 												</div>
-												<!-- <div class="form-group">
-													<label for="lama_usaha">* Status Tempat Tinggal</label>
-													<select class="form-control" name="status_tempat_tinggal" id="status_tempat_tinggal" data-validation-engine="validate[required]" data-errormessage-value-missing="status tempat tinggal harus diisi!">
-														<option value=""> -- Pilih --</option>
-														<option value="1" <?php echo ($memberdata['status_tempat_tinggal']=='1')? 'selected="selected"' : ''; ?> > Milik Keluarga</option>
-														<option value="2" <?php echo ($memberdata['status_tempat_tinggal']=='2')? 'selected="selected"' : ''; ?> > Milik Sendiri</option>
-														<option value="3" <?php echo ($memberdata['status_tempat_tinggal']=='3')? 'selected="selected"' : ''; ?> > Sewa</option>
-													</select>
-												</div> -->
+											
 
 												<div class="form-group">
 													<label for="handphone">* Status Tempat Tinggal</label>

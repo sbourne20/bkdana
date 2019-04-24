@@ -243,21 +243,19 @@ class Member extends CI_Controller {
 		if(isset($_POST['Option_key']))
 		{
 			$usr = $_POST['Option_key'];
-			echo $usr;
+			// echo $usr;
 		}else{
 			echo "no data";
+			exit();
 		}
 
 		$kota = $this->Content_model->getkota($usr);
-		print_r($kota);
 
 		$html = '';
 		foreach ($kota as $prod) {
 			$html .= '<option value="'.$prod['Option_value'].'">'.$prod['Option_label'].' </option>';
-
-		echo $html;
 	}
-
+	echo $html;
 	}
 
 	function submit_ubah_profil()
