@@ -48,21 +48,23 @@
 			<td>Jenis Kelamin</td><td><?php echo $data['Jenis_kelamin']; ?></td>
 		</tr>
 		<tr>
-			<td>Alamat</td><td><?php echo $data['Alamat']; ?></td>
+			<td>Alamat</td><td><?php echo $data['Nama_Alamat']; ?></td>
+		</tr>
+
+		<tr>
+			<td>Provinsi</td><td><?php echo $data['Nama_Provinsi']; ?></td>
 		</tr>		
 		<tr>
-			<td>Kota</td><td><?php echo $data['Kota']; ?></td>
+			<td>Kota</td><td><?php echo $data['Nama_Kota']; ?></td>
 		</tr>
-		<tr>
-			<td>Provinsi</td><td><?php echo $data['Provinsi']; ?></td>
-		</tr>
+		
 		<tr>
 			<td>Kode Pos</td><td><?php echo $data['Kodepos']; ?></td>
 		</tr>
 		<tr>
 			<td>Foto Profil</td>
 			<td>
-				<img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']; ?>" alt="" />		
+				<img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/usaha/'. $data['images_foto_name']); ?>" alt="" />		
 			</td>
 		</tr>
 		<tr>
@@ -80,7 +82,7 @@
 		</tr>
 		<tr>
 			<td>Foto NIK</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Nomor Rekening</td><td><?php echo $data['Nomor_rekening']; ?></td>
@@ -106,7 +108,6 @@
 				    case '4':
 				        $label_pendidikan = 'SARJANA';
 				        break;
-				    
 				    //default:
 				       // $label_pendidikan = 'lain-lain';
 				        //break;
@@ -138,8 +139,6 @@
 				    case '3':
 				        $label_status_tempat_tinggal = 'Sewa';
 				        break;
-				    
-				    
 				    //default:
 				       // $label_pendidikan = 'lain-lain';
 				        //break;
@@ -149,52 +148,28 @@
 		</tr>
 		<tr>
 			<td>Foto Pegang IDCard/EKTP</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/pegang_ktp/'. $data['images_ktp_name']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/pegang_ktp/'. $data['images_ktp_name']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Foto CF</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/contract_farming/'. $data['images_cf_name']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/cf/'. $data['images_cf_name']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Foto Progress Report File</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/progress_report/'. $data['images_progress_report_name']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/progress_report/'. $data['images_progress_report_name']); ?>" alt="" /></td>
 		</tr>
-		<tr>
+		<!-- <tr>
 			<td>Foto Hasil Panen 1</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/hasil_panen1/'. $data['images_hasil_panen_name1']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/hasil_panen1/'. $data['images_hasil_panen_name1']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Foto Hasil Panen 2</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/hasil_panen2/'. $data['images_hasil_panen_name2']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/hasil_panen2/'. $data['images_hasil_panen_name2']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Foto Progress Hasil Panen 3</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/hasil_panen3/'. $data['images_hasil_panen_name3']; ?>" alt="" /></td>
-		</tr>
-
-
-		<!-- <tr>
-			<td>Usaha</td><td><?php echo $data['What_is_the_name_of_your_business']; ?></td>
-		</tr>
-		<tr>
-			<td>Lama Usaha</td>
-			<td>
-				<?php 
-				if (empty($data['How_many_years_have_you_been_in_business'])) {
-					$lama_usaha = 'Kurang dari 1 tahun';
-				}else if ($data['How_many_years_have_you_been_in_business'] == '1000') {
-					$lama_usaha = 'Lebih dari 10 tahun';
-				}else{
-					$lama_usaha = $data['How_many_years_have_you_been_in_business'] . ' tahun';
-				}
-				echo $lama_usaha; ?>
-			</td>
-		</tr>
-		<tr>
-			<td>Foto Usaha</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/usaha/'. $data['images_usaha_name']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/hasil_panen3/'. $data['images_hasil_panen_name3']); ?>" alt="" /></td>
 		</tr> -->
-
 
 		<tr>
 			<td>Grade</td><td><?php echo $data['peringkat_pengguna']; ?></td>

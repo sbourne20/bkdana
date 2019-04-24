@@ -153,6 +153,7 @@ $route['email-aktivasi']    = 'aktivasi/index';
 $route['detail-profil-peminjam'] = 'rekening_koran/detail_profil_peminjam'; 
 
 $route['fileload'] = 'file_loader/file';
+$route['fileload-external'] = 'file_loader/get_file_from_external';
 
 $route['approval-agri'] = 'transaksi/approve_agri';
 $route['approval-akad'] = 'transaksi/approve_akad';

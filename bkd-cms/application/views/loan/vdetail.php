@@ -55,10 +55,10 @@
 			<td>Alamat</td><td><?php echo $data['Alamat']; ?></td>
 		</tr>		
 		<tr>
-			<td>Kota</td><td><?php echo $data['Kota']; ?></td>
+			<td>Kota</td><td><?php echo $data['Nama_Kota']; ?></td>
 		</tr>
 		<tr>
-			<td>Provinsi</td><td><?php echo $data['Provinsi']; ?></td>
+			<td>Provinsi</td><td><?php echo $data['Nama_Provinsi']; ?></td>
 		</tr>
 		<tr>
 			<td>Kode Pos</td><td><?php echo $data['Kodepos']; ?></td>
@@ -84,7 +84,7 @@
 		</tr>
 		<tr>
 			<td>Foto NIK</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']; ?>" alt="" /></td>
+			<td><img width="300" src=" <?php echo site_url('fileload?p=') . 'member/' . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']; ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Nomor Rekening</td><td><?php echo $data['Nomor_rekening']; ?></td>

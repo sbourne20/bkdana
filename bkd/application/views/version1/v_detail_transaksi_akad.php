@@ -206,12 +206,14 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
 $approval_update = site_url('approval-akad');
 $nowdate = date('d-m-Y');
 $day=date('Y-m-d');
+$notelepon = $transaksi['Mobileno'];
+$tele = substr_replace($notelepon,'0',0,3);
 ?>
 
 <!-- Modal bayar -->
 <div class="modal fade" id="modalAkad" tabindex="-1" role="dialog">
-    <div class="modal-dialog modal-sm" role="document">
-        <div class="modal-content" style="width:720px;margin:-50px">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
             </div>
@@ -220,6 +222,7 @@ $day=date('Y-m-d');
                     <div class="row">
                         <div class="col-sm-12">
                             <h4>PERJANJIAN PINJAMAN USAHA KOORDINATOR TANI</h4><br>
+                            <h5><strong>No[<?php echo $log_pinjaman['Master_loan_id'] ?>]</strong></h5></br></br>
                         </div>
                     </div>
                     
@@ -227,7 +230,7 @@ $day=date('Y-m-d');
                         <div class="col-sm-12">
                             <p align="justify">Perjanjian ini dibuat pada hari <?php echo hari_ini()?> tanggal <?php echo tgl_indo($day); ?> antara: </br>
 
-PT Berkah Kelola Dana, suatu perseroan terbatas yang didirikan berdasarkan akta nomor 11 pada tanggal 12 Oktober 2017 beralamat di Jalan Guntur No. 45 RT.13/RW.5, Kel. Pasar Manggis, Kec. Setia Budi, Jakarta Selatan sebagai Penyelenggara, bertindak atas nama Pemberi Pinjaman. Dalam hal ini diwakilkan oleh Eindrata Tanukusuma selaku Head of Marketing PT. Berkah Kelola Dana berdasarkan surat kuasa direksi nomor [---]. </br>
+PT Berkah Kelola Dana, suatu perseroan terbatas yang didirikan berdasarkan akta nomor 11 pada tanggal 12 Oktober 2017 beralamat di Jalan Guntur No. 45 RT.13/RW.5, Kel. Pasar Manggis, Kec. Setia Budi, Jakarta Selatan sebagai Penyelenggara, bertindak atas nama Pemberi Pinjaman. Dalam hal ini diwakilkan oleh Eindrata Tanukusuma selaku Head of Marketing PT. Berkah Kelola Dana berdasarkan surat kuasa direksi nomor <b>No. 02/BKD/OPS/III/2019</b>. </br>
 
 <?php echo $transaksi['Nama_pengguna']; ?> , perseorangan yang memiliki kontrak Pertanian dengan PT Lentera Panen Mandiri dengan Nomor KTP: <?php echo $transaksi['Id_ktp']; ?> yang bertempat tinggal di <?php echo $transaksi['Alamat']; ?>, selanjutnya dalam perjanjian ini bertindak sebagai Peminjam.</p> </br>
 
@@ -271,7 +274,7 @@ Pinjaman akan ditransfer ke rekening Peminjam yang terdaftar di platform BK Dana
 
 <p align="justify">Jangka Waktu, Pelunasan, dan Biaya Administrasi</br></br> 
 
-Pinjaman Usaha Koordinator Tani ini diberikan dengan jangka waktu <?php echo number_format($log_pinjaman['ltp_product_loan_term']); ?> ([---]) hari kerja terhitung sejak tanggal pencairan. 
+Pinjaman Usaha Koordinator Tani ini diberikan dengan jangka waktu <?php echo number_format($log_pinjaman['ltp_product_loan_term']); ?> hari kerja terhitung sejak tanggal pencairan. 
 
 Peminjam melakukan pelunasan dalam perjanjian ini paling lambat pada tanggal pencairan ditambah jangka waktu. 
 
@@ -300,7 +303,7 @@ Sehubungan dengan Pinjaman Koordinator Tani ini maka Peminjam berkewajiban untuk
 
 Mengembalikan seluruh jumlah pokok dan bunga yang ditetapkan oleh BK Dana  paling lambat saat jatuh tempo perjanjian pinjaman. 
 
-Memastikan pembayaran yang telah jatuh tempo ditransfer ke rekening PT. Berkah Kelola Dana, Bank [---] Cabang [---] dengan nomor rekening : [No Virtual Account Koordinator]. 
+Memastikan pembayaran yang telah jatuh tempo ditransfer ke rekening PT. Berkah Kelola Dana, <?php echo ($transaksi['nama_bank']); ?> dengan nomor rekening : 54321-<?php echo $tele; ?>. 
 
 Memberikan laporan sebelumnya sehubungan dengan adanya perubahan  alamat, usaha, kepemilikan, dan lain-lain yang dapat mengganggu perjanjian ini. 
 
@@ -328,9 +331,8 @@ Lalai dalam melaksanakan kewajiban (pembayaran) menurut perjanjian ini.
 
 <p align="justify">Sanksi </br></br>
 
-Apabila Peminjam melanggar salah satu dari ketentuan yang ada pada Perjanjian ini, atau Peminjam lalai melaksanakan kewajibannya sebagai-mana tercantum dalam Perjanjian ini, maka Peminjam dikenakan  denda Rp.100.000,- dan tambahan bunga 0.2 %/Hari dari jumlah pinjaman. 
-
-Adanya pembayaran tersebut tidak mengurangi hak BK Dana untuk melakukan tindakan upaya hukum lainnya kepada Peminjam sebagai akibat dari terjadinya pelanggaran dan atau kelalaian Peminjam. 
+Apabila   Peminjam   melanggar   salah   satu   dari   ketentuan   yang   ada   padaPerjanjian ini, atau Peminjam lalai melaksanakan kewajibannya sebagai-manatercantum   dalam   Perjanjian   ini,   maka   Peminjam   dikenakan     denda[Rp.100.000],- dan tambahan bunga [0.1%] per hari dari jumlah pinjaman.
+Adanya   pembayaran   tersebut   tidak   mengurangi   hak   BK   Dana   untukmelakukan tindakan upaya hukum lainnya kepada Peminjam sebagai akibatdari terjadinya pelanggaran dan atau kelalaian Peminjam. 
 </p>
  
 
@@ -377,6 +379,7 @@ function tgl_indo($tanggal){
  
     return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
 }
+
 
 function hari_ini(){
     $hari = date ("D");

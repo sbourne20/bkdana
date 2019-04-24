@@ -40,6 +40,7 @@ class Master_model extends CI_Model
 			'record_pinjaman' => 'record_pinjaman',
 			'record_repayment' => 'record_repayment',
 			'record_repayment_log' => 'record_repayment_log',
+			'master_option' => 'master_option',
 		);
 
 		/* initialize table name for this class */

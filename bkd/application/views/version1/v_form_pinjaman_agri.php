@@ -34,7 +34,7 @@
                             </div>
                             <div class="form-group">
                                 <label for="product">* Tenor (hari)</label>
-								<input type="text" class="form-control numeric" name="product" id="product" data-validation-engine="validate[required]" data-errormessage-value-missing="Isi tenor Anda!">
+								<input type="text" class="form-control text" name="product" id="product" data-validation-engine="validate[required]" data-errormessage-value-missing="Isi tenor Anda!">
                                 <!-- <select class="form-control" name="product" id="product" data-validation-engine="validate[required]" data-errormessage-value-missing="Pilih Tenor Pinjaman!">
                                     <option value=""> -- Pilih --</option>
                                     <?php foreach ($products as $prod) { ?>

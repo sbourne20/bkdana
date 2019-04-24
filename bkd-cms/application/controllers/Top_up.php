@@ -254,14 +254,6 @@ class Top_up extends CI_Controller {
 
 		$member = $this->Topup_model->getmum($usr);
 		print_r($member);
-		// echo $member['mum_nomor_rekening']
-
-
-		// $id_member = $this->input->post('id_member', TRUE);
-
-		// $data = $this->Topup_model->getmum($id_member);
-
-		// $html = $data['id_mod_user_member'].$data['mum_nomor_rekening'];
 
 		$html = '';
 		foreach ($member as $prod) {

@@ -22,10 +22,10 @@
 			<td>Alamat</td><td><?php echo $data['Alamat']; ?></td>
 		</tr>		
 		<tr>
-			<td>Kota</td><td><?php echo $data['Kota']; ?></td>
+			<td>Kota</td><td><?php echo $data['Nama_Kota']; ?></td>
 		</tr>
 		<tr>
-			<td>Provinsi</td><td><?php echo $data['Provinsi']; ?></td>
+			<td>Provinsi</td><td><?php echo $data['Nama_Provinsi']; ?></td>
 		</tr>
 		<tr>
 			<td>Kode Pos</td><td><?php echo $data['Kodepos']; ?></td>
@@ -33,7 +33,7 @@
 		<tr>
 			<td>Foto Profil</td>
 			<td>
-				<img width="100%" src="<?php echo site_url('fileload?p=') . 'member/' . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']; ?>" alt="" />		
+				<img width="100%" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']); ?>" alt="" />		
 			</td>
 		</tr>
 		<tr>
@@ -49,11 +49,11 @@
 			</td>
 		</tr>
 		<tr>
-			<td>No.NIK</td><td><?php echo $data['Id_ktp']; ?></td>
+			<td>No.KTP</td><td><?php echo $data['Id_ktp']; ?></td>
 		</tr>
 		<tr>
-			<td>Foto NIK</td>
-			<td><img width="100%" src="<?php echo site_url('fileload?p=') . 'member/' . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']; ?>" alt="" /></td>
+			<td>Foto KTP</td>
+			<td><img width="100%" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Nomor Rekening</td><td><?php echo $data['Nomor_rekening']; ?></td>
@@ -90,7 +90,7 @@
 		<?php if (!empty($data['images_usaha_name']) ) { ?>
 		<tr>
 			<td>Foto Usaha</td>
-			<td><img width="100%" src="<?php echo site_url('fileload?p=') . 'member/' . $data['id_mod_user_member'] .'/usaha/'. $data['images_usaha_name']; ?>" alt="" /></td>
+			<td><img width="100%" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/usaha/'. $data['images_usaha_name']); ?>" alt="" /></td>
 		</tr>
 		<?php } ?>
 	</table>

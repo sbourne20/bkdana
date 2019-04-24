@@ -1929,3 +1929,39 @@ footer .socmed > li > a {
 .file-zoom-content {
     height: auto !important;
 }
+
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus{
+	background-color: #14b0c2;
+}
+
+.tkb90-info{
+	border-left: 1px solid #fff;
+	padding-left:20px;
+}
+
+.tooltip-inner {
+    max-width: 350px;
+    /* If max-width does not work, try using width instead */
+    width: 350px; 
+}
+
+.navbar-default .navbar-nav > li > a{
+	padding: 4.5px 12px;
+}
+
+@media (max-width:767px) { 
+	.navbar-nav { 
+		width: 100% !important;
+	} 
+	.navbar-default .navbar-nav > li{
+		margin:10px;
+	}
+	.tkb90-info{
+		border-left:0px;
+		padding-left:0px;
+	}
+	.navbar-default .navbar-nav .open .dropdown-menu>li>a{
+		color:#fff;
+	}
+}
