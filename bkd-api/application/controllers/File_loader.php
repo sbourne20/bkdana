@@ -1,6 +1,11 @@
 <?php  if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+require_once APPPATH . 'libraries/REST_Controller.php';
+require_once APPPATH . 'libraries/ExpiredException.php';
+require_once APPPATH . 'libraries/BeforeValidException.php';
+require_once APPPATH . 'libraries/SignatureInvalidException.php';
 
-class File_loader extends CI_Controller {
+use Restserver\Libraries\REST_Controller;
+class File_loader extends REST_Controller {
 
     public function __construct()
     {
@@ -8,7 +13,7 @@ class File_loader extends CI_Controller {
         // 
         // $this->load->model('Content_model');
         $this->load->model('Member_model');
-        $this->load->model('User_model');
+        // $this->load->model('User_model');
         $this->load->library('session');
     }
 
@@ -83,10 +88,11 @@ class File_loader extends CI_Controller {
         }
     }
 
-    public function file()
+    public function file_get()
     {
         
         $headers = $this->input->request_headers();
+        
 
         if (Authorization::tokenIsExist($headers)) {
             $token = Authorization::validateToken($headers['Authorization']);
@@ -99,7 +105,7 @@ class File_loader extends CI_Controller {
                     $memberID  = $uid;
                      $param = antiInjection($_GET['p']);
                     $mime_type_or_return = $this->get_mime_type($param);
-                    $filepath = $this->config->item('data_dir') . '?p=' . $param;
+                    $filepath = $this->config->item('bkd_server') . '?p=' . $param;
 
                     $url = $filepath;
                     $username = "admin.bkd";
@@ -138,7 +144,17 @@ class File_loader extends CI_Controller {
                             throw new Exception("Response with Status Code [" . $status_code . "].", 500);
                     } catch(Exception $ex) {
                         if ($ch != null) curl_close($ch);
-                        throw new Exception($ex);
+                        // throw new Exception($ex);
+                    //     $response = [
+                    //     // 'response' => $ex,
+                    //     // 'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+                    //     // 'message'  => 'Unauthorized',
+                    // ];
+                    // $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+
+                    $this->set_response($ex->getMessage(), $http_status);
+
+                    return;
                     }
 
                     if ($ch != null) curl_close($ch);

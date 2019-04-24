@@ -137,7 +137,8 @@ class Pinjaman extends REST_Controller {
 
 					$data['pinjaman_list'] = $pinjaman_active;
 
-					if (count($pinjaman_active) > 1)
+					if ($pinjaman_active)
+					// if(false)
 					{
 						$response['response']  = 'fail';
 		                $response['status']    = REST_Controller::HTTP_OK;
@@ -212,7 +213,7 @@ class Pinjaman extends REST_Controller {
 					//$pinjaman_active = $this->Content_model->check_active_pinjaman($memberID);
 					$pinjaman_active = '';
 
-					if (count($pinjaman_active) > 1)
+					if ($pinjaman_active)
 					{
 						$response['response']  = 'fail';
 		                $response['status']    = REST_Controller::HTTP_OK;
@@ -474,7 +475,7 @@ class Pinjaman extends REST_Controller {
 								// ----- END Process Image Name -----
 								$u_detail['images_foto_name'] = $file_foto_name;
 							}else{
-								$file_foto_name   = 'foto.jpg';
+								$file_foto_name   = '';
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
@@ -987,17 +988,17 @@ class Pinjaman extends REST_Controller {
 
 						if( isset($_FILES['info_usaha_file']['name']) && $_FILES['info_usaha_file']['name'] != ''){
 
-							if ($_FILES['info_usaha_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Usaha maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+							// if ($_FILES['info_usaha_file']['size'] > $upload_limit) {
+							// 		$response = [
+					  //           		'response' => 'fail',
+						 //                'status'   => 400,
+						 //                'content'  => '',
+						 //                'message'  => 'Foto Usaha maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						 //            ];
+						 //    		$http_status = REST_Controller::HTTP_OK;
+						 //    		$this->set_response($response, REST_Controller::HTTP_OK);
+					  //               return;
+							// 	}
 
 							// ----- Process Image Name -----
 							$img_info          = pathinfo($_FILES['info_usaha_file']['name']);
@@ -1125,17 +1126,17 @@ class Pinjaman extends REST_Controller {
 							}
 
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
-								if ($_FILES['foto_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+								// if ($_FILES['foto_file']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
@@ -1151,17 +1152,17 @@ class Pinjaman extends REST_Controller {
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
 
-								if ($_FILES['nik_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+								// if ($_FILES['nik_file']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
@@ -1177,17 +1178,17 @@ class Pinjaman extends REST_Controller {
 
 							if( isset($_FILES['foto_usaha_file']['name']) && $_FILES['foto_usaha_file']['name'] != ''){
 
-								if ($_FILES['foto_usaha_file']['size'] > $upload_limit) {
-									$response = [
-					            		'response' => 'fail',
-						                'status'   => 400,
-						                'content'  => '',
-						                'message'  => 'Foto Usaha maksimum ' .number_format($upload_limit / 1048576) . ' MB',
-						            ];
-						    		$http_status = REST_Controller::HTTP_OK;
-						    		$this->set_response($response, REST_Controller::HTTP_OK);
-					                return;
-								}
+								// if ($_FILES['foto_usaha_file']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto Usaha maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 								
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_usaha_file']['name']);

@@ -7,8 +7,9 @@ if($_SERVER['HTTP_HOST']=='localhost' or $_SERVER['HTTP_HOST']=='192.168.1.86')
     $config['doc_root'] .= "://".$_SERVER['HTTP_HOST'];
     $config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
-    $config['data_dir']    = "http://localhost/bkdana/bkd/fileload-external";
-    $config['img_baseurl'] = $config['doc_root'];
+    $config['data_dir']    = FCPATH . "../../../data-bkd/";
+    $config['bkd_server'] = 'http://localhost/bkdana/bkd/fileload-external';
+    // $config['img_baseurl'] = $config['doc_root'];
     $config['images_member_uri'] = $config['doc_root'] ."images-data/member/";
 
 }else if($_SERVER['HTTP_HOST']=='149.129.213.30')
