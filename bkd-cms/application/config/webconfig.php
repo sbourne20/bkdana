@@ -24,12 +24,8 @@ $config['product_images_dir']   = $config['images_dir'] . 'product/';
 $config['category_images_dir']  = $config['images_dir'] . 'category/';
 $config['pages_images_dir']     = $config['images_dir'] . 'pages/';
 $config['logo_dir']             = $config['images_dir'] . 'logo/';
-$config['pendan
+$config['pendana_images_dir']   = $config['images_dir'] . 'pendana/';
 
-a_images_dir']   = $config['images_dir'] . 'pendana/';
-
-
-// echo $config['pages_images_dir'];
 // ----- DATA URL -----
 $config['images_posts_uri']     = $config['img_baseurl'] . "images-data/";
 $config['images_product_uri']   = $config['images_posts_uri'] . "product/";
@@ -53,6 +49,6 @@ $config['bkd_email']          = 'cs@bkdana.id';
 $config['oss_access_key_id'] = 'LTAIJbwb8rmv5ptU';
 $config['oss_access_key_secret'] = 'CSwic1up6VGQtlg4bp2DLQc731n5Re';
 $config['oss_endpoint'] = 'https://oss-ap-southeast-5.aliyuncs.com';
-$config['oss_bucket_bkd_user'] = _SERVER['HTTP_HOST']=='localhost' ? 'bkd-development' : 'bkd-production';
+$config['oss_bucket_bkd_user'] = ($_SERVER['HTTP_HOST']=='localhost' OR $_SERVER['HTTP_HOST']=='149.129.248.46') ? 'bkd-development' : 'bkd-production';
 
 ?>
