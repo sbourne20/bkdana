@@ -238,20 +238,18 @@ class Member extends CI_Controller {
 		if(isset($_POST['Option_key']))
 		{
 			$usr = $_POST['Option_key'];
-			echo $usr;
 		}else{
 			echo "no data";
+			exit();
 		}
 
 		$kota = $this->Content_model->getkota($usr);
-		print_r($kota);
 
 		$html = '';
 		foreach ($kota as $prod) {
 			$html .= '<option value="'.$prod['Option_value'].'">'.$prod['Option_label'].' </option>';
-
+		}		
 		echo $html;
-	}
 
 	}
 
@@ -377,7 +375,7 @@ class Member extends CI_Controller {
 								printf($e->getMessage() . "\n");
 								return;
 							}
-							print(__FUNCTION__ . ": OK" . "\n");
+							
 							// End of OSS
 						}
 						
@@ -421,7 +419,7 @@ class Member extends CI_Controller {
 								printf($e->getMessage() . "\n");
 								return;
 							}
-							print(__FUNCTION__ . ": OK" . "\n");
+							
 							// End of OSS
 							
 						}
@@ -469,7 +467,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 
@@ -513,7 +511,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 
@@ -557,7 +555,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 
@@ -602,7 +600,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 
@@ -648,7 +646,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 
@@ -698,7 +696,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 
@@ -744,7 +742,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 
@@ -791,7 +789,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 
@@ -842,7 +840,7 @@ class Member extends CI_Controller {
 									printf($e->getMessage() . "\n");
 									return;
 								}
-								print(__FUNCTION__ . ": OK" . "\n");
+								
 								// End of OSS
 							}
 						}

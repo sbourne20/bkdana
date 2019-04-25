@@ -41,10 +41,10 @@ function set_ajax(){
               objdata = JSON.parse(html_data);
               if (objdata.error == '1')
               {
-                alertify.alert('Error Message!',objdata.message);
-                return false;
+                	alertify.alert('Error Message!',objdata.message);
+                	return false;
               }else{
-                    show_modal();
+                  show_modal();
               }
             }
         });
