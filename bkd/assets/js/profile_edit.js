@@ -32,12 +32,8 @@ if($('#provinsi').val()!=""){
     $('#provinsi').trigger("change");
 }
 
-});
 
-$( document ).ready(function() {
-    console.log( "ready!" );
-
-    $('#provinsidomisili').change(function() {
+  $('#provinsidomisili').change(function() {
     var provinsidomisili   = $(this).val();
     // var member    = $('data-member');
     console.log(provinsidomisili);

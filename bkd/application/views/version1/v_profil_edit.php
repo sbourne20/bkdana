@@ -275,8 +275,8 @@ if ($memberdata['foto_pegang_ktp'] != '')
 
 
 										
-										<div class="form-group">
-												<label for="handphone">* Pekerjaan</label>
+										<!-- <div class="form-group">
+												<label for="handphone">* Pekejaan</label>
 													<select class="form-control" name="pekerjaan" id="pekerjaan" 	data-value="<?php echo $memberdata['Pekerjaan']; ?>">
 													<option value=""> -- Pilih --</option>
 													<?php foreach ($pekerjaan as $key) {
@@ -287,7 +287,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											}
 											?>
 											</select>
-											</div>
+											</div> -->
 										<div class="form-group">
 											<label>* Upload Foto Diri / Selfie </label>        
 												<input type="file" id="foto_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_profil; ?>" >
@@ -308,18 +308,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											<label for="handphone">* Nomor Rekening</label>
 											<input type="text" class="form-control" name="nomor_rekening" id="nomor_rekening" value="<?php echo $memberdata['Nomor_rekening']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Nomor Rekening harus diisi!">
 										</div>
-										<!-- <div class="form-group">
-											<label for="nama_bank">* Bank</label>
-											<select class="form-control" name="nama_bank" id="nama_bank" data-validation-engine="validate[required]" data-errormessage-value-missing="Bank harus diisi!">
-												<option value=""> -- Pilih --</option>
-												<option value="Bank Mandiri" <?php echo ($memberdata['nama_bank']=='Bank Mandiri')? 'selected="selected"' : ''; ?> > Bank Mandiri</option>
-												<option value="Bank BNI 46" <?php echo ($memberdata['nama_bank']=='Bank BNI 46')? 'selected="selected"' : ''; ?> >Bank BNI 46</option>
-												<option value="Bank BRI" <?php echo ($memberdata['nama_bank']=='Bank BRI')? 'selected="selected"' : ''; ?> >Bank BRI</option>
-												<option value="Bank BCA" <?php echo ($memberdata['nama_bank']=='Bank BCA')? 'selected="selected"' : ''; ?> >Bank BCA</option>
-												<option value="Bank CIMB" <?php echo ($memberdata['nama_bank']=='Bank CIMB')? 'selected="selected"' : ''; ?> >Bank CIMB</option>
-											</select>
-										</div> -->
-
+										
 										<div class="form-group">
 												<label for="handphone">* Bank</label>
 													<select class="form-control" name="nama_bank" id="nama_bank" 	data-value="<?php echo $memberdata['nama_bank']; ?>">
