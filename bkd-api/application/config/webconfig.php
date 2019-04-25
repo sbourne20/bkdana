@@ -57,3 +57,9 @@ $config['bkd_email']          = 'cs@bkdana.id';
 $config['vMerchant_id'] = 'G077099250';
 $config['vClient_key']  = 'SB-Mid-client-3L-CVOaUEZHeshIs'; // Sandbox
 $config['vServer_key']  = 'SB-Mid-server-7UDjQBASCcq-WJdzM-nJBPZZ'; // sandbox
+
+// Alibaba OSS
+$config['oss_access_key_id'] = 'LTAIJbwb8rmv5ptU';
+$config['oss_access_key_secret'] = 'CSwic1up6VGQtlg4bp2DLQc731n5Re';
+$config['oss_endpoint'] = 'https://oss-ap-southeast-5.aliyuncs.com';
+$config['oss_bucket_bkd_user'] = ($_SERVER['HTTP_HOST']=='localhost' OR $_SERVER['HTTP_HOST']=='149.129.248.46') ? 'bkd-development' : 'bkd-production';
