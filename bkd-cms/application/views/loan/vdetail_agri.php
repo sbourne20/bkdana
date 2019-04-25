@@ -45,7 +45,7 @@
 			 echo $data['Tempat_lahir'] .' / '.$tglLahir;  ?></td>
 		</tr>
 		<tr>
-			<td>Jenis Kelamin</td><td><?php echo $data['Jenis_kelamin']; ?></td>
+			<td>Jenis Kelamin</td><td><?php echo $data['Gender']; ?></td>
 		</tr>
 		<tr>
 			<td>Alamat</td><td><?php echo $data['Nama_Alamat']; ?></td>
@@ -88,7 +88,7 @@
 			<td>Nomor Rekening</td><td><?php echo $data['Nomor_rekening']; ?></td>
 		</tr>
 		<tr>
-			<td>Bank</td><td><?php echo $data['nama_bank']; ?></td>
+			<td>Bank</td><td><?php echo $data['Nama_Bank']; ?></td>
 		</tr>
 		<tr>
 			<?php
@@ -119,7 +119,7 @@
 			<td>Bidang Pekerjaan</td><td><?php echo $data['Bidang_pekerjaan']; ?></td>
 		</tr>
 		<tr>
-			<td>Agama</td><td><?php echo $data['Agama']; ?></td>
+			<td>Agama</td><td><?php echo $data['Jenis_Agama']; ?></td>
 		</tr>
 		<tr>
 			<td>Status Pernikahan</td><td><?php echo $data['status_nikah']; ?></td>

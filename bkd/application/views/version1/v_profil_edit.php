@@ -177,12 +177,6 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											<label for="handphone">* Kota sesuai dengan KTP</label>
 											<select class="form-control" name="kota" id="kota" data-value="<?php echo $memberdata['Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
 											<option value=""> -- Pilih Kota--</option>
-											<!-- <?php foreach ($kota as $key) {
-											?>
-											<option value="<?php echo $key['Option_id'] ?>" data-member="<?php echo $key['Option_id']; ?>"> <?php echo $key['Option_label']; ?> </option>
-											<?php
-											}
-											?> -->
 											</select>
 										</div>
 
@@ -252,12 +246,6 @@ if ($memberdata['foto_pegang_ktp'] != '')
 												<label for="handphone">* Kota Domisili</label>
 												<select class="form-control" name="kotadomisili" id="kotadomisili" data-value="<?php echo $memberdata['Kota_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
 												<option value=""> -- Pilih Kota--</option>
-												<!-- <?php foreach ($kota as $key) {
-												?>
-												<option value="<?php echo $key['Option_id'] ?>" data-member="<?php echo $key['Option_id']; ?>"> <?php echo $key['Option_label']; ?> </option>
-												<?php
-												}
-												?> -->
 												</select>
 											</div>
 										</div>
@@ -275,8 +263,8 @@ if ($memberdata['foto_pegang_ktp'] != '')
 
 
 										
-										<!-- <div class="form-group">
-												<label for="handphone">* Pekejaan</label>
+										<div class="form-group">
+												<label for="handphone">* Pekerjaan</label>
 													<select class="form-control" name="pekerjaan" id="pekerjaan" 	data-value="<?php echo $memberdata['Pekerjaan']; ?>">
 													<option value=""> -- Pilih --</option>
 													<?php foreach ($pekerjaan as $key) {
@@ -287,7 +275,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											}
 											?>
 											</select>
-											</div> -->
+											</div>
 										<div class="form-group">
 											<label>* Upload Foto Diri / Selfie </label>        
 												<input type="file" id="foto_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_profil; ?>" >
@@ -537,11 +525,11 @@ if ($memberdata['foto_pegang_ktp'] != '')
 
 											<div class="form-group">
 												<label for="handphone">* Bidang Pekerjaan</label>
-													<select class="form-control" name="pekerjaan" id="pekerjaan" 	data-value="<?php echo $memberdata['Pekerjaan']; ?>">
+													<select class="form-control" name="bidang_pekerjaan" id="bidang_pekerjaan" 	data-value="<?php echo $memberdata['Bidang_pekerjaan']; ?>">
 													<option value=""> -- Pilih --</option>
-													<?php foreach ($pekerjaan as $key) {
+													<?php foreach ($bidang_pekerjaan as $key) {
 											?>
-											<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Pekerjaan']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> 
+											<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Bidang_pekerjaan']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> 
 													</option>
 											<?php
 											}
