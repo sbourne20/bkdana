@@ -70,16 +70,6 @@ $route['transaksi-pinjaman-mikro-draft/approve/(.*)'] = 'transaksi_pinjaman_mikr
 $route['transaksi-pinjaman-mikro-draft/submit_edit']  = 'transaksi_pinjaman_mikro_draft/submit_edit';
 $route['transaksi-pinjaman-mikro-draft/detail_transaksi/(.*)'] = 'transaksi_pinjaman_mikro_draft/detail_transaksi/$1';
 
-
-// $route['transaksi-pinjaman-mikro']              = 'transaksi_pinjaman_mikro/index';
-// $route['transaksi-pinjaman-mikro/json']         = 'transaksi_pinjaman_mikro/json';
-// $route['transaksi-pinjaman-mikro/edit/(.*)']    = 'transaksi_pinjaman_mikro/edit/$1';
-// $route['transaksi-pinjaman-mikro/approve/(.*)'] = 'transaksi_pinjaman_mikro/approve/$1';
-// $route['transaksi-pinjaman-mikro/submit_edit']  = 'transaksi_pinjaman_mikro_draft/submit_edit';
-// $route['transaksi-pinjaman-mikro/detail_transaksi/(.*)'] = 'transaksi_pinjaman_mikro/detail_transaksi/$1';
-
-
-
 //$route['cronjob/find_expired_pinjaman_kilat/(.*)'] = 'cronjob/find_expired_pinjaman_kilat';
 
 //agri
@@ -90,4 +80,28 @@ $route['transaksi-pinjaman-agri-draft/approve/(.*)'] = 'transaksi_pinjaman_agri_
 $route['transaksi-pinjaman-agri-draft/submit_edit']  = 'transaksi_pinjaman_agri_draft/submit_edit';
 $route['transaksi-pinjaman-agri-draft/detail_transaksi/(.*)'] = 'transaksi_pinjaman_agri_draft/detail_transaksi/$1';
 
+//transaksi pinjaman
+$route['transaksi-pinjaman-kilat']              = 'transaksi_pinjaman_kilat/index';
+$route['transaksi-pinjaman-kilat/json']         = 'transaksi_pinjaman_kilat/json';
+$route['transaksi-pinjaman-kilat/edit/(.*)']    = 'transaksi_pinjaman_kilat/edit/$1';
+$route['transaksi-pinjaman-kilat/approve/(.*)'] = 'transaksi_pinjaman_kilat/approve/$1';
+$route['transaksi-pinjaman-kilat/submit_edit']  = 'transaksi_pinjaman_kilat/submit_edit';
+$route['transaksi-pinjaman-kilat/detail_transaksi/(.*)'] = 'transaksi_pinjaman_kilat/detail_transaksi/$1';
+
+$route['transaksi-pinjaman-mikro']              = 'transaksi_pinjaman_mikro/index';
+$route['transaksi-pinjaman-mikro/json']         = 'transaksi_pinjaman_mikro/json';
+$route['transaksi-pinjaman-mikro/edit/(.*)']    = 'transaksi_pinjaman_mikro/edit/$1';
+$route['transaksi-pinjaman-mikro/approve/(.*)'] = 'transaksi_pinjaman_mikro/approve/$1';
+$route['transaksi-pinjaman-mikro/submit_edit']  = 'transaksi_pinjaman_mikro_draft/submit_edit';
+$route['transaksi-pinjaman-mikro/detail_transaksi/(.*)'] = 'transaksi_pinjaman_mikro/detail_transaksi/$1';
+
+$route['transaksi-pinjaman-agri']               = 'transaksi_pinjaman_agri/index';
+$route['transaksi-pinjaman-agri/json']         = 'transaksi_pinjaman_agri/json';
+$route['transaksi-pinjaman-agri/edit/(.*)']    = 'transaksi_pinjaman_agri/edit/$1';
+$route['transaksi-pinjaman-agri/approve/(.*)'] = 'transaksi_pinjaman_agri/approve/$1';
+$route['transaksi-pinjaman-agri/submit_edit']  = 'transaksi_pinjaman_agri/submit_edit';
+$route['transaksi-pinjaman-agri/detail_transaksi/(.*)'] = 'transaksi_pinjaman_agri/detail_transaksi/$1';
+//batas transaksi pinjaman
+
 $route['fileload'] = 'file_loader/file';
+$route['submit-ubah-profil'] = 'peminjam/editprofil';

@@ -261,19 +261,6 @@ if ($memberdata['foto_pegang_ktp'] != '')
 										</div>  
 
 										<div class="form-group">
-											<label for="handphone">* Provinsi sesuai dengan KTP</label>
-											<select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
-											<option value=""> -- Pilih Provinsi--</option>
-											<?php foreach ($provinsi as $key) {
-											?>
-											<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Provinsi']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> </option>
-											<?php
-											}
-											?>
-											</select>
-										</div>
-
-										<div class="form-group">
 											<div id="hiddendomisili4" >
 												<label for="handphone">* Kode Pos Domisili</label>
 												<input type="text" class="form-control" name="kodeposdomisili" id="kodeposdomisili" value="<?php echo $memberdata['Kodepos_Domisili']; ?>" >
@@ -296,7 +283,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 												<option value="5" <?php echo ($memberdata['Pekerjaan']=='5')? 'selected="selected"' : ''; ?>>Lain-lain</option>
 											</select>
 										</div> -->
-										<div class="form-group">
+<!-- 										<div class="form-group">
 												<label for="handphone">* Pekerjaan</label>
 													<select class="form-control" name="pekerjaan" id="pekerjaan" 	data-value="<?php echo $memberdata['Pekerjaan']; ?>">
 													<option value=""> -- Pilih --</option>
@@ -308,7 +295,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											}
 											?>
 											</select>
-											</div>
+											</div> -->
 										<div class="form-group">
 											<label>* Upload Foto Diri / Selfie </label>        
 												<input type="file" id="foto_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_profil; ?>" >
@@ -565,14 +552,6 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											?>
 											</select>
 											</div>
-												
-										</div>
-												<!-- <div class="form-group">
-													<label for="lama_usaha">* Bidang Pekerjaan</label>
-													<select class="form-control" name="bidang_pekerjaan" id="bidang_pekerjaan" data-validation-engine="validate[required]" data-errormessage-value-missing="bidang pekerjaan harus diisi!" >
-														<option value="agrikultur"> Agrikultur</option>
-													</select>
-												</div> -->
 												<div class="form-group">
 												<label for="handphone">* Bidang Pekerjaan</label>
 													<select class="form-control" name="pekerjaan" id="pekerjaan" 	data-value="<?php echo $memberdata['Pekerjaan']; ?>">
@@ -723,6 +702,14 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											</div>
 											<!-- End PENDANA -->
 											<?php } ?>
+										</div>
+												<!-- <div class="form-group">
+													<label for="lama_usaha">* Bidang Pekerjaan</label>
+													<select class="form-control" name="bidang_pekerjaan" id="bidang_pekerjaan" data-validation-engine="validate[required]" data-errormessage-value-missing="bidang pekerjaan harus diisi!" >
+														<option value="agrikultur"> Agrikultur</option>
+													</select>
+												</div> -->
+												
 										<br>
 
 										<input type="hidden" name="old_foto" value="<?php echo $memberdata['images_foto_name']; ?>">
