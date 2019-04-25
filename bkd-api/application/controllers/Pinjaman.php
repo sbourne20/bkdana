@@ -826,7 +826,7 @@ class Pinjaman extends REST_Controller {
 					//$pinjaman_active = $this->Content_model->check_active_pinjaman($memberID);
 					$pinjaman_active = '';
 
-					if (count($pinjaman_active) > 1)
+					if ($pinjaman_active)
 					{
 						$response['response']  = 'fail';
 		                $response['status']    = REST_Controller::HTTP_OK;
