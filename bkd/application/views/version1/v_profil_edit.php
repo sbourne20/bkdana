@@ -534,8 +534,8 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											</select>
 											</div>
 												
-										</div>
-												<div class="form-group">
+
+											<div class="form-group">
 												<label for="handphone">* Bidang Pekerjaan</label>
 													<select class="form-control" name="pekerjaan" id="pekerjaan" 	data-value="<?php echo $memberdata['Pekerjaan']; ?>">
 													<option value=""> -- Pilih --</option>
@@ -665,6 +665,8 @@ if ($memberdata['foto_pegang_ktp'] != '')
 											</div>
 											<!-- End PENDANA -->
 											<?php } ?>
+										</div>
+											
 										<br>
 
 										<input type="hidden" name="old_foto" value="<?php echo $memberdata['images_foto_name']; ?>">

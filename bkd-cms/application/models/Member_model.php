@@ -213,11 +213,9 @@ class Member_model extends CI_Model
 		$this->db->join($this->mod_user_member. ' m', 'm.id_mod_user_member=u.id_mod_user_member', 'left');
 		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Kota
-						 from master_option
-						 group by Option_value) z','z.Option_value=g.Kota', 'join');
+						 from master_option) z','z.Option_value=g.Kota', 'join');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Provinsi
-						 from master_option
-						 group by Option_value) a','a.Option_value=g.Provinsi', 'join');
+						 from master_option) a','a.Option_value=g.Provinsi', 'join');
 		$this->db->where('m.id_mod_user_member', $id);
 		$this->db->limit(1);
 		$query 	= $this->db->get();
