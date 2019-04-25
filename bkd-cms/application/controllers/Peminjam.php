@@ -367,6 +367,529 @@ class Peminjam extends CI_Controller {
 				if (trim($post['fullname']) != '' && !empty($id) )
 				{
 					$userID = $memberdata['Id_pengguna'];
+					
+					$destination_foto = $this->config->item('member_images_dir'). $userID."/foto/";
+					$destination_ktp  = $this->config->item('member_images_dir'). $userID."/ktp/";
+					$destination_usaha = $this->config->item('member_images_dir'). $userID."/usaha/";
+					$destination_usaha2 = $this->config->item('member_images_dir'). $userID."/usaha2/";
+					$destination_usaha3 = $this->config->item('member_images_dir'). $userID."/usaha3/";
+					$destination_usaha4 = $this->config->item('member_images_dir'). $userID."/usaha4/";
+					$destination_usaha5 = $this->config->item('member_images_dir'). $userID."/usaha5/";
+					$destination_surat_keterangan_bekerja = $this->config->item('member_images_dir'). $userID."/surat_keterangan_bekerja/";
+					$destination_slip_gaji = $this->config->item('member_images_dir'). $userID."/slip_gaji/";
+					$destination_pegang_ktp = $this->config->item('member_images_dir'). $userID."/pegang_ktp/";
+
+					if($post['foto_file_hidden']!=''){	
+							$data = $_POST['foto_file_hidden'];
+							$splited = explode(',', substr( $data , 5 ) , 2);
+							$mime=$splited[0];
+							$data=$splited[1];
+
+							$mime_split_without_base64=explode(';', $mime,2);
+							$mime_split=explode('/', $mime_split_without_base64[0],2);
+							if(count($mime_split)==2)
+							{
+								$extension=$mime_split[1];
+								if($extension=='jpeg')$extension='jpg';
+								$output_file_with_extension=rand().'.'.$extension;
+							}
+							$u_detail['images_foto_name']  = $output_file_with_extension;
+
+							$data = base64_decode($data);
+							$temp = tmpfile();
+							fwrite($temp, $data);
+							$tempPath = stream_get_meta_data($temp)['uri'];
+
+							// Start of OSS
+							$accessKeyId = $this->config->item('oss_access_key_id');
+							$accessKeySecret = $this->config->item('oss_access_key_secret');
+							$endpoint = $this->config->item('oss_endpoint');
+							$bucket= $this->config->item('oss_bucket_bkd_user');
+							$object =  $destination_foto . $output_file_with_extension;
+							$filePath = $tempPath;
+
+							try{
+								$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+								$ossClient->uploadFile($bucket, $object, $filePath);
+
+								if($post['old_foto']!=''){
+									$ossClient->deleteObject($bucket,$destination_foto . $post['old_foto']);
+								}
+							} catch(OssException $e) {
+								printf(__FUNCTION__ . ": FAILED\n");
+								printf($e->getMessage() . "\n");
+								return;
+							}
+							print(__FUNCTION__ . ": OK" . "\n");
+							// End of OSS
+						}
+						
+						if($post['ktp_file_hidden']!=''){
+							$data = $_POST['ktp_file_hidden'];
+							$splited = explode(',', substr( $data , 5 ) , 2);
+							$mime=$splited[0];
+							$data=$splited[1];
+
+							$mime_split_without_base64=explode(';', $mime,2);
+							$mime_split=explode('/', $mime_split_without_base64[0],2);
+							if(count($mime_split)==2)
+							{
+								$extension=$mime_split[1];
+								if($extension=='jpeg')$extension='jpg';
+								$output_file_with_extension=rand().'.'.$extension;
+							}
+							$u_detail['images_ktp_name']  = $output_file_with_extension;
+
+							$data = base64_decode($data);
+							$temp = tmpfile();
+							fwrite($temp, $data);
+							$tempPath = stream_get_meta_data($temp)['uri'];
+
+							// Start of OSS
+							$accessKeyId = $this->config->item('oss_access_key_id');
+							$accessKeySecret = $this->config->item('oss_access_key_secret');
+							$endpoint = $this->config->item('oss_endpoint');
+							$bucket= $this->config->item('oss_bucket_bkd_user');
+							$object =  $destination_ktp. $output_file_with_extension;
+							$filePath = $tempPath;
+
+							try{
+								$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+								$ossClient->uploadFile($bucket, $object, $filePath);
+								if($post['old_ktp']!=''){
+									$ossClient->deleteObject($bucket,$destination_ktp . $post['old_ktp']);
+								}
+							} catch(OssException $e) {
+								printf(__FUNCTION__ . ": FAILED\n");
+								printf($e->getMessage() . "\n");
+								return;
+							}
+							print(__FUNCTION__ . ": OK" . "\n");
+							// End of OSS
+							
+						}
+
+
+						if ($memberdata['mum_type_peminjam']=='2'){//tambahan baru pengkondisian
+
+							if($post['usaha_file_hidden']!=''){	
+								$data = $_POST['usaha_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['images_usaha_name']  = $output_file_with_extension;
+
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_usaha']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha . $post['old_usaha']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+
+							if($post['usaha_file2_hidden']!=''){
+								$data = $_POST['usaha_file2_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['images_usaha_name2']  = $output_file_with_extension;
+
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha2. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_usaha2']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha2 . $post['old_usaha2']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+
+							if($post['usaha_file3_hidden']!=''){	
+								$data = $_POST['usaha_file3_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['images_usaha_name3']  = $output_file_with_extension;
+
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha3. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_usaha3']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha3 . $post['old_usaha3']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+
+
+							if($post['usaha_file4_hidden']!=''){
+								$data = $_POST['usaha_file4_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['images_usaha_name4']  = $output_file_with_extension;
+
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha4. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_usaha4']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha4 . $post['old_usaha4']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+
+						
+
+							if($post['usaha_file5_hidden']!=''){	
+								$data = $_POST['usaha_file5_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['images_usaha_name5']  = $output_file_with_extension;
+
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha5. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_usaha5']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha5 . $post['old_usaha5']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+
+					
+						}
+
+						// -----Tambahan Baru-----
+						if ($memberdata['mum_type_peminjam']=='1'){
+
+							if($post['surat_keterangan_bekerja_file_hidden']!=''){
+								$data = $_POST['surat_keterangan_bekerja_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['foto_surat_keterangan_bekerja']  = $output_file_with_extension;
+
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_surat_keterangan_bekerja. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_surat_keterangan_bekerja']!=''){
+										$ossClient->deleteObject($bucket,$destination_surat_keterangan_bekerja . $post['old_surat_keterangan_bekerja']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+
+
+
+							if($post['slip_gaji_file_hidden']!=''){	
+								$data = $_POST['slip_gaji_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['foto_slip_gaji']  = $output_file_with_extension;
+
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_slip_gaji. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_slip_gaji']!=''){
+										$ossClient->deleteObject($bucket,$destination_slip_gaji . $post['old_slip_gaji']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+
+						
+
+
+							if($post['pegang_ktp_file_hidden']!=''){
+								$data = $_POST['pegang_ktp_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['foto_pegang_ktp']  = $output_file_with_extension;
+
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_pegang_ktp. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_pegang_ktp']!=''){
+										$ossClient->deleteObject($bucket,$destination_pegang_ktp . $post['old_pegang_ktp']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+
+							
+						}
+
+						// -----batas tambahan-----
+
+						if ($memberdata['mum_type_peminjam']=='3'){
+							if($post['pegang_ktp_file_hidden']!=''){
+								$data = $_POST['pegang_ktp_file_hidden'];
+								$splited = explode(',', substr( $data , 5 ) , 2);
+								$mime=$splited[0];
+							    $data=$splited[1];
+
+							    $mime_split_without_base64=explode(';', $mime,2);
+							    $mime_split=explode('/', $mime_split_without_base64[0],2);
+							    if(count($mime_split)==2)
+							    {
+							        $extension=$mime_split[1];
+							        if($extension=='jpeg')$extension='jpg';
+							        $output_file_with_extension=rand().'.'.$extension;
+							    }
+								$u_detail['foto_pegang_ktp']  = $output_file_with_extension;
+
+								
+								$data = base64_decode($data);
+								$temp = tmpfile();
+								fwrite($temp, $data);
+								$tempPath = stream_get_meta_data($temp)['uri'];
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_pegang_ktp. $output_file_with_extension;
+								$filePath = $tempPath;
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+									if($post['old_pegang_ktp']!=''){
+										$ossClient->deleteObject($bucket,$destination_pegang_ktp . $post['old_pegang_ktp']);
+									}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								print(__FUNCTION__ . ": OK" . "\n");
+								// End of OSS
+							}
+						}
+					
 						
 						$mem_data['mum_fullname']       = antiInjection(trim($post['fullname']));
 						$mem_data['mum_email']      	= antiInjection(trim($post['email']));

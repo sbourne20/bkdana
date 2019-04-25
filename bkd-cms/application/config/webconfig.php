@@ -24,9 +24,7 @@ $config['product_images_dir']   = $config['images_dir'] . 'product/';
 $config['category_images_dir']  = $config['images_dir'] . 'category/';
 $config['pages_images_dir']     = $config['images_dir'] . 'pages/';
 $config['logo_dir']             = $config['images_dir'] . 'logo/';
-$config['pendan
-
-a_images_dir']   = $config['images_dir'] . 'pendana/';
+$config['pendana_images_dir']   = $config['images_dir'] . 'pendana/';
 
 
 // echo $config['pages_images_dir'];
