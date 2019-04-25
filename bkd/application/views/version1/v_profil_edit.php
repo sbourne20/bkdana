@@ -296,7 +296,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 										</div>
 										<div class="form-group">
 											<label for="handphone">* Nomor KTP</label>
-											<input type="text" class="form-control" name="nomor_ktp" id="nomor_ktp" value="<?php echo $memberdata['Id_ktp']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Nomor NIK harus diisi!" >
+											<input type="text" class="form-control" name="nomor_ktp" id="nomor_ktp" value="<?php echo $memberdata['Id_ktp']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Nomor KTP harus diisi!" >
 										</div>
 										<div class="form-group">
 											<label>Upload Foto KTP</label>
@@ -596,7 +596,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 												</div>
 
 												<div class="form-group">
-													<label for="handphone">* Upload Foto Pegang IDCard/eKTP</label>
+													<label for="handphone">* Upload Foto Pegang IDCard / eKTP</label>
 													<input type="file" id="pegang_ktp_file" data-show-upload="false" accept="image/*"  capture onchange='onFileUpload()'  namafile="<?php echo  $foto_pegang_ktp;?>" >
 													<p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
 													<input type="hidden" class="input_file_hidden" name="pegang_ktp_file_hidden" id="pegang_ktp_file_hidden"/>
@@ -690,61 +690,54 @@ if ($memberdata['foto_pegang_ktp'] != '')
 				</div>
 			</div>
 		</div>
-
 	</div>
 </div>
 <script type="text/javascript">
+	window.onFileUpload = function() {
+		var file = event.target.files[0];
+		var el = event.target;
+		var parent = el.parentNode.parentNode.parentNode;
+		var hiddenInput = parent.getElementsByClassName('input_file_hidden')[0];
+		console.log(parent);
 
-window.onFileUpload = function() {
-	var file = event.target.files[0];
-	var el = event.target;
-	var parent = el.parentNode.parentNode.parentNode;
-	var hiddenInput = parent.getElementsByClassName('input_file_hidden')[0];
-	console.log(parent);
-
-	ImageTools.resize(file, {
-		width: 1024, // maximum width
-		height: 800 // maximum height
-	}, function(blob, didItResize) {
-		// didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
-		var reader = new FileReader();
-		reader.readAsDataURL(blob); 
-		reader.onloadend = function() {
-			base64data = reader.result;
-			hiddenInput.value = base64data;                
-		}
-		// you can also now upload this blob using an XHR.
-	});
-};
-
-
-
+		ImageTools.resize(file, {
+			width: 1024, // maximum width
+			height: 800 // maximum height
+		}, function(blob, didItResize) {
+			// didItResize will be true if it managed to resize it, otherwise false (and will return the original file as 'blob')
+			var reader = new FileReader();
+			reader.readAsDataURL(blob); 
+			reader.onloadend = function() {
+				base64data = reader.result;
+				hiddenInput.value = base64data;                
+			}
+			// you can also now upload this blob using an XHR.
+		});
+	};
 </script>
 <script>
+	function showhidedomisili() {
+	// Get the checkbox
+	var checkBox = document.getElementById("checkdomisili");
+	// Get the output text
+	var text  = document.getElementById("hiddendomisili");
+	var text2 = document.getElementById("hiddendomisili2");
+	var text3 = document.getElementById("hiddendomisili3");
+	var text4 = document.getElementById("hiddendomisili4");
 
-function showhidedomisili() {
-  // Get the checkbox
-  var checkBox = document.getElementById("checkdomisili");
-  // Get the output text
-  var text  = document.getElementById("hiddendomisili");
-  var text2 = document.getElementById("hiddendomisili2");
-  var text3 = document.getElementById("hiddendomisili3");
-  var text4 = document.getElementById("hiddendomisili4");
+	// If the checkbox is checked, display the output text
+	if (checkBox.checked == true){
+		text.style.display  = "none";
+		text2.style.display = "none";
+		text3.style.display = "none";
+		text4.style.display = "none";
+	} else {
+		text.style.display  = "block";
+		text2.style.display = "block";
+		text3.style.display = "block";
+		text4.style.display = "block";
+	}
+	}
 
-  // If the checkbox is checked, display the output text
-  if (checkBox.checked == true){
-	text.style.display  = "none";
-	text2.style.display = "none";
-	text3.style.display = "none";
-	text4.style.display = "none";
-  } else {
-	text.style.display  = "block";
-	text2.style.display = "block";
-	text3.style.display = "block";
-	text4.style.display = "block";
-  }
-}
-
-showhidedomisili();
-
+	showhidedomisili();
 </script>

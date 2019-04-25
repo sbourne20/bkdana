@@ -178,7 +178,7 @@ class Transaksi extends CI_Controller {
 			
 			$data['jml_cicilan'] = $log_transaksi_pinjam['ltp_jml_angsuran'];
 			
-/*			//tambahan baru denda keterlambatan
+			/*//tambahan baru denda keterlambatan
 			if($produk['charge_type']=='1'){
 
 			$data['denda']= ($produk['charge'] * $pinjaman['jml_kredit'])/100;
