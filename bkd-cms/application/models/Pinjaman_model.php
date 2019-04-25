@@ -709,11 +709,9 @@ class Pinjaman_model extends CI_Model
 		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
 		$this->db->join($this->mod_type_business. ' t', 't.id_mod_type_business=prod.type_of_business_id', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Kota
-						 from master_option
-						 group by Option_value) z','z.Option_value=g.Kota', 'join');
+						 from master_option) z','z.Option_value=g.Kota', 'join');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Provinsi
-						 from master_option
-						 group by Option_value) a','a.Option_value=g.Provinsi', 'join');
+						 from master_option) a','a.Option_value=g.Provinsi', 'join');
 		$this->db->where('Master_loan_id', $ID);
 		$sql = $this->db->get();
 
