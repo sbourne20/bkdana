@@ -169,7 +169,7 @@ class Member extends REST_Controller {
 				}
 
 				if ($member['foto_surat_ket_kerja'] !=''){
-					$member['foto_surat_ket_kerja'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/surat_kerja/' .$member['foto_surat_ket_kerja']);
+					$member['foto_surat_ket_kerja'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/surat_keterangan_bekerja/' .$member['foto_surat_ket_kerja']);
 
 					// $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/surat_kerja/' .$member['foto_surat_ket_kerja'];
 				}
@@ -181,7 +181,7 @@ class Member extends REST_Controller {
 				}
 
 				if ($member['foto_pegang_idcard'] !=''){
-					$member['foto_pegang_idcard'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/hold_idcard/' .$member['foto_pegang_idcard']); 
+					$member['foto_pegang_idcard'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/pegang_ktp/' .$member['foto_pegang_idcard']); 
 
 					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/hold_idcard/' .$member['foto_pegang_idcard'];
 				}
