@@ -5,13 +5,6 @@ require_once APPPATH . 'libraries/ExpiredException.php';
 require_once APPPATH . 'libraries/BeforeValidException.php';
 require_once APPPATH . 'libraries/SignatureInvalidException.php';
 
-
-if (is_file(__DIR__ . '/../libraries/aliyun-oss-php-sdk-master/autoload.php')) {
-    require_once __DIR__ . '/../libraries/aliyun-oss-php-sdk-master/autoload.php';
-}
-use OSS\OssClient;
-use OSS\Core\OssException;
-
 use Restserver\Libraries\REST_Controller;
 
 class Pinjaman extends REST_Controller {
@@ -459,14 +452,19 @@ class Pinjaman extends REST_Controller {
 							$nowdate     = date('Y-m-d');
 							$nowdatetime = date('Y-m-d H:i:s');
 
-							// ----- Destination Foto -----
-							$destination_foto = $this->config->item('member_images_dir'). $uid."/foto/";
-							$destination_ktp  = $this->config->item('member_images_dir'). $uid."/ktp/";
-							$destination_surat_kerja = $this->config->item('member_images_dir'). $uid."/surat_kerja/";
-							$destination_slip_gaji   = $this->config->item('member_images_dir'). $uid."/slip_gaji/";
-							$destination_hold_idcard = $this->config->item('member_images_dir'). $uid."/hold_idcard/";
-
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
+
+								// if ($_FILES['foto_file']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'File foto maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
@@ -476,33 +474,23 @@ class Pinjaman extends REST_Controller {
 								$file_foto_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['images_foto_name'] = $file_foto_name;
-
-								// Start of OSS
-								$accessKeyId = $this->config->item('oss_access_key_id');
-								$accessKeySecret = $this->config->item('oss_access_key_secret');
-								$endpoint = $this->config->item('oss_endpoint');
-								$bucket= $this->config->item('oss_bucket_bkd_user');
-								$object =  $destination_foto . $file_foto_name;
-								$filePath = $_FILES['foto_file']['tmp_name'];
-
-								try{
-									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
-									$ossClient->uploadFile($bucket, $object, $filePath);
-
-									//if($post['old_foto']!=''){
-										$ossClient->deleteObject($bucket,$destination_foto . $memberdata['images_foto_name']);
-									//}
-								} catch(OssException $e) {
-									printf(__FUNCTION__ . ": FAILED\n");
-									printf($e->getMessage() . "\n");
-									return;
-								}
-								
-								// End of OSS
+							}else{
+								$file_foto_name   = '';
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
-								
+								// if ($_FILES['nik_file']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto NIK maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -511,33 +499,24 @@ class Pinjaman extends REST_Controller {
 								$file_ktp_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['images_ktp_name']  = $file_ktp_name;
-
-								// Start of OSS
-								$accessKeyId = $this->config->item('oss_access_key_id');
-								$accessKeySecret = $this->config->item('oss_access_key_secret');
-								$endpoint = $this->config->item('oss_endpoint');
-								$bucket= $this->config->item('oss_bucket_bkd_user');
-								$object =  $destination_foto . $file_foto_name;
-								$filePath = $_FILES['nik_file']['tmp_name'];
-
-								try{
-									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
-									$ossClient->uploadFile($bucket, $object, $filePath);
-
-									//if($post['old_foto']!=''){
-										$ossClient->deleteObject($bucket,$destination_foto . $memberdata['images_foto_name']);
-									//}
-								} catch(OssException $e) {
-									printf(__FUNCTION__ . ": FAILED\n");
-									printf($e->getMessage() . "\n");
-									return;
-								}
-								// END of OSS
 							}else{
 								$file_ktp_name   = '';
 							}
 
 							if( isset($_FILES['foto_surat_ket_kerja']['name']) && $_FILES['foto_surat_ket_kerja']['name'] != ''){
+
+								// if ($_FILES['foto_surat_ket_kerja']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto Surat Keterangan Kerja maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_surat_ket_kerja']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -546,33 +525,23 @@ class Pinjaman extends REST_Controller {
 								$file_surat_kerja_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['foto_surat_keterangan_bekerja']  = $file_surat_kerja_name;
-								// Start of OSS
-								$accessKeyId = $this->config->item('oss_access_key_id');
-								$accessKeySecret = $this->config->item('oss_access_key_secret');
-								$endpoint = $this->config->item('oss_endpoint');
-								$bucket= $this->config->item('oss_bucket_bkd_user');
-								$object =  $destination_foto . $file_foto_name;
-								$filePath = $_FILES['foto_surat_ket_kerja']['tmp_name'];
-
-								try{
-									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
-									$ossClient->uploadFile($bucket, $object, $filePath);
-
-									//if($post['old_foto']!=''){
-										$ossClient->deleteObject($bucket,$destination_foto . $memberdata['images_foto_name']);
-									//}
-								} catch(OssException $e) {
-									printf(__FUNCTION__ . ": FAILED\n");
-									printf($e->getMessage() . "\n");
-									return;
-								}
-								// END of OSS
-
 							}else{
 								$file_surat_kerja_name   = '';
 							}
 
 							if( isset($_FILES['foto_slip_gaji']['name']) && $_FILES['foto_slip_gaji']['name'] != ''){
+
+								// if ($_FILES['foto_slip_gaji']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto Slip Gaji maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_slip_gaji']['name']);
@@ -582,34 +551,23 @@ class Pinjaman extends REST_Controller {
 								$file_slip_gaji_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['foto_slip_gaji']  = $file_slip_gaji_name;
-
-								// Start of OSS
-								$accessKeyId = $this->config->item('oss_access_key_id');
-								$accessKeySecret = $this->config->item('oss_access_key_secret');
-								$endpoint = $this->config->item('oss_endpoint');
-								$bucket= $this->config->item('oss_bucket_bkd_user');
-								$object =  $destination_foto . $file_foto_name;
-								$filePath = $_FILES['foto_slip_gaji']['tmp_name'];
-
-								try{
-									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
-									$ossClient->uploadFile($bucket, $object, $filePath);
-
-									//if($post['old_foto']!=''){
-										$ossClient->deleteObject($bucket,$destination_foto . $memberdata['images_foto_name']);
-									//}
-								} catch(OssException $e) {
-									printf(__FUNCTION__ . ": FAILED\n");
-									printf($e->getMessage() . "\n");
-									return;
-								}
-								// END of OSS
-
 							}else{
 								$file_slip_gaji_name   = '';
 							}
 
 							if( isset($_FILES['foto_pegang_idcard']['name']) && $_FILES['foto_pegang_idcard']['name'] != ''){
+
+								// if ($_FILES['foto_pegang_idcard']['size'] > $upload_limit) {
+								// 	$response = [
+					   //          		'response' => 'fail',
+						  //               'status'   => 400,
+						  //               'content'  => '',
+						  //               'message'  => 'Foto Pegang ID Card maksimum ' .number_format($upload_limit / 1048576) . ' MB',
+						  //           ];
+						  //   		$http_status = REST_Controller::HTTP_OK;
+						  //   		$this->set_response($response, REST_Controller::HTTP_OK);
+					   //              return;
+								// }
 
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_pegang_idcard']['name']);
@@ -619,29 +577,6 @@ class Pinjaman extends REST_Controller {
 								$file_foto_pegang_idcard_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['foto_pegang_ktp']  = $file_foto_pegang_idcard_name;
-
-								// Start of OSS
-								$accessKeyId = $this->config->item('oss_access_key_id');
-								$accessKeySecret = $this->config->item('oss_access_key_secret');
-								$endpoint = $this->config->item('oss_endpoint');
-								$bucket= $this->config->item('oss_bucket_bkd_user');
-								$object =  $destination_foto . $file_foto_name;
-								$filePath = $_FILES['foto_pegang_idcard']['tmp_name'];
-
-								try{
-									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
-									$ossClient->uploadFile($bucket, $object, $filePath);
-
-									//if($post['old_foto']!=''){
-										$ossClient->deleteObject($bucket,$destination_foto . $memberdata['images_foto_name']);
-									//}
-								} catch(OssException $e) {
-									printf(__FUNCTION__ . ": FAILED\n");
-									printf($e->getMessage() . "\n");
-									return;
-								}
-								// END of OSS
-								
 							}else{
 								$file_foto_pegang_idcard_name   = '';
 							}
@@ -715,6 +650,80 @@ class Pinjaman extends REST_Controller {
 								$u_detail['Jumlah_permohonan_pinjaman'] = $total_pinjam;
 								$updated_udetail = $this->Content_model->update_userdetail($id_pengguna, $u_detail);
 							
+
+								// ----- Destination Foto -----
+								$destination_foto = $this->config->item('member_images_dir'). $uid."/foto/";
+								$destination_ktp  = $this->config->item('member_images_dir'). $uid."/ktp/";
+								$destination_surat_kerja = $this->config->item('member_images_dir'). $uid."/surat_kerja/";
+								$destination_slip_gaji   = $this->config->item('member_images_dir'). $uid."/slip_gaji/";
+								$destination_hold_idcard = $this->config->item('member_images_dir'). $uid."/hold_idcard/";
+
+								// ----- Upload Foto -----
+							
+								if(isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
+									if (!is_file($destination_foto.$file_foto_name)) {
+										mkdir_r($destination_foto);
+									}
+
+									unlink($destination_foto.$memberdata['images_foto_name']);
+
+									// $this->resize_image($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);
+									
+									move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);
+	
+								}
+
+								if(isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
+									if (!is_file($destination_ktp.$file_ktp_name)) {
+										mkdir_r($destination_ktp);
+									}
+									unlink($destination_ktp.$memberdata['images_ktp_name']);
+
+									// $this->resize_image($_FILES['nik_file']['tmp_name'], $destination_ktp.$file_ktp_name);
+							
+									move_uploaded_file($_FILES['nik_file']['tmp_name'], $destination_ktp.$file_ktp_name);		
+
+									
+									
+								}
+
+								if(isset($_FILES['foto_surat_ket_kerja']['name']) && $_FILES['foto_surat_ket_kerja']['name'] != ''){
+									if (!is_file($destination_surat_kerja.$file_surat_kerja_name)) {
+										mkdir_r($destination_surat_kerja);
+									}
+									unlink($destination_surat_kerja.$memberdata['foto_surat_keterangan_bekerja']);
+									
+									// $this->resize_image($_FILES['foto_surat_ket_kerja']['tmp_name'], $destination_surat_kerja.$file_surat_kerja_name);								
+									move_uploaded_file($_FILES['foto_surat_ket_kerja']['tmp_name'], $destination_surat_kerja.$file_surat_kerja_name);
+
+								}
+
+								if(isset($_FILES['foto_slip_gaji']['name']) && $_FILES['foto_slip_gaji']['name'] != ''){
+									if (!is_file($destination_slip_gaji.$file_slip_gaji_name)) {
+										mkdir_r($destination_slip_gaji);
+									}
+									unlink($destination_slip_gaji.$memberdata['foto_slip_gaji']);
+
+									// $this->resize_image($_FILES['foto_slip_gaji']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
+
+									move_uploaded_file($_FILES['foto_slip_gaji']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
+
+									
+
+								}
+
+								if(isset($_FILES['foto_pegang_idcard']['name']) && $_FILES['foto_pegang_idcard']['name'] != ''){
+									if (!is_file($destination_hold_idcard.$file_foto_pegang_idcard_name)) {
+										mkdir_r($destination_hold_idcard);
+									}
+									unlink($destination_hold_idcard.$memberdata['foto_pegang_ktp']);
+
+									// $this->resize_image($_FILES['foto_pegang_idcard']['tmp_name'], $destination_hold_idcard.$file_foto_pegang_idcard_name);
+
+									move_uploaded_file($_FILES['foto_pegang_idcard']['tmp_name'], $destination_hold_idcard.$file_foto_pegang_idcard_name);
+
+									
+								}
 							}
 
 							// --- Set Ranking pengguna ---

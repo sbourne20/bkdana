@@ -1,0 +1,139 @@
+NoSuchKey: The specified key does not exist. RequestId: 5CC28CFD2FFB291E675BEA14
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: image_content</p>
+<p>Filename: controllers/File_loader.php</p>
+<p>Line Number: 133</p>
+
+
+	<p>Backtrace:</p>
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\application\controllers\File_loader.php<br />
+			Line: 133<br />
+			Function: _error_handler			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\application\libraries\REST_Controller.php<br />
+			Line: 752<br />
+			Function: call_user_func_array			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\index.php<br />
+			Line: 317<br />
+			Function: require_once			</p>
+
+		
+	
+
+</div>
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: image_content</p>
+<p>Filename: controllers/File_loader.php</p>
+<p>Line Number: 145</p>
+
+
+	<p>Backtrace:</p>
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\application\controllers\File_loader.php<br />
+			Line: 145<br />
+			Function: _error_handler			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\application\libraries\REST_Controller.php<br />
+			Line: 752<br />
+			Function: call_user_func_array			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\index.php<br />
+			Line: 317<br />
+			Function: require_once			</p>
+
+		
+	
+
+</div>
+<div style="border:1px solid #990000;padding-left:20px;margin:0 0 10px 0;">
+
+<h4>A PHP Error was encountered</h4>
+
+<p>Severity: Notice</p>
+<p>Message:  Undefined variable: image_content</p>
+<p>Filename: controllers/File_loader.php</p>
+<p>Line Number: 148</p>
+
+
+	<p>Backtrace:</p>
+	
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\application\controllers\File_loader.php<br />
+			Line: 148<br />
+			Function: _error_handler			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\application\libraries\REST_Controller.php<br />
+			Line: 752<br />
+			Function: call_user_func_array			</p>
+
+		
+	
+		
+	
+		
+			<p style="margin-left:10px">
+			File: V:\Application\xampp\htdocs\bkdana\bkd-api\index.php<br />
+			Line: 317<br />
+			Function: require_once			</p>
+
+		
+	
+
+</div>
