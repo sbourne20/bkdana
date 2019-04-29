@@ -56,8 +56,7 @@ $config['template_uri']      = $config['doc_root'] . 'assets/';
 $config['mail_username']      = 'bkdanafinansial@gmail.com';
 $config['mail_password']      = 'master177';
 
-
-// akun BATAVIA 
+// akun fb developer BATAVIA 
 // $config['fb_app_id']          = '1733360370088297';
 // $config['fb_kit_secret']      = 'd827d9e9c9802d140f27a96751fb9811';
 // $config['fb_kit_token']       = '0fa9339955b3ac6efbb5f3bb7738dd02';
@@ -81,6 +80,6 @@ $config['vServer_key']  = 'SB-Mid-server-7UDjQBASCcq-WJdzM-nJBPZZ'; // sandbox
 $config['oss_access_key_id'] = 'LTAIJbwb8rmv5ptU';
 $config['oss_access_key_secret'] = 'CSwic1up6VGQtlg4bp2DLQc731n5Re';
 $config['oss_endpoint'] = 'https://oss-ap-southeast-5.aliyuncs.com';
-$config['oss_bucket_bkd_user'] = _SERVER['HTTP_HOST']=='localhost' ? 'bkd-development' : 'bkd-production';
+$config['oss_bucket_bkd_user'] = ($_SERVER['HTTP_HOST']=='localhost' OR $_SERVER['HTTP_HOST'] =='149.129.248.46') ? 'bkd-development' : 'bkd-production';
 
 

@@ -229,6 +229,7 @@ class Member extends CI_Controller {
 		$data['status_tempat_tinggal'] = $this->Content_model->get_all_status_tempat();
 		$data['gender'] = $this->Content_model->get_all_gender();
 
+
 		//_d($data['memberdata']);
 		$data['pages']    = 'v_profil_edit';
 		$this->load->view('template', $data);
@@ -239,6 +240,7 @@ class Member extends CI_Controller {
 		if(isset($_POST['Option_key']))
 		{
 			$usr = $_POST['Option_key'];
+
 		}else{
 			echo "no data";
 			exit();
@@ -249,8 +251,10 @@ class Member extends CI_Controller {
 		$html = '';
 		foreach ($kota as $prod) {
 			$html .= '<option value="'.$prod['Option_value'].'">'.$prod['Option_label'].' </option>';
+
 		}		
 		echo $html;
+
 
 	}
 

@@ -80,12 +80,14 @@ if($_SERVER['HTTP_HOST']=='localhost') {
 	$db_user = 'root';
 	$db_pass = 'aksesdb';
 	
-}else if($_SERVER['HTTP_HOST']=='149.129.213.30' OR $_SERVER['HTTP_HOST']=='www.bkdana.com') {
+}else if($_SERVER['HTTP_HOST']=='149.129.248.46' OR $_SERVER['HTTP_HOST']=='www.bkdana.com') {
 	// Dev
-	//$db_host = '172.31.33.106';
-	$db_host = 'localhost';
-	$db_user = 'bkduser';
-	$db_pass = 'aksesdb288';
+	// $db_host = 'localhost';
+	// $db_user = 'bkduser';
+	// $db_pass = 'aksesdb288';
+	$db_host = 'rm-d9j6svt1501xltiw5do.mysql.ap-southeast-5.rds.aliyuncs.com';
+	$db_user = 'root';
+	$db_pass = 'Master199';
 }else{
 	/* LIVE*/
 	$db_host = 'rm-d9jxms81910c50lvi.mysql.ap-southeast-5.rds.aliyuncs.com';
