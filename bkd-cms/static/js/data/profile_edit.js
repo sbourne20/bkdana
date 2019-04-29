@@ -33,7 +33,7 @@ if($('#provinsi').val()!=""){
   $('#provinsidomisili').change(function() {
     var provinsidomisili   = $(this).val();
     // var member    = $('data-member');
-    console.log(provinsidomisili);
+    //console.log(provinsidomisili);
     var base_uri  = window.location.href;
 
     var send_data = {'Option_key' : provinsidomisili };
