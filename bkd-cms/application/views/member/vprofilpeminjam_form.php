@@ -14,51 +14,51 @@ $foto_pegang_ktp = '';
 
 if ($memberdata['images_foto_name'] != '')
 {
-    $foto_profil = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/foto/'. $memberdata['images_foto_name'];
+    $foto_profil = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/foto/'. $memberdata['images_foto_name']);
 }
 if ($memberdata['images_ktp_name'] != '')
 {
-    $foto_ktp = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/ktp/'. $memberdata['images_ktp_name'];
+    $foto_ktp = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/ktp/'. $memberdata['images_ktp_name']);
 }
 if ($memberdata['images_usaha_name'] != '')
 {
-    $foto_usaha = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha/'. $memberdata['images_usaha_name'];
+    $foto_usaha = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha/'. $memberdata['images_usaha_name']);
 }
 if ($memberdata['images_usaha_name2'] != '')
 {
-    $foto_usaha2 = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha2/'. $memberdata['images_usaha_name2'];
+    $foto_usaha2 = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha2/'. $memberdata['images_usaha_name2']);
 }
 if ($memberdata['images_usaha_name3'] != '')
 {
-    $foto_usaha3 = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha3/'. $memberdata['images_usaha_name3'];
+    $foto_usaha3 = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha3/'. $memberdata['images_usaha_name3']);
 }
 if ($memberdata['images_usaha_name4'] != '')
 {
-    $foto_usaha4 = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha4/'. $memberdata['images_usaha_name4'];
+    $foto_usaha4 = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha4/'. $memberdata['images_usaha_name4']);
 }
 if ($memberdata['images_usaha_name5'] != '')
 {
-    $foto_usaha5 = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/usaha5/'. $memberdata['images_usaha_name5'];
+    $foto_usaha5 = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/usaha5/'. $memberdata['images_usaha_name5']);
 }
 
 // -----tambahan baru-----
 
 if ($memberdata['foto_surat_keterangan_bekerja'] != '')
 {
-    $foto_surat_keterangan_bekerja = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/surat_keterangan_bekerja/'. $memberdata['foto_surat_keterangan_bekerja'];
+    $foto_surat_keterangan_bekerja = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/surat_keterangan_bekerja/'. $memberdata['foto_surat_keterangan_bekerja']);
 }
 if ($memberdata['foto_slip_gaji'] != '')
 {
-    $foto_slip_gaji= site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/slip_gaji/'. $memberdata['foto_slip_gaji'];
+    $foto_slip_gaji= site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/slip_gaji/'. $memberdata['foto_slip_gaji']);
 }
 if ($memberdata['foto_pegang_ktp'] != '')
 {
-    $foto_pegang_ktp = site_url('fileload?p=') . 'member/'.$memberdata['id_mod_user_member']. '/pegang_ktp/'. $memberdata['foto_pegang_ktp'];
+    $foto_pegang_ktp = site_url('fileload?p=') . urlencode('member/'.$memberdata['id_mod_user_member']. '/pegang_ktp/'. $memberdata['foto_pegang_ktp']);
 }
 
 // -----batas tambahan-----
 
-?>    
+?>
 
 
     <section class="wrapper">
@@ -74,102 +74,78 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Nama Lengkap</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="fullname" id="nama" class="form-control" value="<?php echo $memberdata['Nama_pengguna']; ?>">
+                                    <input type="text" name="fullname" id="nama" class="form-control" value="<?php echo $memberdata['Nama_pengguna']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Email</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="email" id="email" class="form-control" value="<?php echo $memberdata['mum_email']; ?>" disabled="disabled">
+                                    <input type="text" name="email" id="email" class="form-control" value="<?php echo $memberdata['mum_email']; ?>" readonly>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">No Telepon</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="telp" id="telp" class="form-control" value="<?php echo $memberdata['mum_telp']; ?>" disabled="disabled">
+                                    <input type="text" name="telp" id="telp" class="form-control" value="<?php echo $memberdata['mum_telp']; ?>" readonly>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Tempat Lahir</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control" value="<?php echo $memberdata['Tempat_lahir']; ?>" >
+                                    <input type="text" name="tempat_lahir" id="tempat_lahir" class="form-control" value="<?php echo $memberdata['Tempat_lahir']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Tanggal Lahir</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="tgl_lahir" id="tgl_lahir_pinjam" class="form-control datepicker-dob" value="<?php echo ($memberdata['Tanggal_lahir']=='0000-00-00')? '' : date('d-m-Y', strtotime($memberdata['Tanggal_lahir'])); ?>" >
+                                    <input type="text" name="tgl_lahir" id="tgl_lahir_pinjam" class="form-control datepicker-dob" value="<?php echo ($memberdata['Tanggal_lahir']=='0000-00-00')? '' : date('d-m-Y', strtotime($memberdata['Tanggal_lahir'])); ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Jenis Kelamin</label>
                                 <div class="col-sm-6">
-                                    <select name="gender" class="form-control">
+                                    <select class="form-control" name="gender" id="gender" data-value="<?php echo $memberdata['Jenis_kelamin']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                         <option value=""> -- Pilih --</option>
-                                        <option value="pria" <?php echo ($memberdata['Jenis_kelamin']=='pria')? 'selected="selected"' : ''; ?>>Pria</option>
-                                        <option value="wanita" <?php echo ($memberdata['Jenis_kelamin']=='wanita')? 'selected="selected"' : ''; ?>>Wanita</option>
+                                        <?php foreach ($gender as $key) {   ?>
+                                        <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Jenis_kelamin']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> 
+                                        </option>
+                                    <?php } ?>
                                     </select>
                                 </div>     
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Alamat sesuai dengan KTP</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="alamat" id="alamat" class="form-control" value="<?php echo $memberdata['Alamat']; ?>">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="col-sm-2 control-label">Kota sesuai dengan KTP</label>
-                                <div class="col-sm-6">
-                                    <input type="text" name="kota" id="kota" class="form-control" value="<?php echo $memberdata['Kota']; ?>" >
+                                    <input type="text" name="alamat" id="alamat" class="form-control" value="<?php echo $memberdata['Alamat']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Provinsi sesuai dengan KTP</label>
                                 <div class="col-sm-6">
                                    <select class="form-control" name="provinsi" id="provinsi" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
-                                        <option value=""> -- Pilih -- </option>
-                                        <option value="Aceh" <?php echo ($memberdata['Provinsi']=='Aceh')? 'selected="selected"' : ''; ?>>Aceh</option>
-                                        <option value="Bali" <?php echo ($memberdata['Provinsi']=='Bali')? 'selected="selected"' : ''; ?>>Bali</option>
-                                        <option value="Banten" <?php echo ($memberdata['Provinsi']=='Banten')? 'selected="selected"' : ''; ?>>Banten</option>
-                                        <option value="Bengkulu" <?php echo ($memberdata['Provinsi']=='Bengkulu')? 'selected="selected"' : ''; ?>>Bengkulu</option>
-                                        <option value="DI Yogyakarta" <?php echo ($memberdata['Provinsi']=='DI Yogyakarta')? 'selected="selected"' : ''; ?>>DI Yogyakarta</option>
-                                        <option value="DKI Jakarta" <?php echo ($memberdata['Provinsi']=='DKI Jakarta')? 'selected="selected"' : ''; ?>>DKI Jakarta</option>
-                                        <option value="Gorontalo" <?php echo ($memberdata['Provinsi']=='Gorontalo')? 'selected="selected"' : ''; ?>>Gorontalo</option>
-                                        <option value="Jambi" <?php echo ($memberdata['Provinsi']=='Jambi')? 'selected="selected"' : ''; ?>>Jambi</option>
-                                        <option value="Jawa Barat" <?php echo ($memberdata['Provinsi']=='Jawa Barat')? 'selected="selected"' : ''; ?>>Jawa Barat</option>
-                                        <option value="Jawa Tengah" <?php echo ($memberdata['Provinsi']=='Jawa Tengah')? 'selected="selected"' : ''; ?>>Jawa Tengah</option>
-                                        <option value="Jawa Timur" <?php echo ($memberdata['Provinsi']=='Jawa Timur')? 'selected="selected"' : ''; ?>>Jawa Timur</option>
-                                        <option value="Kalimantan Barat" <?php echo ($memberdata['Provinsi']=='Kalimantan Barat')? 'selected="selected"' : ''; ?>>Kalimantan Barat</option>
-                                        <option value="Kalimantan Selatan" <?php echo ($memberdata['Provinsi']=='Kalimantan Selatan')? 'selected="selected"' : ''; ?>>Kalimantan Selatan</option>
-                                        <option value="Kalimantan Tengah" <?php echo ($memberdata['Provinsi']=='Kalimantan Tengah')? 'selected="selected"' : ''; ?>>Kalimantan Tengah</option>
-                                        <option value="Kalimantan Timur" <?php echo ($memberdata['Provinsi']=='Kalimantan Timur')? 'selected="selected"' : ''; ?>>Kalimantan Timur</option>
-                                        <option value="Kalimantan Utara" <?php echo ($memberdata['Provinsi']=='Kalimantan Utara')? 'selected="selected"' : ''; ?>>Kalimantan Utara</option>
-                                        <option value="Kepulauan Bangka Belitung" <?php echo ($memberdata['Provinsi']=='Kepulauan Bangka Belitung')? 'selected="selected"' : ''; ?>>Kepulauan Bangka Belitung</option>
-                                        <option value="Kepulauan Riau" <?php echo ($memberdata['Provinsi']=='Kepulauan Riau')? 'selected="selected"' : ''; ?>>Kepulauan Riau</option>
-                                        <option value="Lampung" <?php echo ($memberdata['Provinsi']=='Lampung')? 'selected="selected"' : ''; ?>>Lampung</option>
-                                        <option value="Maluku" <?php echo ($memberdata['Provinsi']=='Maluku')? 'selected="selected"' : ''; ?>>Maluku</option>
-                                        <option value="Maluku Utara" <?php echo ($memberdata['Provinsi']=='Maluku Utara')? 'selected="selected"' : ''; ?>>Maluku Utara</option>
-                                        <option value="Nusa Tenggara Barat" <?php echo ($memberdata['Provinsi']=='Nusa Tenggara Barat')? 'selected="selected"' : ''; ?>>Nusa Tenggara Barat</option>
-                                        <option value="Nusa Tenggara Timur" <?php echo ($memberdata['Provinsi']=='Nusa Tenggara Timur')? 'selected="selected"' : ''; ?>>Nusa Tenggara Timur</option>
-                                        <option value="Papua" <?php echo ($memberdata['Provinsi']=='Papua')? 'selected="selected"' : ''; ?>>Papua</option>
-                                        <option value="Papua Barat" <?php echo ($memberdata['Provinsi']=='Papua Barat')? 'selected="selected"' : ''; ?>>Papua Barat</option>
-                                        <option value="Riau" <?php echo ($memberdata['Provinsi']=='Riau')? 'selected="selected"' : ''; ?>>Riau</option>
-                                        <option value="Sulawesi Barat" <?php echo ($memberdata['Provinsi']=='Sulawesi Barat')? 'selected="selected"' : ''; ?>>Sulawesi Barat</option>
-                                        <option value="Sulawesi Selatan" <?php echo ($memberdata['Provinsi']=='Sulawesi Selatan')? 'selected="selected"' : ''; ?>>Sulawesi Selatan</option>
-                                        <option value="Sulawesi Tengah" <?php echo ($memberdata['Provinsi']=='Sulawesi Tengah')? 'selected="selected"' : ''; ?>>Sulawesi Tengah</option>
-                                        <option value="Sulawesi Tenggara" <?php echo ($memberdata['Provinsi']=='Sulawesi Tenggara')? 'selected="selected"' : ''; ?>>Sulawesi Tenggara</option>
-                                        <option value="Sulawesi Utara" <?php echo ($memberdata['Provinsi']=='Sulawesi Utara')? 'selected="selected"' : ''; ?>>Sulawesi Utara</option>
-                                        <option value="Sumatera Barat" <?php echo ($memberdata['Provinsi']=='Sumatera Barat')? 'selected="selected"' : ''; ?>>Sumatera Barat</option>
-                                        <option value="Sumatera Selatan" <?php echo ($memberdata['Provinsi']=='Sumatera Selatan')? 'selected="selected"' : ''; ?>>Sumatera Selatan</option>
-                                        <option value="Sumatera Utara" <?php echo ($memberdata['Provinsi']=='Sumatera Utara')? 'selected="selected"' : ''; ?>>Sumatera Utara</option>
+                                        <option value=""> -- Pilih Provinsi--</option>
+                                        <?php foreach ($provinsi as $key) {
+                                        ?>
+                                        <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Provinsi']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> </option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-2 control-label">Kota sesuai dengan KTP</label>
+                                <div class="col-sm-6">
+                                    <select class="form-control" name="kota" id="kota" data-value="<?php echo $memberdata['Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
+                                        <option value=""> -- Pilih Kota--</option>
+                                        </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Kode Pos</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="kodepos" id="kodepos" class="form-control" value="<?php echo $memberdata['Kodepos']; ?>">
+                                    <input type="text" name="kodepos" id="kodepos" class="form-control" value="<?php echo $memberdata['Kodepos']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
 
@@ -200,7 +176,9 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                 
                                     <label class="col-sm-2 control-label">* Kota Domisili</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="kotadomisili" id="kotadomisili" value="<?php echo $memberdata['Kota_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
+                                        <select class="form-control" name="kotadomisili" id="kotadomisili" data-value="<?php echo $memberdata['Kota_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota Domisili harus diisi!" >
+                                            <option value=""> -- Pilih Kota--</option>
+                                            </select>
                                     </div>
                                 
                             </div>  
@@ -208,43 +186,15 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                 
                                     <label class="col-sm-2 control-label">* Provinsi Domisili</label>
                                     <div class="col-sm-6">
-                                        <select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
-                                            <option value=""> -- Pilih -- </option>
-                                            <option value="Aceh" <?php echo ($memberdata['Provinsi_Domisili']=='Aceh')? 'selected="selected"' : ''; ?>>Aceh</option>
-                                            <option value="Bali" <?php echo ($memberdata['Provinsi_Domisili']=='Bali')? 'selected="selected"' : ''; ?>>Bali</option>
-                                            <option value="Banten" <?php echo ($memberdata['Provinsi_Domisili']=='Banten')? 'selected="selected"' : ''; ?>>Banten</option>
-                                            <option value="Bengkulu" <?php echo ($memberdata['Provinsi_Domisili']=='Bengkulu')? 'selected="selected"' : ''; ?>>Bengkulu</option>
-                                            <option value="DI Yogyakarta" <?php echo ($memberdata['Provinsi_Domisili']=='DI Yogyakarta')? 'selected="selected"' : ''; ?>>DI Yogyakarta</option>
-                                            <option value="DKI Jakarta" <?php echo ($memberdata['Provinsi_Domisili']=='DKI Jakarta')? 'selected="selected"' : ''; ?>>DKI Jakarta</option>
-                                            <option value="Gorontalo" <?php echo ($memberdata['Provinsi_Domisili']=='Gorontalo')? 'selected="selected"' : ''; ?>>Gorontalo</option>
-                                            <option value="Jambi" <?php echo ($memberdata['Provinsi_Domisili']=='Jambi')? 'selected="selected"' : ''; ?>>Jambi</option>
-                                            <option value="Jawa Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Barat')? 'selected="selected"' : ''; ?>>Jawa Barat</option>
-                                            <option value="Jawa Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Tengah')? 'selected="selected"' : ''; ?>>Jawa Tengah</option>
-                                            <option value="Jawa Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Jawa Timur')? 'selected="selected"' : ''; ?>>Jawa Timur</option>
-                                            <option value="Kalimantan Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Barat')? 'selected="selected"' : ''; ?>>Kalimantan Barat</option>
-                                            <option value="Kalimantan Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Selatan')? 'selected="selected"' : ''; ?>>Kalimantan Selatan</option>
-                                            <option value="Kalimantan Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Tengah')? 'selected="selected"' : ''; ?>>Kalimantan Tengah</option>
-                                            <option value="Kalimantan Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Timur')? 'selected="selected"' : ''; ?>>Kalimantan Timur</option>
-                                            <option value="Kalimantan Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Kalimantan Utara')? 'selected="selected"' : ''; ?>>Kalimantan Utara</option>
-                                            <option value="Kepulauan Bangka Belitung" <?php echo ($memberdata['Provinsi_Domisili']=='Kepulauan Bangka Belitung')? 'selected="selected"' : ''; ?>>Kepulauan Bangka Belitung</option>
-                                            <option value="Kepulauan Riau" <?php echo ($memberdata['Provinsi_Domisili']=='Kepulauan Riau')? 'selected="selected"' : ''; ?>>Kepulauan Riau</option>
-                                            <option value="Lampung" <?php echo ($memberdata['Provinsi_Domisili']=='Lampung')? 'selected="selected"' : ''; ?>>Lampung</option>
-                                            <option value="Maluku" <?php echo ($memberdata['Provinsi_Domisili']=='Maluku')? 'selected="selected"' : ''; ?>>Maluku</option>
-                                            <option value="Maluku Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Maluku Utara')? 'selected="selected"' : ''; ?>>Maluku Utara</option>
-                                            <option value="Nusa Tenggara Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Nusa Tenggara Barat')? 'selected="selected"' : ''; ?>>Nusa Tenggara Barat</option>
-                                            <option value="Nusa Tenggara Timur" <?php echo ($memberdata['Provinsi_Domisili']=='Nusa Tenggara Timur')? 'selected="selected"' : ''; ?>>Nusa Tenggara Timur</option>
-                                            <option value="Papua" <?php echo ($memberdata['Provinsi_Domisili']=='Papua')? 'selected="selected"' : ''; ?>>Papua</option>
-                                            <option value="Papua Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Papua Barat')? 'selected="selected"' : ''; ?>>Papua Barat</option>
-                                            <option value="Riau" <?php echo ($memberdata['Provinsi_Domisili']=='Riau')? 'selected="selected"' : ''; ?>>Riau</option>
-                                            <option value="Sulawesi Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Barat')? 'selected="selected"' : ''; ?>>Sulawesi Barat</option>
-                                            <option value="Sulawesi Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Selatan')? 'selected="selected"' : ''; ?>>Sulawesi Selatan</option>
-                                            <option value="Sulawesi Tengah" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Tengah')? 'selected="selected"' : ''; ?>>Sulawesi Tengah</option>
-                                            <option value="Sulawesi Tenggara" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Tenggara')? 'selected="selected"' : ''; ?>>Sulawesi Tenggara</option>
-                                            <option value="Sulawesi Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Sulawesi Utara')? 'selected="selected"' : ''; ?>>Sulawesi Utara</option>
-                                            <option value="Sumatera Barat" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Barat')? 'selected="selected"' : ''; ?>>Sumatera Barat</option>
-                                            <option value="Sumatera Selatan" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Selatan')? 'selected="selected"' : ''; ?>>Sumatera Selatan</option>
-                                            <option value="Sumatera Utara" <?php echo ($memberdata['Provinsi_Domisili']=='Sumatera Utara')? 'selected="selected"' : ''; ?>>Sumatera Utara</option>
-                                        </select>
+                                        <select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi Domisili harus diisi!" >
+                                            <option value=""> -- Pilih Provinsi--</option>
+                                            <?php foreach ($provinsi as $key) {
+                                            ?>
+                                            <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Provinsi_Domisili']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> </option>
+                                            <?php
+                                            }
+                                            ?>
+                                            </select>
                                     </div>
                                 
                             </div>  
@@ -252,7 +202,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                 
                                     <label class="col-sm-2 control-label">* Kode Pos Domisili</label>
                                     <div class="col-sm-6">
-                                        <input type="text" class="form-control" name="kodeposdomisili" id="kodeposdomisili" value="<?php echo $memberdata['Kodepos_Domisili']; ?>" >
+                                        <input type="text" class="form-control" name="kodeposdomisili" id="kodeposdomisili" value="<?php echo $memberdata['Kodepos_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
                                     </div>
                                 
                             </div>
@@ -263,20 +213,22 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Pekerjaan</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="pekerjaan" id="pekerjaan" data-validation-engine="validate[required]" data-errormessage-value-missing="Pekerjaan harus diisi!" >
-                                        <option value=""> -- Pilih --</option>
-                                        <option value="1" <?php echo ($memberdata['Pekerjaan']=='1')? 'selected="selected"' : ''; ?>>PNS</option>
-                                        <option value="2" <?php echo ($memberdata['Pekerjaan']=='2')? 'selected="selected"' : ''; ?>>BUMN</option>
-                                        <option value="3" <?php echo ($memberdata['Pekerjaan']=='3')? 'selected="selected"' : ''; ?>>Swasta</option>
-                                        <option value="4" <?php echo ($memberdata['Pekerjaan']=='4')? 'selected="selected"' : ''; ?>>Wiraswasta</option>
-                                        <option value="5" <?php echo ($memberdata['Pekerjaan']=='5')? 'selected="selected"' : ''; ?>>Lain-lain</option>
+                                    <select class="form-control" name="pekerjaan" id="pekerjaan"    data-value="<?php echo $memberdata['Pekerjaan']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
+                                    <option value=""> -- Pilih --</option>
+                                    <?php foreach ($pekerjaan as $key) {
+                                    ?>
+                                    <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Pekerjaan']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> 
+                                            </option>
+                                    <?php
+                                    }
+                                    ?>
                                     </select>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Diri / Selfie</label>
                                 <div class="col-sm-6">
-                                   <input type="file" id="foto_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_profil; ?>" >
+                                   <input type="file" id="foto_file" data-show-upload="false" onchange='onFileUpload()' namafile="<?php echo $foto_profil; ?>" >
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="foto_file_hidden" name="foto_file_hidden"/>                   
                                 </div>
@@ -284,13 +236,13 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Nomor KTP</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nomor_ktp" id="nomor_ktp" class="form-control" value="<?php echo $memberdata['Id_ktp']; ?>">
+                                    <input type="text" name="nomor_ktp" id="nomor_ktp" class="form-control" value="<?php echo $memberdata['Id_ktp']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto KTP</label>
                                 <div class="col-sm-6">
-                                   <input type="file" name="ktp_file" id="ktp_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()'namafile="<?php echo $foto_ktp; ?>" >
+                                   <input type="file" name="ktp_file" id="ktp_file" data-show-upload="false" onchange='onFileUpload()'namafile="<?php echo $foto_ktp; ?>" >
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="ktp_file_hidden" name="ktp_file_hidden"/>
                                 </div>
@@ -298,19 +250,21 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">No Rekening</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nomor_rekening" id="nomor_rekening" class="form-control" value="<?php echo $memberdata['Nomor_rekening']; ?>">
+                                    <input type="text" name="nomor_rekening" id="nomor_rekening" class="form-control" value="<?php echo $memberdata['Nomor_rekening']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Bank</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="nama_bank" id="nama_bank" data-validation-engine="validate[required]" data-errormessage-value-missing="Bank harus diisi!">
+                                    <select class="form-control" name="nama_bank" id="nama_bank"    data-value="<?php echo $memberdata['nama_bank']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                         <option value=""> -- Pilih --</option>
-                                        <option value="Bank Mandiri" <?php echo ($memberdata['nama_bank']=='Bank Mandiri')? 'selected="selected"' : ''; ?> > Bank Mandiri</option>
-                                        <option value="Bank BNI 46" <?php echo ($memberdata['nama_bank']=='Bank BNI 46')? 'selected="selected"' : ''; ?> >Bank BNI 46</option>
-                                        <option value="Bank BRI" <?php echo ($memberdata['nama_bank']=='Bank BRI')? 'selected="selected"' : ''; ?> >Bank BRI</option>
-                                        <option value="Bank BCA" <?php echo ($memberdata['nama_bank']=='Bank BCA')? 'selected="selected"' : ''; ?> >Bank BCA</option>
-                                        <option value="Bank CIMB" <?php echo ($memberdata['nama_bank']=='Bank CIMB')? 'selected="selected"' : ''; ?> >Bank CIMB</option>
+                                        <?php foreach ($nama_bank as $key) {
+                                        ?>
+                                        <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['nama_bank']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> 
+                                        </option>
+                                    <?php
+                                    }
+                                    ?>
                                     </select>
                                 </div>
                             </div>
@@ -320,7 +274,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Pendidikan</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="pendidikan" id="pendidikan">
+                                    <select class="form-control" name="pendidikan" id="pendidikan" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                         <option value=""> -- Pilih --</option>
                                         <option value="1" <?php echo ($memberdata['Pendidikan']=='1')? 'selected="selected"' : '';  ?> > SD</option>
                                         <option value="2" <?php echo ($memberdata['Pendidikan']=='2')? 'selected="selected"' : '';  ?> > SLTP</option>
@@ -333,19 +287,19 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Nama Perusahaan</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nama_perusahaan" id="nama_perusahaan" class="form-control" value="<?php echo $memberdata['nama_perusahaan']; ?>">
+                                    <input type="text" name="nama_perusahaan" id="nama_perusahaan" class="form-control" value="<?php echo $memberdata['nama_perusahaan']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Telepon Tempat Bekerja</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="telepon_perusahaan" id="telepon_perusahaan" class="form-control" value="<?php echo $memberdata['telepon_tempat_bekerja']; ?>">
+                                    <input type="text" name="telepon_perusahaan" id="telepon_perusahaan" class="form-control" value="<?php echo $memberdata['telepon_tempat_bekerja']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Status Karyawan</label>
                                 <div class="col-sm-6">
-                                    <select name="status_karyawan" class="form-control">
+                                    <select name="status_karyawan" class="form-control" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                         <option value=""> -- Pilih --</option>
                                          <option value="1" <?php echo ($memberdata['status_karyawan']=='1')? 'selected="selected"' : '';  ?> > Kontrak</option>
                                         <option value="2" <?php echo ($memberdata['status_karyawan']=='2')? 'selected="selected"' : '';  ?> > Tetap</option>
@@ -355,49 +309,49 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Lama Bekerja</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="lama_bekerja" id="lama_bekerja" class="form-control" value="<?php echo $memberdata['lama_bekerja']; ?>">
+                                    <input type="text" name="lama_bekerja" id="lama_bekerja" class="form-control" value="<?php echo $memberdata['lama_bekerja']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Nama Atasan Langsung</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="nama_atasan_langsung" id="nama_atasan_langsung" class="form-control" value="<?php echo $memberdata['nama_atasan_langsung']; ?>">
+                                    <input type="text" name="nama_atasan_langsung" id="nama_atasan_langsung" class="form-control" value="<?php echo $memberdata['nama_atasan_langsung']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">No Telepon Atasan Langsung</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="telp_atasan_langsung" id="telp_atasan_langsung" class="form-control" value="<?php echo $memberdata['telp_atasan_langsung']; ?>">
+                                    <input type="text" name="telp_atasan_langsung" id="telp_atasan_langsung" class="form-control" value="<?php echo $memberdata['telp_atasan_langsung']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Referensi Teman / Saudara 1</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="referensi_teman_1" id="referensi_teman_1" class="form-control" value="<?php echo $memberdata['referensi_teman_1']; ?>">
+                                    <input type="text" name="referensi_teman_1" id="referensi_teman_1" class="form-control" value="<?php echo $memberdata['referensi_teman_1']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">No Telepon Teman / Saudara 1</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="telp_teman_1" id="telp_teman_1" class="form-control" value="<?php echo $memberdata['telp_referensi_teman_1']; ?>">
+                                    <input type="text" name="telp_teman_1" id="telp_teman_1" class="form-control" value="<?php echo $memberdata['telp_referensi_teman_1']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Referensi Teman / Saudara 2</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="referensi_teman_2" id="referensi_teman_2" class="form-control" value="<?php echo $memberdata['referensi_teman_2']; ?>">
+                                    <input type="text" name="referensi_teman_2" id="referensi_teman_2" class="form-control" value="<?php echo $memberdata['referensi_teman_2']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">No Telepon Teman / Saudara 2</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="telp_teman_2" id="telp_teman_2" class="form-control" value="<?php echo $memberdata['telp_referensi_teman_2']; ?>">
+                                    <input type="text" name="telp_teman_2" id="telp_teman_2" class="form-control" value="<?php echo $memberdata['telp_referensi_teman_2']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Surat Keterangan Bekerja</label>
                                 <div class="col-sm-6">
-                                    <input type="file" id="surat_keterangan_bekerja_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php  echo $foto_surat_keterangan_bekerja; ?>">
+                                    <input type="file" id="surat_keterangan_bekerja_file" data-show-upload="false" onchange='onFileUpload()' namafile="<?php  echo $foto_surat_keterangan_bekerja; ?>">
                                         <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                         <input type="hidden" class="input_file_hidden" id="surat_keterangan_bekerja_file_hidden" name="surat_keterangan_bekerja_file_hidden"/>
                                 </div>
@@ -405,13 +359,13 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Gaji Bulanan</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="gaji_bulanan" id="gaji_bulanan" class="form-control" value="<?php echo $memberdata['gaji_bulanan']; ?>">
+                                    <input type="text" name="gaji_bulanan" id="gaji_bulanan" class="form-control" value="<?php echo $memberdata['gaji_bulanan']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Slip Gaji</label>
                                 <div class="col-sm-6">
-                                    <input type="file" id="slip_gaji_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo  $foto_slip_gaji; ?>">
+                                    <input type="file" id="slip_gaji_file" data-show-upload="false" onchange='onFileUpload()' namafile="<?php echo  $foto_slip_gaji; ?>">
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="slip_gaji_file_hidden" name="slip_gaji_file_hidden"/>
                                 </div>
@@ -419,7 +373,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Pegang ID CARD / KTP</label>
                                 <div class="col-sm-6">
-                                   <input type="file" id="pegang_ktp_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo  $foto_pegang_ktp;?>" >
+                                   <input type="file" id="pegang_ktp_file" data-show-upload="false" onchange='onFileUpload()' namafile="<?php echo  $foto_pegang_ktp;?>" >
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="pegang_ktp_file_hidden" name="pegang_ktp_file_hidden"/>
                                 </div>
@@ -435,19 +389,19 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Usaha</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="usaha" id="usaha" class="form-control" value="<?php echo $memberdata['What_is_the_name_of_your_business']; ?>">
+                                    <input type="text" name="usaha" id="usaha" class="form-control" value="<?php echo $memberdata['What_is_the_name_of_your_business']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Deskripsi Usaha</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="deskripsi_usaha" id="deskripsi_usaha" class="form-control" value="<?php echo $memberdata['deskripsi_usaha']; ?>">
+                                    <input type="text" name="deskripsi_usaha" id="deskripsi_usaha" class="form-control" value="<?php echo $memberdata['deskripsi_usaha']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Usaha 1</label>
                                 <div class="col-sm-6">
-                                    <input type="file" id="usaha_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()'  namafile="<?php echo $foto_usaha; ?>" multiple>
+                                    <input type="file" id="usaha_file" data-show-upload="false"  onchange='onFileUpload()'  namafile="<?php echo $foto_usaha; ?>" multiple>
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="usaha_file_hidden" name="usaha_file_hidden"/>
                                 </div>
@@ -455,7 +409,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Usaha 2</label>
                                 <div class="col-sm-6">
-                                    <input type="file" id="usaha_file2" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_usaha2; ?>" multiple>
+                                    <input type="file" id="usaha_file2" data-show-upload="false"  onchange='onFileUpload()' namafile="<?php echo $foto_usaha2; ?>" multiple>
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="usaha_file2_hidden" name="usaha_file2_hidden"/>
                                 </div>
@@ -463,7 +417,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Usaha 3</label>
                                 <div class="col-sm-6">
-                                    <input type="file" id="usaha_file3" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_usaha3; ?>" multiple>
+                                    <input type="file" id="usaha_file3" data-show-upload="false"  onchange='onFileUpload()' namafile="<?php echo $foto_usaha3; ?>" multiple>
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="usaha_file3_hidden" name="usaha_file3_hidden"/>
                                 </div>
@@ -471,7 +425,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Usaha 4</label>
                                 <div class="col-sm-6">
-                                    <input type="file" id="usaha_file4" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_usaha4; ?>" multiple>
+                                    <input type="file" id="usaha_file4" data-show-upload="false"  onchange='onFileUpload()' namafile="<?php echo $foto_usaha4; ?>" multiple>
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="usaha_file4_hidden" name="usaha_file4_hidden"/>
                                 </div>
@@ -479,7 +433,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Usaha 5</label>
                                 <div class="col-sm-6">
-                                   <input type="file" id="usaha_file5" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_usaha5; ?>" multiple>
+                                   <input type="file" id="usaha_file5" data-show-upload="false"  onchange='onFileUpload()' namafile="<?php echo $foto_usaha5; ?>" multiple>
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" id="usaha_file5_hidden" name="usaha_file5_hidden"/>
                                 </div>
@@ -508,31 +462,31 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Omzet Usaha</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="omzet_usaha" id="omzet_usaha" class="form-control" value="<?php echo $memberdata['omzet_usaha'];?>">
+                                    <input type="text" name="omzet_usaha" id="omzet_usaha" class="form-control" value="<?php echo $memberdata['omzet_usaha'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Modal Usaha</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="modal_usaha" id="modal_usaha" class="form-control" value="<?php echo $memberdata['modal_usaha'];?>">
+                                    <input type="text" name="modal_usaha" id="modal_usaha" class="form-control" value="<?php echo $memberdata['modal_usaha'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Margin Usaha</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="margin_usaha" id="margin_usaha" class="form-control" value="<?php echo $memberdata['margin_usaha'];?>">
+                                    <input type="text" name="margin_usaha" id="margin_usaha" class="form-control" value="<?php echo $memberdata['margin_usaha'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Biaya Operasional</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="biaya_operasional" id="biaya_operasional" class="form-control" value="<?php echo $memberdata['biaya_operasional'];?>">
+                                    <input type="text" name="biaya_operasional" id="biaya_operasional" class="form-control" value="<?php echo $memberdata['biaya_operasional'];?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Laba Usaha</label>
                                 <div class="col-sm-6">
-                                    <input type="text" name="laba_usaha" id="laba_usaha" class="form-control" value="<?php echo $memberdata['laba_usaha'];?>">
+                                    <input type="text" name="laba_usaha" id="laba_usaha" class="form-control" value="<?php echo $memberdata['laba_usaha'];?>"data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                 </div>
                             </div>
                             
@@ -545,7 +499,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Pendidikan</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="pendidikan" id="pendidikan">
+                                    <select class="form-control" name="pendidikan" id="pendidikan" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                         <option value=""> -- Pilih --</option>
                                         <option value="1" <?php echo ($memberdata['Pendidikan']=='1')? 'selected="selected"' : '';  ?> > SD</option>
                                         <option value="2" <?php echo ($memberdata['Pendidikan']=='2')? 'selected="selected"' : '';  ?> > SLTP</option>
@@ -563,17 +517,25 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                     </select>
                                 </div>
                             </div>
+  <!--                               <div class="form-group" id="hiddendomisili2">
+                                    <label class="col-sm-2 control-label">* coba agama</label>
+                                    <div class="col-sm-6">
+                                        <input type="text" class="form-control" name="kotadomisili" id="kotadomisili" value="<?php echo $memberdataagama['Option_']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
+                                    </div>
+                                
+                            </div> --> 
                              <div class="form-group">
                                 <label class="col-sm-2 control-label">Agama</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="agama" id="agama">
+                                    <select class="form-control" name="agama" id="agama" data-value="<?php echo $memberdata['Agama']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
                                         <option value=""> -- Pilih --</option>
-                                        <option value="islam" <?php echo ($memberdata['Agama']=='islam')? 'selected="selected"' : '';  ?> > Islam</option>
-                                        <option value="katolik" <?php echo ($memberdata['Agama']=='katolik')? 'selected="selected"' : '';  ?> > Katolik</option>
-                                        <option value="protestan" <?php echo ($memberdata['Agama']=='protestan')? 'selected="selected"' : '';  ?> > Protestan</option>
-                                        <option value="budha" <?php echo ($memberdata['Agama']=='budha')? 'selected="selected"' : '';  ?> > Budha</option>
-                                        <option value="hindu" <?php echo ($memberdata['Agama']=='hindu')? 'selected="selected"' : '';  ?> > Hindu</option>
-                                        <option value="lain-lain" <?php echo ($memberdata['Agama']=='lain-lain')? 'selected="selected"' : '';  ?> > Lain-lain</option>
+                                        <?php foreach ($agama as $key) {
+                                        ?>
+                                        <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if($memberdata['Agama']==$key['Option_value']){echo "selected";}?>> <?php echo $key['Option_label']; ?> 
+                                        </option>
+                                         <?php
+                                         }
+                                         ?>
                                     </select>
                                 </div>
                             </div>
@@ -611,7 +573,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Foto Pegang ID Card/ KTP</label>
                                 <div class="col-sm-6">
-                                    <input type="file" id="pegang_ktp_file" data-show-upload="false" accept="image/*"  capture onchange='onFileUpload()'  namafile="<?php echo  $foto_pegang_ktp;?>" >
+                                    <input type="file" id="pegang_ktp_file" data-show-upload="false"  onchange='onFileUpload()'  namafile="<?php echo  $foto_pegang_ktp;?>" >
                                     <p class="help-block">* maksimum size 1 MB dengan jpg, png, gif</p>
                                     <input type="hidden" class="input_file_hidden" name="pegang_ktp_file_hidden" id="pegang_ktp_file_hidden"/>
                                 </div>
@@ -692,7 +654,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
 window.onFileUpload = function() {
     var file = event.target.files[0];
     var el = event.target;
-    var parent = el.parentNode.parentNode.parentNode.parentNode.parentNode;
+    var parent = el.parentNode.parentNode.parentNode;
     var hiddenInput = parent.getElementsByClassName('input_file_hidden')[0];
     console.log(parent);
     ImageTools.resize(file, {

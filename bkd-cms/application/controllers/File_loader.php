@@ -88,48 +88,102 @@ class File_loader extends CI_Controller {
         }
     }
 
-    public function file()
-    {
-        $this->User_model->has_login();
+    // public function file()
+    // {
+    //     $this->User_model->has_login();
 
-        $param = urldecode(antiInjection($_GET['p']));
-        $mime_type_or_return = $this->get_mime_type($param);
-        $filepath = $this->config->item('data_dir') . '?p=' . $param;
+    //     $param = urldecode(antiInjection($_GET['p']));
+    //     $mime_type_or_return = $this->get_mime_type($param);
+    //     $filepath = $this->config->item('data_dir') . '?p=' . $param;
 
-        // Start of OSS
-        $accessKeyId = $this->config->item('oss_access_key_id');
-        $accessKeySecret = $this->config->item('oss_access_key_secret');
-        $endpoint = $this->config->item('oss_endpoint');
-        $bucket= $this->config->item('oss_bucket_bkd_user');
-        $object = $param;
+    //     // Start of OSS
+    //     $accessKeyId = $this->config->item('oss_access_key_id');
+    //     $accessKeySecret = $this->config->item('oss_access_key_secret');
+    //     $endpoint = $this->config->item('oss_endpoint');
+    //     $bucket= $this->config->item('oss_bucket_bkd_user');
+    //     $object = $param;
 
-        try {
-            $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
-            $image_content = $ossClient->getObject($bucket, $object);
-        } catch (OssException $e) {
-            print $e->getMessage();
-        }
-        // End of OSS
+    //     try {
+    //         $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+    //         $image_content = $ossClient->getObject($bucket, $object);
+    //     } catch (OssException $e) {
+    //         print $e->getMessage();
+    //     }
+    //     // End of OSS
 
-        // Image was not found
-        if($image_content === FALSE)
-        {
-            show_error('Image "'.$filepath.'" could not be found.');
-            return FALSE;
-        }
+    //     // Image was not found
+    //     if($image_content === FALSE)
+    //     {
+    //         show_error('Image "'.$filepath.'" could not be found.');
+    //         return FALSE;
+    //     }
 
-        // Return the image or output it?
-        if($mime_type_or_return === TRUE)
-        {
-            return $image_content;
-        }
+    //     // Return the image or output it?
+    //     if($mime_type_or_return === TRUE)
+    //     {
+    //         return $image_content;
+    //     }
 
-        header('Content-Length: '.strlen($image_content)); // sends filesize header
-        header('Content-Type: '.$mime_type_or_return); // send mime-type header
-        header('Content-Disposition: inline; filename="'.basename($filepath).'";'); // sends filename header
-        exit($image_content); // reads and outputs the file onto the output buffer
+    //     header('Content-Length: '.strlen($image_content)); // sends filesize header
+    //     header('Content-Type: '.$mime_type_or_return); // send mime-type header
+    //     header('Content-Disposition: inline; filename="'.basename($filepath).'";'); // sends filename header
+    //     exit($image_content); // reads and outputs the file onto the output buffer
        
-       
-	}
+ //        public function file()
+ //    {
+ //        //$this->User_model->has_login()
+ //        //$this->Content_model->has_login();
+ //        $uid = htmlentities($_SESSION['_bkduser_']);
+ //        $param = urldecode(antiInjection($_GET['p']));
+ //        $filename = substr($param, strrpos($param,'/')+1);
+ //        $param_array = explode('/', $param);
+ //        $paramuid = $param_array[1]; 
+
+ //        $mime_type_or_return = $this->get_mime_type($param);
+ //        $filepath = $this->config->item('data_dir') . $param;
+
+ //        $userfile = $this->Member_model->get_file_name($uid);
+ //        $user_file_name = (strtolower($userfile['userfile']));
+ //        $user_file_name_array = explode('|',$user_file_name);
+
+ //        if(in_array(strtolower($filename), $user_file_name_array ) && $uid == $paramuid){
+ //            // Start of OSS
+ //            $accessKeyId = $this->config->item('oss_access_key_id');
+ //            $accessKeySecret = $this->config->item('oss_access_key_secret');
+ //            $endpoint = $this->config->item('oss_endpoint');
+ //            $bucket= $this->config->item('oss_bucket_bkd_user');
+ //            $object = $param;
+
+ //            try {
+ //                $ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+ //                $image_content = $ossClient->getObject($bucket, $object);
+ //            } catch (OssException $e) {
+ //                print $e->getMessage();
+ //            }
+ //            // End of OSS
+
+ //            // Image was not found
+ //            if($image_content === FALSE)
+ //            {
+ //                show_error('Image "'.$filepath.'" could not be found.');
+ //                return FALSE;
+ //            }
+
+ //            // Return the image or output it?
+ //            if($mime_type_or_return === TRUE)
+ //            {
+ //                return $image_content;
+ //            }
+
+ //            header('Content-Length: '.strlen($image_content)); // sends filesize header
+ //            header('Content-Type: '.$mime_type_or_return); // send mime-type header
+ //            header('Content-Disposition: inline; filename="'.basename($filepath).'";'); // sends filename header
+ //            exit($image_content); // reads and outputs the file onto the output buffer
+ //        }
+ //        else{
+ //            header('HTTP/1.0 403 Forbidden');
+ //        }
+
+	// }
 
 }

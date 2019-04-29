@@ -213,9 +213,9 @@ class Member_model extends CI_Model
 		$this->db->join($this->mod_user_member. ' m', 'm.id_mod_user_member=u.id_mod_user_member', 'left');
 		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Kota
-						 from master_option) z','z.Option_value=g.Kota', 'join');
+						 from master_option) z','z.Option_value=g.Kota', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Provinsi
-						 from master_option) a','a.Option_value=g.Provinsi', 'join');
+						 from master_option) a','a.Option_value=g.Provinsi', 'left');
 		$this->db->where('m.id_mod_user_member', $id);
 		$this->db->limit(1);
 		$query 	= $this->db->get();
@@ -617,5 +617,96 @@ class Member_model extends CI_Model
 	}
 
 	//batas tambahan baru
+
+	function get_all_province()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'provinsi');
+		$this->db->order_by('Option_label', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_cities()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'kota');
+		$this->db->order_by('Option_label', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_pendidikan()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'pendidikan');
+		$this->db->order_by('Option_value', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_pekerjaan()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'pekerjaan');
+		$this->db->order_by('Option_value', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_bank()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'bank');
+		$this->db->order_by('Option_label', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_gender()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'gender');
+		$this->db->order_by('Option_key', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_status_tempat()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'status_tempat');
+		$this->db->order_by('Option_value', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}	
+
+	function get_all_agama()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'agama');
+		$this->db->order_by('Option_value', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function getkota($code)
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'kota');
+		$this->db->like('Option_value', $code, 'after');
+		$sql = $this->db->get();		
+		return $sql->result_array();
+	}
+
 
 }
