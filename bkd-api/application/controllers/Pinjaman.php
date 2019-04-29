@@ -773,21 +773,21 @@ class Pinjaman extends REST_Controller {
 
 	// ---------- RESIZE IMAGE ----------- //
 
-	function resize_image($source)
-	{
-		$this->load->library('image_lib');
+	// function resize_image($source)
+	// {
+	// 	$this->load->library('image_lib');
 
-		$config['image_library'] = 'gd2';
-		$config['source_image'] = $source;
-		$config['maintain_ratio'] = TRUE;
-		$config['width'] = 500;
-		$config['height'] = 500;
+	// 	$config['image_library'] = 'gd2';
+	// 	$config['source_image'] = $source;
+	// 	$config['maintain_ratio'] = TRUE;
+	// 	$config['width'] = 500;
+	// 	$config['height'] = 500;
 
-		$this->image_lib->initialize($config);
+	// 	$this->image_lib->initialize($config);
 
-		$this->image_lib->resize();
-		$this->image_lib->clear();
-	}
+	// 	$this->image_lib->resize();
+	// 	$this->image_lib->clear();
+	// }
 
 	// ---------- PINJAMAN MIKRO ----------- //
 
@@ -1107,6 +1107,10 @@ class Pinjaman extends REST_Controller {
 								$destination_foto  = $this->config->item('member_images_dir'). $uid."/foto/";
 								$destination_ktp   = $this->config->item('member_images_dir'). $uid."/ktp/";
 								$destination_usaha = $this->config->item('member_images_dir'). $uid."/usaha/";
+								$destination_usaha2 = $this->config->item('member_images_dir'). $uid."/usaha2/";
+								$destination_usaha3 = $this->config->item('member_images_dir'). $uid."/usaha3/";
+								$destination_usaha4 = $this->config->item('member_images_dir'). $uid."/usaha4/";
+								$destination_usaha5 = $this->config->item('member_images_dir'). $uid."/usaha5/";
 
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
 
@@ -1179,10 +1183,10 @@ class Pinjaman extends REST_Controller {
 								$file_ktp_name   = '';
 							}
 
-							if( isset($_FILES['foto_usaha_file']['name']) && $_FILES['foto_usaha_file']['name'] != ''){
+							if( isset($_FILES['foto_usaha']['name']) && $_FILES['foto_usaha']['name'] != ''){
 								
 								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['foto_usaha_file']['name']);
+								$img_info          = pathinfo($_FILES['foto_usaha']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
 								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
 								$fileExt           = $img_info['extension'];
@@ -1195,7 +1199,7 @@ class Pinjaman extends REST_Controller {
 								$endpoint = $this->config->item('oss_endpoint');
 								$bucket= $this->config->item('oss_bucket_bkd_user');
 								$object =  $destination_usaha . $foto_usaha;
-								$filePath = $_FILES['foto_usaha_file']['tmp_name'];
+								$filePath = $_FILES['foto_usaha']['tmp_name'];
 
 								try{
 									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
@@ -1212,6 +1216,146 @@ class Pinjaman extends REST_Controller {
 								// END of OSS
 							}else{
 								$foto_usaha   = '';
+							}
+
+							if( isset($_FILES['foto_usaha2']['name']) && $_FILES['foto_usaha2']['name'] != ''){
+								
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['foto_usaha2']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$foto_usaha2   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								$u_detail['images_usaha_name2']  = $foto_usaha2;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha2 . $foto_usaha2;
+								$filePath = $_FILES['foto_usaha2']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha2 . $memberdata['images_usaha_name2']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+							}else{
+								$foto_usaha2   = '';
+							}
+
+							if( isset($_FILES['foto_usaha3']['name']) && $_FILES['foto_usaha3']['name'] != ''){
+								
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['foto_usaha3']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$foto_usaha3   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								$u_detail['images_usaha_name3']  = $foto_usaha3;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha3 . $foto_usaha3;
+								$filePath = $_FILES['foto_usaha3']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha3 . $memberdata['images_usaha_name3']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+							}else{
+								$foto_usaha3   = '';
+							}
+
+							if( isset($_FILES['foto_usaha4']['name']) && $_FILES['foto_usaha4']['name'] != ''){
+								
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['foto_usaha4']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$foto_usaha4   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								$u_detail['images_usaha_name4']  = $foto_usaha4;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha4 . $foto_usaha4;
+								$filePath = $_FILES['foto_usaha4']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha4 . $memberdata['images_usaha_name4']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+							}else{
+								$foto_usaha4   = '';
+							}
+
+							if( isset($_FILES['foto_usaha5']['name']) && $_FILES['foto_usaha5']['name'] != ''){
+								
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['foto_usaha5']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$foto_usaha5   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								$u_detail['images_usaha_name5']  = $foto_usaha5;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha5 . $foto_usaha5;
+								$filePath = $_FILES['foto_usaha5']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha5 . $memberdata['images_usaha_name5']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+							}else{
+								$foto_usaha5   = '';
 							}
 
 							// ------------ Insert pinjaman ---------------//

@@ -43,7 +43,7 @@ class Register_peminjam extends REST_Controller {
 			$type        = trim($post['type']);
 
 			$check = $this->Content_model->check_existing_member($email, $notelp, '');
-			$count_member = count($check);
+			$count_member = $check;
 
 			//_d($check);exit();
 
@@ -189,7 +189,7 @@ class Register_peminjam extends REST_Controller {
 			$repassword  = trim($post['confirm_password']);
 
 			$check = $this->Content_model->check_existing_member($email, $notelp, '');
-			$count_member = count($check);
+			$count_member = $check;
 
 			//_d($check);exit();
 
@@ -410,7 +410,7 @@ class Register_peminjam extends REST_Controller {
 
 
 			$check = $this->Content_model->check_existing_member($email, $notelp, '');
-			$count_member = count($check);
+			$count_member = $check;
 
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
 

@@ -192,6 +192,34 @@ class Member extends REST_Controller {
 					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
 				}
 
+
+				if ($member['foto_usaha_file2'] !=''){
+					$member['foto_usaha_file2'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha2/' .$member['foto_usaha_file2']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+				}
+
+
+				if ($member['foto_usaha_file3'] !=''){
+					$member['foto_usaha_file3'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha3/' .$member['foto_usaha_file3']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+				}
+
+
+				if ($member['foto_usaha_file4'] !=''){
+					$member['foto_usaha_file4'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha4/' .$member['foto_usaha_file4']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+				}
+
+
+				if ($member['foto_usaha_file5'] !=''){
+					$member['foto_usaha_file5'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha5/' .$member['foto_usaha_file5']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+				}
+
 				
 
 				$response['response'] = 'success';

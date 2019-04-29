@@ -143,6 +143,10 @@ class Member_model extends CI_Model
 			IFNULL(foto_slip_gaji, "") as foto_slip_gaji,
 			IFNULL(foto_pegang_ktp, "") as foto_pegang_idcard,
 			IFNULL(images_usaha_name, "") as foto_usaha_file,
+			IFNULL(images_usaha_name2, "") as foto_usaha_file2,
+			IFNULL(images_usaha_name3, "") as foto_usaha_file3,
+			IFNULL(images_usaha_name4, "") as foto_usaha_file4,
+			IFNULL(images_usaha_name5, "") as foto_usaha_file5,
 			');
 		$this->db->from($this->mod_user_member.' m');
 		$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
@@ -343,39 +347,5 @@ class Member_model extends CI_Model
 		$this->db->update($this->mod_user_member);
 		return $this->db->affected_rows();
 	}
-
-
-// //yere 16 April 17:30, 18 April 09:10
-// 	function new_tokenDevice($uid, $data)
-// 	{
-// 		$this->db->select('id_mod_user_member, fcm_token');
-// 		$this->db->from('mod_user_member');
-// 		$this->db->where('fcm_token', $data);
-// 		$this->db->limit('1');
-// 		$sql = $this->db->get();
-// 		return $sql->row_array();
-// 	}
-
-
-// 	{
-
-// 	if ($data != false) {
-	//  $this->db->select('id_mod_user_member, fcm_token');
-	// 	$this->db->from($this->mod_user_member);
-	// 	$this->db->where('fcm_token', $uid);
-	// 	$this->db->limit(1);
-	// 	$sql = $this->db->get();
-	// 	return $sql->row_array();
-
-	
-// // 			$this->db->set('fcm_token', $data);
-// // 		$this->db->where('id_mod_user_member', $uid);
-// // 		$this->db->or_where('mum_email', $uid);
-// // 		$this->db->or_where('mum_telp', $uid);
-// // 		$this->db->update($this->mod_user_member);
-// // 	return $this->db->affected_rows();
-// // }
-// 	}
-
 
 }
