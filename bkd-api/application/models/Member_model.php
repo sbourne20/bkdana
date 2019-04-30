@@ -63,7 +63,7 @@ class Member_model extends CI_Model
 			$u2 = '+62' . substr($u, 1);
 		}
 
-		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_type');
+		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_type, mum_type_peminjam');
 		$this->db->from($this->mod_user_member);
 		$this->db->where('mum_telp', $u);
 		$this->db->or_where('mum_email', $u);

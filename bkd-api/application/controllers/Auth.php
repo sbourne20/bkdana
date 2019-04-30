@@ -56,6 +56,7 @@ class Auth extends REST_Controller
                         $tokenData['nbf']   = $notBefore;
                         $tokenData['exp']   = $expire;
                         $tokenData['logtype'] = $getdata['mum_type'];
+                        $tokenData['tpeminjam'] = $getdata['mum_type_peminjam'];
 
                         
                          // if(count($getfcmtoken) > 0)
@@ -69,6 +70,7 @@ class Auth extends REST_Controller
                         $response['token']    = Authorization::generateToken($tokenData);
                         $response['name']     = $getdata['mum_fullname'];
                         $response['logtype']  = $getdata['mum_type'];
+                        $response['tpeminjam'] = $getdata['mum_type_peminjam'];
 
                         $this->set_response($response, REST_Controller::HTTP_OK);
                         return;
