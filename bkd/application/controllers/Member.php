@@ -968,8 +968,8 @@ class Member extends CI_Controller {
 						if (isset($post['laba_usaha'])) {
 							$u_detail['laba_usaha']  = antiInjection(trim($post['laba_usaha']));
 						}
-						if (isset($post['bidang_pekerjaan'])) {
-							$u_detail['bidang_pekerjaan']  = antiInjection(trim($post['bidang_pekerjaan']));
+						if (isset($post['pekerjaan'])) {
+							$u_detail['bidang_pekerjaan']  = antiInjection(trim($post['pekerjaan']));
 						}
 						if (isset($post['jumlah_tanggungan'])) {
 							$u_detail['How_many_people_do_you_financially_support']  = antiInjection(trim($post['jumlah_tanggungan']));

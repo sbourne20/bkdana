@@ -228,9 +228,10 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                                                 </span></time>
                                                 <div class="cbp_tmicon <?php echo $class; ?>"><?php echo $icon; ?></div>
                                                 <div class="cbp_tmlabel">
-                                                     <h4>Pembayaran Cicilan ke <?php echo $k; ?></h4>
+                                                     <h4>Pembayaran ke <?php echo $k; ?></h4>
                                                      <p><?php echo number_format($cicilan['Total_loan_outstanding'], 2); ?> IDR</p>
                                                     <?php
+                                                    $nowdatetime = date('Y-m-d H:i:s');
                                                     $nowdate = date('Y-m-d');
                                                     $denda1 = str_replace('/', '-', $cicilan_duedate);
                                                     $denda2 = date('Y-m-d', strtotime($denda1));
@@ -340,13 +341,14 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                             <div class="balance">Saldo : <?php echo number_format($total_saldo['Amount']); ?> IDR</div>
                             <div class="bill">Tagihan : <?php echo number_format($cicilan['Total_loan_outstanding'], 2); ?> IDR</div>
                             <div class="bill">Denda : <?php echo number_format($data['jml_denda']); ?> IDR</div>
+                            <div class="bill">Bunga : <?php echo number_format($total_bunga); ?> IDR</div>
                             <br><br>
                             <?php
         
                             ?>
 
                             <?php
-                            $datediff =(strtotime($nowdate) - strtotime($cicilan['ltp_tgl_jatuh_tempo']))/86400;
+                            // $datediff = round((strtotime($nowdatetime) - strtotime($data['tgl_jatuh_tempo']))/86400);
                             // $leave_start = DateTime::createFromFormat('Y-m-d', $leave_start);
                             // $leave_end = DateTime::createFromFormat('Y-m-d', $leave_end);
                             // $diffDays = $leave_end->diff($leave_start)->format("%a");
@@ -356,15 +358,16 @@ $kuota = round(($transaksi['jml_kredit']/$transaksi['Amount']) * 100);
                                 <form id="form_pembayaran" method="POST" action="<?php echo $submit_url; ?>">
                                     <input type="hidden" name="transaksi_id" value="<?php echo $transaksi['Master_loan_id']; ?>">
                                     <input type="hidden" name="jatuh_tempo" value="<?php echo $data['tgl_jatuh_tempo']; ?>">
-                                    <input type="hidden" name="jml_pinjaman" value="<?php echo $total_bayar; ?>">
+                                    <input type="text" name="jml_pinjaman" value="<?php echo $total_bayar; ?>">
                                     <input type="text" name="jml_cicilan" value="<?php echo $cicilan['Amount']; ?>">
-                                    <input type="text" name="datediff" value="<?php echo $datediff; ?>">
+                                    <input type="text" name="total_bunga" value="<?php echo $total_bunga; ?>">
+                                    <!-- <input type="text" name="datediff" value="<?php echo $total_bunga; ?>">  -->
                                      <input type="hidden" name="bayar_denda" value="<?php echo $data['jml_denda']; ?>">
                                     <input type="hidden" name="id_peminjam" value="<?php echo $transaksi['Id_pengguna']; ?>">
                                     <input type="hidden" name="id_peminjam_member" value="<?php echo $transaksi['id_mod_user_member']; ?>">
                                     <div class="form-group">
                                         <label for="handphone">Jumlah Pembayaran</label>
-                                        <input type="text" name="jml_bayar" class="form-control text-center numeric" value="<?php echo $cicilan['Total_loan_outstanding']+$data['jml_denda']; ?>">
+                                        <input type="text" name="jml_bayar" class="form-control text-center numeric" value="<?php echo $cicilan['Total_loan_outstanding']+$data['jml_denda']+$total_bunga; ?>">
                                     </div>
                                     <button type="button" id="submit_bayarcicilan" style="background: transparent; border: none;">
                                     <a href="javascript:;" data-dismiss="modal" class="btn btn-purple">Submit</a>

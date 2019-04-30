@@ -590,5 +590,14 @@ class Member_model extends CI_Model
 		return $ret;
 	}
 
+	function get_fcm_token($id)
+	{
+		$this->db->select('fcm_token');
+		$this->db->from($this->mod_user_member);
+		$this->db->where('id_mod_user_member', $id);
+		$this->db->limit(1);
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
 
 }

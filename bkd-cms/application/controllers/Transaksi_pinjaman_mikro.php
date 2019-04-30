@@ -12,6 +12,8 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 		$this->load->model('Wallet_model');
 		$this->load->model('Member_model');
 		$this->load->model('Log_transaksi_model');
+
+		$this->load->library('FirebaseNotification');
 		
 		//error_reporting(E_ALL);
 		error_reporting(0);
@@ -195,8 +197,16 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 		{
 			// get data pinjaman
 			$loan_data = $this->Pinjaman_model->get_pinjaman_byid($id);
+			$token_data = $this->Member_model->get_fcm_token($loan_data['User_id']);
 
 			if ( count($loan_data) > 0) {
+
+				$message_fcm = "Pinjaman Mikro anda dengan nomor traksaksi ".$loan_data['Master_loan_id']." telah disetujui";
+				$title_fcm	= "Status Pinjaman";
+				$action = "approve_pinjaman_mikro";
+
+				$this->firebasenotification->notif_aprrove($token_data['fcm_token'], $message_fcm, $title_fcm, $action);
+
 				// get tipe produk: kilat, mikro ,usaha
 				$produk = $this->Product_model->get_product_by($loan_data['Product_id']);
 				$tipe_produk = $produk['type_of_business_id'];
@@ -207,8 +217,9 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 
 				// ---------- hitung total pinjaman disetujui ------------			
 				$revenue                = ($pinjaman_rp * $produk['Fee_revenue_share'])/100;
-				$jml_pinjaman_disetujui = $pinjaman_rp - ($revenue + $revenue);
 				$admin_fee              = ($pinjaman_rp * $produk['Secured_loan_fee'])/100;
+				$jml_pinjaman_disetujui = $pinjaman_rp - ($revenue + $revenue);
+				
 				// ----------- End hitung total pinjaman disetujui -------------------
 
 				//tambahan baru
@@ -527,9 +538,16 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 		if (!empty($id))
 		{
 			$loan_data = $this->Pinjaman_model->get_pinjaman_byid($id);
+			$token_data = $this->Member_model->get_fcm_token($loan_data['User_id']);
 			
 			if (count($loan_data) > 0) {
 				$affected = $this->Pinjaman_model->reject_pinjaman($id);
+
+				$message_fcm = "Pinjaman Mikro anda dengan nomor traksaksi ".$loan_data['Master_loan_id']." tidak disetujui";
+				$title_fcm	= "Status Pinjaman";
+				$action = "reject_pinjaman_mikro";
+
+			$this->firebasenotification->notif_aprrove($token_data['fcm_token'], $message_fcm, $title_fcm, $action);
 			}else{
 				$affected = FALSE;
 			}

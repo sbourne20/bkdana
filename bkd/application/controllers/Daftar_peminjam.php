@@ -45,7 +45,7 @@ class Daftar_peminjam extends CI_Controller {
         $page           = (int)antiInjection($this->uri->segment(3));
 
         if (empty($page)) {
-	        $start_index    = 0;;
+	        $start_index    = 0;
 	    }else{
 	        $start_index    = ($page*$limit_per_page)-$limit_per_page;
 	    }
@@ -540,7 +540,11 @@ class Daftar_peminjam extends CI_Controller {
 							$title    = 'Perjanjian Pinjaman Mikro '.$tbl_penawaran['Master_loan_id'];
 							$label_transaksi = 'Pinjaman Mikro';
 						}
-
+						
+						// $token_data = $this->Member_model->get_fcm_token($loan_data['User_id']);
+						// $message_fcm = "Pinjaman Agri anda dengan nomor traksaksi ".$loan_data['Master_loan_id']." telah ditinjau, silahkan cek Dashboard Anda untuk melanjutkan pinjaman";
+						// $title_fcm	= "Status Pinjaman";
+						// $action = "akad_pinjaman";
 						// update status pinjaman mjd approve
 						$this->Content_model->approve_pinjaman_bycode($tbl_penawaran['Master_loan_id']);
 						// update semua pendana status mjd approve

@@ -272,12 +272,12 @@ class Wallet_model extends CI_Model
 		return $ret;
 	}
 
-	function update_record_repayment($data, $data1, $id)
+	function update_record_repayment($data, $data1, $data2, $data3, $data4, $id)
 	{
 		//$id   = $this->db->escape_str($id);
 		//$data = $this->db->escape_str($data);
 
-		$sql = "UPDATE record_repayment SET tgl_pembayaran = '".$data."' , status_cicilan ='".$data1."' WHERE Master_loan_id= '".$id."' ";
+		$sql = "UPDATE record_repayment SET tgl_pembayaran = '".$data."' , status_cicilan ='".$data1."' , jumlah_cicilan ='".$data2."' , jml_bayar ='".$data3."' , jml_bunga ='".$data4."' WHERE Master_loan_id= '".$id."' ";
 
 		$kueri = $this->db->query($sql);
 		return $this->db->affected_rows();
