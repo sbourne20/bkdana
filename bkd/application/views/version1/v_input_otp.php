@@ -32,12 +32,11 @@
                         <form class="form-horizontal form-validation" >
                             <div class="form-group">
                                 <label class="control-label col-sm-3" style="margin-right:-26px;">Kode Negara</label>
-                                  <div class="col-md-2" style="margin-right:-20px;">
+                                  <div class="col-md-2">
                                         <input type="text" class="form-control" id="country_code" value="<?php echo $kode_negara; ?>" maxlength="3" disabled>
                                   </div>
-
                                   <label class="control-label col-sm-2" style="margin-right:-26px;">No.HP</label>
-                                  <div class="col-md-4">
+                                  <div class="col-md-5">
                                         <input type="text" class="form-control" id="phone_num" value="<?php echo $notelp; ?>" maxlength="12" disabled>
                                   </div>
                             </div>

@@ -889,11 +889,8 @@ class Peminjam extends CI_Controller {
 								// End of OSS
 							}
 						}
-					
-						
+								
 						$mem_data['mum_fullname']       = antiInjection(trim($post['fullname']));
-						$mem_data['mum_email']      	= antiInjection(trim($post['email']));
-						$mem_data['mum_telp']           = antiInjection(trim($post['telp']));
 						$mem_data['mum_ktp']            = antiInjection(trim($post['nomor_ktp']));
 						$mem_data['mum_nomor_rekening'] = antiInjection(trim($post['nomor_rekening']));
 

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class loan_reporting extends CI_Controller {
+class Loan_reporting extends CI_Controller {
 
 	function __construct()
 	{

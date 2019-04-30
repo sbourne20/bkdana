@@ -57,15 +57,18 @@ class Member_model extends CI_Model
 	function do_login_byemail($u)
 	{
 		$u = $this->db->escape_str($u);
-		$u2 = $u;
-		if(substr($u2, 0, 1)=='0'){
-			$u2 = '+62'.substr($u2, 1);
+		$phone62 = $u;
+		if(substr($phone62, 0, 1)=='0'){
+			$phone62 = '+62'.substr($phone62, 1);
 		}
-		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_type');
+		if(substr($phone62, 0, 2)=='62'){
+			$phone62 = '+62'.substr($phone62, 2);
+		}
+		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_type, mum_verifikasi_email');
 		$this->db->from($this->mod_user_member);
 		$this->db->where('mum_email' , $u);
 		$this->db->or_where('mum_telp' , $u);
-		$this->db->or_where('mum_telp' , $u2);
+		$this->db->or_where('mum_telp' , $phone62);
 		//$this->db->where('mum_status', '1');
 		$this->db->limit('1');
 		$sql = $this->db->get();
@@ -148,10 +151,18 @@ class Member_model extends CI_Model
 
 	function get_member_by($email)
 	{
+		$phone62 = $email;
+		if(substr($phone62, 0, 1)=='0'){
+			$phone62 = '+62'.substr($phone62, 1);
+		}
+		if(substr($phone62, 0, 2)=='62'){
+			$phone62 = '+62'.substr($phone62, 2);
+		}
 		$this->db->select('id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_status, mum_type');
 		$this->db->from($this->mod_user_member);
 		$this->db->where('mum_email', $email);
-		$this->db->or_where('mum_telp', '+'.$email);		
+		$this->db->or_where('mum_telp' , $email);
+		$this->db->or_where('mum_telp' , $phone62);			
 		$this->db->limit('1');
 		$sql = $this->db->get();
 		return $sql->row_array();
@@ -186,6 +197,26 @@ class Member_model extends CI_Model
 		$this->db->set('mum_last_login', date('Y-m-d H:i:s'));
 		$this->db->where('id_mod_user_member', $uid);
 		$this->db->update($this->mod_user_member);
+		return $this->db->affected_rows();
+	}
+
+	function get_virtual_account($uid,$bank_id)
+	{
+		$this->db->select('*');
+		$this->db->from($this->user_virtual_account);
+		$this->db->where('bank_id', $bank_id);
+		$this->db->where('user_id', $uid);
+		$sql = $this->db->get();
+		return $sql->row_array();
+	}
+
+	function insert_virtual_account_no($uid,$phone_no,$bank_id,$va_name)
+	{
+		$this->db->set('user_id', $uid);
+		$this->db->set('bank_id', $bank_id);
+		$this->db->set('virtual_account_no', $phone_no);
+		$this->db->set('virtual_account_name', $va_name);
+		$this->db->insert($this->user_virtual_account);
 		return $this->db->affected_rows();
 	}
 

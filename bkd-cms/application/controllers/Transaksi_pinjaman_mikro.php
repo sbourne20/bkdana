@@ -207,8 +207,8 @@ class Transaksi_pinjaman_mikro extends CI_Controller {
 
 				// ---------- hitung total pinjaman disetujui ------------			
 				$revenue                = ($pinjaman_rp * $produk['Fee_revenue_share'])/100;
-				$jml_pinjaman_disetujui = $pinjaman_rp - ($revenue + $revenue);
 				$admin_fee              = ($pinjaman_rp * $produk['Secured_loan_fee'])/100;
+				$jml_pinjaman_disetujui = $pinjaman_rp - ($admin_fee + $revenue);
 				// ----------- End hitung total pinjaman disetujui -------------------
 
 				//tambahan baru

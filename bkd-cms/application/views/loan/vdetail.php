@@ -66,7 +66,7 @@
 		<tr>
 			<td>Foto Profil</td>
 			<td>
-				<img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']; ?>"" alt="" />		
+				<img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']); ?>"" alt="" />		
 			</td>
 		</tr>
 		<tr>
@@ -84,7 +84,7 @@
 		</tr>
 		<tr>
 			<td>Foto NIK</td>
-			<td><img width="300" src=" <?php echo site_url('fileload?p=') . 'member/' . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']; ?>" alt="" /></td>
+			<td><img width="300" src=" <?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Nomor Rekening</td><td><?php echo $data['Nomor_rekening']; ?></td>

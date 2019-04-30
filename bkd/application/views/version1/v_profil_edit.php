@@ -38,38 +38,38 @@ $foto_pegang_ktp = '';
 // ----- batas tambahan baru -----
 
 if ($memberdata['images_foto_name'] != '') {
-		$foto_profil = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/foto/' . $memberdata['images_foto_name']);
-	}
+	$foto_profil = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/foto/' . $memberdata['images_foto_name']);
+}
 if ($memberdata['images_ktp_name'] != '') {
-		$foto_ktp = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/ktp/' . $memberdata['images_ktp_name']);
-	}
+	$foto_ktp = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/ktp/' . $memberdata['images_ktp_name']);
+}
 if ($memberdata['images_usaha_name'] != '') {
-		$foto_usaha = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha/' . $memberdata['images_usaha_name']);
-	}
+	$foto_usaha = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha/' . $memberdata['images_usaha_name']);
+}
 if ($memberdata['images_usaha_name2'] != '') {
-		$foto_usaha2 = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha2/' . $memberdata['images_usaha_name2']);
-	}
+	$foto_usaha2 = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha2/' . $memberdata['images_usaha_name2']);
+}
 if ($memberdata['images_usaha_name3'] != '') {
-		$foto_usaha3 = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha3/' . $memberdata['images_usaha_name3']);
-	}
+	$foto_usaha3 = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha3/' . $memberdata['images_usaha_name3']);
+}
 if ($memberdata['images_usaha_name4'] != '') {
-		$foto_usaha4 = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha4/' . $memberdata['images_usaha_name4']);
-	}
+	$foto_usaha4 = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha4/' . $memberdata['images_usaha_name4']);
+}
 if ($memberdata['images_usaha_name5'] != '') {
-		$foto_usaha5 = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha5/' . $memberdata['images_usaha_name5']);
-	}
+	$foto_usaha5 = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/usaha5/' . $memberdata['images_usaha_name5']);
+}
 
 // -----tambahan baru-----
 
 if ($memberdata['foto_surat_keterangan_bekerja'] != '') {
-		$foto_surat_keterangan_bekerja = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/surat_keterangan_bekerja/' . $memberdata['foto_surat_keterangan_bekerja']);
-	}
+	$foto_surat_keterangan_bekerja = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/surat_keterangan_bekerja/' . $memberdata['foto_surat_keterangan_bekerja']);
+}
 if ($memberdata['foto_slip_gaji'] != '') {
-		$foto_slip_gaji = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/slip_gaji/' . $memberdata['foto_slip_gaji']);
-	}
+	$foto_slip_gaji = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/slip_gaji/' . $memberdata['foto_slip_gaji']);
+}
 if ($memberdata['foto_pegang_ktp'] != '') {
-		$foto_pegang_ktp = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/pegang_ktp/' . $memberdata['foto_pegang_ktp']);
-	}
+	$foto_pegang_ktp = site_url('fileload?p=') . urlencode('member/' . $memberdata['id_mod_user_member'] . '/pegang_ktp/' . $memberdata['foto_pegang_ktp']);
+}
 
 // -----batas tambahan-----
 
@@ -210,27 +210,27 @@ if ($memberdata['foto_pegang_ktp'] != '') {
 												</div>
 											</div>
 											<!-- <div class="form-group">
-												<div id="hiddendomisili2">
-													<label for="handphone">* Kota Domisili</label>
-													<input type="text" class="form-control" name="kotadomisili" id="kotadomisili" value="<?php echo $memberdata['Nama_Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
-												</div>
-											</div>  
+													<div id="hiddendomisili2">
+														<label for="handphone">* Kota Domisili</label>
+														<input type="text" class="form-control" name="kotadomisili" id="kotadomisili" value="<?php echo $memberdata['Nama_Kota']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota harus diisi!" >
+													</div>
+												</div>  
 										
 
-											<div class="form-group">
-												<label for="handphone">* Provinsi Domisili</label>
-												<select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
-												<option value=""> -- Pilih Provinsi--</option>
-												<?php foreach ($provinsi as $key) {
-													?>
-													<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if ($memberdata['Provinsi'] == $key['Option_value']) {
-																																							echo "selected";
-																																						} ?>> <?php echo $key['Option_label']; ?> </option>
-												<?php
-											}
-											?>
-												</select>
-											</div>  -->
+												<div class="form-group">
+													<label for="handphone">* Provinsi Domisili</label>
+													<select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi harus diisi!" >
+													<option value=""> -- Pilih Provinsi--</option>
+													<?php foreach ($provinsi as $key) {
+														?>
+															<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>"<?php if ($memberdata['Provinsi'] == $key['Option_value']) {
+																																									echo "selected";
+																																								} ?>> <?php echo $key['Option_label']; ?> </option>
+													<?php
+												}
+												?>
+													</select>
+												</div>  -->
 
 											<div class="form-group">
 												<div id="hiddendomisili2">
@@ -269,8 +269,6 @@ if ($memberdata['foto_pegang_ktp'] != '') {
 											<!-- BATAS ALAMAT DOMISILI -->
 										<?php } ?>
 
-
-
 										<div class="form-group">
 											<label for="handphone">* Pekerjaan</label>
 											<select class="form-control" name="pekerjaan" id="pekerjaan" data-value="<?php echo $memberdata['Pekerjaan']; ?>">
@@ -285,7 +283,8 @@ if ($memberdata['foto_pegang_ktp'] != '') {
 											}
 											?>
 											</select>
-										</div> -->
+										</div>
+
 										<div class="form-group">
 											<label>* Upload Foto Diri / Selfie </label>
 											<input type="file" id="foto_file" data-show-upload="false" accept="image/*" capture onchange='onFileUpload()' namafile="<?php echo $foto_profil; ?>">
@@ -328,16 +327,16 @@ if ($memberdata['foto_pegang_ktp'] != '') {
 										<?php if ($memberdata['mum_type_peminjam'] == '1') { ?>
 
 											<!-- <div class="form-group">
-													<label for="handphone">* Pendidikan</label>
-													<select class="form-control" name="pendidikan" id="pendidikan">
-														<option value=""> -- Pilih --</option>
-														<option value="1" <?php echo ($memberdata['Pendidikan'] == '1') ? 'selected="selected"' : '';  ?> > SD</option>
-														<option value="2" <?php echo ($memberdata['Pendidikan'] == '2') ? 'selected="selected"' : '';  ?> > SLTP</option>
-														<option value="3" <?php echo ($memberdata['Pendidikan'] == '3') ? 'selected="selected"' : '';  ?> > SLTA</option>
-														<option value="4" <?php echo ($memberdata['Pendidikan'] == '4') ? 'selected="selected"' : '';  ?> > Diploma</option>
-														<option value="5" <?php echo ($memberdata['Pendidikan'] == '5') ? 'selected="selected"' : '';  ?> > Sarjana</option>
-													</select>
-												</div> -->
+														<label for="handphone">* Pendidikan</label>
+														<select class="form-control" name="pendidikan" id="pendidikan">
+															<option value=""> -- Pilih --</option>
+															<option value="1" <?php echo ($memberdata['Pendidikan'] == '1') ? 'selected="selected"' : '';  ?> > SD</option>
+															<option value="2" <?php echo ($memberdata['Pendidikan'] == '2') ? 'selected="selected"' : '';  ?> > SLTP</option>
+															<option value="3" <?php echo ($memberdata['Pendidikan'] == '3') ? 'selected="selected"' : '';  ?> > SLTA</option>
+															<option value="4" <?php echo ($memberdata['Pendidikan'] == '4') ? 'selected="selected"' : '';  ?> > Diploma</option>
+															<option value="5" <?php echo ($memberdata['Pendidikan'] == '5') ? 'selected="selected"' : '';  ?> > Sarjana</option>
+														</select>
+													</div> -->
 											<div class="form-group">
 												<label for="handphone">* Pendidikan</label>
 												<select class="form-control" name="pendidikan" id="pendidikan" data-value="<?php echo $memberdata['Pendidikan']; ?>">
@@ -616,7 +615,7 @@ if ($memberdata['foto_pegang_ktp'] != '') {
 										<!-- End Agri -->
 
 										<!-- PENDANA -->
-										<?php if ($memberdata['mum_type'] == '2') { 
+										<?php if ($memberdata['mum_type'] == '2') {
 											?>
 											<div class="form-group">
 												<label>* Status Pernikahan</label>
@@ -643,16 +642,16 @@ if ($memberdata['foto_pegang_ktp'] != '') {
 											</div>
 
 											<!-- <div class="form-group">
-													<label for="handphone">* Pendidikan Terakhir</label>
-													<select class="form-control" name="pendidikan" id="pendidikan">
-														<option value=""> -- Pilih --</option>
-														<option value="1" <?php echo ($memberdata['Pendidikan'] == '1') ? 'selected="selected"' : '';  ?> > SD</option>
-														<option value="2" <?php echo ($memberdata['Pendidikan'] == '2') ? 'selected="selected"' : '';  ?> > SLTP</option>
-														<option value="3" <?php echo ($memberdata['Pendidikan'] == '3') ? 'selected="selected"' : '';  ?> > SLTA</option>
-														<option value="4" <?php echo ($memberdata['Pendidikan'] == '4') ? 'selected="selected"' : '';  ?> > Diploma</option>
-														<option value="5" <?php echo ($memberdata['Pendidikan'] == '5') ? 'selected="selected"' : '';  ?> > Sarjana</option>
-													</select>
-												</div> -->
+														<label for="handphone">* Pendidikan Terakhir</label>
+														<select class="form-control" name="pendidikan" id="pendidikan">
+															<option value=""> -- Pilih --</option>
+															<option value="1" <?php echo ($memberdata['Pendidikan'] == '1') ? 'selected="selected"' : '';  ?> > SD</option>
+															<option value="2" <?php echo ($memberdata['Pendidikan'] == '2') ? 'selected="selected"' : '';  ?> > SLTP</option>
+															<option value="3" <?php echo ($memberdata['Pendidikan'] == '3') ? 'selected="selected"' : '';  ?> > SLTA</option>
+															<option value="4" <?php echo ($memberdata['Pendidikan'] == '4') ? 'selected="selected"' : '';  ?> > Diploma</option>
+															<option value="5" <?php echo ($memberdata['Pendidikan'] == '5') ? 'selected="selected"' : '';  ?> > Sarjana</option>
+														</select>
+													</div> -->
 
 											<div class="form-group">
 												<label for="handphone">* Pendidikan</label>

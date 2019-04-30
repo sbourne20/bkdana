@@ -32,5 +32,13 @@ class Payment_model extends CI_Model
 		return $sql->row_array();
 	}
 
+	function get_va_banks(){
+		$this->db->select('*');
+		$this->db->from($this->bank);
+		$this->db->where('use_va', 1);
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
 
 }

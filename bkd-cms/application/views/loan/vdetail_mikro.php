@@ -62,7 +62,7 @@
 		<tr>
 			<td>Foto Profil</td>
 			<td>
-				<img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']; ?>" alt="" />		
+				<img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']); ?>" alt="" />		
 			</td>
 		</tr>
 		<tr>
@@ -80,7 +80,7 @@
 		</tr>
 		<tr>
 			<td>Foto NIK</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/ktp/'. $data['images_ktp_name']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Nomor Rekening</td><td><?php echo $data['Nomor_rekening']; ?></td>
@@ -107,7 +107,23 @@
 		</tr>
 		<tr>
 			<td>Foto Usaha</td>
-			<td><img width="300" src="<?php echo $this->config->item('images_member_uri') . $data['id_mod_user_member'] .'/usaha/'. $data['images_usaha_name']; ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/usaha/'. $data['images_usaha_name']); ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto Usaha 2</td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/usaha2/'. $data['images_usaha_name2']); ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto Usaha 3</td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/usaha3/'. $data['images_usaha_name3']); ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto Usaha 4</td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/usaha4/'. $data['images_usaha_name4']); ?>" alt="" /></td>
+		</tr>
+		<tr>
+			<td>Foto Usaha 5</td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/usaha5/'. $data['images_usaha_name5']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Grade</td><td><?php echo $data['peringkat_pengguna']; ?></td>

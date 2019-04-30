@@ -672,7 +672,7 @@ class Daftar_peminjam extends CI_Controller {
 		$html_content = '
         Hai '.$userdata['Nama_pengguna'].',<br><br>
 
-            Pengajuan Pinjaman Anda di BKDana.com telah disetujui dan sudah mendapat Pendanaan.
+            Pengajuan Pinjaman Anda di BKDana telah disetujui dan sudah mendapat Pendanaan.
             <br><br>
             
             Berikut detail pinjaman Anda:<br><br>

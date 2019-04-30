@@ -184,11 +184,11 @@ class Content_model extends CI_Model
 
 	function check_existing_member($email, $telp, $ktp="")
 	{
-		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_password, Id_ktp, Mobileno, ID_No');
+		$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_password, Id_ktp, mum_telp as Mobileno, ID_No');
 		$this->db->from('mod_user_member m');
 		$this->db->join('user u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
 		$this->db->join('user_detail ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
-		$this->db->where('Mobileno', $telp);
+		$this->db->where('mum_telp', $telp);
 		if ($email !=''){
 			$this->db->or_where('mum_email', $email);
 		}

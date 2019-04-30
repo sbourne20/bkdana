@@ -115,7 +115,7 @@
                                                 <tr onclick="document.location='<?php echo $link_detail; ?>'" title="Klik Detail Peminjam">
                                                     <td><?php echo $tra['transaksi_id']; ?></td>
                                                     <td>
-                                                        <?php echo $tra['nama_peminjam']; ?>
+                                                        <!-- <?php echo $tra['nama_peminjam']; ?> -->
                                                         <div class="sub-description">Slot Pendanaan : <?php echo $slot; ?>%</div>
                                                         <div class="sub-description">Rate : </div>
                                                     </td>

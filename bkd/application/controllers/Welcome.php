@@ -1,6 +1,12 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
+if (is_file(__DIR__ . '/../libraries/aliyun-oss-php-sdk-master/autoload.php')) {
+    require_once __DIR__ . '/../libraries/aliyun-oss-php-sdk-master/autoload.php';
+}
+use OSS\OssClient;
+use OSS\Core\OssException;
+
 class Welcome extends CI_Controller {
 
 	/**
@@ -23,15 +29,4 @@ class Welcome extends CI_Controller {
 		$this->load->view('welcome_message');
 	}
 
-	function test_pendana_mail()
-	{
-		$this->load->model('Member_model');
-		$memdata = $this->Member_model->get_member_byid(58);
-		$output['member']    = $memdata;
-		$output['ordercode'] = 'DD-56C14BF2D8F163';
-		$output['tgl_order'] = date('d/m/Y');
-		$html = $this->load->view('email/vpendana', $output, TRUE);
-		echo $html;
-		//$attach_file = $this->create_pdf($html, $output['ordercode']);
-	}
 }

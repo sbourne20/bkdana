@@ -30,7 +30,6 @@ class Aktivasi extends CI_Controller {
 		$ciphertext = $this->input->get('t', TRUE);
 		$email      = trim(antiInjection(urldecode($this->encryption->decrypt($ciphertext))));
 
-
 		if ($email != '' && filter_var($email, FILTER_VALIDATE_EMAIL) ) 
 		{
 			$member = $this->Member_model->get_member_by($email);
