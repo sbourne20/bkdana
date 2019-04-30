@@ -13,14 +13,14 @@ $( document ).ready(function() {
             },
             success: function(html_data)
             {
-            	var kota = $('#kota'); 
+                var kota = $('#kota'); 
                 kota.html(html_data);
                 if(kota.data("value") != ""){
                     $('#kota option[value='+kota.data("value")+']').prop('selected','selected');
                 }
             },
             error: function (request, status, error) {
-                /*alert(request.responseText);*/
+                /alert(request.responseText);/
             }
         });
 });
@@ -62,4 +62,3 @@ if($('#provinsidomisili').val()!=""){
 }
 
 });
-

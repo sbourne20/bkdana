@@ -5774,3 +5774,31 @@ dt { margin-top: 15px; margin-bottom: 5px; }
   pointer-events: none;
   cursor: default;
 }
+
+.krajee-default .file-footer-caption,
+.krajee-default .file-upload-indicator{
+    display: none !important;
+}
+
+.krajee-default.file-preview-frame .file-thumbnail-footer{
+    height:30px !important;
+    margin-top:5px !important;
+}
+
+.file-drop-zone{
+    border: 0 !important;
+    margin: 0 !important
+}
+
+.krajee-default.file-preview-frame .kv-file-content{
+    width: 250px !important;
+    height: auto !important;
+}
+
+.file-zoom-content {
+    height: auto !important;
+}
+
+.file-preview-image {
+    width:100%;
+}

@@ -25,6 +25,7 @@ $config['category_images_dir']  = $config['images_dir'] . 'category/';
 $config['pages_images_dir']     = $config['images_dir'] . 'pages/';
 $config['logo_dir']             = $config['images_dir'] . 'logo/';
 $config['pendana_images_dir']   = $config['images_dir'] . 'pendana/';
+$config['member_images_dir']    = 'member/';
 
 // ----- DATA URL -----
 $config['images_posts_uri']     = $config['img_baseurl'] . "images-data/";

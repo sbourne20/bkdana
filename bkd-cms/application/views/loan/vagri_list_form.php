@@ -23,7 +23,7 @@
 							$EDIT[$field] = isset($EDIT[$field]) ? $EDIT[$field] : $this->session->flashdata($field);
 						}
 	            	?> -->
-	                <form class="form-horizontal form-validation" method="post" id="formID" name="formID">
+	                <form class="form-horizontal form-validation" enctype="multipart/form-data" method="post" id="formID" name="formID">
 	                	 <!-- action="<?php echo site_url('transaksi-pinjaman-agri/submit_edit'); ?>" -->
 
 	                	
@@ -60,18 +60,85 @@
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Jumlah Pinjaman Disetujui</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" name="Jml_permohonan_pinjaman_disetujui" value="<?php
+	                            <input type="text" class="form-control numeric" name="Jml_permohonan_pinjaman_disetujui" value="<?php
 	                         /*   $pinjaman_awal =  $data['Jml_permohonan_pinjaman'];
 	                            $pinjaman_disetujui =  $data['Jml_permohonan_pinjaman_disetujui'];
 	                            if($pinjaman_disetujui > $pinjaman_awal){
 	                            	echo "<script>alert('same message');</script>";
 	                            }else{*/
-	                             echo number_format($data['Jml_permohonan_pinjaman_disetujui']); 
+	                             echo $data['Jml_permohonan_pinjaman_disetujui']; 
 								//}
 	                             ?>">
 	                        	
 	                        </div>
 	                    </div>
+
+	                    <!-- tambahan baru -->
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">No CF</label>
+	                        <div class="col-sm-6">
+	                            <input type="text" class="form-control" name="cf_number" value="<?php echo $data['no_cf']; ?>" >
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">Luas Lahan (Ha)</label>
+	                        <div class="col-sm-6">
+	                            <input type="text" class="form-control" name="luas_lahan" value="<?php echo number_format($data['no_cf']); ?>" >
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">Tanggal Panen</label>
+	                        <div class="col-sm-6">
+	                           <input type="text" class="form-control datepicker-dob" name="tgl_panen" id="tgl_panen" value="<?php echo ($data['tgl_panen']=='0000-00-00')? '' : date('d-m-Y', strtotime($data['tgl_panen'])); ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!"  >
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">Penjualan 6 Bulan Terakhir</label>
+	                        <div class="col-sm-6">
+	                            <input type="text" class="form-control numeric" name="penjualan" value="<?php echo $data['penjualan_terakhir']; ?>" >
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">Bulan Aktif 6 Bulan Terakhir</label>
+	                        <div class="col-sm-6">
+	                            <input type="text" class="form-control" name="bulan_aktif" value="<?php echo $data['bulan_aktif_terakhir']; ?>" >
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">Tipe Hasil Tani</label>
+	                        <div class="col-sm-6">
+	                            <select class="form-control" name="tipe_hasil_tani" id="tipe_hasil_tani" data-value="<?php echo $data['tipe_hasil_tani']; ?>">
+                                    <option value=""> -- Pilih --</option>
+                                    <?php foreach ($tipe_hasil_tani as $key) { ?>
+                                        <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>" 
+                                        <?php if ($data['tipe_hasil_tani'] == $key['Option_value']) {
+                                        echo "selected";
+                                        } ?>> <?php echo $key['Option_label']; ?>
+                                        </option>
+                                    <?php } ?>
+                                </select>
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">Volume Panen (Kg)</label>
+	                        <div class="col-sm-6">
+	                            <input type="text" class="form-control" name="volume_panen" value="<?php echo number_format($data['volume_panen']); ?>" >
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">Harga/Kg (IDR)</label>
+	                        <div class="col-sm-6">
+	                            <input type="text" class="form-control numeric" name="harga_kg" value="<?php echo $data['harga_kg']; ?>" >
+	                        </div>
+	                    </div>
+	                    <div class="form-group">
+	                        <label class="col-sm-3 control-label">Tenor Pinjaman yang direkomendasikan</label>
+	                        <div class="col-sm-6">
+	                            <input type="text" class="form-control" name="rekomendasi_tenor" value="<?php echo $data['tenor_pinjaman_disetujui']; ?>" >
+	                        </div>
+	                    </div>
+	                    <!-- batas tambahan baru -->
+
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Hasil Crowd Funding</label>
 	                        <div class="col-sm-6">

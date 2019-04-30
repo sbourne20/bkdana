@@ -128,8 +128,6 @@ class File_loader extends CI_Controller {
         header('Content-Type: '.$mime_type_or_return); // send mime-type header
         header('Content-Disposition: inline; filename="'.basename($filepath).'";'); // sends filename header
         exit($image_content); // reads and outputs the file onto the output buffer
-       
-       
-	}
+    }
 
 }

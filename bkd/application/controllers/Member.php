@@ -223,8 +223,8 @@ class Member extends CI_Controller {
 		$data['kota'] = $this->Content_model->get_all_cities();
 		$data['pendidikan'] = $this->Content_model->get_all_pendidikan();
 		$data['agama'] = $this->Content_model->get_all_agama();
-		$data['pekerjaan'] = $this->Content_model->get_all_bidang_pekerjaan();
-		$data['bidang_pekerjaan'] = $this->Content_model->get_all_pekerjaan();
+		$data['pekerjaan'] = $this->Content_model->get_all_pekerjaan();
+		$data['bidang_pekerjaan'] = $this->Content_model->get_all_bidang_pekerjaan();
 		$data['nama_bank'] = $this->Content_model->get_all_bank();
 		$data['status_tempat_tinggal'] = $this->Content_model->get_all_status_tempat();
 		$data['gender'] = $this->Content_model->get_all_gender();
@@ -265,6 +265,10 @@ class Member extends CI_Controller {
 		if($_SERVER["REQUEST_METHOD"] == "POST")
 		{
 			$post = $this->input->post(NULL, TRUE);
+
+			// echo "FN ".$post['fullname'];
+			// echo "TLP ".$post['telp'];
+			// exit();
 
 			if (trim($post['fullname']) != '' && trim($post['telp']) != '' )
 			{
@@ -968,8 +972,8 @@ class Member extends CI_Controller {
 						if (isset($post['laba_usaha'])) {
 							$u_detail['laba_usaha']  = antiInjection(trim($post['laba_usaha']));
 						}
-						if (isset($post['bidang_pekerjaan'])) {
-							$u_detail['bidang_pekerjaan']  = antiInjection(trim($post['bidang_pekerjaan']));
+						if (isset($post['pekerjaan'])) {
+							$u_detail['bidang_pekerjaan']  = antiInjection(trim($post['pekerjaan']));
 						}
 						if (isset($post['jumlah_tanggungan'])) {
 							$u_detail['How_many_people_do_you_financially_support']  = antiInjection(trim($post['jumlah_tanggungan']));

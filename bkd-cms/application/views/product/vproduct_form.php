@@ -70,9 +70,7 @@
                                     <input type="radio" class="radiocheck" name="type_interest_rate" value="2" <?php echo ($mode==2 && $EDIT['type_of_interest_rate']==2)? 'checked="checked"' : ''; ?> > Bulanan
                                 </label>
                             </div>
-                            <?php
-                            //agri
-                            if($b['id_mod_type_business']=='5'){ ?>
+                            
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Min Tenor</label>
@@ -93,23 +91,19 @@
                                 </div>
                             </div>
                             <!-- batas agri -->
-                            <?php }else{ ?>
+                            
 
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Loan Term </label>
                                 <div class="col-sm-2">
                                     <div class="input-group">
-                                        <input type="text" name="loan_term" class="form-control" value="<?php echo isset($EDIT['Loan_term'])? $EDIT['Loan_term'] : ''; ?>" data-validation-engine="validate[required]">
+                                        <input type="text" name="loan_term" id="loan_term" class="form-control" value="<?php echo isset($EDIT['Loan_term'])? $EDIT['Loan_term'] : ''; ?>" data-validation-engine="validate[required]">
                                         <span class="input-group-addon" id="tipe_loan_term"> </span>
                                     </div>
                                 </div>
                             </div>
 
-                            <?php 
-                            } 
-                            //agri
-                            if($b['id_mod_type_business']=='5'){
-                            ?>
+                           
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Min Loan </label>
                                 <div class="col-sm-2">
@@ -118,7 +112,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <?php } ?>
+                            
                             <!-- batas agri -->
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Max Loan </label>
@@ -243,42 +237,6 @@
             </div>            
         </div>
     </section>
-<!-- 
-    <script type="text/javascript">
-        $('#type_bisnis').change(function() {
-            var value = $(this).val();
-            var split = value.split('==');
-            var type = split[0];
-
-            if (type == 1)
-            {
-                $('#tipe_loan_term').text('days');
-            }else{
-                $('#tipe_loan_term').text('months');                
-            }
-        });
-    </script> -->
-
-
-
-<!-- <script type="text/javascript">
-//var value = null;
- $('#type_interest_rate').change(function(){
-//$("input[name='category']").change(function() {
-    var value = $(this).val();
-    var type = value[0];
-            if (type = 1)
-            {
-                $('#tipe_loan_term').text('days');       
-            }
-            if (type = 2)
-            {
-                $('#tipe_loan_term').text('weeks');       
-            }else{
-                $('#tipe_loan_term').text('months');                
-            }
-});
- </script> -->
 
  <script type="text/javascript">
 var type_interest_rate;
