@@ -172,18 +172,7 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                     </div>
                                 
                             </div>
-                            <div class="form-group" id="hiddendomisili2">
-                                
-                                    <label class="col-sm-2 control-label">* Kota Domisili</label>
-                                    <div class="col-sm-6">
-                                        <select class="form-control" name="kotadomisili" id="kotadomisili" data-value="<?php echo $memberdata['Kota_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota Domisili harus diisi!" >
-                                            <option value=""> -- Pilih Kota--</option>
-                                            </select>
-                                    </div>
-                                
-                            </div>  
                             <div class="form-group" id="hiddendomisili3">
-                                
                                     <label class="col-sm-2 control-label">* Provinsi Domisili</label>
                                     <div class="col-sm-6">
                                         <select class="form-control" name="provinsidomisili" id="provinsidomisili" data-validation-engine="validate[required]" data-errormessage-value-missing="Provinsi Domisili harus diisi!" >
@@ -196,8 +185,17 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                             ?>
                                             </select>
                                     </div>
+                            </div>
+                            <div class="form-group" id="hiddendomisili2">
                                 
-                            </div>  
+                                    <label class="col-sm-2 control-label">* Kota Domisili</label>
+                                    <div class="col-sm-6">
+                                        <select class="form-control" name="kotadomisili" id="kotadomisili" data-value="<?php echo $memberdata['Kota_Domisili']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="Kota Domisili harus diisi!" >
+                                            <option value=""> -- Pilih Kota--</option>
+                                            </select>
+                                    </div>
+                                
+                            </div>    
                             <div class="form-group" id="hiddendomisili4">
                                 
                                     <label class="col-sm-2 control-label">* Kode Pos Domisili</label>
@@ -274,14 +272,18 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Pendidikan</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="pendidikan" id="pendidikan" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
-                                        <option value=""> -- Pilih --</option>
-                                        <option value="1" <?php echo ($memberdata['Pendidikan']=='1')? 'selected="selected"' : '';  ?> > SD</option>
-                                        <option value="2" <?php echo ($memberdata['Pendidikan']=='2')? 'selected="selected"' : '';  ?> > SLTP</option>
-                                        <option value="3" <?php echo ($memberdata['Pendidikan']=='3')? 'selected="selected"' : '';  ?> > SLTA</option>
-                                        <option value="4" <?php echo ($memberdata['Pendidikan']=='4')? 'selected="selected"' : '';  ?> > Diploma</option>
-                                        <option value="5" <?php echo ($memberdata['Pendidikan']=='5')? 'selected="selected"' : '';  ?> > Sarjana</option>
-                                    </select>
+                                <select class="form-control" name="pendidikan" id="pendidikan" data-value="<?php echo $memberdata['Pendidikan']; ?>">
+                                    <option value=""> -- Pilih --</option>
+                                    <?php foreach ($pendidikan as $key) {
+                                        ?>
+                                        <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>" <?php if ($memberdata['Pendidikan'] == $key['Option_value']) {
+                                                                                                                                                    echo "selected";
+                                                                                                                                                } ?>> <?php echo $key['Option_label']; ?>
+                                        </option>
+                                    <?php
+                                }
+                                ?>
+                                </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -499,14 +501,18 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Pendidikan</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="pendidikan" id="pendidikan" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!">
-                                        <option value=""> -- Pilih --</option>
-                                        <option value="1" <?php echo ($memberdata['Pendidikan']=='1')? 'selected="selected"' : '';  ?> > SD</option>
-                                        <option value="2" <?php echo ($memberdata['Pendidikan']=='2')? 'selected="selected"' : '';  ?> > SLTP</option>
-                                        <option value="3" <?php echo ($memberdata['Pendidikan']=='3')? 'selected="selected"' : '';  ?> > SLTA</option>
-                                        <option value="4" <?php echo ($memberdata['Pendidikan']=='4')? 'selected="selected"' : '';  ?> > Diploma</option>
-                                        <option value="5" <?php echo ($memberdata['Pendidikan']=='5')? 'selected="selected"' : '';  ?> > Sarjana</option>
-                                    </select>
+                                    <select class="form-control" name="pendidikan" id="pendidikan" data-value="<?php echo $memberdata['Pendidikan']; ?>">
+                                    <option value=""> -- Pilih --</option>
+                                    <?php foreach ($pendidikan as $key) {
+                                        ?>
+                                        <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>" <?php if ($memberdata['Pendidikan'] == $key['Option_value']) {
+                                                                                                                                                    echo "selected";
+                                                                                                                                                } ?>> <?php echo $key['Option_label']; ?>
+                                        </option>
+                                    <?php
+                                }
+                                ?>
+                                </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -562,12 +568,18 @@ if ($memberdata['foto_pegang_ktp'] != '')
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Status Tempat Tinggal</label>
                                 <div class="col-sm-6">
-                                    <select class="form-control" name="status_tempat_tinggal" id="status_tempat_tinggal" data-validation-engine="validate[required]" data-errormessage-value-missing="status tempat tinggal harus diisi!">
-                                        <option value=""> -- Pilih --</option>
-                                        <option value="1" <?php echo ($memberdata['status_tempat_tinggal']=='1')? 'selected="selected"' : ''; ?> > Milik Keluarga</option>
-                                        <option value="2" <?php echo ($memberdata['status_tempat_tinggal']=='2')? 'selected="selected"' : ''; ?> > Milik Sendiri</option>
-                                        <option value="3" <?php echo ($memberdata['status_tempat_tinggal']=='3')? 'selected="selected"' : ''; ?> > Sewa</option>
-                                    </select>
+                                    <select class="form-control" name="status_tempat_tinggal" id="status_tempat_tinggal" data-value="<?php echo $memberdata['status_tempat_tinggal']; ?>">
+                                                    <option value=""> -- Pilih --</option>
+                                                    <?php foreach ($status_tempat_tinggal as $key) {
+                                                        ?>
+                                                        <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>" <?php if ($memberdata['status_tempat_tinggal'] == $key['Option_value']) {
+                                                                                                                                                                    echo "selected";
+                                                                                                                                                                } ?>> <?php echo $key['Option_label']; ?>
+                                                        </option>
+                                                    <?php
+                                                }
+                                                ?>
+                                                </select>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -637,6 +649,17 @@ if ($memberdata['foto_pegang_ktp'] != '')
                                 </div>
                                 <!-- End PENDANA -->
                                 <?php } ?>
+
+                                <input type="hidden" name="old_foto" value="<?php echo $memberdata['images_foto_name']; ?>">
+                                <input type="hidden" name="old_ktp" value="<?php echo $memberdata['images_ktp_name']; ?>">
+                                <input type="hidden" name="old_usaha" value="<?php echo $memberdata['images_usaha_name']; ?>">
+                                <input type="hidden" name="old_usaha2" value="<?php echo $memberdata['images_usaha_name2']; ?>">
+                                <input type="hidden" name="old_usaha3" value="<?php echo $memberdata['images_usaha_name3']; ?>">
+                                <input type="hidden" name="old_usaha4" value="<?php echo $memberdata['images_usaha_name4']; ?>">
+                                <input type="hidden" name="old_usaha5" value="<?php echo $memberdata['images_usaha_name5']; ?>">
+                                <input type="hidden" name="old_surat_keterangan_bekerja" value="<?php echo $memberdata['foto_surat_keterangan_bekerja']; ?>">
+                                <input type="hidden" name="old_slip_gaji" value="<?php echo $memberdata['foto_slip_gaji']; ?>">
+                                <input type="hidden" name="old_pegang_ktp" value="<?php echo $memberdata['foto_pegang_ktp']; ?>">
 
                                 <div class="position-center">
                                 <button type="submit" class="btn btn-primary">Submit</button> 

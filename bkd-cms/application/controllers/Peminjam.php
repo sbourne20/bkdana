@@ -49,6 +49,7 @@ class Peminjam extends CI_Controller {
 		$id = $this->input->post('id');
 
 		$output['data'] = $this->Member_model->get_usermember_by($id);
+		//$output['pendidikan'] = $this->Member_model->get_all_pendidikan();
 		$this->load->view('member/vdetail', $output);
 	}
 
@@ -248,7 +249,8 @@ class Peminjam extends CI_Controller {
 		$id             = antiInjection($this->uri->segment(3));
 		$output['mode'] = 2; // sbg tanda edit
 		$output['EDIT'] = $this->Member_model->get_usermember_by($id);
-		$output['memberdata'] = $this->Member_model->get_usermember_by($id);
+		//$output['memberdata'] = $this->Member_model->get_usermember_by($id);
+		$output['memberdata'] = $this->Member_model->get_user_alldata($id);
 
 		//tambahan baru master option
 		$output['provinsi'] = $this->Member_model->get_all_province();
@@ -853,8 +855,8 @@ class Peminjam extends CI_Controller {
 
 					
 					$mem_data['mum_fullname']       = antiInjection(trim($post['fullname']));
-					$mem_data['mum_email']      	= antiInjection(trim($post['email']));
-					$mem_data['mum_telp']           = antiInjection(trim($post['telp']));
+					//$mem_data['mum_email']      	= antiInjection(trim($post['email']));
+					//$mem_data['mum_telp']           = antiInjection(trim($post['telp']));
 					$mem_data['mum_ktp']            = antiInjection(trim($post['nomor_ktp']));
 					$mem_data['mum_nomor_rekening'] = antiInjection(trim($post['nomor_rekening']));
 
@@ -878,7 +880,7 @@ class Peminjam extends CI_Controller {
 					$this->Member_model->update_user($id, $user);
 
 					// user_detail
-					$u_detail['Mobileno']          = antiInjection(trim($post['telp']));
+					//$u_detail['Mobileno']          = antiInjection(trim($post['telp']));
 					$u_detail['Occupation']        = antiInjection(trim($post['pekerjaan']));
 					$u_detail['ID_type']           = 'KTP';
 					$u_detail['ID_No']             = antiInjection(trim($post['nomor_ktp']));

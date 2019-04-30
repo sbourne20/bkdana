@@ -312,8 +312,8 @@ if ($memberdata['foto_pegang_ktp'] != '') {
 												<?php foreach ($nama_bank as $key) {
 													?>
 													<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>" <?php if ($memberdata['nama_bank'] == $key['Option_value']) {
-																																								echo "selected";
-																																							} ?>> <?php echo $key['Option_label']; ?>
+														echo "selected";
+														} ?>> <?php echo $key['Option_label']; ?>
 													</option>
 												<?php
 											}
