@@ -213,9 +213,20 @@ class Member_model extends CI_Model
 		$this->db->join($this->mod_user_member. ' m', 'm.id_mod_user_member=u.id_mod_user_member', 'left');
 		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Kota
-						 from master_option) z','z.Option_value=g.Kota', 'join');
+						 from master_option
+						 where Option_key = "kota") z','z.Option_value=g.Kota', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Provinsi
-						 from master_option) a','a.Option_value=g.Provinsi', 'join');
+						 from master_option
+						 where Option_key = "provinsi") a','a.Option_value=g.Provinsi', 'left');
+		$this->db->join('(SELECT Option_value, Option_label as Jenis_Pekerjaan
+						 from master_option
+						 where Option_key = "pekerjaan") x','x.Option_value=u.Pekerjaan', 'left');
+		$this->db->join('(SELECT Option_value, Option_label as Gender
+						 from master_option
+						 where Option_key = "gender") gender','gender.Option_value=u.Jenis_kelamin', 'left');
+		$this->db->join('(SELECT Option_value, Option_label as Nama_Bank
+						 from master_option
+						 where Option_key = "bank") b','b.Option_value=u.nama_bank', 'left');
 		$this->db->where('m.id_mod_user_member', $id);
 		$this->db->limit(1);
 		$query 	= $this->db->get();
@@ -326,7 +337,7 @@ class Member_model extends CI_Model
 		return $this->db->affected_rows();
 	}
 
-	public function update_profil_geografi($data, $ID)
+	public function update_profil_geografi($ID, $data)
 	{
 		$this->db->where('User_id', $ID);
 		$this->db->update($this->profile_geografi, $data);
@@ -579,5 +590,43 @@ class Member_model extends CI_Model
 		return $ret;
 	}
 
+	//tambahan baru edit profil
+	// function get_member_byid($id)
+	// {
+	// 	$this->db->select('m.id_mod_user_member, mum_fullname, mum_email, mum_telp, mum_password, mum_status, mum_create_date, mum_type, mum_type_peminjam, mum_ktp, mum_nomor_rekening, mum_nomor_rekening,
+	// 		u.Id_pengguna, Nama_pengguna, Id_ktp, Profile_photo, Nomor_rekening, nama_bank, npwp, deskripsi_usaha, omzet_usaha, modal_usaha, margin_usaha, biaya_operasional, laba_usaha, peringkat_pengguna, peringkat_pengguna_persentase, images_foto_name, Mobileno, Alamat, Kota, Provinsi, Kodepos');
+	// 	$this->db->from($this->mod_user_member.' m');
+	// 	$this->db->join($this->user.' u', 'u.id_mod_user_member=m.id_mod_user_member', 'left');
+	// 	$this->db->join($this->user_detail.' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
+	// 	$this->db->join($this->profile_geografi.' g', 'g.User_id=u.Id_pengguna', 'left');
+	// 	$this->db->where('m.id_mod_user_member', $id);
+	// 	$this->db->limit(1);
+	// 	$sql = $this->db->get();
+
+	// 	return $sql->row_array();
+	// }
+
+	function update_member_byid($uid, $data)
+	{
+		$this->db->where('id_mod_user_member', $uid);
+		$this->db->update($this->mod_user_member, $data);
+		return $this->db->affected_rows();
+	}
+
+	function update_user($uid, $data)
+	{
+		$this->db->where('id_mod_user_member', $uid);
+		$this->db->update($this->user_ojk, $data);
+		return $this->db->affected_rows();
+	}
+
+	function update_userdetail($uid, $data)
+	{
+		$this->db->where('Id_pengguna', $uid);
+		$this->db->update($this->user_ojk_detail, $data);
+		return $this->db->affected_rows();
+	}
+
+	//batas tambahan baru
 
 }

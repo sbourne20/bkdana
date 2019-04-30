@@ -101,11 +101,9 @@ class Invest_model extends CI_Model
 		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
 		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Kota
-						 from master_option
-						 group by Option_value) z','z.Option_value=g.Kota', 'join');
+						 from master_option) z','z.Option_value=g.Kota', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Provinsi
-						 from master_option
-						 group by Option_value) a','a.Option_value=g.Provinsi', 'join');
+						 from master_option) a','a.Option_value=g.Provinsi', 'left');
 		$this->db->where('Id', $id);
 		$sql = $this->db->get();
 

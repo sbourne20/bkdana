@@ -16,7 +16,7 @@
 			<td>Tempat / Tanggal Lahir</td><td><?php echo $data['Tempat_lahir'] .' / '. date('d-m-Y', strtotime($data['Tanggal_lahir'])); ?></td>
 		</tr>
 		<tr>
-			<td>Jenis Kelamin</td><td><?php echo $data['Jenis_kelamin']; ?></td>
+			<td>Jenis Kelamin</td><td><?php echo $data['Gender']; ?></td>
 		</tr>
 		<tr>
 			<td>Alamat</td><td><?php echo $data['Alamat']; ?></td>
@@ -40,10 +40,7 @@
 			<td>Pekerjaan</td>
 			<td>
 				<?php
-				$array_pekerjaan = array('1'=>'PNS', '2'=>'BUMN', '3'=>'Swasta', '4'=>'Wiraswasta', '5'=>'Lain-lain'); 
-				if (!empty($data['Pekerjaan'])) {
-					echo $array_pekerjaan[$data['Pekerjaan']]; 
-				}
+					echo $data['Jenis_Pekerjaan'];
 				?>
 				
 			</td>
@@ -59,7 +56,7 @@
 			<td>Nomor Rekening</td><td><?php echo $data['Nomor_rekening']; ?></td>
 		</tr>
 		<tr>
-			<td>Bank</td><td><?php echo $data['nama_bank']; ?></td>
+			<td>Bank</td><td><?php echo $data['Nama_Bank']; ?></td>
 		</tr>
 		<tr>
 			<td>Grade</td><td><?php echo $data['peringkat_pengguna']; ?></td>

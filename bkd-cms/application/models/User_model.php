@@ -259,6 +259,10 @@ class User_model extends CI_Model
 		$controller = $this->uri->segment(1, $default_controller);
 		$action = $this->uri->segment(2, $default_method);
 
+		// echo "cotroller =".$controller;
+		// echo " | action =".$action;
+		// exit();
+
 		$default_access = array(
 			$default_controller => $default_controller,
 			$default_controller.'/'.$default_method => $default_controller.'/'.$default_method,
@@ -276,15 +280,19 @@ class User_model extends CI_Model
 			$acc        = $this->get_user_access($CU_role_id);
 			$acc        = array_merge($default_access,$acc);
 
-		//{echo 'acc '.$acc;
-		//exit()};
+		//print_r($acc);
+		// exit();
 			//_d($acc);exit();
 
 			// {echo 'link'.$default_access;
 			// exit()};
 
+		//echo '<br><br>'.$acc[$controller.'/'.$action];
+		//exit();
+
+
 			if( ! isset($acc[$controller.'/'.$action]) ){
-				$this->session->set_userdata('message',' to access / take action on the page that you are headed.');
+				$this->session->set_userdata('message',' unauthorized action.');
 				$this->session->set_userdata('message_type','error');
 				$ref = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : site_url();
 				redirect($ref);
@@ -300,6 +308,10 @@ class User_model extends CI_Model
 		$id = $this->db->escape_str($id);
 		$query = $this->db->query(" SELECT * FROM {$this->user_privileges} WHERE priv_id_group='$id' ");
 		$res = $query->result();
+
+		// print_r($res);
+		// exit();
+
 		if(count($res)>0){
 			foreach($res as $row){
 				$acc[$row->access] = $row->access;

@@ -709,9 +709,23 @@ class Pinjaman_model extends CI_Model
 		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
 		$this->db->join($this->mod_type_business. ' t', 't.id_mod_type_business=prod.type_of_business_id', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Kota
-						 from master_option) z','z.Option_value=g.Kota', 'join');
+						 from master_option
+						 where Option_key = "kota") z','z.Option_value=g.Kota', 'left');
 		$this->db->join('(SELECT Option_value, Option_label as Nama_Provinsi
-						 from master_option) a','a.Option_value=g.Provinsi', 'join');
+						 from master_option
+						 where Option_key = "provinsi") a','a.Option_value=g.Provinsi', 'left');
+		$this->db->join('(SELECT Option_value, Option_label as Jenis_Pekerjaan
+						 from master_option
+						 where Option_key = "pekerjaan") x','x.Option_value=u.Pekerjaan', 'left');
+		$this->db->join('(SELECT Option_value, Option_label as Gender
+						 from master_option
+						 where Option_key = "gender") gender','gender.Option_value=u.Jenis_kelamin', 'left');
+		$this->db->join('(SELECT Option_value, Option_label as Nama_Bank
+						 from master_option
+						 where Option_key = "bank") b','b.Option_value=u.nama_bank', 'left');
+		$this->db->join('(SELECT Option_value, Option_label as Jenis_Agama
+						 from master_option
+						 where Option_key = "agama") ag','ag.Option_value=g.Agama', 'left');
 		$this->db->where('Master_loan_id', $ID);
 		$sql = $this->db->get();
 

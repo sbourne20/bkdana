@@ -1732,11 +1732,21 @@ class Content_model extends CI_Model
 		return $sql->result_array();
 	}
 
-	function get_all_pekerjaan()
+	function get_all_bidang_pekerjaan()
 	{
 		$this->db->select('*');
 		$this->db->from($this->master_option);
 		$this->db->where('Option_key', 'pekerjaan');
+		$this->db->order_by('Option_value', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
+	function get_all_pekerjaan()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'bidang_pekerjaan');
 		$this->db->order_by('Option_value', 'asc');
 		$sql = $this->db->get();
 		return $sql->result_array();
@@ -1783,11 +1793,11 @@ class Content_model extends CI_Model
 	}
 
 	function getkota($code)
-	{
+	{	
 		$this->db->select('*');
 		$this->db->from($this->master_option);
 		$this->db->where('Option_key', 'kota');
-		$this->db->like('Option_value', $code, 'after');
+		$this->db->like('Option_value',$code, 'after');
 		$sql = $this->db->get();
 		
 		return $sql->result_array();
