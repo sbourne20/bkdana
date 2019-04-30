@@ -40,12 +40,35 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 
 		function edit()
 	{
-		
-
+			
 		$id = antiInjection($this->uri->segment(3));
 		//$output['mode'] = 2;
 		$output['data'] = $this->Pinjaman_model->get_loan_detail($id);
 		//header('Content-type: image/jpeg');
+
+		$output['top_css']   ="";
+		$output['top_js']    ="";
+		$output['bottom_js'] ="";
+		$output['top_css']   .= add_css("plugins/bootstrap-timepicker/bootstrap-timepicker.css");
+		$output['top_css'] .= add_css('plugins/validationengine/validationEngine.jquery.css');
+		$output['top_css'] .= add_css('plugins/bootstrap-datepicker/css/bootstrap-datepicker.css');
+		$output['top_js']    .= add_js("plugins/bootstrap-timepicker/bootstrap-timepicker.js");
+		$output['bottom_js'] .= add_js('plugins/validationengine/jquery.validationEngine.js');
+		$output['bottom_js'] .= add_js('plugins/bootstrap-datepicker/js/bootstrap-datepicker.min.js');
+		$output['bottom_js'] .= add_js('plugins/jqueryvalidation/dist/jquery.validate.min.js');
+		$output['bottom_js'] .= add_js('plugins/autoNumeric/autoNumeric.min.js');
+
+		$output['bottom_js'] .= add_js('plugins/validation-init.js');
+		$output['bottom_js'] .= add_js('plugins/autoNumeric-init.js');
+		$output['bottom_js'] .= add_js('plugins/date-init.js');
+		$output['bottom_js'] .= add_js('plugins/autoNumeric/autoNumeric.min.js');
+		$output['bottom_js'] .= add_js('plugins/autoNumeric-init.js');
+
+		$output['tipe_hasil_tani'] = $this->Member_model->get_all_tipe_hasil_tani();
+		//$a = $this->Member_model->get_all_tipe_hasil_tani();
+		//echo"tipe hasil tani ".$a;
+		//exit();
+		
 		$mainData['mainContent'] = $this->load->view('loan/vagri_list_form', $output, true);
 		//$output['data'] = $this->Pinjaman_model->get_loan_detail($id);
 		$this->load->view('vbase',$mainData);
@@ -55,9 +78,27 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 
 		if (trim($post['transaksi_id']) != '' && !empty($id) )
 		{
-			$updata1['Jml_permohonan_pinjaman_disetujui'] = antiInjection(trim($post['Jml_permohonan_pinjaman_disetujui']));
-			$updata1['Amount'] = antiInjection(trim($post['Jml_permohonan_pinjaman_disetujui']));
-			
+
+			$filter = explode('.', trim($post['Jml_permohonan_pinjaman_disetujui']));
+			$pinjaman_disetujui = str_replace(',', '', $filter[0]);
+			$filter = explode('.', trim($post['penjualan']));
+			$penjualan = str_replace(',', '', $filter[0]);
+			$filter = explode('.', trim($post['harga_kg']));
+			$harga_kg = str_replace(',', '', $filter[0]);
+
+			$updata1['Jml_permohonan_pinjaman_disetujui'] = $pinjaman_disetujui;
+			$updata1['Amount'] = $pinjaman_disetujui;
+			//tambahan baru agri
+			$updata1['no_cf'] = antiInjection(trim($post['cf_number']));
+			$updata1['luas_lahan'] = antiInjection(trim($post['luas_lahan']));
+			$updata1['tgl_panen'] = date('Y-m-d', strtotime(trim($post['tgl_panen'])));
+			$updata1['penjualan_terakhir'] = $penjualan;
+			$updata1['bulan_aktif_terakhir'] = antiInjection(trim($post['bulan_aktif']));
+			$updata1['tipe_hasil_tani'] = antiInjection(trim($post['tipe_hasil_tani']));
+			$updata1['volume_panen'] = antiInjection(trim($post['volume_panen']));
+			$updata1['harga_kg'] = $harga_kg;
+			$updata1['tenor_pinjaman_disetujui'] = antiInjection(trim($post['rekomendasi_tenor']));
+			//batas tambahan baru agri
 			$affected = $this->Pinjaman_model->update_profil_pinjaman($updata1, $id);
 			
 			
@@ -94,12 +135,12 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 			if($affected){
 				$this->session->set_userdata('message','Data has been updated.');
 				$this->session->set_userdata('message_type','success');
-				redirect('transaksi_pinjaman_mikro');
+				redirect('transaksi_pinjaman_agri');
 					
 			}else{
 				$this->session->set_userdata('message','No Update.');
 				$this->session->set_userdata('message_type','warning');
-				redirect('transaksi_pinjaman_mikro');
+				redirect('transaksi_pinjaman_agri');
 			}
 
 		}

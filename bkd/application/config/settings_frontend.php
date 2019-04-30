@@ -17,7 +17,7 @@ if($_SERVER['HTTP_HOST']=='localhost')
 	$config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
 	//foto start
-	$config['showphoto']    = 'http://'.$_SERVER['HTTP_HOST']. 'bkdana/data-bkd/';
+	$config['showphoto']    = 'http://'.$_SERVER['HTTP_HOST']. '/bkdana/data-bkd/';
 	//foto end
 
 	$config['data_dir']    = FCPATH . "../../../data-bkd/";

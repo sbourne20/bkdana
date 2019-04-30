@@ -759,5 +759,15 @@ class Member_model extends CI_Model
 		return $sql->result_array();
 	}
 
+	function get_all_tipe_hasil_tani()
+	{
+		$this->db->select('*');
+		$this->db->from($this->master_option);
+		$this->db->where('Option_key', 'hasil_tani');
+		$this->db->order_by('Option_key', 'asc');
+		$sql = $this->db->get();
+		return $sql->result_array();
+	}
+
 
 }

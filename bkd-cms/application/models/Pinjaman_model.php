@@ -742,6 +742,9 @@ class Pinjaman_model extends CI_Model
 		//$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
 		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
 		$this->db->join($this->mod_type_business. ' t', 't.id_mod_type_business=prod.type_of_business_id', 'left');
+		$this->db->join('(SELECT Option_value, Option_label as hasil_tani
+						 from master_option
+						 where Option_key = "hasil_tani") ht','ht.Option_value=p.tipe_hasil_tani', 'left');
 		$this->db->where('Master_loan_id', $ID);
 		$sql = $this->db->get();
 
