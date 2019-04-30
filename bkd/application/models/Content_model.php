@@ -752,6 +752,7 @@ class Content_model extends CI_Model
 			foto_usaha,
 			nama_bank,
 			Mobileno,
+			jumlah_cicilan,
 			images_foto_name,
 			images_usaha_name,
 			images_usaha_name2,
@@ -759,6 +760,7 @@ class Content_model extends CI_Model
 			images_usaha_name4,
 			images_usaha_name5,
 			nama_peminjam,
+			prod.Interest_rate,
 			Alamat, Kota, Provinsi, prod.type_of_interest_rate,
 			rr.jml_denda,
 			(select count(*) as itotal from '.$this->profile_pendanaan.' where Master_loan_id=transaksi_id) as total_lender ');

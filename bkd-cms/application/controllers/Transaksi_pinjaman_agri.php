@@ -12,6 +12,8 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 		$this->load->model('Wallet_model');
 		$this->load->model('Member_model');
 		$this->load->model('Log_transaksi_model');
+
+		$this->load->library('FirebaseNotification');
 		
 		//error_reporting(E_ALL);
 		error_reporting(0);
@@ -199,13 +201,21 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 		$affected = FALSE;
 		$id = antiInjection(trim($this->uri->segment(3)));
 
+		$nowdatetime = date('Y-m-d H:i:s');
+
 		if ( !empty($id) )
 		{
 			// get data pinjaman
 			$loan_data = $this->Pinjaman_model->get_pinjaman_byid($id);
+			$token_data = $this->Member_model->get_fcm_token($loan_data['User_id']);
 
 			if ( count($loan_data) > 0) {
 				// get tipe produk: kilat, mikro ,usaha
+				$message_fcm = "Pinjaman Agri anda dengan nomor traksaksi ".$loan_data['Master_loan_id']." telah ditinjau oleh Analis kami, silahkan cek Dashboard Anda untuk melanjutkan pinjaman";
+				$title_fcm	= "Status Pinjaman";
+				$action = "approve_pinjaman_agri";
+
+
 				$produk = $this->Product_model->get_product_by($loan_data['Product_id']);
 				$tipe_produk = $produk['type_of_business_id'];
 				//tambahan baru repayment
@@ -219,15 +229,18 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 				$jml_pinjaman_disetujui = $pinjaman_rp - $admin_fee;
 				// ----------- End hitung total pinjaman disetujui -------------------
 
+			$datediff =round((strtotime($nowdatetime) - strtotime($record_repayment_data['tgl_jatuh_tempo']))/86400);
+
 				//tambahan baru
 				$type_interest_rate = $produk['type_of_interest_rate'];
 				if($type_interest_rate == 1){//harian
 					$totalweeks   = $loan_data['loan_term_permohonan'];
-					$jml_angsuran = ($pinjaman_rp + ( $pinjaman_rp * ($produk['Interest_rate'] * $totalweeks))/100 );
+					$jml_angsuran = $pinjaman_rp;
 					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
 					$total_angsuran_rp = $jml_repayment*$totalweeks;
-					$bunga             = $total_angsuran_rp - $pinjaman_rp;
+					// $bunga             = $total_angsuran_rp - $pinjaman_rp;
+					$bunga = ($pinjaman_rp * ($produk['Interest_rate'] * $diffdate))/100;
 					$loan_term = $loan_data['loan_term_permohonan'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." days"));
 				}
@@ -237,7 +250,7 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
 					$total_angsuran_rp = $jml_repayment*$totalweeks;
-					$bunga             = $total_angsuran_rp - $pinjaman_rp;
+					$bunga = ($pinjaman_rp * ($produk['Interest_rate'] * $diffdate))/100;
 					$loan_term = $loan_data['loan_term_permohonan'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." months"));
 				}
@@ -247,7 +260,8 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 					$pokok_cicilan = $pinjaman_rp / $totalweeks;
 					$jml_repayment     = round($jml_angsuran);
 					$total_angsuran_rp = $jml_repayment*$totalweeks;
-					$bunga             = $total_angsuran_rp - $pinjaman_rp;
+					$bunga = ($pinjaman_rp * ($produk['Interest_rate'] * $diffdate))/100;
+					// $bunga             = $total_angsuran_rp - $pinjaman_rp;
 					$loan_term = $loan_data['loan_term_permohonan'];
 					$tgl_jatuh_tempo = date('Y-m-d', strtotime("+".$loan_term." weeks"));
 				}
@@ -282,22 +296,24 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 					$inlog['ltp_jml_angsuran']             = $jml_repayment;
 					$inlog['ltp_lama_angsuran']            = $totalweeks;
 					$inlog['ltp_tgl_jatuh_tempo']          = $tgl_jatuh_tempo;
-					$inlog['ltp_frozen']                   = $frozen_fee;
+					$inlog['ltp_frozen']                   = 0;
 					$inlog['ltp_platform_fee']             = $angsuran_platform_fee;
 					$inlog['ltp_LO_fee']                   = $angsuran_LO;
 					$inlog['ltp_lender_fee']               = $lender_fee;
-					$inlog['ltp_pokok_cicilan']		   	   = $pokok_cicilan;
-					$inlog['ltp_bunga_cicilan']			   = $bunga_cicilan;
+					$inlog['ltp_pokok_cicilan']		   	   = 0;
+					$inlog['ltp_bunga_cicilan']			   = 0;
 
 					$this->Pinjaman_model->update_log_pinjaman($inlog, $loan_data['Master_loan_id']);
 
 					$cicilan_duedate1 = date('Y-m-d H:i:s',strtotime($loan_data1['tgl_pinjaman_disetujui']. "+".$jmlhari." day"));
 
-					$nowdatetime = date('Y-m-d H:i:s');
+					
 
 					$repayment['Master_loan_id']		   = $loan_data['Master_loan_id'];
 					$repayment['User_id']				   = $loan_data['User_id'];
-					$repayment['jumlah_cicilan']		   = $jml_repayment;
+					$repayment['jumlah_cicilan']		   = $pinjaman_rp;
+					$repayment['jml_bayar']				   = 0;
+					$repayment['jml_bunga']				   = $bunga;
 					$repayment['notes_cicilan']			   = 1;
 					$repayment['status_cicilan']		   = 'belum-bayar';
 					$repayment['tgl_jatuh_tempo']		   = $cicilan_duedate1;
@@ -469,9 +485,15 @@ class Transaksi_pinjaman_agri extends CI_Controller {
 		if (!empty($id))
 		{
 			$loan_data = $this->Pinjaman_model->get_pinjaman_byid($id);
+			$token_data = $this->Member_model->get_fcm_token($loan_data['User_id']);
 			
 			if (count($loan_data) > 0) {
 				$affected = $this->Pinjaman_model->reject_pinjaman($id);
+
+				$message_fcm = "Pinjaman Agri anda dengan nomor traksaksi ".$loan_data['Master_loan_id']." tidak disetujui";
+				$title_fcm	= "Status Pinjaman";
+				$action = "reject_pinjaman_agri";
+				$this->firebasenotification->notif_aprrove($token_data['fcm_token'], $message_fcm, $title_fcm, $action);
 			}else{
 				$affected = FALSE;
 			}
