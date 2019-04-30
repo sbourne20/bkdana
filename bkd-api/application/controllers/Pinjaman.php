@@ -5,6 +5,13 @@ require_once APPPATH . 'libraries/ExpiredException.php';
 require_once APPPATH . 'libraries/BeforeValidException.php';
 require_once APPPATH . 'libraries/SignatureInvalidException.php';
 
+
+if (is_file(__DIR__ . '/../libraries/aliyun-oss-php-sdk-master/autoload.php')) {
+    require_once __DIR__ . '/../libraries/aliyun-oss-php-sdk-master/autoload.php';
+}
+use OSS\OssClient;
+use OSS\Core\OssException;
+
 use Restserver\Libraries\REST_Controller;
 
 class Pinjaman extends REST_Controller {
@@ -133,11 +140,12 @@ class Pinjaman extends REST_Controller {
 				        return;
 					}
 
-					$pinjaman_active = $this->Content_model->check_active_pinjaman_bymember($memberID);
+					$pinjaman_active = $this->Content_model->check_active_pinjaman_bymember($memberID);	
 
 					$data['pinjaman_list'] = $pinjaman_active;
 
-					if (count($pinjaman_active) > 1)
+					if ($pinjaman_active)
+					// if(false)
 					{
 						$response['response']  = 'fail';
 		                $response['status']    = REST_Controller::HTTP_OK;
@@ -212,7 +220,7 @@ class Pinjaman extends REST_Controller {
 					//$pinjaman_active = $this->Content_model->check_active_pinjaman($memberID);
 					$pinjaman_active = '';
 
-					if (count($pinjaman_active) > 1)
+					if ($pinjaman_active)
 					{
 						$response['response']  = 'fail';
 		                $response['status']    = REST_Controller::HTTP_OK;
@@ -372,15 +380,15 @@ class Pinjaman extends REST_Controller {
 
 						// update table user detail
 						$indata_udetail['company']                                  = trim($post['nama_perusahaan']);
-						$indata_udetail['What_is_the_name_of_your_business']        = trim($post['nama_perusahaan']);
+						// $indata_udetail['What_is_the_name_of_your_business']        = trim($post['usaha']);
 						$indata_udetail['How_many_years_have_you_been_in_business'] = trim($post['lama_bekerja']);
 						$indata_udetail['Business_phone_no']                        = trim($post['telp_perusahaan']);
 						$indata_udetail['status_karyawan']                          = trim($post['status_karyawan']);
-						$indata_udetail['nama_atasan']                              = trim($post['nama_atasan']);
-						$indata_udetail['referensi_orang_1']                        = trim($post['referensi_1']);
-						$indata_udetail['referensi_orang_2']                        = trim($post['referensi_2']);
-						$indata_udetail['referensi_nama_1']                         = trim($post['referensi_nama_1']);
-						$indata_udetail['referensi_nama_2']                         = trim($post['referensi_nama_2']);
+						$indata_udetail['nama_atasan_langsung']                              = trim($post['nama_atasan']);
+						$indata_udetail['telp_referensi_teman_1']                        = trim($post['referensi_1']);
+						$indata_udetail['telp_referensi_teman_2']                        = trim($post['referensi_2']);
+						$indata_udetail['referensi_teman_1']                         = trim($post['referensi_nama_1']);
+						$indata_udetail['referensi_teman_2']                         = trim($post['referensi_nama_2']);
 						$this->Content_model->update_userdetail($id_pengguna, $indata_udetail);
 						
 						$response['response'] = 'success';
@@ -431,7 +439,9 @@ class Pinjaman extends REST_Controller {
                 
 				$uid = (int)antiInjection($token->id);
 				$logintype = (int)antiInjection($token->logtype);
-
+				
+				// $upload_limit = $this->config->item('file_upload_limit');	
+				
 				if (!empty($uid) && trim($uid) !='') {
 
 						$memberdata = $this->Member_model->get_member_byid_less($uid);
@@ -449,7 +459,15 @@ class Pinjaman extends REST_Controller {
 							$nowdate     = date('Y-m-d');
 							$nowdatetime = date('Y-m-d H:i:s');
 
+							// ----- Destination Foto -----
+							$destination_foto = $this->config->item('member_images_dir'). $uid."/foto/";
+							$destination_ktp  = $this->config->item('member_images_dir'). $uid."/ktp/";
+							$destination_surat_kerja = $this->config->item('member_images_dir'). $uid."/surat_keterangan_bekerja/";
+							$destination_slip_gaji   = $this->config->item('member_images_dir'). $uid."/slip_gaji/";
+							$destination_hold_idcard = $this->config->item('member_images_dir'). $uid."/pegang_ktp/";
+
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -458,11 +476,33 @@ class Pinjaman extends REST_Controller {
 								$file_foto_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['images_foto_name'] = $file_foto_name;
-							}else{
-								$file_foto_name   = '';
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_foto . $file_foto_name;
+								$filePath = $_FILES['foto_file']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_foto . $memberdata['images_foto_name']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								
+								// End of OSS
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
+								
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -471,6 +511,28 @@ class Pinjaman extends REST_Controller {
 								$file_ktp_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['images_ktp_name']  = $file_ktp_name;
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_ktp . $file_ktp_name;
+								$filePath = $_FILES['nik_file']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_ktp . $memberdata['images_ktp_name']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
 							}else{
 								$file_ktp_name   = '';
 							}
@@ -483,12 +545,35 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_surat_kerja_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_surat_keterangan_kerja_name']  = $file_surat_kerja_name;
+								$u_detail['foto_surat_keterangan_bekerja']  = $file_surat_kerja_name;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_surat_kerja . $file_surat_kerja_name;
+								$filePath = $_FILES['foto_surat_ket_kerja']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_surat_kerja . $memberdata['foto_surat_keterangan_bekerja']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+
 							}else{
 								$file_surat_kerja_name   = '';
 							}
 
 							if( isset($_FILES['foto_slip_gaji']['name']) && $_FILES['foto_slip_gaji']['name'] != ''){
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_slip_gaji']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -496,12 +581,36 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_slip_gaji_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_slip_gaji_name']  = $file_slip_gaji_name;
+								$u_detail['foto_slip_gaji']  = $file_slip_gaji_name;
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_slip_gaji . $file_slip_gaji_name;
+								$filePath = $_FILES['foto_slip_gaji']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_slip_gaji . $memberdata['foto_slip_gaji']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+
 							}else{
 								$file_slip_gaji_name   = '';
 							}
 
 							if( isset($_FILES['foto_pegang_idcard']['name']) && $_FILES['foto_pegang_idcard']['name'] != ''){
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_pegang_idcard']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -509,7 +618,30 @@ class Pinjaman extends REST_Controller {
 								$fileExt           = $img_info['extension'];
 								$file_foto_pegang_idcard_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
-								$u_detail['images_with_idcard_name']  = $file_foto_pegang_idcard_name;
+								$u_detail['foto_pegang_ktp']  = $file_foto_pegang_idcard_name;
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_hold_idcard . $file_foto_pegang_idcard_name;
+								$filePath = $_FILES['foto_pegang_idcard']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_hold_idcard . $memberdata['foto_pegang_ktp']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+								
 							}else{
 								$file_foto_pegang_idcard_name   = '';
 							}
@@ -534,6 +666,7 @@ class Pinjaman extends REST_Controller {
 							$p_pinjam['Jml_permohonan_pinjaman']      = $total_pinjam;
 							$p_pinjam['User_id']                      = $id_pengguna;
 							$p_pinjam['Product_id']                   = $productID;
+							$p_pinjam['Amount']						  = $total_pinjam;
 							$p_pinjam['Master_loan_status']           = 'review';
 							$p_pinjam['pinjam_member_id']             = $uid;
 							$p_pinjam['jml_permohonan_pinjaman_awal'] = $p_pinjam['Jml_permohonan_pinjaman'];
@@ -582,56 +715,6 @@ class Pinjaman extends REST_Controller {
 								$u_detail['Jumlah_permohonan_pinjaman'] = $total_pinjam;
 								$updated_udetail = $this->Content_model->update_userdetail($id_pengguna, $u_detail);
 							
-
-								// ----- Destination Foto -----
-								$destination_foto = $this->config->item('member_images_dir'). $uid."/foto/";
-								$destination_ktp  = $this->config->item('member_images_dir'). $uid."/ktp/";
-								$destination_surat_kerja = $this->config->item('member_images_dir'). $uid."/surat_kerja/";
-								$destination_slip_gaji   = $this->config->item('member_images_dir'). $uid."/slip_gaji/";
-								$destination_hold_idcard = $this->config->item('member_images_dir'). $uid."/hold_idcard/";
-
-								// ----- Upload Foto -----
-							
-								if(isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
-									if (!is_file($destination_foto.$file_foto_name)) {
-										mkdir_r($destination_foto);
-									}
-
-									unlink($destination_foto.$memberdata['images_foto_name']);
-									move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);		
-								}
-
-								if(isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
-									if (!is_file($destination_ktp.$file_ktp_name)) {
-										mkdir_r($destination_ktp);
-									}
-									unlink($destination_ktp.$memberdata['images_ktp_name']);
-									move_uploaded_file($_FILES['nik_file']['tmp_name'], $destination_ktp.$file_ktp_name);		
-								}
-
-								if(isset($_FILES['foto_surat_ket_kerja']['name']) && $_FILES['foto_surat_ket_kerja']['name'] != ''){
-									if (!is_file($destination_surat_kerja.$file_surat_kerja_name)) {
-										mkdir_r($destination_surat_kerja);
-									}
-									unlink($destination_surat_kerja.$memberdata['images_surat_keterangan_kerja_name']);
-									move_uploaded_file($_FILES['foto_surat_ket_kerja']['tmp_name'], $destination_surat_kerja.$file_surat_kerja_name);
-								}
-
-								if(isset($_FILES['foto_slip_gaji']['name']) && $_FILES['foto_slip_gaji']['name'] != ''){
-									if (!is_file($destination_slip_gaji.$file_slip_gaji_name)) {
-										mkdir_r($destination_slip_gaji);
-									}
-									unlink($destination_slip_gaji.$memberdata['images_slip_gaji_name']);
-									move_uploaded_file($_FILES['foto_slip_gaji']['tmp_name'], $destination_slip_gaji.$file_slip_gaji_name);
-								}
-
-								if(isset($_FILES['foto_pegang_idcard']['name']) && $_FILES['foto_pegang_idcard']['name'] != ''){
-									if (!is_file($destination_hold_idcard.$file_foto_pegang_idcard_name)) {
-										mkdir_r($destination_hold_idcard);
-									}
-									unlink($destination_hold_idcard.$memberdata['images_with_idcard_name']);
-									move_uploaded_file($_FILES['foto_pegang_idcard']['tmp_name'], $destination_hold_idcard.$file_foto_pegang_idcard_name);
-								}
 							}
 
 							// --- Set Ranking pengguna ---
@@ -688,6 +771,24 @@ class Pinjaman extends REST_Controller {
         return;
 	}
 
+	// ---------- RESIZE IMAGE ----------- //
+
+	// function resize_image($source)
+	// {
+	// 	$this->load->library('image_lib');
+
+	// 	$config['image_library'] = 'gd2';
+	// 	$config['source_image'] = $source;
+	// 	$config['maintain_ratio'] = TRUE;
+	// 	$config['width'] = 500;
+	// 	$config['height'] = 500;
+
+	// 	$this->image_lib->initialize($config);
+
+	// 	$this->image_lib->resize();
+	// 	$this->image_lib->clear();
+	// }
+
 	// ---------- PINJAMAN MIKRO ----------- //
 
 	function pengajuan_mikro_post()
@@ -716,7 +817,7 @@ class Pinjaman extends REST_Controller {
 					//$pinjaman_active = $this->Content_model->check_active_pinjaman($memberID);
 					$pinjaman_active = '';
 
-					if (count($pinjaman_active) > 1)
+					if ($pinjaman_active)
 					{
 						$response['response']  = 'fail';
 		                $response['status']    = REST_Controller::HTTP_OK;
@@ -876,40 +977,43 @@ class Pinjaman extends REST_Controller {
 						$indata_user['nama_bank']  = trim($post['nama_bank']);
 						$this->Content_model->update_user($uid, $indata_user);
 
-						if( isset($_FILES['info_usaha_file']['name']) && $_FILES['info_usaha_file']['name'] != ''){
-							// ----- Process Image Name -----
-							$img_info          = pathinfo($_FILES['info_usaha_file']['name']);
-							$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
-							$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
-							$fileExt           = $img_info['extension'];
-							$file_usaha_name   = $fileName.'.'.$fileExt;
-							// ----- END Process Image Name -----
-							$u_detail['images_usaha_name'] = $file_usaha_name;
-						}else{
-							$file_usaha_name   = '';
-						}
+						// if( isset($_FILES['info_usaha_file']['name']) && $_FILES['info_usaha_file']['name'] != ''){
+						// 	// ----- Process Image Name -----
+						// 	$img_info          = pathinfo($_FILES['info_usaha_file']['name']);
+						// 	$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+						// 	$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+						// 	$fileExt           = $img_info['extension'];
+						// 	$file_usaha_name   = $fileName.'.'.$fileExt;
+						// 	// ----- END Process Image Name -----
+						// 	$u_detail['images_usaha_name'] = $file_usaha_name;
+						// }else{
+						// 	$file_usaha_name   = '';
+						// }
 
 						// -> update table user detail
 						$u_detail['deskripsi_usaha']         = trim($post['deskripsi_usaha']);
 						$u_detail['omzet_usaha']             = trim($post['omzet']);;
 						$u_detail['margin_usaha']            = trim($post['margin']);;
-						$u_detail['biaya_operasional_usaha'] = trim($post['biaya_operasional']);;
+						$u_detail['biaya_operasional'] = trim($post['biaya_operasional']);;
 						$u_detail['laba_usaha']              = trim($post['laba_usaha']);;
 						$u_detail['jml_bunga_usaha']         = trim($post['jml_bunga']);;
 						$updated_udetail = $this->Content_model->update_userdetail($id_pengguna, $u_detail);
 
 						// ----- Destination Foto -----
-						$destination_usaha = $this->config->item('member_images_dir'). $uid."/usaha/";
+						// $destination_usaha = $this->config->item('member_images_dir'). $uid."/usaha/";
 
-						if ($updated_udetail) {
-							if(isset($_FILES['info_usaha_file']['name']) && $_FILES['info_usaha_file']['name'] != ''){
-								if (!is_file($destination_usaha.$file_usaha_name)) {
-									mkdir_r($destination_usaha);
-								}
-								unlink($destination_usaha.$memberdata['images_usaha_name']);
-								move_uploaded_file($_FILES['info_usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
-							}
-						}
+						// if ($updated_udetail) {
+						// 	if(isset($_FILES['info_usaha_file']['name']) && $_FILES['info_usaha_file']['name'] != ''){
+						// 		if (!is_file($destination_usaha.$file_usaha_name)) {
+						// 			mkdir_r($destination_usaha);
+						// 		}
+						// 		unlink($destination_usaha.$memberdata['images_usaha_name']);
+
+						// 		// $this->resize_image($_FILES['info_usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
+
+						// 		move_uploaded_file($_FILES['info_usaha_file']['tmp_name'], $destination_usaha.$file_usaha_name);
+						// 	}
+						// }
 
 						$response['response'] = 'success';
 	                    $response['status']   = REST_Controller::HTTP_OK;
@@ -993,12 +1097,23 @@ class Pinjaman extends REST_Controller {
 								$response['response'] = 'failed';
 			                    $response['status']   = REST_Controller::HTTP_BAD_REQUEST;
 			                    $response['content']  = '';
-			                    $response['message']  = 'Jumlah Pinjaman Maksimal Rp 5000,000';
+			                    $response['message']  = 'Jumlah Pinjaman Maksimal Rp '.number_format($produk['Max_loan']);
+			                    // $response['message']  = 'Jumlah Pinjaman Maksimal Rp 5000,000';
 			                    $this->set_response($response, REST_Controller::HTTP_BAD_REQUEST);
 			                    return;
 							}
 
+								// ----- Destination Foto -----
+								$destination_foto  = $this->config->item('member_images_dir'). $uid."/foto/";
+								$destination_ktp   = $this->config->item('member_images_dir'). $uid."/ktp/";
+								$destination_usaha = $this->config->item('member_images_dir'). $uid."/usaha/";
+								$destination_usaha2 = $this->config->item('member_images_dir'). $uid."/usaha2/";
+								$destination_usaha3 = $this->config->item('member_images_dir'). $uid."/usaha3/";
+								$destination_usaha4 = $this->config->item('member_images_dir'). $uid."/usaha4/";
+								$destination_usaha5 = $this->config->item('member_images_dir'). $uid."/usaha5/";
+
 							if( isset($_FILES['foto_file']['name']) && $_FILES['foto_file']['name'] != ''){
+
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['foto_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1007,11 +1122,33 @@ class Pinjaman extends REST_Controller {
 								$file_foto_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['images_foto_name'] = $file_foto_name;
-							}else{
-								$file_foto_name   = '';
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_foto . $file_foto_name;
+								$filePath = $_FILES['foto_file']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_foto . $memberdata['images_foto_name']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								
+								// End of OSS
 							}
 
 							if( isset($_FILES['nik_file']['name']) && $_FILES['nik_file']['name'] != ''){
+								
 								// ----- Process Image Name -----
 								$img_info          = pathinfo($_FILES['nik_file']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
@@ -1020,21 +1157,205 @@ class Pinjaman extends REST_Controller {
 								$file_ktp_name   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['images_ktp_name']  = $file_ktp_name;
+
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_ktp . $file_ktp_name;
+								$filePath = $_FILES['nik_file']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_ktp . $memberdata['images_ktp_name']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
 							}else{
 								$file_ktp_name   = '';
 							}
 
-							if( isset($_FILES['foto_usaha_file']['name']) && $_FILES['foto_usaha_file']['name'] != ''){
+							if( isset($_FILES['foto_usaha']['name']) && $_FILES['foto_usaha']['name'] != ''){
+								
 								// ----- Process Image Name -----
-								$img_info          = pathinfo($_FILES['foto_usaha_file']['name']);
+								$img_info          = pathinfo($_FILES['foto_usaha']['name']);
 								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
 								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
 								$fileExt           = $img_info['extension'];
 								$foto_usaha   = $fileName.'.'.$fileExt;
 								// ----- END Process Image Name -----
 								$u_detail['images_usaha_name']  = $foto_usaha;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha . $foto_usaha;
+								$filePath = $_FILES['foto_usaha']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha . $memberdata['images_usaha_name']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
 							}else{
 								$foto_usaha   = '';
+							}
+
+							if( isset($_FILES['foto_usaha2']['name']) && $_FILES['foto_usaha2']['name'] != ''){
+								
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['foto_usaha2']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$foto_usaha2   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								$u_detail['images_usaha_name2']  = $foto_usaha2;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha2 . $foto_usaha2;
+								$filePath = $_FILES['foto_usaha2']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha2 . $memberdata['images_usaha_name2']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+							}else{
+								$foto_usaha2   = '';
+							}
+
+							if( isset($_FILES['foto_usaha3']['name']) && $_FILES['foto_usaha3']['name'] != ''){
+								
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['foto_usaha3']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$foto_usaha3   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								$u_detail['images_usaha_name3']  = $foto_usaha3;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha3 . $foto_usaha3;
+								$filePath = $_FILES['foto_usaha3']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha3 . $memberdata['images_usaha_name3']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+							}else{
+								$foto_usaha3   = '';
+							}
+
+							if( isset($_FILES['foto_usaha4']['name']) && $_FILES['foto_usaha4']['name'] != ''){
+								
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['foto_usaha4']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$foto_usaha4   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								$u_detail['images_usaha_name4']  = $foto_usaha4;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha4 . $foto_usaha4;
+								$filePath = $_FILES['foto_usaha4']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha4 . $memberdata['images_usaha_name4']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+							}else{
+								$foto_usaha4   = '';
+							}
+
+							if( isset($_FILES['foto_usaha5']['name']) && $_FILES['foto_usaha5']['name'] != ''){
+								
+								// ----- Process Image Name -----
+								$img_info          = pathinfo($_FILES['foto_usaha5']['name']);
+								$fileName          = strtolower(str_replace(' ', '-', $img_info['filename']));
+								$fileName          = preg_replace('#[^a-z.0-9_-]#i', '', $fileName);
+								$fileExt           = $img_info['extension'];
+								$foto_usaha5   = $fileName.'.'.$fileExt;
+								// ----- END Process Image Name -----
+								$u_detail['images_usaha_name5']  = $foto_usaha5;
+								// Start of OSS
+								$accessKeyId = $this->config->item('oss_access_key_id');
+								$accessKeySecret = $this->config->item('oss_access_key_secret');
+								$endpoint = $this->config->item('oss_endpoint');
+								$bucket= $this->config->item('oss_bucket_bkd_user');
+								$object =  $destination_usaha5 . $foto_usaha5;
+								$filePath = $_FILES['foto_usaha5']['tmp_name'];
+
+								try{
+									$ossClient = new OssClient($accessKeyId, $accessKeySecret, $endpoint);
+									$ossClient->uploadFile($bucket, $object, $filePath);
+
+									//if($post['old_foto']!=''){
+										$ossClient->deleteObject($bucket,$destination_usaha5 . $memberdata['images_usaha_name5']);
+									//}
+								} catch(OssException $e) {
+									printf(__FUNCTION__ . ": FAILED\n");
+									printf($e->getMessage() . "\n");
+									return;
+								}
+								// END of OSS
+							}else{
+								$foto_usaha5   = '';
 							}
 
 							// ------------ Insert pinjaman ---------------//
@@ -1106,38 +1427,6 @@ class Pinjaman extends REST_Controller {
 								$u_detail['How_many_years_have_you_been_in_business'] = trim($post['lama_usaha']);
 								$u_detail['Jumlah_permohonan_pinjaman'] = $total_pinjam;
 								$this->Content_model->update_userdetail($id_pengguna, $u_detail);
-								
-									// ----- Destination Foto -----
-								$destination_foto  = $this->config->item('member_images_dir'). $uid."/foto/";
-								$destination_ktp   = $this->config->item('member_images_dir'). $uid."/ktp/";
-								$destination_usaha = $this->config->item('member_images_dir'). $uid."/usaha/";
-
-								// ----- Upload Foto -----
-								
-									if($_FILES['foto_file']['name'] != ''){
-										if (!is_file($destination_foto.$file_foto_name)) {
-											mkdir_r($destination_foto);
-										}
-
-										unlink($destination_foto.$memberdata['images_foto_name']);
-										move_uploaded_file($_FILES['foto_file']['tmp_name'], $destination_foto.$file_foto_name);		
-									}
-
-									if($_FILES['nik_file']['name'] != ''){
-										if (!is_file($destination_ktp.$file_ktp_name)) {
-											mkdir_r($destination_ktp);
-										}
-										unlink($destination_ktp.$memberdata['images_ktp_name']);
-										move_uploaded_file($_FILES['nik_file']['tmp_name'], $destination_ktp.$file_ktp_name);		
-									}
-
-									if($_FILES['foto_usaha_file']['name'] != ''){
-										if (!is_file($destination_usaha.$foto_usaha)) {
-											mkdir_r($destination_usaha);
-										}
-										unlink($destination_usaha.$memberdata['images_usaha_name']);
-										move_uploaded_file($_FILES['foto_usaha_file']['tmp_name'], $destination_usaha.$foto_usaha);		
-									}
 
 									// --- Set Ranking pengguna ---
 									$get_ranking = set_ranking_pengguna($id_pengguna, $memberdata['mum_type'], $memberdata['mum_type_peminjam']); // (Id_pengguna, peminjam/pendana, kilat/mikro)

@@ -159,27 +159,65 @@ class Member extends REST_Controller {
 				$member = $this->Member_model->data_member($uid);
 
 				if ($member['foto_file'] !=''){
-					$member['foto_file'] = $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/foto/' .$member['foto_file'];
+					$member['foto_file'] =site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/foto/' .$member['foto_file']);
 				}
 
 				if ($member['nik_file'] !=''){
-					$member['nik_file'] = $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/ktp/' .$member['nik_file'];
+					$member['nik_file'] =site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/ktp/' .$member['nik_file']); 
+					
+					// $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/ktp/' .$member['nik_file'];
 				}
 
 				if ($member['foto_surat_ket_kerja'] !=''){
-					$member['foto_surat_ket_kerja'] = $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/surat_kerja/' .$member['foto_surat_ket_kerja'];
+					$member['foto_surat_ket_kerja'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/surat_keterangan_bekerja/' .$member['foto_surat_ket_kerja']);
+
+					// $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/surat_kerja/' .$member['foto_surat_ket_kerja'];
 				}
 
 				if ($member['foto_slip_gaji'] !=''){
-					$member['foto_slip_gaji'] = $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/slip_gaji/' .$member['foto_slip_gaji'];
+					$member['foto_slip_gaji'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/slip_gaji/' .$member['foto_slip_gaji']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/slip_gaji/' .$member['foto_slip_gaji'];
 				}
 
 				if ($member['foto_pegang_idcard'] !=''){
-					$member['foto_pegang_idcard'] = $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/hold_idcard/' .$member['foto_pegang_idcard'];
+					$member['foto_pegang_idcard'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/pegang_ktp/' .$member['foto_pegang_idcard']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/hold_idcard/' .$member['foto_pegang_idcard'];
 				}
 
 				if ($member['foto_usaha_file'] !=''){
-					$member['foto_usaha_file'] = $this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+					$member['foto_usaha_file'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+				}
+
+
+				if ($member['foto_usaha_file2'] !=''){
+					$member['foto_usaha_file2'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha2/' .$member['foto_usaha_file2']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+				}
+
+
+				if ($member['foto_usaha_file3'] !=''){
+					$member['foto_usaha_file3'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha3/' .$member['foto_usaha_file3']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+				}
+
+
+				if ($member['foto_usaha_file4'] !=''){
+					$member['foto_usaha_file4'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha4/' .$member['foto_usaha_file4']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
+				}
+
+
+				if ($member['foto_usaha_file5'] !=''){
+					$member['foto_usaha_file5'] = site_url('fileload') . '?p=' . urlencode('member/'.$member['member_id'] .'/usaha5/' .$member['foto_usaha_file5']); 
+
+					//$this->config->item('images_uri') . 'member/'.$member['member_id'] .'/usaha/' .$member['foto_usaha_file'];
 				}
 
 				

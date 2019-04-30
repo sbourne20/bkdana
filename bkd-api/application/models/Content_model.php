@@ -538,7 +538,7 @@ class Content_model extends CI_Model
 			FORMAT(Jml_penawaran_pemberian_pinjaman_disetujui, 0) as total_approve, 
 			tgl_disetujui as tgl_approve,
 			pendanaan_status as transaksi_status,
-			product_title, Loan_term, id_mod_type_business, type_business_name
+			product_title, nama_peminjam, Loan_term, id_mod_type_business, type_business_name
 			FROM {$this->profile_pendanaan} pd 
 			LEFT JOIN {$this->profil_permohonan_pinjaman} pp ON(pp.Master_loan_id=pd.Master_loan_id)
 			LEFT JOIN {$this->product} prod ON(prod.Product_id=pp.Product_id)
@@ -1535,4 +1535,5 @@ class Content_model extends CI_Model
 		return $sql->row_array();
 	}
 
+	
 }

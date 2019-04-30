@@ -8,7 +8,6 @@ require_once APPPATH . 'libraries/SignatureInvalidException.php';
 
 use Restserver\Libraries\REST_Controller;
 
-
 /* ======= LOGIN =======  */
 
 class Auth extends REST_Controller
@@ -28,13 +27,14 @@ class Auth extends REST_Controller
 
             $email = trim($this->input->post('username', TRUE));
             $pass  = trim($this->input->post('password', TRUE));
+            $tokenfornotif = trim($this->input->post('fcmtoken', TRUE)); 
 
             if ($email != '' && $pass != '') {
 
                 $device_token = $this->input->post('token', TRUE);
 
                 $getdata = $this->Member_model->do_login_byemail(htmlentities(strip_tags($email)));
-
+            
                 // _d($getdata);
                 // exit();
 
@@ -43,14 +43,6 @@ class Auth extends REST_Controller
                     $stored_password = $getdata['mum_password'];
 
                     if (password_verify(base64_encode(hash('sha256', ($pass), true)), $stored_password)) {
-
-                        /*if (!empty($device_token))
-                        {
-                            // echo 'update device token';
-                            $updata['member_device_token'] = antiInjection($device_token);
-                            $updata['member_device_date']  = date('Y-m-d H:i:s');
-                            $this->Member_model->update_memberdata($getdata['member_id'], $updata);
-                        }*/
 
                         // Generate JWT Token
                         $issuedAt   = time();
@@ -64,14 +56,26 @@ class Auth extends REST_Controller
                         $tokenData['nbf']   = $notBefore;
                         $tokenData['exp']   = $expire;
                         $tokenData['logtype'] = $getdata['mum_type'];
+                        $tokenData['tpeminjam'] = $getdata['mum_type_peminjam'];
 
+                        
+                         // if(count($getfcmtoken) > 0)
+                         // {
+                         // 	$this->Member_model->update_memberNotification($getfcmtoken['id_mod_user_member'],'');
+                         // }
+                         
+                        $this->Member_model->update_memberNotification($tokenData['id'], $tokenfornotif);
                         $response['response'] = 'success';
                         $response['status']   = REST_Controller::HTTP_OK;
                         $response['token']    = Authorization::generateToken($tokenData);
                         $response['name']     = $getdata['mum_fullname'];
                         $response['logtype']  = $getdata['mum_type'];
+                        $response['tpeminjam'] = $getdata['mum_type_peminjam'];
+
                         $this->set_response($response, REST_Controller::HTTP_OK);
                         return;
+                         
+                       
                     }
                     else
                     {
@@ -100,6 +104,43 @@ class Auth extends REST_Controller
                 return;
             }
         
+    }
+
+    public function logout_post()
+    {
+
+    	$email_num = trim($this->input->post('emailUsr', TRUE));
+        $response['response'] = 'success';
+        $response['status']   = REST_Controller::HTTP_OK;
+        $this->Member_model->update_memberNotification($email_num, '');
+        $this->set_response($response, REST_Controller::HTTP_OK);
+        return;
+    }
+
+    public function check_fcmtoken_post(){
+        $check_fcmtoken = trim($this->input->post('fcmtoken', TRUE));
+        $getfcmtoken = $this->Member_model->get_fcmtoken($check_fcmtoken);
+
+        if($getfcmtoken['fcm_token'] == $check_fcmtoken){
+
+            $response = [
+                            'response' => 'success',
+                            'status'   => REST_Controller::HTTP_OK,
+                            'message'  => 'Data Found',
+                        ];
+            $this->set_response($response, REST_Controller::HTTP_OK);
+            return;
+
+        }else{
+            $response = [
+                            'response' => 'fail',
+                            'status'   => 400,
+                            'message'  => 'Data Not Found',
+                        ];
+                        $this->set_response($response, 400);
+                        return;  
+        }
+
     }
 
     public function callback_google_post()

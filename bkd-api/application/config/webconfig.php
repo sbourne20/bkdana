@@ -1,16 +1,16 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-if($_SERVER['HTTP_HOST']=='localhost')
+if($_SERVER['HTTP_HOST']=='localhost' or $_SERVER['HTTP_HOST']=='192.168.1.86')
 {
     $config['doc_root'] = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == "on") ? "https" : "http");
     $config['doc_root'] .= "://".$_SERVER['HTTP_HOST'];
     $config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
-    $config['data_dir']    = $_SERVER['DOCUMENT_ROOT'] . '/data-bkd/';
-    $config['attach_dir']  = $_SERVER['DOCUMENT_ROOT'] . '/data-file-bkd/';
-    $config['img_baseurl'] = "http://localhost/";
-    $config['images_uri']   = $config['img_baseurl'] . "data-bkd/images/";
+    $config['data_dir']    = FCPATH . "../../../data-bkd/";
+    $config['bkd_server'] = 'http://localhost/bkdana/bkd/fileload-external';
+    // $config['img_baseurl'] = $config['doc_root'];
+    $config['images_member_uri'] = $config['doc_root'] ."images-data/member/";
 
 }else if($_SERVER['HTTP_HOST']=='149.129.213.30')
 {
@@ -26,18 +26,18 @@ if($_SERVER['HTTP_HOST']=='localhost')
     $config['doc_root'] = "https://".$_SERVER['HTTP_HOST'];
     $config['doc_root'] .= str_replace(basename($_SERVER['SCRIPT_NAME']),"",$_SERVER['SCRIPT_NAME']);
 
-    $config['data_dir']    = '/var/www/html/data-bkd/';
-    $config['attach_dir']  = '/var/www/html/data-file-bkd/';
-    $config['img_baseurl'] = 'https://bkdana.id/';
-    $config['images_uri']   = $config['img_baseurl'] . "images-data/";
+   $config['data_dir']    = "https://bkdana.id/fileload-external";
+    $config['attach_dir']  = FCPATH . "../../data-file-bkd/";
+    $config['img_baseurl'] = $ishttp ."://".$_SERVER['HTTP_HOST'] .'/';
+    $config['images_member_uri']    = "https://bkdana.id/fileload-external";
 }
 
 // upload path
-$config['images_dir']         = $config['data_dir'] . 'images/';
+$config['images_dir']         = $config['data_dir'];
 $config['kilat_images_dir']   = $config['images_dir'] . 'pinjaman/kilat/';
 $config['mikro_images_dir']   = $config['images_dir'] . 'pinjaman/mikro/';
 $config['pendana_images_dir'] = $config['images_dir'] . 'pendana/';
-$config['member_images_dir']  = $config['images_dir'] . 'member/';
+$config['member_images_dir']  = 'member/';
 
 
 
@@ -47,7 +47,7 @@ $config['mail_username']      = 'bkdanafinansial@gmail.com';
 $config['mail_password']      = 'master177';
 $config['bank_tujuan']        = 'Bank CIMB';
 
-$config['minimum_mikro']      = '2000000';
+$config['minimum_mikro']      = '1000000';
 $config['minimum_topup']      = '100000';
 $config['minimum_grade']      = '95';
 $config['bkd_telp']           = '+62 21 83784354';
@@ -62,4 +62,4 @@ $config['vServer_key']  = 'SB-Mid-server-7UDjQBASCcq-WJdzM-nJBPZZ'; // sandbox
 $config['oss_access_key_id'] = 'LTAIJbwb8rmv5ptU';
 $config['oss_access_key_secret'] = 'CSwic1up6VGQtlg4bp2DLQc731n5Re';
 $config['oss_endpoint'] = 'https://oss-ap-southeast-5.aliyuncs.com';
-$config['oss_bucket_bkd_user'] = ($_SERVER['HTTP_HOST']=='localhost' OR $_SERVER['HTTP_HOST']=='149.129.248.46') ? 'bkd-development' : 'bkd-production';
+$config['oss_bucket_bkd_user'] = ($_SERVER['HTTP_HOST']=='localhost' OR $_SERVER['HTTP_HOST']=='149.129.248.46' OR $_SERVER['HTTP_HOST']=='192.168.1.86') ? 'bkd-development' : 'bkd-production';

@@ -120,8 +120,8 @@ class Profile extends REST_Controller {
 					$nik             = trim($post['nik']);
 					$gender          = trim($post['jenis_kelamin']);
 					$tgl_lahir       = ($post['tgl_lahir'])? date('Y-m-d', strtotime(trim($post['tgl_lahir']))) : '';
-					$pendidikan      = trim($post['pendidikan']);
-					$pekerjaan       = trim($post['pekerjaan']);
+					$pendidikan         = trim($post['pendidikan']);
+					$pekerjaan          = trim($post['pekerjaan']);
 
 					$memberdata = $this->Member_model->get_member_byid_less($uid);
 					$id_pengguna = $memberdata['Id_pengguna'];
@@ -178,8 +178,8 @@ class Profile extends REST_Controller {
 						$indata_user['Jenis_kelamin']  = $gender;
 						$indata_user['Tanggal_lahir']  = $tgl_lahir;
 						$indata_user['Id_ktp']         = $nik;
-						//$indata_user['Pendidikan']     = $pendidikan;
-						//$indata_user['Pekerjaan']      = $pekerjaan;
+						$indata_user['Pendidikan']     = $pendidikan;
+						$indata_user['Pekerjaan']      = $pekerjaan;
 						$this->Content_model->update_user($uid, $indata_user);
 
 						$u_detail['Mobileno'] = $telp;
