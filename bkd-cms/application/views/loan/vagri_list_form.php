@@ -77,13 +77,13 @@
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">No CF</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" name="cf_number" value="<?php echo $data['no_cf']; ?>" >
+	                            <input type="text" class="form-control" name="cf_number" value="<?php echo $data['no_cf']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Luas Lahan (Ha)</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" name="luas_lahan" value="<?php echo number_format($data['no_cf']); ?>" >
+	                            <input type="text" class="form-control" name="luas_lahan" value="<?php echo number_format($data['no_cf']); ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
@@ -95,19 +95,19 @@
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Penjualan 6 Bulan Terakhir</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control numeric" name="penjualan" value="<?php echo $data['penjualan_terakhir']; ?>" >
+	                            <input type="text" class="form-control numeric" name="penjualan" value="<?php echo $data['penjualan_terakhir']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Bulan Aktif 6 Bulan Terakhir</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" name="bulan_aktif" value="<?php echo $data['bulan_aktif_terakhir']; ?>" >
+	                            <input type="text" class="form-control" name="bulan_aktif" value="<?php echo $data['bulan_aktif_terakhir']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Tipe Hasil Tani</label>
 	                        <div class="col-sm-6">
-	                            <select class="form-control" name="tipe_hasil_tani" id="tipe_hasil_tani" data-value="<?php echo $data['tipe_hasil_tani']; ?>">
+	                            <select class="form-control" name="tipe_hasil_tani" id="tipe_hasil_tani" data-value="<?php echo $data['tipe_hasil_tani']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
                                     <option value=""> -- Pilih --</option>
                                     <?php foreach ($tipe_hasil_tani as $key) { ?>
                                         <option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>" 
@@ -122,19 +122,19 @@
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Volume Panen (Kg)</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" name="volume_panen" value="<?php echo number_format($data['volume_panen']); ?>" >
+	                            <input type="text" class="form-control" name="volume_panen" value="<?php echo number_format($data['volume_panen']); ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Harga/Kg (IDR)</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control numeric" name="harga_kg" value="<?php echo $data['harga_kg']; ?>" >
+	                            <input type="text" class="form-control numeric" name="harga_kg" value="<?php echo $data['harga_kg']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
 	                        </div>
 	                    </div>
 	                    <div class="form-group">
 	                        <label class="col-sm-3 control-label">Tenor Pinjaman yang direkomendasikan</label>
 	                        <div class="col-sm-6">
-	                            <input type="text" class="form-control" name="rekomendasi_tenor" value="<?php echo $data['tenor_pinjaman_disetujui']; ?>" >
+	                            <input type="text" class="form-control" name="rekomendasi_tenor" value="<?php echo $data['tenor_pinjaman_disetujui']; ?>" data-validation-engine="validate[required]" data-errormessage-value-missing="This field is required!" >
 	                        </div>
 	                    </div>
 	                    <!-- batas tambahan baru -->

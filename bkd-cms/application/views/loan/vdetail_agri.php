@@ -35,6 +35,11 @@
 		<tr>
 			<td>Nama</td><td><?php echo $data['Nama_pengguna']; ?></td>
 		</tr>
+		<?php if (!empty($data['mum_email']) ) { ?>
+		<tr>
+			<td>Email</td><td><?php echo $data['mum_email']; ?></td>
+		</tr>
+		<?php } ?>
 		<tr>
 			<td>Telp</td><td><?php echo $data['Mobileno']; ?></td>
 		</tr>
@@ -48,23 +53,37 @@
 			<td>Jenis Kelamin</td><td><?php echo $data['Gender']; ?></td>
 		</tr>
 		<tr>
-			<td>Alamat</td><td><?php echo $data['Nama_Alamat']; ?></td>
+			<td>Alamat sesuai dengan ktp</td><td><?php echo $data['Alamat']; ?></td>
 		</tr>
 
 		<tr>
-			<td>Provinsi</td><td><?php echo $data['Nama_Provinsi']; ?></td>
+			<td>Provinsi sesuai dengan ktp</td><td><?php echo $data['Nama_Provinsi']; ?></td>
 		</tr>		
 		<tr>
-			<td>Kota</td><td><?php echo $data['Nama_Kota']; ?></td>
+			<td>Kota sesuai dengan ktp</td><td><?php echo $data['Nama_Kota']; ?></td>
 		</tr>
 		
 		<tr>
-			<td>Kode Pos</td><td><?php echo $data['Kodepos']; ?></td>
+			<td>Kode Pos sesuai dengan ktp</td><td><?php echo $data['Kodepos']; ?></td>
 		</tr>
+		<?php if ($data['Check_Domisili']=='0') { ?>
+		<tr>
+			<td>Alamat Domisili</td><td><?php echo $data['Alamat_Domisili']; ?></td>
+		</tr>
+		<tr>
+			<td>Provinsi Domisili</td><td><?php echo $data['Provinsi_Domisili']; ?></td>
+		</tr>		
+		<tr>
+			<td>Kota Domisili</td><td><?php echo $data['Kota_Domisili']; ?></td>
+		</tr>
+		<tr>
+			<td>Kode Pos Domisili</td><td><?php echo $data['Kodepos_Domisili']; ?></td>
+		</tr>
+		<?php } ?>
 		<tr>
 			<td>Foto Profil</td>
 			<td>
-				<img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/usaha/'. $data['images_foto_name']); ?>" alt="" />		
+				<img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/foto/'. $data['images_foto_name']); ?>" alt="" />		
 			</td>
 		</tr>
 		<tr>
@@ -148,7 +167,7 @@
 		</tr>
 		<tr>
 			<td>Foto Pegang IDCard/EKTP</td>
-			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/pegang_ktp/'. $data['images_ktp_name']); ?>" alt="" /></td>
+			<td><img width="300" src="<?php echo site_url('fileload?p=') . urlencode('member/' . $data['id_mod_user_member'] .'/pegang_ktp/'. $data['foto_pegang_ktp']); ?>" alt="" /></td>
 		</tr>
 		<tr>
 			<td>Foto CF</td>
@@ -181,7 +200,7 @@
 			<td>Jumlah Pinjaman disetujui</td><td>Rp <?php echo number_format($data['Jml_permohonan_pinjaman_disetujui']); ?></td>
 		</tr>
 		<tr>
-			<td>Tenor</td><td><?php echo $data['Loan_term']; ?> Bulan</td>
+			<td>Tenor</td><td><?php echo $data['loan_term_permohonan']; ?> Hari </td>
 		</tr>
 		
 

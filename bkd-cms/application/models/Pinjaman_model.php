@@ -704,6 +704,7 @@ class Pinjaman_model extends CI_Model
 		$this->db->select('*');
 		$this->db->from($this->tabel_pinjaman. ' p');
 		$this->db->join($this->user_ojk. ' u', 'u.Id_pengguna=p.User_id', 'left');
+		$this->db->join($this->mod_user_member. ' mem', 'mem.Id_mod_user_member=u.id_mod_user_member', 'left');
 		$this->db->join($this->user_ojk_detail. ' ud', 'ud.Id_pengguna=u.Id_pengguna', 'left');
 		$this->db->join($this->profile_geografi. ' g', 'g.User_id=u.Id_pengguna', 'left');
 		$this->db->join($this->product. ' prod', 'prod.Product_id=p.Product_id', 'left');
