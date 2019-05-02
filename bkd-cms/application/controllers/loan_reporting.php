@@ -29,13 +29,13 @@ class loan_reporting extends CI_Controller {
 		$mainData['top_css']  .= add_external_css('https://cdn.datatables.net/buttons/1.5.6/css/buttons.dataTables.min.css');
 		$mainData['top_js'] .= add_js('plugins/bootstrap-datepicker/bootstrap-datepicker.js');
 		$mainData['bottom_js'] .= add_js('plugins/DataTables1.10.19/dataTables.min.js');
-		$mainData['bottom_js'] .= add_js('plugins/Buttons-1.5.6/js/dataTables.buttons.min.js');
-		$mainData['bottom_js'] .= add_js('plugins/Buttons-1.5.6/js/buttons.flash.min.js');
-		$mainData['bottom_js'] .= add_js('plugins/JSZip-2.5.0/jszip.min.js');
-		$mainData['bottom_js'] .= add_js('plugins/pdfmake-0.1.36/pdfmake.min.js');
-		$mainData['bottom_js'] .= add_js('plugins/pdfmake-0.1.36/vfs_fonts.js');
-		$mainData['bottom_js'] .= add_js('plugins/Buttons-1.5.6/js/buttons.html5.min.js');
-		$mainData['bottom_js'] .= add_js('plugins/Buttons-1.5.6/js//buttons.print.min.js');
+		$mainData['bottom_js'] .= add_js('plugins/DataTables1.10.19/Buttons-1.5.6/js/dataTables.buttons.min.js');
+		$mainData['bottom_js'] .= add_js('plugins/DataTables1.10.19/Buttons-1.5.6/js/buttons.flash.min.js');
+		$mainData['bottom_js'] .= add_js('plugins/DataTables1.10.19/JSZip-2.5.0/jszip.min.js');
+		$mainData['bottom_js'] .= add_js('plugins/DataTables1.10.19/pdfmake-0.1.36/pdfmake.min.js');
+		$mainData['bottom_js'] .= add_js('plugins/DataTables1.10.19/pdfmake-0.1.36/vfs_fonts.js');
+		$mainData['bottom_js'] .= add_js('plugins/DataTables1.10.19/Buttons-1.5.6/js/buttons.html5.min.js');
+		$mainData['bottom_js'] .= add_js('plugins/DataTables1.10.19/Buttons-1.5.6/js//buttons.print.min.js');
 		$mainData['bottom_js'] .= add_js('js/data/loan_reporting.js');
 
 		$mainData['mainContent']  = $this->load->view('loan_reporting/vmember', $output, true);
