@@ -205,7 +205,7 @@ class Transaksi extends CI_Controller {
 			$data['jumlah_cicilan']   = $repayment1['jumlah_cicilan'];
 			$data['jumlah_denda']     = $repayment1['jml_denda'];
 
-			if($repayment1['notes_cicilan']){
+			if($repayment1['notes_cicilan'] == '1' && $repayment1['status_cicilan'] == 'belum_lunas'){
 			$data['total_bunga']	  = ($datediff2*$transaksi['jumlah_cicilan']*$transaksi['Interest_rate'])/100;
 			}else{
 				$data['total_bunga'] = ($datediff*$transaksi['jumlah_cicilan']*$transaksi['Interest_rate'])/100;
@@ -801,6 +801,7 @@ class Transaksi extends CI_Controller {
 			$nowdate     		= date('Y-m-d');
 			$nowdatetime 		= date('Y-m-d H:i:s');
 			$get_master_wallet 	= $this->Wallet_model->get_wallet_bymember($uid);
+			$last_number   		= $this->Content_model->get_nomor_angsuran($indetail['Master_loan_id']);
 			$nomor_cicilan 		= $last_number['itotal'] + 1;
 			$getlog 			= $this->Content_model->get_tabel_pinjaman($transaksi_id);
 			$produk 			= $this->Content_model->get_product_by($getlog['Product_id']);
@@ -818,7 +819,7 @@ class Transaksi extends CI_Controller {
 
 			$record_repayment_data = $this->Content_model->get_record_repayment($indetail['Master_loan_id']);
 			
-			$last_number   		= $this->Content_model->get_nomor_angsuran($indetail['Master_loan_id']);
+			
 
 
 			$detail_id 				= $this->Content_model->insert_cicilan($indetail);
@@ -850,10 +851,10 @@ class Transaksi extends CI_Controller {
 					$this->Wallet_model->insert_detail_wallet($detail_w);
 
 					if($jml_cicilan_hidden == $jml_bayar){
-					$repayment['jumlah_cicilan'] = $nominal_amount - ($jml_cicilan - $bunga_pinjaman);
+					$repayment['jumlah_cicilan'] = $nominal_amount - ($jml_bayar - $bunga_pinjaman); 
 					$repayment['tgl_pembayaran'] = $nowdatetime;
 					$repayment['status_cicilan'] = 'lunas';
-					$repayment['jml_bayar']		 = $jml_cicilan;
+					$repayment['jml_bayar']		 = $jml_bayar;
 					$repayment['jml_bunga']		 = $bunga_pinjaman;
 					$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $repayment['status_cicilan'], $repayment['jumlah_cicilan'], $repayment['jml_bayar'], $repayment['jml_bunga'], $indetail['Master_loan_id'] );	
 
@@ -867,11 +868,11 @@ class Transaksi extends CI_Controller {
 						// $repayment['tgl_record_repayment']	   = $nowdatetime;
 						// $this->Wallet_model->insert_record_repayment($repayment);	
 					}else{
-						$repayment['jumlah_cicilan'] = $nominal_amount - ($jml_cicilan - $bunga_pinjaman); 
+						$repayment['jumlah_cicilan'] = $nominal_amount - ($jml_bayar - $bunga_pinjaman); 
 						$repayment['tgl_pembayaran'] = $nowdatetime;
 						$repayment['jml_bunga']		 = $bunga_pinjaman;
 						$repayment['notes_cicilan']	 = $nomor_cicilan;
-						$repayment['jml_bayar']		 = $jml_cicilan;
+						$repayment['jml_bayar']		 = $jml_bayar;
 						$repayment['status_cicilan'] = 'belum-lunas';
 						$this->Wallet_model->update_record_repayment($repayment['tgl_pembayaran'], $repayment['status_cicilan'], $repayment['jumlah_cicilan'], $repayment['jml_bayar'], $repayment['jml_bunga'], $indetail['Master_loan_id'] );
 
