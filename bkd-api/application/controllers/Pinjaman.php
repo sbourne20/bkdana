@@ -1488,4 +1488,162 @@ class Pinjaman extends REST_Controller {
 		$this->set_response($response, $http_status);
         return;
 	}
+
+	// ---------- PINJAMAN AGRI ----------- //
+
+	function pengajuan_agri_post()
+	{
+		// ======= list agri ====== //
+
+		$headers = $this->input->request_headers();
+
+		if (Authorization::tokenIsExist($headers)) {
+            $token = Authorization::validateToken($headers['Authorization']);
+            if ($token != false) {
+                
+				$uid = (int)antiInjection($token->id);
+
+				$logintype = (int)antiInjection($token->logtype);
+
+				if (!empty($uid) && is_numeric($logintype)) {
+
+					$memberID  = $uid;
+
+					if ($logintype=='2') {	
+						redirect('message/restrict_pendana');
+						exit();
+					}
+
+					//$pinjaman_active = $this->Content_model->check_active_pinjaman($memberID);
+					$pinjaman_active = '';
+
+					if ($pinjaman_active)
+					{
+						$response['response']  = 'fail';
+		                $response['status']    = REST_Controller::HTTP_OK;
+		                $response['message']   = 'Masih ada transaksi pinjaman yang belum selesai';
+		                $response['content']   = '';
+						$this->set_response($response, REST_Controller::HTTP_OK);
+		                return;
+					}else{
+
+						$data['products'] = $this->Content_model->get_pinjaman_pengajuan(3); // type_off_business_id
+						//$member           = $this->Member_model->data_member($uid);
+
+						$response['response']      = 'success';
+	                    $response['status']        = REST_Controller::HTTP_OK;
+	                    $response['content']       = $data;
+	                    //$response['data_product']  = $data;
+	                    $this->set_response($response, REST_Controller::HTTP_OK);
+					   	return;
+					}
+
+				}else{
+			    	$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			    }
+
+			}else{
+				$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			}
+		}else{
+			$response = [
+        		'response' => 'fail',
+                'status'   => REST_Controller::HTTP_FORBIDDEN,
+                'message'  => 'Forbidden',
+            ];
+            $http_status = REST_Controller::HTTP_FORBIDDEN;
+		}
+
+		$this->set_response($response, $http_status);
+        return;
+	}
+
+	function submit_agri1_post()
+	{
+		$headers = $this->input->request_headers();
+
+		if (Authorization::tokenIsExist($headers)) {
+            $token = Authorization::validateToken($headers['Authorization']);
+            if ($token != false) {
+                
+				$uid = (int)antiInjection($token->id);
+				$logintype = (int)antiInjection($token->logtype);
+				//_d($_POST);exit();
+
+				if (!empty($uid) && trim($uid) !='') {
+
+						$memberdata = $this->Member_model->get_member_byid_less($uid);
+						$id_pengguna = $memberdata['Id_pengguna'];
+
+						$post = $this->input->post(NULL, TRUE);
+
+						$nowdate     = date('Y-m-d');
+						$nowdatetime = date('Y-m-d H:i:s');
+
+						// update table user
+						$indata_user['Tempat_lahir']  = trim($post['tempat_lahir']);
+						$indata_user['Id_ktp']        = trim($post['no_nik']);
+						$indata_user['Pekerjaan']     = trim($post['pekerjaan']);
+
+						$this->Content_model->update_user($uid, $indata_user);
+
+						// update table user detail
+						$indata_udetail['ID_No'] = $indata_user['Id_ktp'];
+						$this->Content_model->update_userdetail($id_pengguna, $indata_udetail);
+						
+						// update table profil geografi
+						$indata_geo['Alamat']   = trim($post['alamat']);
+						$indata_geo['Kota']     = trim($post['kota']);
+						$indata_geo['Provinsi'] = trim($post['provinsi']);
+						$indata_geo['Kodepos']  = trim($post['kodepos']);
+
+						$this->Content_model->update_profil_geografi($id_pengguna, $indata_geo);
+
+						$response['response'] = 'success';
+	                    $response['status']   = REST_Controller::HTTP_OK;
+	                    $response['content']  = '';
+	                    $this->set_response($response, REST_Controller::HTTP_OK);
+	                    return;
+							
+						
+				}else{
+					$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+				}
+			}else{
+			    	$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			    }
+
+			}else{
+				$response = [
+	            		'response' => 'fail',
+		                'status'   => REST_Controller::HTTP_UNAUTHORIZED,
+		                'message'  => 'Unauthorized',
+		            ];
+		            $http_status = REST_Controller::HTTP_UNAUTHORIZED;
+			}
+		
+
+		$this->set_response($response, $http_status);
+        return;
+	}
 }

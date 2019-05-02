@@ -31,7 +31,7 @@ class Master_model extends CI_Model
 			'mod_setting_home'           => 'mod_setting_home',
 			'mod_tempo'                  => 'mod_tempo',
 			'mod_bank'                   => 'mod_bank',
-			'mod_province'               => 'mod_province'
+			'master_option'               => 'master_option'
 		);
 
 		/* initialize table name for this class */

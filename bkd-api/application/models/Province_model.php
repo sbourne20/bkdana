@@ -11,9 +11,10 @@ class Province_model extends CI_Model
 
 	function get_province()
 	{
-		$this->db->select('province_name');
-		$this->db->from($this->mod_province);
-		$this->db->order_by('province_name', 'asc');
+		$this->db->select('Option_label');
+		$this->db->from($this->master_option);
+		$this->db->order_by('Option_label', 'asc');
+		$this->db->where('Option_key','provinsi');
 		$sql = $this->db->get();
 		$ret = $sql->result_array();
 		$sql->free_result();

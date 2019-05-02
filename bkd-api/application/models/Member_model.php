@@ -120,7 +120,6 @@ class Member_model extends CI_Model
 			IFNULL(margin_usaha, "") as margin_usaha,
 			IFNULL(biaya_operasional, "") as biaya_operasional_usaha,
 			IFNULL(laba_usaha, "") as laba_usaha,
-			IFNULL(jml_bunga_usaha, "") as jml_bunga_usaha,
 			IFNULL(How_many_years_have_you_been_in_business, "") as lama_usaha,
 			IFNULL(status_karyawan, "") as status_karyawan,
 			IFNULL(nama_atasan_langsung, "") as nama_atasan,

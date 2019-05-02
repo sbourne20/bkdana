@@ -561,9 +561,8 @@ if ($memberdata['foto_pegang_ktp'] != '') {
 													<option value=""> -- Pilih --</option>
 													<?php foreach ($agama as $key) {
 														?>
-														<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>" <?php if ($memberdata['Agama'] == $key['Option_value']) {
-																																									echo "selected";
-																																								} ?>> <?php echo $key['Option_label']; ?>
+														<option value="<?php echo $key['Option_value'] ?>" data-member="<?php echo $key['Option_value']; ?>" <?php if ($memberdata['Agama'] == $key['Option_value']) {							echo "selected";
+														} ?>> <?php echo $key['Option_label']; ?>
 														</option>
 													<?php
 												}
